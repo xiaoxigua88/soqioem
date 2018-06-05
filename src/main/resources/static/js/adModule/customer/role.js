@@ -46,7 +46,8 @@ $(function() {
                         if (fieldEmptyValidate($_form)) {
                             SQ.post({
                                 url: $_form.attr("action"),
-                                data: $_form.serialize()
+                                contentType: "application/json; charset=utf-8",
+                                data: /*$_form.serialize()*/JSON.stringify(getJSON())
                             });
                         }
                         return false;
@@ -56,4 +57,34 @@ $(function() {
         });
         return false;
     });
+    
+    $.fn.serializeObject = function() {
+        var o = [];
+        var a = this.serializeArray();
+        var t = {};
+        $.each(a, function(i,data) {
+             if(t[data.name]){
+             	 o.push(t);
+                 t={};
+                 t[data.name] = this.value || '';
+             }else{
+            	 t[data.name] = this.value || '';
+            	 if(i==a.length-1){
+            		 o.push(t);
+            	 }
+             }
+         });
+         if(o.length==1){
+        	 //如果数组中对象长度为1则无必要生成数组
+        	 return t;
+         }
+         return o;
+     };
+     
+     var getJSON = function(){
+    	 var roleData = $("#editForm input[type != hidden]").serializeObject();
+    	 var privileges = $("#editForm input[type = hidden]").serializeObject();
+    	 roleData.privileges = privileges;
+    	 return roleData;
+     }
 });

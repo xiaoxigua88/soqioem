@@ -42,7 +42,7 @@ $(function() {
              }
          });
          return o;
-     };
+    };
     $("#btnSave").click(function() {
         var $_form = $("#privilegeForm");
         if (fieldEmptyValidate($_form)) {

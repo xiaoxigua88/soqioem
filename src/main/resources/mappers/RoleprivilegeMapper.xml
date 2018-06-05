@@ -21,11 +21,25 @@
       and PriId = #{priid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Roleprivilege" >
-    insert into RolePrivilege (RoleId, PriId, "Value"
+    insert into RolePrivilege (RoleId, PriId, Value
       )
     values (#{roleid,jdbcType=INTEGER}, #{priid,jdbcType=INTEGER}, #{value,jdbcType=INTEGER}
       )
   </insert>
+  <insert id="insertBatch" parameterType="com.soqi.oem.gentry.Role">
+  	<foreach collection="privileges" separator=";" item="item">
+    insert into RolePrivilege (RoleId, PriId, Value)
+    values (#{roleid,jdbcType=INTEGER}, #{item.priid,jdbcType=INTEGER}, #{item.value,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <update id="updateBatch" parameterType="com.soqi.oem.gentry.Role">
+    <foreach collection="privileges" separator=";" item="item">
+      update RolePrivilege 
+      set
+      Value = #{item.value,jdbcType=INTEGER}
+      where PriId = #{item.priid,jdbcType=INTEGER} and RoleId = #{roleid,jdbcType=INTEGER}
+    </foreach>
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Roleprivilege" >
     update RolePrivilege
     set "Value" = #{value,jdbcType=INTEGER}

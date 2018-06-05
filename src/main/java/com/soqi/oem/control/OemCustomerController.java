@@ -134,16 +134,16 @@ public class OemCustomerController extends BaseController{
 	@ResponseBody
 	public ResultFontJS getRoleInfo(@RequestParam(value="roleid",required=true) Integer roleid, HttpServletRequest req,  HttpServletResponse resp){
 		Map<String,Object> map = new HashMap<String, Object>();
+		//根据当前用户获取其角色所属权限列表
+		Customer ct = this.getCustomer();
 		if(roleid.intValue()==0){
 			//获取权限数据
-			//根据当前用户获取其角色所属权限列表
-			Customer ct = this.getCustomer();
 			List<Privilege> lst = privilegeService.getPrivsCompared(ct.getCustomerid());
 			map.put("privilegeList", lst);
 			//弹出框新增
 			return ResultFontJS.ok(map);
 		}else{
-			Role role = roleService.qryRoleByRoleid(roleid);
+			Role role = roleService.qryRoleByRoleidAndOemid(roleid, ct.getOemid());
 			//根据当前角色获取当前权限列表
 			List<Privilege> lst = privilegeService.getRolePrivsCompared(roleid);
 			map.put("privilegeList", lst);
@@ -154,8 +154,27 @@ public class OemCustomerController extends BaseController{
 	}
 	@RequestMapping("/oemmanager/customer/rolePrivilegeSave")
 	@ResponseBody
-	public ResultFontJS rolePrivilegeSave(@RequestBody Role role){
-		return ResultFontJS.ok();
+	public ResultFontJS rolePrivilegeSave(@RequestBody Role role, Integer operateType){
+		Customer ct = this.getCustomer();
+		role.setOemid(ct.getOemid());
+		if(operateType.intValue()==1){
+			//更新操作
+			boolean save = privilegeService.updateRoleAndRolePrivilege(role);
+			if(save){
+				return ResultFontJS.ok("角色及权限更新");
+			}else{
+				return ResultFontJS.error("角色及权限更新失败");
+			}
+		}else if(operateType.intValue()==0){
+			//添加操作
+			boolean save = privilegeService.saveRoleAndRolePrivilege(role);
+			if(save){
+				return ResultFontJS.ok("角色及权限添加成功");
+			}else{
+				return ResultFontJS.error("角色及权保存失败");
+			}
+		}else{
+			return ResultFontJS.error("未知错误");
+		}
 	}
-	
 }

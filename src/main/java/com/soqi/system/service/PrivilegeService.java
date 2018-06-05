@@ -99,4 +99,27 @@ public class PrivilegeService {
 		List<Role> oemRoles = rm.selectRolseByOemid(oemid);
 		return custRoles;
 	}
+	
+	//更新角色
+	@Transactional("primaryTransactionManager")
+	public boolean updateRoleAndRolePrivilege(Role role){
+		int single = rm.updateByPrimaryKey(role);
+		int batch = roleprivilegeMapper.updateBatch(role);
+		return single>0 && batch>0 ? true:false;
+	}
+	
+	//添加角色
+	@Transactional("primaryTransactionManager")
+	public boolean saveRoleAndRolePrivilege(Role role){
+		//根据角色编号和oem查询是否有重复的角色创建
+		Role hasRole = rm.selectByPrimaryKey(role.getRoleid(), role.getOemid());
+		if(hasRole != null){
+			return false;
+		}
+		//添加角色
+		int single = rm.insert(role);
+		//添加角色对应的权限
+		int batch = roleprivilegeMapper.insertBatch(role);
+		return single>0 && batch>0 ? true:false;
+	}
 }

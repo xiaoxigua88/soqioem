@@ -13,23 +13,24 @@
     where RoleId = #{roleid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Role" >
-    insert into Role (RoleId, OemId, RoleName, 
-      AddTime, Description)
-    values (#{roleid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, 
-      #{addtime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
+    insert into Role (RoleId, OemId, RoleName, Description)
+    values ( #{roleid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Role" >
     update Role
-    set OemId = #{oemid,jdbcType=INTEGER},
-      RoleName = #{rolename,jdbcType=VARCHAR},
-      AddTime = #{addtime,jdbcType=TIMESTAMP},
-      Description = #{description,jdbcType=VARCHAR}
-    where RoleId = #{roleid,jdbcType=INTEGER}
+    set
+      <if test="description!=null and description!=''">
+      Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename!=null and rolename!=''">
+      RoleName = #{rolename,jdbcType=VARCHAR}
+      </if>
+    where RoleId = #{roleid,jdbcType=INTEGER} and OemId = #{oemid,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
     select RoleId, OemId, RoleName, AddTime, Description
     from Role
-    where RoleId = #{roleid,jdbcType=INTEGER}
+    where RoleId = #{roleid,jdbcType=INTEGER} and OemId = #{oemid,jdbcType=INTEGER}
   </select>
   <select id="selectRolseByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select RoleId, OemId, RoleName, AddTime, Description

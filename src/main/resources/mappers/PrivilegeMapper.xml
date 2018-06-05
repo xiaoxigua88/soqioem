@@ -18,6 +18,7 @@
     values (#{priid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{valueconfig,jdbcType=INTEGER}, 
       #{defvalue,jdbcType=INTEGER}, #{groupid,jdbcType=INTEGER})
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Privilege" >
     update Privilege
     set "Name" = #{name,jdbcType=VARCHAR},

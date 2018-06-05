@@ -39,7 +39,7 @@
       and RoleId = #{roleid,jdbcType=INTEGER}
   </select>
   <select id="selectRoleListByCustomerId" resultMap="RoleResultMap" parameterType="INTEGER" >
-    select m.roleid,n.oemid,n.rolename,n.AddTime,n.Description from customerRole m left join role n on m.RoleId = n.RoleId where m.CustomerId = #{customerid,jdbcType=INTEGER}
+    select m.roleid,n.oemid,n.rolename,n.AddTime,n.Description from customerRole m left join role n on m.RoleId = n.RoleId left join Customer l on m.CustomerId = l.CustomerId where l.OemId = n.OemId and m.CustomerId = #{customerid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select CustomerId, RoleId, AddTime, Description

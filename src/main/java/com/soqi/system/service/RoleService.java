@@ -17,7 +17,7 @@ public class RoleService {
 		return rm.selectRolseByOemid(oemid);
 	}
 	
-	public Role qryRoleByRoleid(Integer roleid){
-		return rm.selectByPrimaryKey(roleid);
+	public Role qryRoleByRoleidAndOemid(Integer roleid,Integer oemid){
+		return rm.selectByPrimaryKey(roleid, oemid);
 	}
 }

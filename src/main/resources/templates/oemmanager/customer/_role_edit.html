@@ -1,5 +1,5 @@
 <script type="text/html" id="editInformation">
-<form action="/oemmanager/customer/rolePrivilegeSave" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:700px;" id="editForm">
+<form action="/oemmanager/customer/rolePrivilegeSave?operateType={{if role}}1{{else}}0{{/if}}" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:700px;" id="editForm">
 	<div class="form-group validate-control">
 		<div class="sq-control-label">角色编号：</div>
         <div class="col-xs-3">
@@ -43,7 +43,7 @@
 						        <input type="hidden" name="priid" value="{{item.priid}}" />{{item.priname}}
 						    </td>
 						    <td>
-								<input type="hidden" id="v_{{item.priid}}" name="privalue" value="{{item.value}}" />
+								<input type="hidden" id="v_{{item.priid}}" name="value" value="{{item.value}}" />
 								{{each priEnumList as item2 j}}
 									<label class="margin-right-10 {{if (item2.value & item.valueconfig) ==0}}text-muted{{else}}text-orange{{/if}}">
 								            <input type="checkbox" class="chk_defval defval{{item.priid}}" data-for="{{item.priid}}" value="{{item2.value}}" {{item2 | rolePrivilegeFormate : item}}/>{{item2.description}}
