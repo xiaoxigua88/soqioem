@@ -1,0 +1,738 @@
+/* 面包屑导航 */
+.crumb-container {
+	/* 将 sq-crumb 的高度放在父容器设置，防止内容填充延迟造成的抖动 */
+	height: 52px;
+	background-color: #fff;
+}
+.sq-crumb {
+	margin-bottom: 0;
+	padding: 0;
+	padding-left: 25px;
+	line-height: 52px;
+	/* 重置bootstrap crumb背景色 */
+	background-color: #fff;
+	font-size: 14px;
+	-webkit-box-shadow: 0 2px 4px #e7e7e7;
+	-moz-box-shadow: 0 2px 4px #e7e7e7;
+	-ms-box-shadow: 0 2px 4px #e7e7e7;
+	box-shadow: 0 2px 1px #e7e7e7;
+}
+.sq-crumb > li + li:before {
+	padding: 0 5px;
+	color: #999;
+	content: ">"
+}
+.sq-crumb a {
+	color: #999;
+}
+.sq-crumb a:hover {
+	text-decoration: none;
+}
+.sq-crumb a[href]:hover {
+	color: #009FD9;
+}
+.sq-crumb .active,
+.sq-crumb li:last-child a {
+	color: #009FD9;
+}
+.crumb-home {
+	padding-left: 18px;
+	background: url(img/uc/crumb_home.png) no-repeat left center;
+}
+.crumb-home:hover {
+	background-image: url(img/uc/crumb_home_hover.png);
+}
+
+/* 快捷feedback提示框 */
+.ui-feedback-layout {
+	display: none;
+	position: fixed;
+	top: 112px;
+	left: 50%;
+	z-index: 10000;
+	margin-left: 90px;
+}
+.graceful-menu .ui-feedback-layout {
+	margin-left: 40px;
+}
+.ui-feedback {
+	position: relative;
+	left: -50%;
+	z-index: 10;
+	min-width: 360px;
+	padding: 0 35px;
+	height: 36px;
+	line-height: 36px;
+}
+.ui-feedback-icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	/*bottom: 0;*/
+	z-index: 10;
+	width: 35px;
+	/* 需设置高度（该高度与父容器相同），才能让背景图片在 向下滑动的过程中保持位置固定 */
+	height: 36px;
+	background: no-repeat center;
+}
+.ui-feedback-text {
+	font-size: 14px;
+}
+.ui-feedback-close {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 14px;
+	z-index: 10;
+	font-size: 18px;
+	cursor: pointer;
+}
+/* 快捷feedback提示框 皮肤 */
+.ui-feedback-success {
+	border: 1px solid #81ea96;
+	border-top: none;
+	background-color: #daffe0;
+	color: #4ed968;
+}
+.ui-feedback-success .ui-feedback-icon {
+	background-image: url(img/uc/tip_icon_success_16.png);
+}
+.ui-feedback-error {
+	border: 1px solid #ff1900;
+	border-top: none;
+	background-color: #ffd7cf;
+	color: #ff1900;
+}
+.ui-feedback-error .ui-feedback-icon {
+	background-image: url(img/uc/tip_icon_error_16.png);
+}
+.ui-feedback-warn {
+	border: 1px solid #ff8800;
+	border-top: none;
+	background-color: #fff3e5;
+	color: #ff8800;
+}
+.ui-feedback-warn .ui-feedback-icon {
+	background-image: url(img/uc/tip_icon_warn_16_solid.png);
+}
+
+/* 警示框 */
+.alert-warn,
+.alert-success {
+	padding: 7px 22px 5px 37px;
+	background: url(img/uc/tip_icon_warn_16.png) no-repeat 10px 10px #fff3e5;
+	border: 1px solid #ff8800;
+	border-radius: 2px;
+	color: #ff8800;
+	font-size: 12px;
+	line-height: 2em;
+}
+.alert-protect {
+	min-width: 500px;
+}
+.alert-success {
+	background-image: url(img/uc/tip_icon_success_16.png);
+	background-color: #d9ffe0;
+	color: #14cc39;
+	border-color: #14cc39;
+}
+.alert-warn-lg {
+	padding: 20px 0 20px 90px;
+	background: url(img/uc/tip_icon_warn_50.png) no-repeat 20px center #fff3e5;
+	border-left: 3px solid #ff8800;
+	border-radius: 2px;
+}
+.alert-warn-lg .tip-title {
+	margin-bottom: 10px;
+	color: #ff8800;
+	font-size: 14px;
+}
+.tip-content {
+	line-height: 1.8em;
+}
+.checkbox-alert {
+	background-image: none;
+	padding: 5px 0 5px 10px;
+}
+.alert-warn.alert-white-bg {
+	border: none;
+	border-top: 1px solid #eee;
+	background-color: #fff;
+	color: #aaa;
+}
+.alert-warn.alert-white-bg .alert-warn-title {
+	color: #ff8800;
+}
+
+/* 分页样式 */
+.pager-operate {
+	padding-left: 20px;
+	margin-right: 15px;
+}
+.mark-read {
+	margin-left: 22px;
+	font-size: 12px;
+}
+.pager-size {
+    padding-right:50px;
+}
+.pager-count {
+	line-height: 28px;
+}
+.pager-count select {
+	font-size: 12px;
+}
+.page-button {
+	float: left;
+	min-width: 28px;
+	height: 28px;
+	border: 1px solid #dedede;
+	margin-left: 10px;
+	background: #f7f7f7 no-repeat center;
+	line-height: 27px;
+	text-align: center;
+	cursor: pointer;
+}
+.page-button:hover,
+.page--current {
+	border-color: #009FD9;
+	background-color: #009FD9;
+	color: #fff;
+}
+.page-button.disabled,
+.page-button.disabled:hover {
+	border-color: #dedede;
+	background-color: #f7f7f7;
+	color: #ddd;
+	cursor: not-allowed;
+}
+.pager-set {
+    padding-left:5px;
+    padding-right:5px;
+}
+.pager-first {
+	background-image: url(img/uc/pager_first.png);
+}
+.pager-first:hover {
+	background-image: url(img/uc/pager_first_hover.png);
+}
+.pager-first.disabled,
+.pager-first.disabled:hover {
+	background-image: url(img/uc/pager_first_disabled.png);
+}
+.pager-prev {
+	background-image: url(img/uc/pager_prev.png);
+}
+.pager-prev:hover {
+	background-image: url(img/uc/pager_prev_hover.png);
+}
+.pager-prev.disabled,
+.pager-prev.disabled:hover {
+	background-image: url(img/uc/pager_prev_disabled.png);
+}
+.pager-next {
+	background-image: url(img/uc/pager_next.png);
+}
+.pager-next:hover {
+	background-image: url(img/uc/pager_next_hover.png);
+}
+.pager-next.disabled,
+.pager-next.disabled:hover {
+	background-image: url(img/uc/pager_next_disabled.png);
+}
+.pager-last {
+	background-image: url(img/uc/pager_last.png);
+}
+.pager-last:hover {
+	background-image: url(img/uc/pager_last_hover.png);
+}
+.pager-last.disabled,
+.pager-last.disabled:hover {
+	background-image: url(img/uc/pager_last_disabled.png);
+}
+
+/* 多图上传附件 */
+.add-attachment {
+	display: block;
+	width: 60px;
+	height: 60px;
+	background: url(img/uc/add_img.png);
+}
+.add-attachment:hover {
+	background: url(img/uc/add_img_hover.png);
+	-webkit-transition-property: background-image;
+	-moz-transition-property: background-image;
+	-ms-transition-property: background-image;
+	-o-transition-property: background-image;
+	transition-property: background-image;
+}
+/* 为了兼容ie8，多加了一层容器。下面这个是真正可以点击的上传元素 */
+.add-attachment-real {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+/* 兼容ie8 */
+.add-attachment form input {
+	cursor: pointer;
+}
+.added-img-container {
+	line-height: 1;
+}
+.attachment-item {
+	float: left;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	width: 60px;
+	height: 60px;
+	margin-right: 10px;
+}
+.attachment-item-document {
+	display: block;
+	overflow: hidden;
+	position: relative;
+	z-index: 113;
+	width: 150px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	margin-right: 10px;
+	background: #fff;
+}
+
+.attachment-item-document .document-name {
+	display: inline-block;
+	max-width: 120px;
+	height: 100%;
+	z-index: 1;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-decoration: underline;
+	color:#009fd9;
+}
+.delete-attachment2 {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	z-index: 1000;
+	right: 10px;
+	top: 0;
+	font-size: 24px;
+	color: #ff8500;
+	cursor: pointer;
+}
+
+.attachment-item img {
+	width: 100%;
+	height: 100%;
+}
+.delete-attachment,
+.uploading-tip {
+	position: absolute;
+	bottom: -20px;
+	left: 0;
+	right: 0;
+	z-index: 110;
+	height: 20px;
+	line-height: 20px;
+	color: #fff;
+	background: #000;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.delete-attachment:hover {
+	text-decoration: none;
+	color: #fff;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+}
+.attachment-done:hover .delete-attachment {
+	bottom: 0;
+}
+.attachment-uploading:hover .delete-attachment {
+	bottom: -20px;
+}
+.attachment-uploading .add-cover,
+.attachment-done .add-cover {
+	z-index: -10 !important;
+	background: #fff;
+}
+/* ie8 的img元素 盖住了 :after元素，所以设置不可见 */
+.attachment-uploading img {
+	visibility: hidden;
+}
+.uploading-tip {
+	display: none;
+	bottom: 0;
+}
+.attachment-uploading .uploading-tip {
+	display: block;
+}
+.attachment-uploading:after,
+.attachment-done:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+.attachment-uploading:after {
+	background: #f5f5f5 url(img/uc/loading.gif) no-repeat center;
+}
+/* 单图上传 */
+.preview-container {
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+}
+.upload-reminder {
+	position: absolute;
+	bottom: -28px;
+	left: 0;
+	right: 0;
+	height: 28px;
+	z-index: 10;
+	background-color: #000;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	line-height: 28px;
+	color: #fff;
+	text-align: center;
+	-webkit-transition-property: bottom;
+	-moz-transition-property: bottom;
+	-o-transition-property: bottom;
+	transition-property: bottom;
+}
+.preview-container:hover .upload-reminder,
+.upload-reminder.upload-loading {
+	bottom: 0;
+}
+.loading-cover {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 8;
+	width: 100%;
+	height: 100%;
+	background: #eee url(img/uc/loading.gif) no-repeat center;
+}
+.loading-show .loading-cover {
+	display: block;
+}
+.loading-show:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	cursor: not-allowed;
+}
+.attachment-img {
+	width: 120px;
+	height: 90px;
+	border: 1px solid #f2f2f2;
+}
+.img-reminder-box {
+	margin-left: 15px;
+}
+.img-reminder {
+	vertical-align: top;
+	margin: 0 0 15px 0;
+}
+.img-reminder-box .btn-reverse {
+	font-size: 12px;
+}
+/* 步骤进度条 */
+.step-bar {
+	position: relative;
+	float: left;
+	width: 25%;
+	height: 36px;
+	line-height: 36px;
+	font-size: 14px;
+	color: #fff;
+}
+/* 父容器添加，变为3或5个步骤，triple是3，penta是5*/
+.step-bar-triple .step-bar {
+	width: 33.3%;
+}
+.step-bar-penta .step-bar {
+	width: 20%;
+}
+.step-bar-begin {
+	padding-right: 18px;
+}
+.step-bar-center {
+	padding: 0 18px;
+}
+.step-bar-end {
+	padding-left: 18px;
+}
+.step-colored {
+	background-color: #7fddff;
+}
+.step-prefix {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-left: -16px;
+}
+.step--current .step-prefix {
+	background: url(img/uc/step_complete.png) no-repeat center;
+	vertical-align: middle;
+	/* 字体隐藏，由于模板中控制text-hide类比较复杂，这里使用step--current统一控制样式*/
+	border: 0;
+	background-color: transparent;
+	color: transparent;
+	font: 0/0 a;
+	text-shadow: none;
+}
+.step--current.step--failed .step-prefix {
+	background-image: url(img/uc/step_failed.png);
+}
+.step--current.step--dealing .step-prefix {
+	background-image: url(img/uc/step_waiting.png);
+}
+.step--current .step-colored {
+	background-color: #009FD9;
+	color: #fff;
+}
+.step--completed .step-colored {
+	background-color: #7fddff;
+	color: #fff;
+}
+.step-arrow-left,
+.step-arrow-right {
+	position: absolute;
+	top: 0;
+	border: 18px solid transparent;
+	border-left-color: #7fddff;
+}
+.step-arrow-left {
+	left: -8px;
+	border: 18px solid #7fddff;
+	border-left-color: transparent;
+}
+.step-arrow-right {
+	right: -18px;
+}
+.step--current .step-arrow-left {
+	border-color: #009FD9;
+	border-left-color: transparent;
+}
+.step--current .step-arrow-right {
+	border-left-color: #009FD9;
+}
+/* 对当前步骤之后的所有步骤设置灰色样式 */
+.step--current ~ .step-bar .step-colored {
+	background-color: #f2f2f2;
+	color: #999;
+}
+.step--current ~ .step-bar .step-arrow-left {
+	border-color: #f2f2f2;
+	border-left-color: transparent;
+}
+.step--current ~ .step-bar .step-arrow-right {
+	border-left-color: #f2f2f2;
+}
+/* 步骤条下方的结果区域 */
+.status-result-container {
+	width: 650px;
+	padding-bottom: 40px;
+}
+.status-result-content {
+	position: relative;
+	z-index: 10;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 15px;
+	padding-right: 20px;
+	font-size: 14px;
+}
+.status-result-icon {
+	position: absolute;
+	top: 0px;
+	left: -58px;
+	z-index: 10;
+	width: 40px;
+	height: 40px;
+	background-position: center;
+}
+.status-result-text {
+	line-height: 2;
+}
+.status-result-tips {
+	margin-top: 20px;
+}
+.status-result-tips-list {
+	margin-top: 10px;
+	line-height: 2;
+}
+.status-result-footer {
+	margin-top: 20px;
+}
+
+/* 评分星星组件 */
+.comment-star-container {
+
+}
+.star-container {
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+	width: 100px;
+	height: 20px;
+	background-position: top left;
+	vertical-align: text-bottom;
+}
+.comment-star {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	cursor: pointer;
+}
+.star-container,
+.comment-star.star-hover,
+.comment-star.star-active {
+	background: url(img/uc/comment_star.png) repeat-x;
+}
+.comment-star.star-hover,
+.comment-star.star-active {
+	background-position: left -20px;
+}
+.star-level-1 {
+	z-index: 6;
+	width: 20%;
+}
+.star-level-2 {
+	z-index: 5;
+	width: 40%;
+}
+.star-level-3 {
+	z-index: 4;
+	width: 60%;
+}
+.star-level-4 {
+	z-index: 3;
+	width: 80%;
+}
+.star-level-5 {
+	z-index: 2;
+	width: 100%;
+}
+
+
+/* sq-tab组件 */
+.tab-relate-1,
+.tab-relate-2,
+.tab-relate-3,
+.tab-relate-4,
+.tab-relate-5,
+/* inline */
+.inline-tab-relate-1,
+.inline-tab-relate-2,
+.inline-tab-relate-3,
+.inline-tab-relate-4,
+.inline-tab-relate-5,
+/* inline-block */
+.inline-block-relate-1,
+.inline-block-relate-2,
+.inline-block-relate-3,
+.inline-block-relate-4,
+.inline-block-relate-5 {
+	display: none;
+}
+.tab-group-1 .tab-relate-1,
+.tab-group-2 .tab-relate-2,
+.tab-group-3 .tab-relate-3,
+.tab-group-4 .tab-relate-4,
+.tab-group-5 .tab-relate-5 {
+	display: block;
+}
+.tab-group-1 .inline-tab-relate-1,
+.tab-group-2 .inline-tab-relate-2,
+.tab-group-3 .inline-tab-relate-3,
+.tab-group-4 .inline-tab-relate-4,
+.tab-group-5 .inline-tab-relate-5 {
+	display: inline;
+}
+.tab-group-1 .inline-block-relate-1,
+.tab-group-2 .inline-block-relate-2,
+.tab-group-3 .inline-block-relate-3,
+.tab-group-4 .inline-block-relate-4,
+.tab-group-5 .inline-block-relate-5 {
+	display: inline-block;
+}
+.tab-group-1 .hide-relate-1,
+.tab-group-2 .hide-relate-2,
+.tab-group-3 .hide-relate-3,
+.tab-group-4 .hide-relate-4,
+.tab-group-5 .hide-relate-5 {
+	display: none;
+}
+
+/* sq-number组件 */
+.sq-number-container {
+	float: left;
+	line-height: 1;
+}
+.number-input-box {
+	float: left;
+	position: relative;
+	width: 100px;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+}
+.number-input-box input {
+	height: 30px;
+	width: 50px;
+	border: none;
+	line-height: 30px;
+}
+.sq-number-unit {
+	position: absolute;
+	right: 5px;
+	top: 10px;
+	color: #999;
+	text-align: right;
+}
+.sq-number-control {
+	display: inline-block;
+	position: relative;
+	z-index: 10;
+	width: 32px;
+	height: 32px;
+	margin-left: 5px;
+}
+.sq-number-control span {
+	position: absolute;
+	left: 0;
+	z-index: 11;
+	width: 32px;
+	height: 15px;
+	background: no-repeat center;
+	cursor: pointer;
+}
+span.number-control-up {
+	top: 0;
+	background-image: url(img/uc/number_up.png);
+}
+.number-control-up:hover {
+	background-image: url(img/uc/number_up_hover.png);
+}
+span.number-control-down {
+	bottom: 0;
+	background-image: url(img/uc/number_down.png);
+}
+.number-control-down:hover {
+	background-image: url(img/uc/number_down_hover.png);
+}
+

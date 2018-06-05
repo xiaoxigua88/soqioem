@@ -1,0 +1,94 @@
+        <div class="sq-panel">
+#parse("${templateFolder}\\business\\siteyun\\_web_manage_nav.htm")
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($web_nav = "webbanner")
+#parse("${templateFolder}\\business\\siteyun\\_web_nav.htm")
+                    <div class="pull-right">
+                        <a href="#a_null" class="pull-left sq-btn btn-strong btn-operate-add margin-left-20" id="banner_import">新增</a>
+                    </div>
+				</div>
+				<div class="alert-warn alert-protect margin-bottom-20">
+			        本网站的BANNER支持JPG、PNG格式，推荐尺寸：{{if template.adaptation == 1}}电脑端{{/if}}{{template.bannersize}}px{{if template.adaptation == 1}}、移动端{{template.mobibannersize}}px{{/if}}，
+			        为了效果最佳，请严格按照标准上传。
+		        </div>
+		        <table class="sq-table margin-bottom-20">
+			        <thead>
+				        <tr>
+	                        <th style="width:200px">
+		                        图片
+	                        </th>
+	                        <th style="width:95px">
+		                        尺寸（px）
+	                        </th>
+	                        <th style="width:180px">
+		                        链接
+	                        </th>
+	                        {{if template.adaptation == 1}}
+	                        <th style="width:200px">
+		                        移动图片
+	                        </th>
+	                        <th style="width:95px">
+				                尺寸（px）
+				            </th>
+	                        <th style="width:180px">
+		                        链接
+	                        </th>
+				            {{/if}}
+	                        <th style="width:52px">
+		                        排序
+	                        </th>
+	                        <th style="width:135px">
+		                        ALT
+	                        </th>
+	                        <th style="width:135px">
+		                        TITLE
+	                        </th>
+	                        <th>
+		                        操作
+	                        </th>
+				        </tr>
+			        </thead>
+                    <tbody>
+                        {{each lst as item i}}
+                        <tr title="{{i+1}}">
+                            <td>
+                                <img src="webimage.aspx?siteid={{site.WebId}}&imageurl={{item.thumbimageurl}}" style="position:inherit;width:176px; margin:4px 0px;" alt="{{item.alt}}" />
+                            </td>
+                            <td>
+                                {{item.width}}x{{item.height}}
+                            </td>
+                            <td>
+                                {{item.link}}
+                            </td>
+	                        {{if template.adaptation == 1}}
+                            <td>
+                                {{if item.mobiimageurl.length>0}}<img src="webimage.aspx?siteid={{site.WebId}}&imageurl={{item.thumbmobiimageurl}}" style="position:inherit;width:176px; margin:4px 0px;" />{{/if}}
+                            </td>
+                            <td>
+                                {{if item.mobiimageurl.length>0}}{{item.mobiwidth}}x{{item.mobiheight}}{{/if}}
+                            </td>
+                            <td>
+                                {{item.mobilink}}
+                            </td>
+				            {{/if}}
+                            <td class="text-right">
+                                <span class="text-primary margin-right-10">{{item.listorder}}</span>
+                            </td>
+                            <td>
+                                {{item.alt}}
+                            </td>
+                            <td>
+                                {{item.title}}
+                            </td>
+                            <td>
+                                <a href="#a_null" class="banner_edit" data-id="{{item.bannerid}}">修改</a>
+                                <span class="text-muted operate-spacing">|</span>
+                                <a href="#a_null" class="btn-delete" data-id="{{item.bannerid}}">删除</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+		        </table>
+		    </div>
+		</div>

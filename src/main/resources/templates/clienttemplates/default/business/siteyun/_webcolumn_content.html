@@ -1,0 +1,88 @@
+        <div class="sq-panel">
+#parse("${templateFolder}\\business\\siteyun\\_web_manage_nav.htm")
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($web_nav = "webcolumn")
+#parse("${templateFolder}\\business\\siteyun\\_web_nav.htm")
+                    <div class="pull-right">
+                        <a href="webcolumnadd.aspx?yunId={{site.YunId}}" class="pull-left sq-btn btn-strong btn-operate-add  margin-left-20">新增</a>
+                    </div>
+				</div>
+		        <table class="sq-table margin-bottom-20">
+			        <thead>
+				        <tr>
+	                        <th style="width:70px">
+		                        编号
+	                        </th>
+	                        <th style="width:200px">
+		                        名称
+	                        </th>
+	                        <th style="width:120px">
+		                        别名
+	                        </th>
+	                        <th style="width:65px">
+		                        排序值
+	                        </th>
+	                        <th style="width:60px">
+		                        类型
+	                        </th>
+	                        <th style="width:65px">
+				                文章数
+				            </th>
+	                        <th>
+		                        操作
+	                        </th>
+				        </tr>
+			        </thead>
+                    <tbody>
+                        {{each lst as item i}}
+                        <tr>
+                            <td class="text-center">
+                                {{item.columnid}}
+                            </td>
+                            <td>
+                                {{if item.depth >= 4}}
+                                &nbsp;
+                                {{/if}}
+                                {{if item.depth >= 3}}
+                                &nbsp;
+                                {{/if}}
+                                {{if item.depth >= 2}}
+                                &nbsp;
+                                {{/if}}
+                                {{if item.depth > 1}}
+                                |-
+                                {{/if}}
+                                {{item.name}}
+                            </td>
+                            <td>
+                                {{item.code}}
+                            </td>
+                            <td class="text-right">
+                                <span class="text-primary margin-right-10">{{item.listorder}}</span>
+                            </td>
+                            <td>
+                                {{if item.columntypeid == 1}}资讯{{/if}}{{if item.columntypeid == 2}}产品{{/if}}{{if item.columntypeid == 999}}单页{{/if}}
+                            </td>
+                            <td class="text-right">
+                                <span class="text-primary margin-right-10">{{item.articlecount}}</span>
+                            </td>
+                            <td>
+                                <a href="webcolumnadd.aspx?yunId={{site.YunId}}&columnid={{item.columnid}}">修改</a>
+                                <span class="text-muted operate-spacing">|</span>
+                                <a href="#a_null" class="btn-delete" data-id="{{item.columnid}}">删除</a>
+                                {{if item.columntypeid != 999}}
+                                <span class="text-muted operate-spacing">|</span>
+                                <a href="webarticle.aspx?yunId={{site.YunId}}&columnid={{item.columnid}}">文章管理</a>
+                                {{if item.depth < siteInfo.maxcolumndepth}}
+                                <span class="text-muted operate-spacing">|</span>
+                                <a href="webcolumnadd.aspx?yunId={{site.YunId}}&pcolumnid={{item.columnid}}">添加子栏目</a>
+                                {{/if}}
+                                {{/if}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+		        </table>
+		    </div>
+		</div>

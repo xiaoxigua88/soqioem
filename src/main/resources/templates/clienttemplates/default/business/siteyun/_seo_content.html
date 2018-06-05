@@ -1,0 +1,150 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">云建站管理-SEO优化 - <span class="text-primary">{{site.Domain}}</span></div>
+				<div class="pull-left">
+				    <a href="yunlist.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+				</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($seo_nav = "seo")
+#parse("${templateFolder}\\business\\siteyun\\_seo_nav.htm")
+					<div class="pull-right">
+					    <a href="seoadd.aspx?yunId={{site.YunId}}" class="pull-left sq-btn btn-strong btn-operate-add">购买关键词</a>
+					    <a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
+						    <span class="operate-icon operate-icon-refresh"></span>
+					    </a>
+					    <button id="batchExport" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
+						    <span class="operate-icon operate-icon-export"></span>
+						    导出
+					    </button>
+                    </div>
+				</div>
+				<div class="alert-warn margin-bottom-20">
+				    冻结金额消费完毕后会直接消费可用余额。连续未达标超过<b class="text-red">{{failedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。
+				    <input type="hidden" value="{{freezeDay}}" id="freezeDay" />
+				</div>
+				<table class="sq-table margin-bottom-20 siteyun_seo" id="mainList">
+					<thead>
+						<tr>
+							<th style="width:35px">
+								<input type="checkbox" id="checkAll" />
+							</th>
+							<th style="width:240px">
+								关键词
+							</th>
+							<th class="text-center" style="width:80px">
+								搜索引擎
+							</th>
+							<th class="text-center" style="width:80px">
+								初始排名
+							</th>
+							<th class="text-center" style="width:80px">
+								最新排名
+							</th>
+							<th class="text-center" style="width:135px">
+								购买时间
+							</th>
+							<th class="text-center" style="width:60px">
+								价格
+							</th>
+							<th class="text-center" style="width:60px">
+								冻结
+							</th>
+							<th class="text-center" style="width:66px">
+								达标天
+							</th>
+							<th class="text-center" style="width:75px">
+								总消费
+							</th>
+							<th class="text-center" style="width:80px">
+								今日结算
+							</th>
+							<th class="text-center" style="width:80px">
+								状态
+							</th>
+							<th>
+								操作
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr>
+								<td>
+									<input type="checkbox" class="list-checkbox" value="{{item.TaskId}}" data-canstop="{{item.CanStop}}" data-status="{{item.Status}}"{{if item.CanStop==0&&item.Status==4}} disabled{{/if}} />
+								</td>
+								<td>
+								    <span class="text-primary">{{item.Keyword}}</span>
+								</td>
+								<td class="text-center">
+								    <span class="{{item.SearchType | getSearchTypeClass:"className"}}">
+								    {{item.SearchType | getSearchTypeClass:"name"}}
+								    </span>
+								</td>
+								<td class="text-center">
+								    {{#item.RankFirst | formatRank:10}}
+								</td>
+								<td class="text-center">
+								    {{#item.RankLast | formatRank:10}}
+								</td>
+								<td class="text-center">
+									<span class="text-muted">{{item.BuyTime}}</span>
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">￥{{item.Price | toFixed}}</span>
+								</td>
+								<td class="text-right">
+								{{if item.FreezeAmount > 0 }}
+								    <span class="text-red margin-right-10">￥{{item.FreezeAmount | toFixed}}</span>
+								{{else}}
+								    <span class="text-muted margin-right-10">￥{{item.FreezeAmount | toFixed}}</span>
+							    {{/if}}
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">{{item.CostCount}}</span>
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">￥{{item.CostAmount | toFixed}}</span>
+								</td>
+								<td>
+								    <span class="sq-state-icon sq-state-text {{item.SettleStatus | getSeoSettleStatusClass:"className"}}">{{item.SettleStatus | getSeoSettleStatusClass:"name"}}</span>
+								</td>
+								<td>
+								    <span class="sq-state-icon sq-state-text {{item.Status | getSeoStatusClass:"className"}}">
+									    {{item.Status | getSeoStatusClass:"name"}}
+								    </span>
+								</td>
+								<td>
+								    <a href="#a_null" class="task-view" data-taskid="{{item.TaskId}}">详情</a>
+								    {{if item.CanStop}}
+									<span class="text-muted operate-spacing">|</span>
+								    <a href="#a_null" class="task-stop" data-taskid="{{item.TaskId}}">停止</a>
+								    {{else if item.Status==5}}
+									<span class="text-muted operate-spacing">|</span>
+								    <a href="#a_null" class="task-start text-red" data-taskid="{{item.TaskId}}">启动</a>
+								    {{/if}}
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+					<tfoot>
+					    <tr>
+					        <td><input type="checkbox" id="checkAllBottom" /></td>
+					        <td colspan="12">
+					            <div class="pull-left">
+						            <button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+							            <span class="operate-icon operate-icon-start"></span>
+							            启动
+						            </button>
+						            <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+							            <span class="operate-icon operate-icon-delete"></span>
+							            停止
+						            </button>
+					            </div>
+					        </td>
+					    </tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>

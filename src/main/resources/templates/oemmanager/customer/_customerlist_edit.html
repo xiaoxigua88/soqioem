@@ -1,0 +1,92 @@
+<script type="text/html" id="editInformation">
+<form action="?action=Save" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:500px;" id="editForm">
+    {{if customer}}
+	<div class="form-group validate-control">
+		<div class="sq-control-label">员工编号：</div>
+        <div class="col-xs-8">
+	        <input type="hidden" name="customerid" value="{{customer.customerid}}" />
+	        {{customer.customerid}}
+        </div>
+	</div>
+	{{/if}}
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			姓名1：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" name="realname" class="sq-input-reset necessary" value="{{if customer}}{{customer.realname}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			称呼：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" name="callname" class="sq-input-reset necessary" value="{{if customer}}{{customer.callname}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			手机号：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" name="mobile" class="sq-input-reset necessary" value="{{if customer}}{{customer.mobile}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			电话：
+		</div>
+		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
+			<input type="text" name="phone" class="sq-input-reset necessary" value="{{if customer}}{{customer.phone}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			QQ：
+		</div>
+		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
+			<input type="text" name="qq" class="sq-input-reset necessary" value="{{if customer}}{{customer.qq}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			微信：
+		</div>
+		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
+			<input type="text" name="weixin" class="sq-input-reset" value="{{if customer}}{{customer.weixin}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			Email：
+		</div>
+		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
+			<input type="text" name="email" class="sq-input-reset sq-input-memo" value="{{if customer}}{{customer.email}}{{/if}}" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			角色分配：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group">
+			{{each roleList as item i}}
+	        <label><input type="checkbox" name="roleId" value="{{item.roleid}}" {{if item.Exist}} checked="checked"{{/if}} />{{item.rolename}}<span class="text-muted">（{{item.description}}）</span></label><br />
+			{{/each}}
+		</div>
+	</div>
+	<div class="form-group validate-control hide">
+        <div class="sq-control-label">状态：</div>
+        <div class="col-xs-8">
+			<div class="sq-btn-group" id="statusBtn">
+				{{each statusList as item i}}
+				{{if item.Value >0}}
+				<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-degree="{{item.Value}}" data-tab_group="{{item.Value}}" value="{{item.Description}}" />
+				{{if i==1}}<input type="hidden" name="status" id="status" value="{{item.Value}}" />{{/if}}
+				{{/if}}
+				{{/each}}
+			</div>
+        </div>
+	</div>
+</form>
+</script>

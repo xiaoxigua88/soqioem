@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.CustomerroleMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Customerrole" >
+    <id column="CustomerId" property="customerid" jdbcType="INTEGER" />
+    <id column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="RoleResultMap" type="com.soqi.oem.gentry.Role" >
+    <id column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <result column="OmeId" property="omeid" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from CustomerRole
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+      and RoleId = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Customerrole" >
+    insert into CustomerRole (CustomerId, RoleId, AddTime, 
+      Description)
+    values (#{customerid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Customerrole" >
+    update CustomerRole
+    set AddTime = #{addtime,jdbcType=TIMESTAMP},
+      Description = #{description,jdbcType=VARCHAR}
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+      and RoleId = #{roleid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select CustomerId, RoleId, AddTime, Description
+    from CustomerRole
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+      and RoleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <select id="selectRoleListByCustomerId" resultMap="RoleResultMap" parameterType="INTEGER" >
+    select m.roleid,n.oemid,n.rolename,n.AddTime,n.Description from customerRole m left join role n on m.RoleId = n.RoleId where m.CustomerId = #{customerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select CustomerId, RoleId, AddTime, Description
+    from CustomerRole
+  </select>
+  <select id="selectRolesByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select RoleId, OemId, RoleName, AddTime, Description
+    from Role
+  </select>
+</mapper>

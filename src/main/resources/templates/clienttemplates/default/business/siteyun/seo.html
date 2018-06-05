@@ -1,0 +1,23 @@
+#set($diy_css_files = ["/static/css/ucModule/business/keyword.css${version_skin}"])
+#set($diy_js_files = ["/static/js/ucModule/business/siteyun_seo.js${version_skin}"])
+#parse("${templateFolder}\\_header.htm")
+#parse("${templateFolder}\\_menu.htm")
+
+    <div class="sq-main">
+	    <div class="crumb-container" data-nav="siteyun_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+    	
+	    <!-- 关键词排名查询列表 -->
+	    <script type="text/html" id="contentTemplate">
+#parse("${templateFolder}\\business\\siteyun\\_seo_content.htm")
+	    </script>
+    	
+	    <!-- 关键词排名详情 -->
+	    <script type="text/html" id="taskViewTemplate">
+#parse("${templateFolder}\\business\\siteyun\\_seo_view.htm")
+	    </script>
+    </div>
+
+#parse("${templateFolder}\\_footer.htm")

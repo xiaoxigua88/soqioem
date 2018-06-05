@@ -1,0 +1,19 @@
+#set($diy_css_files = ["/static/css/ucModule/business/siteyun.css${version_skin}"])
+#set($diy_js_files = ["/static/lib/plugin/editor/xss.min.js${version_skin}", "/static/lib/plugin/editor/ueditor.config.js${version_skin}", "/static/lib/plugin/editor/ueditor.config.js${version_skin}", "/static/lib/plugin/editor/ueditor.all.min.js${version_skin}", "/static/lib/plugin/editor/lang/zh-cn/zh-cn.js${version_skin}", "/static/js/ucModule/business/siteyun_web.js${version_skin}"])
+#parse("${templateFolder}\\_header.htm")
+#parse("${templateFolder}\\_menu.htm")
+#set($hidePageSize = true)
+    
+    <div class="sq-main">
+	    <div class="crumb-container" data-nav="siteyun_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+    	
+	    <!-- 云建站栏目编辑 -->
+	    <script type="text/html" id="contentTemplate">
+#parse("${templateFolder}\\business\\siteyun\\_webcolumnadd_content.htm")
+	    </script>
+    </div>
+
+#parse("${templateFolder}\\_footer.htm")

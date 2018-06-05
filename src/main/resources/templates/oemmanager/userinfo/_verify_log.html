@@ -1,0 +1,26 @@
+<script type="text/html" id="logInformation">
+<table class="sq-table margin-bottom-20">
+	<thead>
+		<tr>
+			<th style="width:135px">
+				发生时间
+			</th>
+			<th>
+				描述
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each logList as item i}}
+			<tr>
+			    <td>
+				    {{item.AddTime}}
+			    </td>
+			    <td>
+				    {{item.Description}}
+			    </td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>

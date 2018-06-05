@@ -1,0 +1,56 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="sq-panel-title">角色列表
+               <button href="#a_null" class="sq-btn btn-strong btn-operate margin-left-10 role-edit" data-roleid="0">
+                <span class="operate-icon operate-icon-add"></span>
+                新增
+               </button>
+           </div>
+	</div>
+	<div class="sq-panel-body">
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th class="text-center" style="width:105px">
+						角色编号
+					</th>
+					<th class="text-center" style="width:120px">
+						角色名称
+					</th>
+					<th class="text-center" style="width:135px">
+						创建时间
+					</th>
+					<th style="width:280px">
+						备注
+					</th>
+					<th>
+						操作
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+						<td class="text-center">
+						    {{item.roleid}}
+						</td>
+						<td>
+						    {{item.rolename}}
+						</td>
+						<td class="text-center">
+						    {{item.addtime}}
+						</td>
+						<td>
+						    {{item.description}}
+						</td>
+						<td>
+						    <a href="#a_null" class="role-edit" data-roleid="{{item.roleid}}">编辑</a>
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+</script>

@@ -1,0 +1,439 @@
+.text-link a {
+	color: #555;
+}
+.text-link a:hover {
+	color: #009FD9;
+	text-decoration: none;
+}
+.user-detail-count {
+	color: #ff8800;
+	font-size: 22px;
+	line-height: 1;
+}
+.user-detail-decimal {
+	color: #ff8800;
+	line-height: 1;
+}
+.home-page {
+	min-width: 1080px;
+	padding-top: 20px;
+}
+.home-page .sq-panel {
+	padding: 0;
+	margin: 0;
+}
+/* 首页第一排panel */
+.home-tier-1 {
+	height: 248px;
+}
+.tier-1-block {
+	float: left;
+	width: 32.5%;
+	margin-left: 1.25%;
+}
+.tier-1-block:first-child {
+	margin-left: 0;
+}
+.personal-detail {
+	height: 140px;
+}
+.user-detail-container {
+	background-color: #aec785;
+	color: #fff;
+}
+.secretary-detail {
+	position: relative;
+	background-color: #66d6ff;
+}
+.user-avatar {
+	height: 100%;
+	line-height: 140px;
+	width: 130px;
+	vertical-align: middle;
+}
+.user-detail {
+	padding-top: 40px;
+}
+.user-detail-greetings {
+	font-size: 18px;
+}
+.username-outer {
+	display: inline-block;
+	vertical-align: middle;
+}
+@media screen and (min-width: 1880px) and (max-width: 1980px){
+	.username-outer {
+		max-width: 326px;
+	}
+}
+@media screen and (min-width: 1720px) and (max-width: 1879px){
+	.username-outer {
+		max-width: 290px;
+	}
+}
+@media screen and (min-width: 1600px) and (max-width: 1719px){
+	.username-outer {
+		max-width: 240px;
+	}
+}
+@media screen and (min-width: 1401px) and (max-width: 1599px){
+	.username-outer {
+		max-width: 190px;
+	}
+}
+@media screen and (min-width: 1300px) and (max-width: 1400px){
+	.username-outer {
+		max-width: 170px;
+	}
+}
+@media screen and (max-width: 1299px){
+	.username-outer {
+		max-width: 120px;
+	}
+}
+.user-connect {
+	height: 53px;
+	padding: 0 15px;
+	line-height: 53px;
+	font-size: 14px;
+}
+.user-connect:first-child {
+	border-bottom: 1px solid #eee;
+}
+.connect-icon {
+	display: inline-block;
+	padding-left: 30px;
+	background: no-repeat left center;
+}
+.connect-icon-mobile {
+	background-image: url(img/home_icon_mobile.gif);
+	background-position: 2px center;
+}
+.connect-icon-email {
+	background-image: url(img/home_icon_email.gif);
+}
+.user-detail-icon {
+	display: inline-block;
+	width: 50%;
+	padding-left: 30px;
+	background: no-repeat left center;
+}
+.user-detail-mobile {
+	background-image: url(img/home_icon_mobile.png);
+}
+.user-detail-message {
+	background-image: url(img/home_icon_message.png);
+}
+.user-operate {
+	padding: 20px 0 0 29px;
+}
+.user-operate-name {
+	margin-right: 0px;
+	color: #999999;
+}
+.detail-count-container {
+	margin-right: 20px;
+	color: #ff8800;
+	font-size: 16px;
+}
+.user-balance {
+	font-size: 22px;
+}
+.user-operate-buttons {
+	display: inline-block;
+	vertical-align: top;
+}
+.user-recharge {
+	margin-right: 12px;
+}
+.more-operate {
+	padding-top: 8px;
+}
+.more-operate a {
+	color: #555;
+	font-size: 12px;
+}
+.user-operate-spacing {
+	display: inline-block;
+	margin: 0 5px;
+	color: #999;
+}
+.secretary-panel {
+	position: relative;
+}
+.secretary-detail img {
+	position: absolute;
+	bottom: -25px;
+	left: 50%;
+	width: 123px;
+	height: 120px;
+	margin-left: -61px;
+}
+.secretary-operate {
+	padding-top: 28px;
+}
+.secretary-operate-buttons {
+	margin-top: 10px;
+}
+.secretary-operate-buttons a {
+	width: 120px;
+}
+.connect-secretary {
+	padding: 0 28px;
+	margin-right: 40px;
+}
+.secretary-feedback {
+	vertical-align: middle;
+}
+.service-info-trigger {
+	display: inline-block;
+	position: relative;
+	width: 20px;
+	height: 20px;
+	background: no-repeat center;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.service-info-trigger a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+.service-qq {
+	background-image: url(img/home_icon_qq.png);
+}
+.service-tel {
+	background-image: url(img/home_icon_tel.png);
+}
+.service-info-pop {
+	position: absolute;
+	top: -30px;
+	left: 0;
+	z-index: -1;
+	height: 42px;
+	background: no-repeat center;
+	line-height: 32px;
+	text-align: center;
+	color: #009FD9;
+	font-size: 14px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-webkit-transition-property: opacity, top;
+	-moz-transition-property: opacity, top;
+	-ms-transition-property: opacity, top;
+	-o-transition-property: opacity, top;
+	transition-property: opacity, top;
+}
+.service-info-trigger:hover .service-info-pop {
+	top: -50px;
+	z-index: 10;
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+.service-pop-qq {
+	width: 144px;
+	background-image: url(img/pop_bg_qq.png);
+}
+.service-pop-tel {
+	width: 164px;
+	background-image: url(img/pop_bg_tel.png);
+}
+/* 用户信息tab */
+.detail-tabs {
+	border: none;
+}
+.detail-tabs li {
+	border: none;
+	width: 33.3%;
+}
+.detail-tabs > li > a {
+	background-color: #75808e;
+	margin-right: 0;
+	border: none;
+	border-radius: 0;
+	color: #fff;
+}
+.detail-tabs > li > a:hover {
+	background-color: #75808e;
+}
+.nav-tabs > li.active >a,
+.nav-tabs > li.active >a:focus,
+.nav-tabs > li.active >a:hover {
+	color: #555;
+	cursor: default;
+	background-color: #fff;
+	border: none;
+	border-bottom-color: transparent
+}
+.fund-operations {
+	margin-top: 15px;
+}
+.coupon-panel,
+.renew-panel,
+.wo-panel {
+	padding: 5px 20px 0;
+}
+.products-renew-lists li {
+	height: 62px;
+	line-height: 60px;
+	border-top: 1px dashed #eee;
+}
+.products-renew-lists li:first-child {
+	border-top: none;
+}
+.products-renew-lists a {
+	font-size: 14px;
+}
+.product-limit {
+	color: #999;
+	font-size: 12px;
+}
+.user-detail-item {
+	padding-left: 42px;
+	background: no-repeat left center;
+}
+.user-wo-detail {
+	padding-left: 30px;
+}
+.user-cloud {
+	background-image: url(img/home_icon_cloud.png);
+}
+.user-virtual {
+	background-image: url(img/home_icon_servers.png);
+}
+.user-hosting {
+	background-image: url(img/home_icon_hosting.png);
+}
+.user-service {
+	background-image: url(img/home_icon_service.png);
+}
+.user-wo-undone {
+	background-image: url(img/home_icon_wo_clock.png);
+}
+.user-wo-unevaluated {
+	background-image: url(img/home_icon_wo_flower.png);
+}
+.user-wo-closed {
+	background-image: url(img/home_icon_wo_list.png);
+}
+/* 第二排 */
+.home-tier-2 {
+	margin-top: 30px;
+}
+.operate-container {
+	padding: 30px 25px;
+}
+.operate-container-left,
+.operate-container-right {
+	float: left;
+	width: 100%;
+}
+.operate-info {
+	min-width: 900px;
+}
+.operate-links {
+	width: 50%;
+	line-height:30px;
+}
+/* 第三排 */
+.home-tier-3 {
+	margin-top: 30px;
+}
+.home-tier-3-left {
+	width: 66.25%;
+}
+.home-tier-3-right {
+	width: 32.25%;
+	margin-left: 1.25%;
+}
+/* 产品与服务列表 */
+.products-detail-panel {
+	padding: 0 20px;
+}
+.home-panel-heading {
+	height: 36px;
+	border-bottom: 1px solid #eee;
+	padding-left: 30px;
+	padding-right: 20px;
+	background-color: #fafafa;
+	line-height: 35px;
+	color: #606f80;
+	font-size: 16px;
+}
+.home-panel-heading a {
+	margin-top: 19px;
+}
+.products-detail-panel ul {
+	padding: 6px 0 18px 0;
+	width: 50%;
+}
+.products-detail-panel li {
+	height: 62px;
+	line-height: 61px;
+	border-top: 1px dashed #eee;
+}
+.products-detail-panel li:first-child {
+	border-top: none;
+}
+.user-products-lists {
+	border-right: 1px solid #eee;
+}
+.user-products-lists li {
+	padding-right: 34px;
+}
+.user-products-lists-last {
+	border-bottom: 1px dashed #eee;
+}
+.user-wo-lists li {
+	padding-left: 30px;
+}
+.user-domain {
+	background-image: url(img/home_icon_global.png);
+}
+.user-not-payed {
+	background-image: url(img/home_icon_money.png);
+}
+.user-icp {
+	background-image: url(img/home_icon_icp.png);
+}
+.user-push {
+	background-image: url(img/home_icon_push.png);
+}
+.user-undone {
+	background-image: url(img/home_icon_dialog.png);
+}
+
+/* 公共栏 */
+.notice-panel-heading {
+	padding-left: 0;
+}
+.notice-title {
+	display: inline-block;
+	height: 100%;
+	border-top: 3px solid #009FD9;
+	border-right: 1px solid #eee;
+	border-radius: 2px 2px 0 0;
+	padding: 0 20px;
+	color: #009FD9;
+	font-size: 16px;
+	background: #fff;
+}
+.notice-list-panel {
+	padding: 5px 18px;
+	height: 250px;
+}
+.notice-list-panel li {
+	height: 39px;
+	line-height: 38px;
+	border-top: 1px dashed #eee;
+}
+.notice-list-panel li:first-child {
+	border-top: none;
+}
+.notice-content {
+	display: inline-block;
+	max-width: 80%;
+}
+.list-decoration-point {
+	color: #009FD9;
+}

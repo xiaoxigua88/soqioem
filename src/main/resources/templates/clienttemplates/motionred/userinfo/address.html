@@ -1,0 +1,31 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<meta charset="utf-8"/>
+	<title>默认模板客户地址</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/ucModule/account/userInfo.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="${templDir}+_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="${templDir}+_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="${templDir}+_menu::menu"/>
+	<!-- 内容部分 -->
+	<div class="sq-main">
+		<div class="crumb-container" data-nav="address" id="crumbNavContainer">
+			<!-- JS填充 -->
+		</div>
+		<div id="contentBox"></div>
+		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+	</div>
+	<!-- 页脚部分 -->
+	<div th:replace="${templDir}+_footer::copy"/>
+	<div>
+		<div th:replace="${templDir}+_script::commonJs"></div>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/ucModule/account/cityData.js}"></script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/ucModule/account/address.js}"></script>
+	</div>
+</body>

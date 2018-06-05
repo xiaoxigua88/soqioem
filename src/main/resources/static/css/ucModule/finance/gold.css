@@ -1,0 +1,24 @@
+.balance-int {
+	font-size: 24px;
+}
+.sq-form-control {
+    padding-left:92px;
+}   
+.sq-btn-group 
+{
+    min-width:880px;
+}
+.sq-form-control .btn-reverse 
+{
+	width: 250px;
+	height:80px;
+	line-height:79px;
+	font-size:18px;
+	font-weight:bold;
+	margin:10px;
+	margin-left:0px;
+	float:left;
+}
+.sq-btn-group .sq-tab-selected, .sq-btn-group .sq-tab-selected:hover {
+    background-position: 221px 51px;
+}

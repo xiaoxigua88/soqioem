@@ -1,0 +1,151 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="sq-panel-title">云建站管理</div>
+				<div class="pull-right">
+			        <form action="" class="pull-left" id="searchForm">
+			            <label class="pull-left search-group-label">域名</label>
+				        <input type="text" name="domain" class="pull-left sq-input-reset search-group-input" placeholder="输入域名搜索" value="{{filter.domain}}" />
+			            <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+			        </form>
+				</div>
+			</div>
+			<div class="sq-panel-body">
+				<table class="sq-table margin-bottom-20" id="mainList">
+					<thead>
+						<tr>
+							<th style="width:80px" rowspan="2">
+								业务编号
+							</th>
+							<th class="text-center" colspan="7">
+							    站点信息
+							</th>
+							<th class="text-center" colspan="6">
+							    SEO优化增值服务
+							</th>
+							<th rowspan="2">
+								操作
+							</th>
+						</tr>
+						<tr>
+							<th style="width:120px">
+								域名
+							</th>
+							<th style="width:80px">
+								首年价格
+							</th>
+							<th style="width:80px">
+								维护年费
+							</th>
+							<th style="width:80px">
+								累计续费
+							</th>
+							<th style="width:90px">
+								创建日期
+							</th>
+							<th style="width:90px">
+								到期日期
+							</th>
+							<th style="width:80px">
+								网站状态
+							</th>
+						    <th style="width:80px">
+								冻结金额
+							</th>
+							<th style="width:80px">
+								今日结算
+							</th>
+							<th style="width:80px">
+								今日消费
+							</th>
+							<th style="width:80px">
+								累计达标
+							</th>
+							<th style="width:80px">
+								累计消费
+							</th>
+							<th style="width:80px">
+								优化状态
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr>
+								<td>
+								    {{item.YunId}}
+								</td>
+								<td>
+								    {{item.Domain}}
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">￥{{item.CreatePrice | toFixed}}</span>
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">￥{{item.RenewalPrice | toFixed}}</span>
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">￥{{item.TotalPayAmount | toFixed}}</span>
+								</td>
+								<td>
+								    {{item.AddTime | dateFormat:'yyyy-MM-dd'}}
+								</td>
+								<td>
+								    {{item.ExpireTime | dateFormat:'yyyy-MM-dd'}}
+								</td>
+								<td class="text-center">
+								    {{if item.Expried}}<span class="text-red">已欠费</span>{{else}}<span class="text-primary">服务中</span>{{/if}}
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">{{if item.SeoStatus==-1}}-{{else}}￥{{item.FreezeAmount | toFixed}}{{/if}}</span>
+								</td>
+								<td class="text-center">
+						            {{if item.SeoStatus==-1}}-{{else}}<span class="sq-state-icon sq-state-text {{item.SettleStatus | getSeoSettleStatusClass:"className"}}">{{item.SettleStatus | getSeoSettleStatusClass:"name"}}</span>{{/if}}
+								</td>
+								<td class="text-center">
+								    <span class="text-orange margin-right-10">
+								        {{if item.SeoStatus==-1}}-{{else}}{{if item.SettleStatus==1}}-{{else if item.SettleStatus==2}}-{{else}}<b class="text-red">￥{{item.LastCostAmount | toFixed}}</b>{{/if}}{{/if}}
+								    </span>
+								</td>
+								<td class="text-center">
+								    <span class="text-orange">{{if item.SeoStatus==-1}}-{{else}}{{item.TotalCostCount}}天{{/if}}</span>
+								</td>
+								<td class="text-right">
+								    <span class="text-orange margin-right-10">{{if item.SeoStatus==-1}}-{{else}}￥{{item.TotalCostAmount | toFixed}}{{/if}}</span>
+								</td>
+								<td class="text-center">
+								    {{if item.SeoStatus==-1}}<span class="text-muted">未开通</span>{{else if item.SeoStatus==1}}<span class="text-primary">服务中</span>{{else}}<span class="text-red">已停止</span>{{/if}}
+								</td>
+								<td>
+								    <a href="#a_null" class="web-pay{{if item.Expried}} text-red{{/if}}" data-yunid="{{item.YunId}}" data-paycount="{{item.TotalPayCount}}" data-createprice="{{item.CreatePrice}}" data-renewalprice="{{item.RenewalPrice}}">网站续费</a>
+									<span class="text-muted operate-spacing">|</span>
+								    <a href="seo.aspx?yunId={{item.YunId}}">
+								        {{if item.SeoStatus==-1}}<span class="text-red">购买SEO</span>{{else if item.SeoStatus==1}}SEO优化{{else}}<span class="text-red">SEO续费</span>{{/if}}
+								    </a>
+									<span class="text-muted operate-spacing">|</span>
+				                    {{if item.ReadOnly}}
+				                    <span class="text-muted">网站管理已禁用</span>
+									{{else}}
+									<div class="btn-group btn-group-four">
+										<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="selected-content text-primary">网站管理</span>
+											<span class="sq-caret text-primary"></span>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="webinfo.aspx?yunId={{item.YunId}}">基本信息</a></li>
+											<li><a href="webcolumn.aspx?yunId={{item.YunId}}">栏目管理</a></li>
+											<li><a href="webarticle.aspx?yunId={{item.YunId}}">文章管理</a></li>
+											<li><a href="webbanner.aspx?yunId={{item.YunId}}">BANNER管理</a></li>
+											<li><a href="webfriendlink.aspx?domain={{item.YunId}}">友链管理</a></li>
+											<li><a href="#">一键更新</a></li>
+										</ul>
+									</div>
+								    {{/if}}
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+                <!-- 引入分页 -->
+                {{include "paginationTpl"}}
+			</div>
+		</div>

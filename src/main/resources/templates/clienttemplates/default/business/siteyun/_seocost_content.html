@@ -1,0 +1,77 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">云建站管理-SEO优化 - <span class="text-primary">{{site.Domain}}</span></div>
+				<div class="pull-left">
+				    <a href="yunlist.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+				</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($seo_nav = "seocost")
+#parse("${templateFolder}\\business\\siteyun\\_seo_nav.htm")
+				</div>
+			    <div class="font-size-16 margin-bottom-20">
+				    <span class="margin-left-10">累计扣费：</span><span class="balance-int text-stress">{{yunSeo.TotalCostCount}}</span><span class="text-stress"> 天</span>
+				    <span class="margin-left-10">共消费金额：</span><span class="balance-int text-stress">{{yunSeo.TotalCostAmount | getInt}}</span><span class="balance-decimal text-stress">{{yunSeo.TotalCostAmount | getDecimals}} 元</span>
+			    </div>
+			    <table class="sq-table margin-bottom-20">
+				    <thead>
+					    <tr>
+		                    <th style="width:55px">
+			                    序号
+		                    </th>
+		                    <th style="width:85px">
+			                    消费日期
+		                    </th>
+		                    <th style="width:105px">
+			                    达标排名(个)
+		                    </th>
+		                    <th style="width:105px">
+			                    消费金额(元)
+		                    </th>
+		                    <th style="width:105px">
+			                    解冻金额(元)
+		                    </th>
+		                    <th style="width:150px">
+					            资金流水号
+					        </th>
+		                    <th style="width:150px">
+			                    结算时间
+		                    </th>
+		                    <th>
+			                    备注
+		                    </th>
+					    </tr>
+				    </thead>
+				    <tbody>
+					    {{each lst as item i}}
+						    <tr class="free">
+							    <td>
+							        {{i+1}}
+							    </td>
+		                        <td>
+		                            {{item.ConsumeDate | dateFormat:'yyyy-MM-dd'}}
+		                        </td>
+		                        <td class="text-center">
+		                            {{item.CostCount}}
+		                        </td>
+		                        <td class="text-stress">
+			                        ￥{{item.CostAmount | toFixed}}
+		                        </td>
+		                        <td class="text-stress">
+			                        ￥{{item.FreeAmount | toFixed}}
+		                        </td>
+		                        <td>
+		                            {{item.PayId}}
+		                        </td>
+		                        <td>
+		                            {{item.AddTime}}
+		                        </td>
+		                        <td>
+		                        </td>
+						    </tr>
+					    {{/each}}
+				    </tbody>
+			    </table>
+			</div>
+		</div>

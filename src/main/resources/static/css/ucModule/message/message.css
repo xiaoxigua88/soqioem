@@ -1,0 +1,65 @@
+.unread-count {
+	font-size: 12px;
+}
+/* 消息table */
+.msg-list {
+	width: 100%;
+	line-height: 39px;
+}
+.msg-list thead {
+	background-color: #f5f9fa;
+	font-size: 14px;
+	font-weight: normal;
+}
+.msg-list th {
+	font-weight:bold;
+}
+.msg-list tr {
+	border: 1px solid #eee;
+	border-left: none;
+	border-right: none;
+}
+.col-checkbox {
+	padding-left: 20px;
+}
+.msg-title {
+	color: #4d4d4d;
+}
+.msg-read-row {
+	background-color: #fafafa;
+}
+.msg-read-row .msg-title {
+	color: #999;
+}
+.msg-state {
+	display: inline-block;
+	width: 4px;
+	height: 4px;
+	margin-right: 7px;
+	background: url(img/icon_msg_state.png) no-repeat center;
+	vertical-align: middle;
+}
+.msg-read-row .msg-state {
+	background: none;
+}
+/* 消息内容页 */
+.msg-content {
+    width:960px;
+}
+.msg-content-title {
+	height: 51px;
+	border-bottom: 1px solid #eee;
+	background-color: #f2f8fa;
+	line-height: 50px;
+	font-size: 16px;
+	font-weight:bold;
+	text-align:center;
+}
+.msg-content-time {
+	font-size: 12px;
+	text-align:center;
+	line-height: 30px;
+}
+.msg-content-text {
+	padding: 0px 20px;
+}

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soqi.oem.dao.OemuserMapper">
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Oemuser">
+    <id column="UserId" jdbcType="INTEGER" property="userid" />
+    <result column="OemId" jdbcType="INTEGER" property="oemid" />
+    <result column="Pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="Question" jdbcType="VARCHAR" property="question" />
+    <result column="Answer" jdbcType="VARCHAR" property="answer" />
+    <result column="Mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="Email" jdbcType="VARCHAR" property="email" />
+    <result column="EmailVerify" jdbcType="BIT" property="emailverify" />
+    <result column="CallName" jdbcType="VARCHAR" property="callname" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="RegisterTime" jdbcType="TIMESTAMP" property="registertime" />
+    <result column="RegisterIp" jdbcType="VARCHAR" property="registerip" />
+    <result column="LastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+    <result column="LastLoginIp" jdbcType="VARCHAR" property="lastloginip" />
+    <result column="CurrentLoginTime" jdbcType="TIMESTAMP" property="currentlogintime" />
+    <result column="CurrentLoginIp" jdbcType="VARCHAR" property="currentloginip" />
+    <result column="LoginCount" jdbcType="INTEGER" property="logincount" />
+    <result column="Domain" property="domain" jdbcType="VARCHAR" />
+    <result column="RegisterStamp" jdbcType="VARCHAR" property="registerstamp" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="VerifyStatus" jdbcType="INTEGER" property="verifystatus" />
+    <result column="TotalAmount" property="totalamount" jdbcType="DECIMAL" />
+    <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
+    <result column="SeoAmountNeed" property="seoamountneed" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from OemUser
+    where UserId = #{userid,jdbcType=INTEGER}
+  </delete>
+  
+  
+ 
+  <select id="selectAll" resultMap="BaseResultMap">
+    select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+  </select>
+  
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Oemuser">
+    insert into OemUser (OemId, Pwd, 
+      Question, Answer, Mobile, 
+      Email, EmailVerify, CallName, 
+      QQ, RegisterTime, RegisterIp, 
+      LastLoginTime, LastLoginIp, CurrentLoginTime, 
+      CurrentLoginIp, LoginCount, RegisterStamp, 
+      Status)
+    values (#{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
+      #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{emailverify,jdbcType=BIT}, #{callname,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, sysdatetime(), #{registerip,jdbcType=VARCHAR}, 
+      #{lastlogintime,jdbcType=TIMESTAMP}, #{lastloginip,jdbcType=VARCHAR}, #{currentlogintime,jdbcType=TIMESTAMP}, 
+      #{currentloginip,jdbcType=VARCHAR}, 0, #{registerstamp,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oemuser">
+    update OemUser
+    set 
+      <if test="pwd!=null and pwd!=''">
+      	Pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="question!=null and question!=''">
+      	Question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer!=null and answer!=''">
+      Answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile!=null and mobile!=''">
+      Mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email!=null and email!=''">
+      Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailverify!=null and emailverify!=''">
+      EmailVerify = #{emailverify,jdbcType=BIT},
+      </if>
+      <if test="callname!=null and callname!=''">
+      CallName = #{callname,jdbcType=VARCHAR},
+      </if>
+      <if test="qq!=null and qq!=''">
+      QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime!=null and lastlogintime!=''">
+      LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip!=null and lastloginip!=''">
+      LastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="currentlogintime!=null and currentlogintime!=''">
+      CurrentLoginTime = #{currentlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentloginip!=null and currentloginip!=''">
+      CurrentLoginIp = #{currentloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount!=null and logincount!=''">
+      LoginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="registerstamp!=null and registerstamp!=''">
+      RegisterStamp = #{registerstamp,jdbcType=VARCHAR},
+      </if>
+      <if test="status!=null and status!=''">
+      Status = #{status,jdbcType=INTEGER}
+      </if>
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+    where UserId = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOemId" parameterType="map" resultMap="BaseResultMap">
+    select m.UserId, m.OemId, m.Pwd, m.Question, m.Answer, m.Mobile, m.Email, m.EmailVerify, m.CallName, 
+    m.QQ, m.RegisterTime, m.RegisterIp, m.LastLoginTime, m.LastLoginIp, m.CurrentLoginTime, m.CurrentLoginIp, 
+    m.LoginCount, m.RegisterStamp, m.Status, m.VerifyStatus, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
+    from OemUser m left join UserAccount n
+    on m.UserId = n.UserId
+    where m.OemId = #{oemid,jdbcType=INTEGER} Order by m.UserId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  
+  <select id="selectCountByOemId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) as total from OemUser m  where m.OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByDomainAndMobile" resultMap="BaseResultMap" parameterType="map" >
+    select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+    where Mobile = #{mobile,jdbcType=VARCHAR} and Domain = #{domain,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectOemuserByMobileAndOemid" parameterType="map" resultMap="BaseResultMap">
+  	select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+    where Mobile = #{mobile,jdbcType=VARCHAR} and OemId = #{oemid,jdbcType=INTEGER}
+    <if test="userid!=null and userid!=''">  
+    	AND UserId != #{userid,jdbcType=INTEGER}
+	</if>  
+  </select>
+</mapper>

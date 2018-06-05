@@ -1,0 +1,270 @@
+.balance-int {
+	font-size: 24px;
+}
+.form-group.withdraw-account {
+	margin-top: 10px;
+}
+.withdraw-amount {
+	line-height: 42px;
+	margin-top: 10px;
+}
+.payment-choices,
+.more-methods {
+	position: relative;
+	float: left;
+	width: 12%;
+	min-width: 200px;
+	height: 45px;
+	border: 1px dashed #c3c3c3;
+	margin-right: 2%;
+	margin-top: 10px;
+	padding-right: 20px;
+	background-position: center left;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	text-align: right;
+}
+.payment-choices span {
+	line-height: 45px;
+	display: inline-block;
+	max-width: 130px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.methods-chosen{
+	border:1px solid #fe7000;
+}
+.methods-chosen:after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+	width: 21px;
+	height: 21px;
+	background: url(img/payment_chosen.png);
+}
+.more-methods a {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	line-height: 45px;
+	text-align: left;
+	padding-left:20px;
+	color:#666;
+}
+.more-methods a:hover,
+.more-methods a:hover .more-methods-plus{
+	color:#0095da;
+	text-decoration: none;
+}
+.more-methods-plus {
+	position: absolute;
+	top: 4%;
+	right: 0;
+	line-height: 1;
+	font-size: 35px;
+	color:#9a9a9a;
+}
+/*银行背景图*/
+.card-icbc {
+	background-image: url(img/bank_icbc.png);
+}
+.card-abc {
+	background-image: url(img/bank_abc.png);
+}
+.card-bjbank {
+	background-image: url(img/bank_beijing.png);
+}
+.card-boc {
+	background-image: url(img/bank_boc.png);
+}
+.card-ccb {
+	background-image: url(img/bank_ccb.png);
+}
+.card-dlb {
+	background-image: url(img/bank_dalian.png);
+}
+.card-ceb {
+	background-image: url(img/bank_everbright.png);
+}
+.card-gdb {
+	background-image: url(img/bank_guangfa.png);
+}
+.card-hzcb {
+	background-image: url(img/bank_hangzhou.png);
+}
+.card-hsbc {
+	background-image: url(img/bank_hsbc.png);
+}
+.card-hxb {
+	background-image: url(img/bank_huaxia.png);
+}
+.card-comm {
+	background-image: url(img/bank_jiaotong.png);
+}
+.card-cmbc {
+	background-image: url(img/bank_minsheng.png);
+}
+.card-nbbank {
+	background-image: url(img/bank_ningbo.png);
+}
+.card-spabank {
+	background-image: url(img/bank_pingan.png);
+}
+.card-spdb {
+	background-image: url(img/bank_pufa.png);
+}
+.card-shbank {
+	background-image: url(img/bank_shanghai.png);
+}
+.card-sjb {
+	background-image: url(img/bank_shengjing.png);
+}
+.card-szdb {
+	background-image: url(img/bank_shenzhen.png);
+}
+.card-cib {
+	background-image: url(img/bank_xingye.png);
+}
+.card-postgc {
+	background-image: url(img/bank_youzheng.png);
+}
+.card-cmb {
+	background-image: url(img/bank_zhaoshang.png);
+}
+.card-czsb {
+	background-image: url(img/bank_zheshang.png);
+}
+.card-citic {
+	background-image: url(img/bank_zhongxin.png);
+}
+/* 银行卡管理页面 */
+.account-outer {
+	float: left;
+	width: 15%;
+	min-width: 202px;
+	border: 2px solid #f7f7f7;
+	margin-right:2%;
+	margin-bottom: 20px;
+}
+.account-item {
+	border: 1px solid #ddd;
+}
+.account-detail {
+	border-bottom: 1px dashed #ddd;
+	padding: 65px 0 10px 0;
+	background: no-repeat top center;
+}
+.account-number {
+	display: inline-block;
+	max-width: 80%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.delete-card {
+	padding: 5px 0;
+	background-color: #fafafa;
+}
+.delete-card a:hover {
+	text-decoration: none;
+}
+.add-account-outer {
+	display: block;
+}
+.add-account-outer:hover {
+	border-color: #bfeeff;
+	text-decoration: none;
+}
+.add-account-outer:hover .account-item {
+	border-color: #009fd9;
+}
+.add-account {
+	height: 97px;
+	background: url(img/blue_plus.png) no-repeat center;
+}
+/*银行卡图样式*/
+.pay-alipay {
+	background-image: url(img/alipay.png);
+}
+.payment-choices.pay-alipay {
+	background-position: 20px center;
+}
+.account-detail.pay-alipay {
+	background-position: center 13px;
+}
+.card-large-icbc {
+	background-image: url(img/bank_icbc_large.png);
+}
+.card-large-abc {
+	background-image: url(img/bank_abc_large.png);
+}
+.card-large-bjbank {
+	background-image: url(img/bank_beijing_large.png);
+}
+.card-large-boc {
+	background-image: url(img/bank_boc_large.png);
+}
+.card-large-ccb {
+	background-image: url(img/bank_ccb_large.png);
+}
+.card-large-dlb {
+	background-image: url(img/bank_dalian_large.png);
+}
+.card-large-ceb {
+	background-image: url(img/bank_everbright_large.png);
+}
+.card-large-gdb {
+	background-image: url(img/bank_guangfa_large.png);
+}
+.card-large-hzcb {
+	background-image: url(img/bank_hangzhou_large.png);
+}
+.card-large-hsbc {
+	background-image: url(img/bank_hsbc_large.png);
+}
+.card-large-hxb {
+	background-image: url(img/bank_huaxia_large.png);
+}
+.card-large-comm {
+	background-image: url(img/bank_jiaotong_large.png);
+}
+.card-large-cmbc {
+	background-image: url(img/bank_minsheng_large.png);
+}
+.card-large-nbbank {
+	background-image: url(img/bank_ningbo_large.png);
+}
+.card-large-spabank {
+	background-image: url(img/bank_pingan_large.png);
+}
+.card-large-spdb {
+	background-image: url(img/bank_pufa_large.png);
+}
+.card-large-shbank {
+	background-image: url(img/bank_shanghai_large.png);
+}
+.card-large-sjb {
+	background-image: url(img/bank_shengjing_large.png);
+}
+.card-large-szdb {
+	background-image: url(img/bank_shenzhen_large.png);
+}
+.card-large-cib {
+	background-image: url(img/bank_xingye_large.png);
+}
+.card-large-postgc {
+	background-image: url(img/bank_youzheng_large.png);
+}
+.card-large-cmb {
+	background-image: url(img/bank_zhaoshang_large.png);
+}
+.card-large-czsb {
+	background-image: url(img/bank_zheshang_large.png);
+}
+.card-large-citic {
+	background-image: url(img/bank_zhongxin_large.png);
+}

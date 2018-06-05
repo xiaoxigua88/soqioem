@@ -1,0 +1,69 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">权限列表</div>
+	</div>
+	<div class="sq-panel-body">
+		<form method="post" action="/oemmanager/customer/privilegeSave" id="privilegeForm">
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:80px">
+						权限分组
+					</th>
+					<th style="width:80px">
+						权限编码
+					</th>
+					<th style="width:168px">
+						权限名称
+					</th>
+					<th style="width:70px">
+						权限值
+					</th>
+					<th>
+						默认权限
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+						<td>
+						    <b class="text-primary">{{item.groupname}}</b>
+						</td>
+						<td class="text-center">
+						    {{item.priid}}
+						</td>
+						<td class="validate-control">
+						    <input type="hidden" name="priid" value="{{item.priid}}" />
+						    <input type="text" name="name" class="sq-input-reset" value="{{item.priname}}" />
+						</td>
+						<td class="text-center">
+						    {{item.defvalue}}
+						</td>
+						<td>
+						    <input type="hidden" id="v_{{item.priid}}" name="defvalue" value="{{item.defvalue}}" />
+						    {{each priEnumList as item2 j}}
+						    <label class="margin-right-10 {{if (item2.value & item.valueconfig) ==0}}text-muted{{else}}text-orange{{/if}}">
+						        <input type="checkbox" class="chk_defval defval{{item.priid}}" data-for="{{item.priid}}" value="{{item2.value}}" {{item2 | privilegeFormate : item}} />{{item2.description}}
+						    </label>
+						    {{/each}}
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+			<tfoot>
+			    <tr>
+			        <td colspan="5">
+		                <button id="btnSave" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate">
+			                <span class="operate-icon operate-icon-restart"></span>
+			                保存
+		                </button>
+			        </td>
+			    </tr>
+			</tfoot>
+		</table>
+		</form>
+	</div>
+</div>
+</script>

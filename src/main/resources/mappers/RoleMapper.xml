@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Role" >
+    <id column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <result column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Role
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Role" >
+    insert into Role (RoleId, OemId, RoleName, 
+      AddTime, Description)
+    values (#{roleid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Role" >
+    update Role
+    set OemId = #{oemid,jdbcType=INTEGER},
+      RoleName = #{rolename,jdbcType=VARCHAR},
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      Description = #{description,jdbcType=VARCHAR}
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select RoleId, OemId, RoleName, AddTime, Description
+    from Role
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <select id="selectRolseByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select RoleId, OemId, RoleName, AddTime, Description
+    from Role
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select RoleId, OemId, RoleName, AddTime, Description
+    from Role
+  </select>
+</mapper>

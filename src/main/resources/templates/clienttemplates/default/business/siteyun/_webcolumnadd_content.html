@@ -1,0 +1,176 @@
+        <div class="sq-panel">
+			<div class="sq-panel-heading">
+                <div class="sq-panel-title">
+                    修改栏目 {{if common.backUrl.length >0}}<a href="{{common.backUrl}}" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>{{/if}}
+                </div>
+			</div>
+            <div class="sq-panel-body">
+                <form class="form-horizontal sq-form sq-tab-container font-size-12" action="?action=Save" method="post" id="saveForm">
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            域名：
+                        </div>
+                        <div class="col-xs-10 sq-form-control">
+                            {{site.Domain}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{if !column && !parentColumn}}
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            栏目类型：
+                        </div>
+                        <div class="col-xs-10 sq-form-control">
+                            <div class="sq-btn-group" data-parent-selector="form">
+                                {{each columnTypeList as item i}}
+                                <input type="button" class="sq-btn btn-primary btn-reverse" data-tab_group="{{item.Value}}" value="{{item.Description}}" />
+                                {{/each}}
+                                <input type="hidden" name="coltypeid" value="" />
+                            </div>
+                        </div>
+                        {{else if parentColumn != null}}
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            上级栏目:
+                        </div>
+                        <div class="col-xs-10 sq-form-control">
+                            {{parentColumn.name}} - {{parentColumn.code}}
+                            <input type="hidden" name="pcolumnid" value="{{parentColumn.columnid}}" />
+                            <input type="hidden" name="coltypeid" value="{{parentColumn.columntypeid}}" />
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            名称：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="text" name="name" value="{{if column}}{{column.name}}{{/if}}" placeholder="请输入栏目名称" data-error="" class="sq-input-reset necessary"  />
+					        <div class="input-reminder">建议中文格式，将展示在网页上</div>
+                        </div>
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            别名：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="text" name="code" value="{{if column}}{{column.code}}{{/if}}" placeholder="请输入栏目别名" data-error="" class="sq-input-reset necessary" />
+					        <div class="input-reminder">字母格式，是该栏目的静态文件名</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            显示设置：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <label> <input type="checkbox" name="showinnav" value="1" {{if !column || column.showinnav}} checked{{/if}} data-error="" />在主导航显示</label>
+                            <label> <input type="checkbox" name="showinindex" value="1" {{if !column || column.showinindex}} checked{{/if}} data-error="" />在首页显示</label>
+                        </div>
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            排序：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="text" name="listorder" value="{{if column}}{{column.listorder}}{{/if}}" data-error="" class="sq-input-reset necessary" />
+					        <div class="input-reminder">在菜单栏的先后顺序，越小越靠前</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            页大小：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="text" name="pagesize" value="{{if column}}{{column.pagesize}}{{/if}}" data-error="" class="sq-input-reset necessary" />
+					        <div class="input-reminder">栏目列表页每页内容条数</div>
+                        </div>
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            页码个数：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="text" name="pagecount" value="{{if column}}{{column.pagecount}}{{/if}}" data-error="" class="sq-input-reset necessary" />
+					        <div class="input-reminder">栏目列表页展示的页码个数</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            电脑端图片：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="hidden" name="imageurl" value="{{if column}}{{column.imageurl}}{{/if}}" data-error="请上传电脑端图片" />
+                            <button class="sq-btn btn-primary btn-upload" data-image-type="column">{{if column && column.imageurl.length > 0}}重新选择{{else}}选择图片{{/if}}</button>
+                            <b class="text-orange">格式：PNG、JPG 尺寸：{{template.columnsize}}px</b>
+                        </div>
+                        {{if template.adaptation==1}}
+                        <div class="col-xs-1 sq-control-label">
+                            移动端图片：
+                        </div>
+                        <div class="col-xs-4 sq-form-control validate-control">
+                            <input type="hidden" name="mobiimageurl" value="{{if column}}{{column.mobiimageurl}}{{/if}}" data-error="请上传手机端图片" />
+                            <button class="sq-btn btn-primary btn-upload btn-upload-mobi" data-image-type="column" data-is-mobile>{{if column && column.mobiimageurl.length > 0}}重新选择{{else}}选择图片{{/if}}</button>
+                            <b class="text-orange">格式：PNG、JPG 尺寸：{{template.mobicolumnsize}}px</b>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            优化标题：
+                        </div>
+                        <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain sq-seotitle-input">
+                                <input type="text" name="seotitle" value="{{if column}}{{column.seotitle}}{{/if}}" class="sq-input-reset sq-seotitle-input necessary" />
+					        </div>
+					        <div class="input-reminder">标题的质量对SEO具有重要的作用，请认真提炼，建议不要超过30个汉字</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            优化关键词：
+                        </div>
+                        <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain sq-seotitle-input">
+                                <input type="text" name="seokeyword" value="{{if column}}{{column.seokeyword}}{{/if}}" class="sq-input-reset sq-seotitle-input necessary" />
+					        </div>
+					        <div class="input-reminder">关键词的质量对SEO具有重要的作用，请认真提炼，建议不要超过5个关键词</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            优化描述：
+                        </div>
+                        <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain sq-seodescription-area">
+                                <textarea name="seodescription" class="sq-input-reset sq-seodescription-area necessary">{{if column}}{{column.seodescription}}{{/if}}</textarea>
+					        </div>
+					        <div class="input-reminder">描述的质量对SEO具有重要的作用，请认真提炼，建议不要超过75个汉字</div>
+                        </div>
+                    </div>
+                    {{if site.ParentColumnID == null}}
+                    <div class="form-group hide">
+                        <div class="col-xs-1 sq-control-label">
+                            <span class="necessary-mark">*</span>
+                            内容：
+                        </div>
+                        <div class="col-xs-10 sq-form-control validate-control ueditor" style="white-space:normal;line-height:normal;" data-sq-ueditor="999"></div>
+                    </div>
+                    {{/if}}
+                    <div class="form-group validate-control">
+                        <div class="col-xs-1 sq-control-label">
+                            &nbsp;
+                        </div>
+                        <div class="col-xs-10 sq-form-control sq-input-group validate-control">
+                            <button class="sq-btn btn-strong btn-strong-high btn-save" disabled>{{if column}}修改栏目{{else}}创建栏目{{/if}}</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="yunId" value="{{site.YunId}}" />
+                    {{if column}}<input type="hidden" name="colid" value="{{column.ID}}" />{{/if}}
+                    <input type="hidden" name="redirecturl" value="{{common.backUrl}}{{if common.backUrl.indexOf('?domain')<0}}?domain={{site.Domain}}{{/if}}" />
+                </form>
+            </div>
+		</div>

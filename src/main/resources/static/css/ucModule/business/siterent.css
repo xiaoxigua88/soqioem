@@ -1,0 +1,63 @@
+input[type=file] {
+    width:0px; height:0px; overflow:hidden;
+}
+.web-block {
+    width:100%;
+    border:1px solid #FF8800;
+    display:block;
+    padding:16px;
+}
+.web-img {
+    width:300px;
+    height:225px;
+    border:0px;
+}
+.web-info {
+    line-height:32px;
+    font-size:14px;
+}
+.freekey {
+    text-decoration:line-through;
+}
+.paid 
+{
+    background:#FFF3E5;
+}
+.free .price {
+    text-decoration:line-through;
+}
+.weblist {
+    width:100%;
+    display:block;
+}
+.weblist li {
+    display:block;
+    width:410px;
+    height:440px;
+    float:left;
+}
+.weblist li .detail {
+    border:1px solid #FF8800;
+    width:332px;
+    padding:16px;
+    line-height:28px;
+    font-size:14px;
+    margin:0 auto;
+}
+.weblist li .detail:hover {
+    border:2px solid #FF8800;
+}
+.weblist li .detail .imgs {
+    width:300px;
+    height:225px;
+    border:0px;
+}
+.weblist li .detail label {
+    width:120px;
+}
+.weblist li .detail .buy {
+    text-align:right;
+}
+.balance-int {
+	font-size: 24px;
+}

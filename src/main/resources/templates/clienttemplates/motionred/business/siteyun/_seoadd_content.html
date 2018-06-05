@@ -1,0 +1,136 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">云建站管理-SEO优化 - <span class="text-primary">{{site.Domain}}</span></div>
+				<div class="pull-left">
+					<a href="yunlist.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+				</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($seo_nav = "seoadd")
+#parse("${templateFolder}\\business\\siteyun\\_seo_nav.htm")
+					<div class="pull-right">
+					    <a href="#a_null" class="pull-left sq-btn btn-strong btn-operate btn-operate-add">
+                            <span class="operate-icon operate-icon-add"></span>
+                            添加关键词
+                        </a>
+					    <a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
+						    <span class="operate-icon operate-icon-refresh"></span>
+					    </a>
+					    <button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+						    <span class="operate-icon operate-icon-delete"></span>
+						    删除
+					    </button>
+					    <button id="batchClear" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
+						    <span class="operate-icon operate-icon-clear"></span>
+						    清空
+					    </button>
+                    </div>
+				</div>
+				<div class="alert-warn margin-bottom-20">
+				    购买后将冻结您{{freezeDay}}天的达标费用，连续未达标超过<b class="text-red">{{failedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。
+				</div>
+				<table class="sq-table margin-bottom-20" id="mainList">
+					<thead>
+						<tr>
+							<th style="width:35px">
+								<input type="checkbox" id="checkAll" />
+							</th>
+							<th style="width:240px">
+								关键词
+							</th>
+							<th class="text-center" style="width:80px">
+								搜索引擎
+							</th>
+							<th class="text-center" style="width:135px">
+								提交时间
+							</th>
+							<th class="text-center" style="width:80px">
+								当前排名
+							</th>
+							<th class="text-center" style="width:80px">
+								扣费规则
+							</th>
+							<th class="text-center" style="width:80px">
+								价格(元)
+							</th>
+							<th>
+								检测状态
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr id="tr_{{item.TaskId}}">
+								<td>
+									<input type="checkbox" class="list-checkbox" id="chk_{{item.TaskId}}" value="{{item.TaskId}}" data-price ="{{item.Price}}" data-status="{{item.Status}}" />
+								</td>
+								<td>
+								    {{item.Keyword}}
+								</td>
+								<td class="text-center">
+								    <span class="{{item.SearchType | getSearchTypeClass:"className"}}">
+								    {{item.SearchType | getSearchTypeClass:"name"}}
+								    </span>
+								</td>
+								<td class="text-center">
+									{{item.AddTime}}
+								</td>
+								<td class="text-center" id="td_rank_{{item.TaskId}}">
+								    {{if item.RankLast>50}}<span class="text-muted">五页外</span>{{else if item.RankLast>0}}{{item.RankLast}}{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
+								</td>
+								<td class="text-center" id="td_costby_{{item.TaskId}}">
+								    {{if item.Status == 3}}前{{item.ToRank}}名按天{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
+								</td>
+								<td class="text-center" id="td_price_{{item.TaskId}}">
+								    {{if item.Status == 3}}<span class="text-orange">￥{{item.Price | toFixed}}</span>{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
+								</td>
+								<td id="td_status_{{item.TaskId}}">
+								    <span class="sq-state-icon sq-state-text {{item.Status | getSeoStatusClass:"className"}}">
+									    {{item.Status | getSeoStatusClass:"name"}}
+								    </span>
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div class="config-view-outer">
+				<div class="config-view-inner">
+					<div class="title1">
+						<h2 class="config-view-title">已选择的关键词配置</h2>
+					</div>
+					<div class="block01 mt10">
+						<ul class="list01 config-view-list">
+							<li>
+								<span class="config-view-item-title">计费方式：</span><em>达标按天扣除</em>
+							</li>
+							<li>
+								<span class="config-view-item-title">优化周期：</span><em>约1-3个月</em>
+							</li>
+							<li>
+								<span class="config-view-item-title">关键词数：</span><em id="keyword_count">0个</em>
+							</li>
+							<li>
+								<span class="config-view-item-title">起购天数：</span>
+								<em>{{freezeDay}}天</em>
+							</li>
+							<li class="price-container">
+								<span class="config-view-item-title price-title">达标每天：</span>
+								<span class="text-stress server-price">
+									<span class="rmb-symbol">￥</span><span id="amount_perday">0.00</span>
+								</span>
+							</li>
+							<li class="price-container">
+								<span class="config-view-item-title price-title">冻结费用：</span>
+								<span class="text-stress server-price">
+									<span class="rmb-symbol">￥</span><span id="amount_total">0.00</span>
+								</span>
+							</li>
+							<li class="text-center">
+								<input type="button" class="server-buy-btn strong default-transition buyButton" value="购买当前关键词" id="payBtn" disabled />
+							</li>
+						</ul>
+					</div>
+				</div>            </div>
+		</div>

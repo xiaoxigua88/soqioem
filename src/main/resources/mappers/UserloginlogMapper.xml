@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.UserloginlogMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Userloginlog" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="LoginTime" property="logintime" jdbcType="TIMESTAMP" />
+    <result column="Ip" property="ip" jdbcType="VARCHAR" />
+    <result column="IpLong" property="iplong" jdbcType="BIGINT" />
+    <result column="Area" property="area" jdbcType="VARCHAR" />
+    <result column="Brower" property="brower" jdbcType="VARCHAR" />
+    <result column="OS" property="os" jdbcType="VARCHAR" />
+    <result column="Stamp" property="stamp" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UserLoginLog
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Userloginlog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UserLoginLog (UserId, LoginTime, Ip, 
+      IpLong, Area, Brower, 
+      OS, Stamp)
+    values (#{userid,jdbcType=INTEGER}, #{logintime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, 
+      #{iplong,jdbcType=BIGINT}, #{area,jdbcType=VARCHAR}, #{brower,jdbcType=VARCHAR}, 
+      #{os,jdbcType=VARCHAR}, #{stamp,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Userloginlog" >
+    update UserLoginLog
+    set UserId = #{userid,jdbcType=INTEGER},
+      LoginTime = #{logintime,jdbcType=TIMESTAMP},
+      Ip = #{ip,jdbcType=VARCHAR},
+      IpLong = #{iplong,jdbcType=BIGINT},
+      Area = #{area,jdbcType=VARCHAR},
+      Brower = #{brower,jdbcType=VARCHAR},
+      OS = #{os,jdbcType=VARCHAR},
+      Stamp = #{stamp,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select Id, UserId, LoginTime, Ip, IpLong, Area, Brower, OS, Stamp
+    from UserLoginLog
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select Id, UserId, LoginTime, Ip, IpLong, Area, Brower, OS, Stamp
+    from UserLoginLog
+  </select>
+</mapper>

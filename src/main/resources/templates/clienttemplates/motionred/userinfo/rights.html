@@ -1,0 +1,218 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<meta charset="utf-8"/>
+	<title>默认模板客户欢迎页</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/ucModule/verify/verifyRights.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="${templDir}+_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="${templDir}+_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="${templDir}+_menu::menu"/>
+	<!-- 内容部分 -->
+	<div class="sq-main">
+		<div class="crumb-container" data-nav="rights" id="crumbNavContainer">
+			<!-- JS填充 -->
+		</div>
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">认证权益</div>
+			</div>
+			<div class="sq-panel-body">
+				<table width="100%" class="menber-right-table">
+					<thead>
+						<tr>
+							<th width="178" class="th-type-container">
+								<div>
+									<div class="th-type-top">认证类型</div>
+									<div class="th-type-left">会员权益</div>
+								</div>
+							</th>
+							<th>
+								<span class="icon-auth-none"></span>未认证
+							</th>
+							<th>
+								<span class="icon-auth-personal"></span>个人认证
+							</th>
+							<th>
+								<span class="icon-auth-company"></span>个体工商户
+							</th>
+							<th>
+								<span class="icon-auth-company"></span>企业认证
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="td-menber-right-item">数据云查询</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">数据云监控</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">数据云排名</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">数据云建站</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">优帮云站通</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">API接入</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">服务优先</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">VIP专属服务</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">余额退款</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-personal">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+						<tr>
+							<td class="td-menber-right-item">新品优先体验</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-none">
+								<span class="auth-mark"></span>
+							</td>
+							<td class="td-auth-company">
+								<span class="td-auth-icon"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="description-auth">
+					<span class="auth-mark"></span>&nbsp;
+					代表“不支持”；
+					<span class="auth-icon-personal"></span>
+					<span class="auth-icon-company"></span>&nbsp;
+					代表“支持”
+				</div>
+			</div>
+		</div>
+		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+	</div>
+	<!-- 页脚部分 -->
+	<div th:replace="${templDir}+_footer::copy"/>
+	<div>
+		<div th:replace="${templDir}+_script::commonJs"></div>
+	</div>
+</body>

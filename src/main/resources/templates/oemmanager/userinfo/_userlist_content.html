@@ -1,0 +1,208 @@
+<script type="text/html"  id="contentTemplate">
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">用户列表</div>
+				<div class="pull-left">
+					<a href="#a_null" id="user-add" data-oemid="{{oemid}}" class="pull-left sq-btn btn-strong btn-operate-add margin-left-20">添加用户</a>
+            	</div>
+			</div>
+			
+			<div class="sq-panel-body">
+				<div class="task-operates clearfix margin-bottom-10">
+				<form action="" class="pull-left" id="searchForm">
+			        <label class="pull-left search-group-label">用户：</label>
+				    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.userName}}" placeholder="用户ID、手机、Email" />
+				    <label class="pull-left search-group-label">QQ：</label>
+					<input type="text" name="qq" class="pull-left sq-input-reset sq-input-qq search-group-input" placeholder="输入QQ搜索" value="{{filter.qq}}" />
+			        <label class="pull-left search-group-label">注册：</label>
+				    <input type="text" name="minRegisterTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minRegisterTime}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxRegisterTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxRegisterTime}}" />
+			        <label class="pull-left search-group-label">登录：</label>
+				    <input type="text" name="minCurrentLoginTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minCurrentLoginTime}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxCurrentLoginTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxCurrentLoginTime}}" />
+			        <label class="pull-left search-group-label">金额：</label>
+				    <input type="text" name="minTotalAmount" class="pull-left sq-input-reset sq-input-number sq-input-60 search-group-input" value="{{filter.minTotalAmount}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxTotalAmount" class="pull-left sq-input-reset sq-input-number sq-input-60 search-group-input" value="{{filter.maxTotalAmount}}" />
+			        <label class="pull-left search-group-label">优币：</label>
+				    <input type="text" name="minTotalGold" class="pull-left sq-input-reset sq-input-number sq-input-70 search-group-input" value="{{filter.minTotalGold}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxTotalGold" class="pull-left sq-input-reset sq-input-number sq-input-70 search-group-input" value="{{filter.maxTotalGold}}" />
+				    <label class="pull-left search-group-label">认证：</label>
+				     <div data-field_name="verifyStatus" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+					    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="selected-content"></span>
+						    <span class="sq-caret"></span>
+					    </a>
+					    <ul class="dropdown-menu sq-search-dropdown">
+				            {{each userVerifyStatusList as item i}}
+					        <li><a href="#a_null" class="{{if filter.verifyStatus == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+					        {{/each}}
+					    </ul>
+				    </div>
+				    <label class="pull-left search-group-label">状态：</label>
+				    <div data-field_name="userStatus" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+					    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="selected-content"></span>
+						    <span class="sq-caret"></span>
+					    </a>
+					    <ul class="dropdown-menu sq-search-dropdown">
+				            {{each userStatusList as item i}}
+					        <li><a href="#a_null" class="{{if filter.userStatus == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+					        {{/each}}
+					    </ul>
+				    </div>
+					<input class="hide" type="text" name="verifyStatus" value="{{filter.verifyStatus}}" />
+					<input class="hide" type="text" name="userStatus" value="{{filter.userStatus}}" />
+				    <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+				</form>
+			    </div>
+				<table class="sq-table margin-bottom-20" id="mainList">
+					<thead>
+						<tr>
+							<th rowspan="2" style="width:35px">
+								<input type="checkbox" id="checkAll" />
+							</th>
+							<th rowspan="2" class="text-center" style="width:105px">
+								手机
+							</th>
+							<th rowspan="2" class="text-center" style="width:100px">
+								称呼
+							</th>
+							<th rowspan="2" class="text-center" style="width:105px">
+								QQ
+							</th>
+							<th colspan="4" class="text-center" style="width:400px">
+							    金额
+							</th>
+							<th rowspan="2" class="text-center" style="width:180px" data-order_name="registertime">
+								注册时间
+							</th>
+							<th colspan="2" class="text-center" style="width:245px">
+								最新登录
+							</th>
+							<th rowspan="2" class="text-center" style="width:80px" data-order_name="verifystatus">
+							    认证
+							</th>
+							<th rowspan="2" class="text-center" style="width:80px" data-order_name="userstatus">
+								状态
+							</th>
+							<th rowspan="2">
+								操作
+							</th>
+						</tr>
+						<tr>
+							<th class="text-center" style="width:100px" data-order_name="totalamount">
+							    总金额
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="freezeamount">
+							    冻结
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="seoamountneed">
+							    日需求
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="amountcanuseday">
+							    可用天
+							</th>
+							<th rowspan="2" class="text-center" style="width:180px" data-order_name="currentlogintime">
+								登录时间
+							</th>
+							<th rowspan="2" class="text-center" style="width:65px" data-order_name="logincount">
+								次数
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr>
+								<td>
+									<input type="checkbox" class="list-checkbox" value="{{item.TaskId}}" />
+								</td>
+								<td>
+								    <a href="#a_null" class="user-view" data-userid="{{item.userid}}" title="查看用户{{item.mobile}}的详细资料">{{item.mobile}}</a>
+								</td>
+								<td class="text-center">
+								    {{item.callname}}
+								</td>
+								<td class="text-center">
+								    {{item.qq}}
+								</td>
+								<td class="text-center">
+								    <span class="text-orange">￥{{item.totalamount | toFixed}}</span>
+								</td>
+								<td class="text-center">
+								    <span class="text-orange">￥{{item.freezeamount | toFixed}}</span>
+								</td>
+								<td class="text-center">
+								    {{if item.seoamountneed>0}}<span class="text-orange">￥{{item.seoamountneed | tofixed}}</span>{{else}}<span class="text-muted">-</span>{{/if}}
+								</td>
+								<td class="text-center">
+								    {{if item.amountcanuseday>=0}}<span class="text-orange">{{item.amountcanuseday}}</span>{{else}}<span class="text-muted">-</span>{{/if}}
+								</td>
+								<td class="text-center">
+								    {{item.registertime}}
+								</td>
+								<td class="text-center">
+								    {{item.currentlogintime}}
+								</td>
+								<td class="text-center">
+								    {{item.logincount}}
+								</td>
+								<td class="text-center">
+								    <span class="{{item.verifystatus | getVerifyStatusClass:"className"}}">
+									{{item.verifystatus | getVerifyStatusClass:"name"}}
+									</span>
+								</td>
+								<td class="text-center">
+								    <span class="{{item.status | getUserStatusClass:"className"}}">
+									{{item.status | getUserStatusClass:"name"}}
+									</span>
+								</td>
+								<td>
+									<a href="#a_null" class="user-view" data-userid="{{item.userid}}" th:text="${#PeUtils.hasPermission('1301:4')==true ? '详情':''}"></a>
+								    <a href="#a_null" class="user-edit" data-userid="{{item.userid}}" th:text="${#PeUtils.hasPermission('1301:16')==true ? '|编辑':''}">编辑</a>
+									<span class="text-muted operate-spacing">|</span>
+									<div  class="btn-group btn-group-mini">
+										<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="selected-content text-primary">更多</span>
+											<span class="sq-caret text-primary"></span>
+										</a>
+										<ul class="dropdown-menu">
+											{{if item.userstatus==1}}
+											<li><a href="#a_null" class="user-verify" data-userid="{{item.userid}}">实名认证</a></li>
+											<li><a href="#a_null" class="user-recharge" data-userid="{{item.userid}}" th:utext="${#PeUtils.hasPermission('1004:16')==true ? '账户充值':''}">账户充值</a></li>
+											{{/if}}
+											<li><a href="#a_null" class="user-pwd" data-userid="{{item.UserId}}" th:utext="${#PeUtils.hasPermission('1301:16')==true ? '重置密码':''}">重置密码</a></li>
+											<li><a href="/client/userinf/default?action=LoginUser&userid={{item.userid}}" target="_blank" th:utext="${#PeUtils.hasPermission('1301:4')==true ? '无密登录':''}">无密登录</a></li>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+					<tfoot>
+					    <tr>
+					        <td><input type="checkbox" id="checkAllBottom" /></td>
+					        <td colspan="18">
+					            <div class="pull-left">
+					                <button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+						                <span class="operate-icon operate-icon-delete"></span>
+						                	激活
+					                </button>
+					                <button id="Button1" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+						                <span class="operate-icon operate-icon-delete"></span>
+						               		 锁定
+					                </button>
+					            </div>
+				                <!-- 引入分页 -->
+				                <!-- 引入分页 -->
+				                {{include "paginationTpl"}}
+					        </td>
+					    </tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+</script>

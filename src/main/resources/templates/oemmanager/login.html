@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8"/>
+    <title>管理员登录页</title>
+    <link rel="stylesheet" th:href="@{/css/common/common.css}"/>
+    <link rel="stylesheet" th:href="@{/lib/framework/jquery-ui-custom/jquery-ui-1.11.4.custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/module/admin.css}"/>
+    <link rel="stylesheet" th:href="@{/lib/plugin/jQuery/dialog/skins/homeDialog.css}">
+    <link rel="stylesheet" th:href="@{/lib/plugin/jQuery/formValidator/themes/ArrowSolidBox/style/style.css}">
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/framework/jquery/jquery-1.12.2.min.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/js/public.js}"></script>
+	<!--[if lte IE 9]>
+	<script type="text/javascript" charset="utf-8" th:src="@{/lib/browser/PIE.js}"></script>
+	<![endif]-->
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/framework/jquery-ui-custom/jquery-ui-1.11.4.custom.min.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/jquery.form.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/formValidator/jquery.formValidator.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/formValidator/jquery.formValidator.Regex.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/dialog/jquery.dialog.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/dialog/plugins/iframeTools.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/login.js}"></script>
+</head>
+</head>
+<body>
+	<div class="new-login-wrap">
+	    <div class="login-head">
+		    <div class="auto login-head-wrap clearfix">
+			    <div class="head-logo pull-left">
+				    <img  class="head-logo-img" src="/img/adModule/header_logo_green.png" th:attr="src=@{/img/adModule/header_logo_green.png},title=#{logo},alt=#{logo}" width="197" height="44" />
+				    <span class="head-logo-title">管理中心</span>
+			    </div>
+			    <div class="head-friend-link pull-right">
+				    <a class="head-link border-none" th:href="${domain_main}">优帮云官网</a>
+				    <a class="head-link" th:href="${domain_uc}">用户中心</a>
+			    </div>
+		    </div>
+	    </div>
+        <div class="login-main-area">
+	        <div class="bg-back"></div>
+	        <div class="auto login-inner">
+		        <div class="clearfix">
+			        <div class="pattern-area">
+				        <div class="login-pattern"></div>
+			        </div>
+			        <div class="login-main pie-for-element">
+				        <div class="login-title">
+					        管理员登录
+				        </div>
+				        <form id="loginForm" method="post" action="/loginForm">
+					        <div class="login-form-item form-item-bg form-item-bg-user">
+						        <input type="text" name="userName" placeholder="用户名" id="userName" class="input-focus-handle" value="13456889246"/>
+						        <div id="emailAutoComplete" class="email-complete-list"></div>
+					        </div>
+					        <div class="login-form-item form-item-bg form-item-bg-lock">
+						        <input type="password" name="password" placeholder="登录密码" id="password" class="input-focus-handle" value="12345678" />
+					        </div>
+					        <div class="captcha-deck clearfix">
+						        <div class="login-form-item form-item-bg form-item-bg-captcha captcha-item">
+							        <input type="text" name="verifyCode" placeholder="验证码" maxlength="5" id="verifyCode" class="input-focus-handle" />
+						        </div>
+						        <div class="captcha-box">
+							        <img class="show-captcha" src="" alt="" />
+							        <span class="refresh-captcha"></span>
+						        </div>
+					        </div>
+					        <div><input type="hidden" name="userType" value="2"/></div>
+					        <input type="submit" value="登 录" id="loginSubmit" class="login-submit default-transition default-font" />
+				        </form>
+			        </div>
+		        </div>
+	        </div>
+        </div>
+	    <div class="login-bottom">
+		    <p class="bottom-copyright">©2012-2017 杭州搜骐网络科技有限公司 版权所有 浙ICP备15036601号-2</p>
+	    </div>
+	</div>
+	
+</body>
+</html>

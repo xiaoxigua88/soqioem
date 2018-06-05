@@ -1,0 +1,41 @@
+/* 等待打款 */
+.test-pay-container {
+	width: 650px;
+	padding-top: 10px;
+}
+.test-pay-content {
+	position: relative;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 25px;
+	padding-right: 20px;
+}
+.verify-result-icon {
+	position: absolute;
+	top: -9px;
+	left: -58px;
+	width: 40px;
+	height: 40px;
+	background-position: center;
+}
+.test-pay-content,
+.view-rights {
+	font-size: 14px;
+}
+.reject-reason,
+.test-pay-tips ul {
+	margin-top: 10px;
+}
+.test-pay-tips li {
+	line-height: 1.8em;
+}
+
+.attachment-back-block {
+		overflow: hidden;
+		display: block;
+		height: 0;
+}
+.tab-group-1 .attachment-back-block {
+	overflow: visible;
+	display: block;
+	height: auto;
+}

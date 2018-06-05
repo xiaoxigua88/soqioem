@@ -1,0 +1,198 @@
+.info-block {
+	padding: 20px 0;
+}
+.basic-info {
+}
+.info-module-title {
+	font-size: 16px;
+	color: #009FD9;
+}
+.user-info-table {
+	font-size: 12px;
+}
+.user-info-table tr {
+	clear: both;
+}
+.user-info-table td {
+	padding: 6px 0;
+	padding-left: 20px;
+	line-height: 30px;
+}
+.user-info-table input {
+	padding-left: 10px;
+	width: 270px;
+}
+.info-item-name {
+	width: 135px;
+	text-align: right;
+	color: #999;
+}
+.necessary-mark {
+	color: red;
+}
+.btn-reverse.company-verify {
+	padding: 0 14px;
+	margin-left: 12px;
+	font-size: 12px;
+}
+.change-setting {
+	margin-left: 15px;
+}
+.user-label {
+	vertical-align: sub;
+}
+.save-button-outer {
+	padding-left: 153px;
+}
+/* 安全设置 */
+.safety-info-detail {
+	margin-left: 20px;
+	padding-top: 10px;
+}
+.safety-level-container {
+	margin-top: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #eee;
+}
+.go-verify {
+	margin-left: 15px;
+}
+.safety-level {
+	width: 400px;
+	height: 20px;
+	line-height: 20px;
+}
+.safety-level-bar {
+	display: inline-block;
+	margin-bottom: 0;
+	margin-left: 22px;
+	width: 260px;
+}
+.safety-level-text {
+	margin-left: 15px;
+}
+.safety-bar-high {
+	background: #14cc39;
+}
+.safety-bar-mid {
+	background: #ffa200;
+}
+.safety-bar-low {
+	background: red;
+}
+.safety-level-high {
+	color: #14cc39;
+}
+.safety-level-mid {
+	color: #ffa200;
+}
+.safety-level-low {
+	color: red;
+}
+.user-settings-container {
+	padding: 0 20px;
+}
+.settings-tier {
+	height: 80px;
+	line-height: 79px;
+	border-bottom: 1px dashed #eee;
+}
+.settings-detail {
+	width: 88%;
+}
+.setting-operate {
+	width: 12%;
+}
+.setting-name {
+	display: inline-block;
+	width: 7%;
+}
+.setting-intro {
+	display: inline-block;
+	color: #999;
+}
+.setting-status {
+	display: inline-block;
+	padding-left: 30px;
+	padding-right: 10px;
+	background: no-repeat left center;
+}
+.setting-success {
+	background-image: url(img/user_setting_success.png);
+	color: #14cc39;
+}
+.setting-undone {
+	background-image: url(img/user_setting_fail.png);
+	color: red;
+}
+.setting-operate {
+	white-space: nowrap;
+	text-align: center;
+}
+.setting-operate a {
+	display: inline-block;
+	line-height: 1;
+	width: 40px;
+	margin-left: 10px;
+}
+
+/* 修改密码 */
+.password-table {
+	margin-bottom: 20px;
+}
+.password-table .sq-input-reset {
+	width: 160px;
+}
+.sq-form .send-captcha,
+.show-captcha {
+	height: 32px;
+	line-height: 32px;
+	font-size: 12px;
+	/* 垂直方向对齐 */
+	vertical-align: bottom;
+}
+.selectProvince {
+	width: 110px;
+	height: 30px;
+}
+.selectCity {
+	width: 156px;
+	height: 30px;
+}
+
+/*验证码弹窗*/
+.captcha-box table {
+	width: 100%;
+	font-family: "microsoft yahei";
+}
+.captcha-box input,
+.captcha-box select {
+	font-family: "microsoft yahei";
+	width: 260px;
+	height: 32px;
+	line-height: 32px;
+	padding-left: 10px;
+	outline-color: #009FD9;
+	border: 1px solid #ccc;
+	color: #545454;
+}
+.captcha-box th {
+	font-weight: normal;
+	text-align: right;
+	font-size: 14px;
+	color: #545454;
+}
+.captcha-box th b {
+	color: #f00;
+	font-size: 12px;
+	font-weight: normal;
+	padding-right: 5px
+}
+.captcha-box td {
+	line-height: 200%;
+	vertical-align: top;
+}
+.captcha-box img {
+	vertical-align:middle;
+	cursor:pointer
+}

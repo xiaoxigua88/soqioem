@@ -1,0 +1,30 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<meta charset="utf-8"/>
+	<title>默认模板客户欢迎页</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/ucModule/home/home.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="${templDir}+_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="${templDir}+_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="${templDir}+_menu::menu"/>
+	<!-- 内容部分 -->
+	<!-- <div th:replace="${templDir}+_defaultContent::defaultContent"/> -->
+	<div class="sq-main home-page">
+		<div class="crumb-container hide" id="crumbNavContainer" data-nav="phoenix">
+			<!-- 首页无路径导航 -->
+		</div>
+		<div id="contentBox"></div>
+		<div th:replace="${templDir}+_default_content::defaultContent"/>
+	</div>
+	<!-- 页脚部分 -->
+	<div th:replace="${templDir}+_footer::copy"/>
+	<div>
+		<div th:replace="${templDir}+_script::commonJs"></div>
+	</div>
+</body>

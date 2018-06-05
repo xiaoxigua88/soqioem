@@ -1,0 +1,108 @@
+.workorder-main {
+	padding-top: 27px;
+}
+.workorder-type-container {
+	padding-right: 5px;
+}
+.workorder-type-line {
+	position: relative;
+	z-index: 10;
+	margin-bottom: 24px;
+	border: 1px solid #F4F4F4;
+}
+.workorder-type-line-title {
+	box-sizing: content-box;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 10;
+	width: 1em;
+	padding: 20px 1em;
+	background-color: #eef1f3;
+	line-height: 1;
+	font-size: 14px;
+	color: #555;
+}
+.workorder-type-tech,
+.workorder-type-others {
+	padding-top: 30px;
+}
+.workorder-type-account {
+	padding-top: 25px;
+}
+.workorder-type-line-titlepad {
+	margin-left: 3em;
+}
+.workorder-type-item {
+	float: left;
+	width: 33%;
+	height: 152px;
+	line-height: 1;
+}
+.workorder-type-item-iconpad {
+	margin-left: 24px;
+	padding-left: 84px;
+	background: url(img/icon_workorder_money.png) no-repeat 10px 27px;
+}
+.workorder-iconpad-1 {
+	background-image: url(img/icon_workorder_1.png);
+}
+.workorder-iconpad-2 {
+	background-image: url(img/icon_workorder_2.png);
+}
+.workorder-iconpad-3 {
+	background-image: url(img/icon_workorder_3.png);
+}
+.workorder-iconpad-4 {
+	background-image: url(img/icon_workorder_4.png);
+}
+.workorder-iconpad-5 {
+	background-image: url(img/icon_workorder_5.png);
+}
+.workorder-iconpad-6 {
+	background-image: url(img/icon_workorder_6.png);
+}
+.workorder-iconpad-7 {
+	background-image: url(img/icon_workorder_7.png);
+}
+.workorder-iconpad-8 {
+	background-image: url(img/icon_workorder_8.png);
+}
+.workorder-iconpad-9 {
+	background-image: url(img/icon_workorder_9.png);
+}
+.workorder-type-item-title {
+	padding-top: 25px;
+	font-size: 16px;
+	color: #545454;
+}
+.workorder-type-item-text {
+	margin-top: 12px;
+	line-height: 1.5em;
+	font-size: 12px;
+	color: #999;
+}
+.workorder-type-button-submit {
+	display: inline-block;
+	margin-top: 16px;
+	margin-bottom: 23px;
+	padding: 5px;
+	border: 1px solid #FF8F17;
+	border-radius: 2px;
+	white-space: nowrap;
+	font-size: 12px;
+	color: #FF8400;
+}
+.workorder-type-button-submit:hover {
+	background: #FF8F17;
+	text-decoration: none;
+	color: white;
+}
+.buy-diagnosis {
+	height: auto;
+	font-size: 12px;
+	margin-top: 16px;
+	margin-bottom: 23px;
+	padding: 6px;
+	line-height: 1;
+}

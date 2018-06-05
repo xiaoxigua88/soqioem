@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+	
+</head>
+<body>
+	<footer th:fragment="copy">
+	<!-- footer -->
+	<div class="footer"></div>
+	<!-- footer end -->
+    <!-- 快捷feedback提示框 -->
+    <div class="ui-feedback-layout" id="nyFeedback">
+	    <div class="ui-feedback ui-feedback-success">
+		    <div class="ui-feedback-icon"></div>
+		    <div class="ui-feedback-text">
+			    操作成功
+		    </div>
+		    <span class="ui-feedback-close">&times;</span>
+	    </div>
+    </div>
+    
+    <!-- 异步请求waiting效果 -->
+    <div id="nyWaitingTip" class="sq-loading-tip">
+	    <div class="sq-loading-mask"></div>
+	    <div class="sq-loading-box">
+		    <div class="loading-tip-head">
+			    提示信息
+		    </div>
+		    <i></i>
+		    <div class="loading-tip-text">努力加载中，请稍后......</div>
+	    </div>
+    </div>
+    
+    <!-- 面包屑导航模板 -->
+    <script type="text/html" id="crumbNavTpl">
+	    <ol class="breadcrumb sq-crumb">
+		    <li><a href="/administrator/" class="crumb-home">管理中心</a></li>
+		    <!-- 一级目录 -->
+		    <li><a>{{upperMenuText}}</a></li>
+	    {{if subMenuText}}
+		    <!-- 二级目录（部分模块没有二级目录） -->
+		    <li>
+			    <a {{if subMenuLink}}href="{{subMenuLink}}"{{/if}}>
+				    {{subMenuText}}
+			    </a>
+		    </li>
+	    {{/if}}
+	    {{if insideTitle}}
+		    <!-- 详情页面 -->
+		    <li>
+			    <a>{{insideTitle}}</a>
+		    </li>
+	    {{/if}}
+	    </ol>
+    </script>
+    
+    <!-- 表格无数据提示 模版 -->
+    <script id="nonedataTdTpl" type="text/html">
+	    <tr>
+		    <td colspan="{{cols}}" class="sq-nonedata-td">
+			    <div class="sq-nonedata-wrapper tip-icon-info-large">
+				    <div class="sq-nonedata-text">{{text}}</div>
+				    {{if subtext}}
+					    <div class="sq-nonedata-subtext">
+						    {{if subtextLink}}
+							    <a href="{{subtextLink}}" target="_blank">{{subtext}}</a>
+						    {{else}}
+							    {{subtext}}
+						    {{/if}}
+					    </div>
+				    {{/if}}
+			    </div>
+		    </td>
+	    </tr>
+    </script>
+    
+    <!-- 表格无搜索结果提示 模版 -->
+    <script id="noneSearchRecordTdTpl" type="text/html">
+	    <tr>
+		    <td colspan="{{cols}}" class="sq-nonedata-td">
+			    <div class="sq-nonedata-wrapper tip-icon-info-large">
+				    <div class="sq-nonedata-text">
+					    搜索“{{searchKey}}”的结果为空
+				    </div>
+			    </div>
+		    </td>
+	    </tr>
+    </script>
+    
+    <!-- 分页模板 -->
+    <script id="paginationTpl" type="text/html">
+	    <div class="clearfix pager-wrapper" id="pager">
+		    <div class="sq-pagination pull-right default-transition-children-fast">
+			    <span class="page-button pager-first"></span>
+			    <span class="page-button pager-prev"></span>
+			    <span class="page-number default-transition-children-fast">
+				    <!-- <span class="page-button page--current">1</span> -->
+				    <span class="page-button">n</span>
+			    </span>
+			    <span class="page-button pager-next"></span>
+			    <span class="page-button pager-last"></span>
+		    </div>
+		    <div class="pager-count pager-size pull-right">
+		        <span class="page-button pager-set">20</span>
+		        <span class="page-button pager-set">50</span>
+		        <span class="page-button pager-set">100</span>
+		        <span class="page-button pager-set">500</span>
+		        <span class="page-button pager-set">1000</span>
+		    </div>
+		    <div class="pager-count pull-right">
+			    共有
+			    <span class="text-primary">
+				    {{pager.total}}
+			    </span>
+			    条记录&nbsp;&nbsp;&nbsp;&nbsp;
+		        每页显示
+		    </div>
+	    </div>
+    </script>
+    
+    <!-- 上传附件模板  attachment-uploading attachment-done -->
+    <script type="text/html" id="attachment">
+	    <span class="attachment-item attachment-uploading">
+		    <a href="#a_null" class="add-cover"></a>
+		    <img src="" alt="" data-file_path="">
+		    <a class="delete-attachment default-transition text-center" href="#a_null">删除</a>
+		    <span class="uploading-tip text-center">上传中...</span>
+	    </span>
+    </script>
+    
+    <!-- 上传附件模板-文档  attachment-uploading attachment-done -->
+    <script type="text/html" id="attachment2">
+	    <span class="attachment-item-document document-upload">
+		    <span class="document-name">上传中...</span>
+		    <span class="delete-attachment2">×</span>
+		    <!--<span class="uploading-tip text-center">上传中...</span>-->
+	    </span>
+    </script>
+    
+    <!-- 操作保护模板 -->
+    <script type="text/html" id="operateProtectTpl">
+#parse("${templateFolder}\\_footer_protect.htm")
+    </script>    
+    <!-- 用户概况模板 -->
+    <script type="text/html" id="userViewTpl">
+#parse("${templateFolder}\\_userview.htm")
+    </script>
+    
+    <!-- 验证码确认 -->
+    <div id="captchaCheck" class="captcha-box" style="display:none;">
+        <table>
+	        <tr>
+		        <th>验证码：</th>
+		        <td>
+			        <div><input type="text" name="captcha" id="captcha" class="input  necessary" style="width:120px" autofocus />&nbsp;&nbsp;<img class="show-captcha" src=""/></div>
+		        </td>
+		        <td></td>
+	        </tr>
+        </table>
+    </div>
+    
+    <script>var jsData = {"user":{"UserId":106166,"CallName":"帝王","Mobile":"183********","Email":"744***@qq.com","VerifyType":0,"VerifyStatus":1,"SeoSettleHour":10,"UserAccount":{"UserId":106166,"TotalAmount":0.00,"FreezeAmount":0.00,"AvailableAmount":0.0,"TotalGold":0,"SeoAmountNeed":0.00,"WatchGoldNeed":0}},"customer":{"CustomerId":10003,"CallName":"家琼","QQ":"2885116112","Phone":"0571-88730320"},"count":{"WatchDomainBeianBudget":0,"WatchDomainSeoBudget":0,"WatchKeywordRankBudget":0,"WatchUrlIncludeBudget":0,"TodayRechargeAmount":0.0,"MonthRechargeAmount":0.0,"TodayCostAmount":0.0,"MonthCostAmount":0.0,"TodayCostGold":0,"MonthCostGold":0},"noticeList":[{"NewsId":6,"Title":"优帮云站通V1.0正式发布，引领建站优化云服务进入新时代","Url":"http://www.youbangyun.com/notice/1006.html","PublishTime":"2017-10-17 11:41:46"},{"NewsId":5,"Title":"优帮云上线电子签章 推进网络营销行业诚信规范发展","Url":"http://www.youbangyun.com/notice/1005.html","PublishTime":"2017-10-14 10:31:01"},{"NewsId":4,"Title":"优帮云发布数据平台API接口V1.3版，拉开网络营销数字化市场序幕","Url":"http://www.youbangyun.com/notice/1004.html","PublishTime":"2017-10-13 09:00:25"},{"NewsId":3,"Title":"优帮云API平台化战略正式启动 开启营销服务新模式","Url":"http://www.youbangyun.com/notice/1003.html","PublishTime":"2017-05-18 09:18:00"},{"NewsId":2,"Title":"优帮云官网正式启动 开放灵活的数字营销服务","Url":"http://www.youbangyun.com/notice/1002.html","PublishTime":"2017-05-18 09:18:00"},{"NewsId":1,"Title":"搜骐网络成立两周年 稳健发展打造数字营销服务平台","Url":"http://www.youbangyun.com/notice/1001.html","PublishTime":"2017-05-18 09:18:00"}],"common":{"userID":106166,"userName":"帝王","userMobile":"183********","userEmail":"744***@qq.com","sendCountDown":0,"unReadTotal":0,"backUrl":"http://console.youbangyun.com/client/userinfo/verify.aspx","domain":{"main":"http://www.youbangyun.com","uc":"http://console.youbangyun.com/client","static":"http://console.youbangyun.com/static"}}};</script>
+	</footer>
+</body>
+</html>

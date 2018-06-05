@@ -1,0 +1,61 @@
+.text-red{ color:Red;}
+.text-blue{ color:Blue;}
+.siterent-wrapper {
+    font: 12px/1.5 "Source Han Sans SC","HanHei SC","PingFang SC","Helvetica Neue",Helvetica,"Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif; color: #333; position:fixed;
+    /*left:50%;top:50%;margin-left:-490px;margin-top:-228px;width:980px;height:465px;*/
+    left:0;top:0;width:100%;height:100%;
+    background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkYxOEEzODk0MzI0NzExRTc4NkI3ODg2QzkyMEQyRjIwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYxOEEzODk1MzI0NzExRTc4NkI3ODg2QzkyMEQyRjIwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjE4QTM4OTIzMjQ3MTFFNzg2Qjc4ODZDOTIwRDJGMjAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjE4QTM4OTMzMjQ3MTFFNzg2Qjc4ODZDOTIwRDJGMjAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5F2vrqAAAAD0lEQVR42mJgYGA4BBBgAADHAMOuvqBZAAAAAElFTkSuQmCC) repeat;
+    z-index:9999;
+    display:none;
+}
+.siterent-wrapper *  { margin: 0; padding: 0; -webkit-box-sizing: content-box;  -moz-box-sizing: content-box; box-sizing: content-box; }
+.siterent-wrapper .clearfix{ clear:both;*zoom:1}
+.siterent-wrapper a,.siterent-wrapper a:active,.siterent-wrapper a:hover { cursor: pointer; color: #fff; text-decoration: none }
+.siterent-wrapper em { font-style: normal }
+.siterent-wrapper ul { list-style: none }
+.siterent-popup{position:absolute;left:50%;top:50%;margin-left:-490px;margin-top:-228px;width:980px;height:465px; background:#fff; border:3px solid #ccc; border-left:none;
+                border-top-right-radius:10px;border-bottom-right-radius:10px;-moz-border-top-right-radius:10px;-moz-border-bottom-right-radius:10px;}
+.siterent-popup .popup-tabs{position:absolute;left:0;top:0;width:43px;height:100%;}
+.siterent-popup .popup-tabs li{position:relative;float:left;width:100%;height:50%;border-left:3px solid #e8e8e8;background:#e8e8e8;cursor:pointer}
+.siterent-popup .popup-tabs li.active{border-left:3px solid #01af63;background:#fff;color:#01af63}
+.siterent-popup .popup-tabs-item{display:block;position:absolute;top:40%;left:50%;height:78px;width:20px;margin-top:-39px;margin-left:-10px;line-height:16px;font-size:14px; font-weight:bold;}
+.siterent-popup .popup-content,.siterent-popup .popup-main{width:100%}
+.siterent-popup .popup-content-left{float:left;width:518px; height:465px; border-right:1px solid #ddd}
+
+.siterent-popup .popup-content-right{float:left;width:420px; padding-left:20px; padding-right:20px;}
+.siterent-popup .popup-content-right ul{padding-top:10px;}
+.siterent-popup .popup-content-right ul li {line-height:24px; font-size:14px; color:blue}
+.siterent-popup .popup-content-right ul li a{ color:red}
+.siterent-popup .popup-content-right ul.serv-form li{ font-size:16px; color:#000; line-height:36px; }
+.siterent-popup .popup-content-right ul.serv-form input { padding:5px; font-weight:bold;}
+.siterent-popup .popup-content-right ul.serv-form input.serv-name { width:100px; margin-right:2px;}
+
+.siterent-popup .popup-title{padding-top:60px;font-size:28px;text-align:center;color:#333;line-height:36px;font-weight:400}
+.siterent-popup .popup-title.second{ padding-top:10px;}
+.siterent-popup .popup-close{position:absolute;top:10px;right:5px;width:28px;cursor:pointer;height:37px;background:url(http://console.youbangyun.com/static/img/pop_close.png) no-repeat}
+.popup-form{width:430px;margin:30px auto 0;padding:0px 56px 0px}
+.popup-form .popup-form-group{position:relative;margin-bottom:14px;font-size:14px}
+.popup-form .popup-form-label{width:84px}
+.popup-form .popup-form-info{ font-size:18px;}
+.popup-form .popup-form-tip { color:Blue;margin-bottom:8px;}
+.popup-form .free{ text-decoration:line-through;color:#999;}
+
+.siterent-popup .popup-overview{display:block;}
+.siterent-popup .popup-process{width:340px;height:245px;margin:25px auto 0;background:url(http://console.youbangyun.com/static/img/pop_bg.png) no-repeat}
+
+.siterent-popup .popup-seoview{display:none}
+.siterent-popup .popup-seoview-title{padding-top:24px;}
+.siterent-popup .keyword-view { height:320px; padding-top:16px; overflow:auto;} 
+.siterent-popup .keyword-view table tr.paid{background:#FFF3E5}
+.siterent-popup .keyword-view table tr.paid td.price{ text-align:right;}
+.siterent-popup .keyword-view table tr.free{ color:#999}
+.siterent-popup .keyword-view table tr.free .price{ text-decoration:line-through;}
+.siterent-popup .keyword-view table { border-collapse: collapse; border-spacing: 0; margin-left:56px; width:900px; border:1px solid #eee }
+.siterent-popup .keyword-view table th{ line-height:28px; text-align:center;border:1px solid #eee; font-weight:bold; background:#F5F9FA }
+.siterent-popup .keyword-view table td{ line-height:24px; text-align:center;border:1px solid #eee; padding:4px;}
+.siterent-popup .keyword-view table td.align-left{ text-align:left;}
+.siterent-popup .keyword-view table td.align-center{ text-align:center;}
+.siterent-popup .keyword-view table td.align-right{ text-align:right;}
+
+.popup-overview-btn,.popup-seoview-btn,.popup-apply-btn{background:#009FD9;display:block;float:left; margin:10px 15px 0px 0px;width:100px;height:28px;color:#fff;border-radius:6px;text-align:center;padding-top:10px}
+.popup-apply-btn{background:#fe5f00;}

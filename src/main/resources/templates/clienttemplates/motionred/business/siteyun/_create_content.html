@@ -1,0 +1,90 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">云建站购买</div>
+				<div class="pull-left">
+					<a href="yunlist.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+				</div>
+			</div>
+			<div class="sq-panel-body uc-pc-con">
+                <div class="uc-pc-style">
+                    <ul class="clearfix" id="siteTypeBusinessUl">
+                        <li  class="current" ><a href="javascript:;" onclick="selectBus(null)">全部行业(42)</a></li>
+                       <li ><a href="javascript:;" onclick="selectBus(107)">自定义(2)</a></li>
+                       <li ><a href="javascript:;" onclick="selectBus(83)">电子科技/IT(1)</a></li>
+                       <li ><a href="javascript:;" onclick="selectBus(103)">通用(39)</a></li>
+                    </ul>
+                </div>
+                <div class="case-list">
+			        <ul class="clearfix">
+					{{each lst as item i}}
+        	            <li{{if i%2==1}} class="last"{{/if}}>
+            	            <div class="detail" data-tmlid="{{item.TplName}}" data-adept="{{item.Addtption}}">
+                	            <div class="ic  o"></div>
+                	            <div class="cmain">
+					                <div class="pc">
+					                    <div class="div_img"><img src="http://static.zhiqiyun.com/uploads/2016/11/25/63FFF642A6AB8C8967165035059991D1.jpg"  alt="餐饮美食手机WAP网站设计方案" /></div>
+					                </div>
+					                <div class="div_info">					                    <span class="margin-right-10">模板名称：<span class="text-primary">Y000001</span></span>
+					                    <a class="sq-btn btn-primary" href="http://www.{{item.Code}}.youbangyun.top/" target="_blank">电脑端演示</a>
+					                </div>
+                	            </div>
+                                <div class="wap">
+                                    <div><img src="http://static.zhiqiyun.com/uploads/2016/11/25/9C45843F03AED82C8EDAB2486BCD9E17.png" alt="餐饮美食网站设计方案" /></div>
+                                </div>
+                                <i></i>
+                            </div>
+                        </li>
+					{{/each}}
+                    </ul>
+                </div>
+			    <ul class="zhi-case clearfix" id="pcList">
+					{{each lst as item i}}
+                    <li{{if i%3==0}} class="active"{{/if}}>
+                        <div class="uc-pc-img"><img src="http://static.zhiqiyun.com/uploads/2016/12/19/D7E467E994D3D49BBEF8CD9C38571756.jpg" alt="" /></div>
+                        <a href="#null" target="_blank">预览</a>
+                        <i></i>
+                    </li>
+					{{/each}}
+                </ul>
+			</div>
+			<div class="config-view-outer">
+				<div class="config-view-inner">
+					<div class="title1">
+						<h2 class="config-view-title">云建站方案配置</h2>
+					</div>
+					<div class="block01 mt10">
+						<ul class="list01 config-view-list">
+							<li>
+								<span class="config-view-item-title">模板选择：</span>
+								<em>Y0000001</em>
+							</li>
+							<li>
+								<span class="config-view-item-title">移动展示：</span>
+								<em>自适应</em>
+							</li>
+							<li>
+								<span class="config-view-item-title">起购周期：</span>
+								<em>一年</em>
+							</li>
+							<li class="price-container">
+								<span class="config-view-item-title price-title">首年费用：</span>
+								<span class="text-stress server-price">
+									<span class="rmb-symbol">￥</span><span id="amount_perday">0.00</span>
+								</span>
+							</li>
+							<li class="price-container">
+								<span class="config-view-item-title price-title">次年续费：</span>
+								<span class="text-stress server-price">
+									<span class="rmb-symbol">￥</span><span id="amount_total">0.00</span>
+								</span>
+							</li>
+							<li>
+								<span class="config-view-item-title">绑定域名：</span><input type="text" name="domain" class="sq-input-reset" style="width:130px;" /><em></em>
+							</li>
+							<li class="text-center">
+								<input type="button" class="server-buy-btn strong default-transition buyButton" value="立即购买网站" id="payBtn" disabled />
+							</li>
+						</ul>
+					</div>
+				</div>            </div>
+		</div>

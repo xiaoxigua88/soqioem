@@ -1,0 +1,60 @@
+<script type="text/html" id="editInformation">
+<form action="/oemmanager/customer/rolePrivilegeSave" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:700px;" id="editForm">
+	<div class="form-group validate-control">
+		<div class="sq-control-label">角色编号：</div>
+        <div class="col-xs-3">
+			<input type="text" name="roleid" class="sq-input-reset necessary" value="{{if role}}{{role.roleid}}{{/if}}" autocomplete="off" {{if role}} readonly="readonly"{{/if}} />
+        </div>
+		<div class="sq-control-label">角色名称：</div>
+        <div class="col-xs-3">
+			<input type="text" name="rolename" class="sq-input-reset necessary" value="{{if role}}{{role.rolename}}{{/if}}" autocomplete="off" />
+        </div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">备注：</div>
+        <div class="col-xs-8">
+			<input type="text" name="description" value="{{if role}}{{role.description}}{{/if}}" class="sq-input-reset" style="width:320px" />
+        </div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">权限分配：</div>
+        <div class="col-xs-9">
+		    <table class="sq-table" id="privilegeList">
+			    <thead>
+				    <tr>
+					    <th style="width:80px">
+						    权限分组
+					    </th>
+					    <th style="width:102px">
+						    权限名称
+					    </th>
+					    <th>
+						    默认权限<label class="margin-left-10"><input type="checkbox" id="pri_chkall" />全选/全不选</label>
+					    </th>
+				    </tr>
+			    </thead>
+			    <tbody>
+				    {{each privilegeList as item i}}
+					    <tr>
+						    <td>
+						        <b class="text-primary">{{item.groupname}}</b>
+						    </td>
+						    <td class="validate-control">
+						        <input type="hidden" name="priid" value="{{item.priid}}" />{{item.priname}}
+						    </td>
+						    <td>
+								<input type="hidden" id="v_{{item.priid}}" name="privalue" value="{{item.value}}" />
+								{{each priEnumList as item2 j}}
+									<label class="margin-right-10 {{if (item2.value & item.valueconfig) ==0}}text-muted{{else}}text-orange{{/if}}">
+								            <input type="checkbox" class="chk_defval defval{{item.priid}}" data-for="{{item.priid}}" value="{{item2.value}}" {{item2 | rolePrivilegeFormate : item}}/>{{item2.description}}
+								    </label>
+								{{/each}}
+							</td>
+					    </tr>
+				    {{/each}}
+			    </tbody>
+		    </table>
+        </div>
+	</div>
+</form>
+</script>

@@ -1,0 +1,227 @@
+﻿.new-login-wrap .login-head {
+	line-height: 90px;
+	background: #fff;
+}
+.new-login-wrap .head-logo-img {
+	display:  block;
+	float: left;
+	width: 197px;
+	height: 44px;
+	margin-top: 21px;
+}
+.new-login-wrap .head-logo-title {
+	display: block;
+	float: left;
+	line-height: 28px;
+	font-size: 24px;
+	margin: 28px 15px 0;
+	padding-left: 10px;
+	border-left: 3px solid #adadad;
+	color: #9fabb0;
+}
+.new-login-wrap .head-friend-link .head-link {
+	padding: 0 15px;
+	font-size: 14px;
+	color: #7d7d7d;
+	border-left: 1px solid #adadad;
+}
+.new-login-wrap .head-friend-link .border-none {
+    border:0px;
+}
+.new-login-wrap .login-bottom {
+	width: 100%;
+	height: 106px;
+	background: #fff;
+}
+
+.new-login-wrap .bottom-copyright {
+	line-height: 92px;
+	font-size: 12px;
+	text-align: center;
+}
+
+
+.login-main-area {
+	position: relative;
+	height: 630px;
+}
+/*大背景*/
+.bg-back {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(img/login_back_3.png) no-repeat center center #00c4c4;
+}
+.login-inner {
+	position: relative;
+	z-index: 20;
+}
+/*图案*/
+.pattern-area {
+	position: relative;
+	float: left;
+	width: 580px;
+	height: 587px;
+}
+.pattern-area .login-pattern {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 580px;
+	height: 587px;
+	background: url(img/login_pattern_3.png) no-repeat center;
+	background-image:url(img/login_pattern_3.jpg)\9;
+}
+.login-main {
+	position: absolute;
+	right: 40px;
+	top: 100px;
+	z-index: 50;
+	padding: 36px 40px;
+	background-color: #fff;
+	-webkit-box-shadow: 0 1px 6px #888;
+	-moz-box-shadow: 0 1px 6px #888;
+	-ms-box-shadow: 0 1px 6px #888;
+	-o-box-shadow: 0 1px 6px #888;
+	box-shadow: 0 1px 6px #888;
+}
+.login-title {
+	font-size: 22px;
+	color: #565656;
+	margin-bottom: 25px;
+}
+.login-form-item {
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #ddd;
+	margin-top: 16px;
+	padding-left: 41px;
+}
+.form-item-bg {
+	background-image: url(img/login_iconlist.png);
+	background-repeat: no-repeat;
+}
+.form-item-bg-user {
+	position: relative;
+	z-index: 50;
+	background-position: -39px -10px;
+}
+.form-item-bg-user.input-outer--focus {
+	background-position: -39px -315px;
+}
+.form-item-bg-lock {
+	background-position: -39px -66px;
+}
+.form-item-bg-lock.input-outer--focus {
+	background-position: -39px -363px;
+}
+.form-item-bg-captcha {
+	background-position: -39px -120px;
+}
+.form-item-bg-captcha.input-outer--focus {
+	background-position: -39px -416px;
+}
+.input-outer--focus {
+	border: 1px solid #009FD9;
+}
+.login-form-item input {
+	display: block;
+	width: 100%;
+	height: 38px;
+	line-height: 38px;
+	border: none;
+	outline: none;
+	font-family: "Microsoft Yahei", Tahoma, Arial;
+}
+/* 控制 邮箱提示列表 的样式 */
+.email-complete-list {
+	position: absolute;
+	left: -1px;
+	right: 0;
+	top: 40px;
+	z-index: 10;
+	line-height: normal;
+}
+.email-complete-list .ui-autocomplete {
+	left: 0 !important;
+	right: 0 !important;
+	padding-top: 1px;
+	border-top-color: #009fd9;
+}
+.email-complete-list .ui-autocomplete .ui-menu-item {
+	padding-left: 41px;
+	overflow: hidden;
+}
+
+.captcha-deck {
+	margin-top: 16px;
+}
+.captcha-item {
+	position: relative;
+	z-index: 30;
+	float: left;
+	margin-top: 0;
+	width: 172px;
+}
+.captcha-box {
+	position: relative;
+	z-index: 20;
+}
+.show-captcha {
+	margin: 4px 0 0 16px;
+	cursor: pointer;
+}
+.refresh-captcha {
+	position: absolute;
+	right: 0;
+	top: 8px;
+	width: 24px;
+	height: 22px;
+	background: url(img/login_iconlist.png) no-repeat center -267px;
+	cursor: pointer;
+}
+.login-options {
+	margin-top: 18px;
+	padding-left: 14px;
+	line-height: 14px;
+}
+.idsave-check {
+	position: relative;
+	z-index: 10;
+	height: 14px;
+	line-height: 14px;
+	font-size: 14px;
+	color: #555;
+	padding-left: 20px;
+	cursor: pointer;
+}
+.login-options a {
+	float: right;
+	color: #009FD9;
+	font-size: 14px;
+	text-decoration: none;
+}
+.login-options a:hover {
+	text-decoration: underline;
+}
+
+.login-submit {
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 3px;
+	font-size: 14px;
+	background-color: #009FD9;
+	color: #fff;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	margin-top: 30px;
+}
+.login-submit:hover {
+	background-color: #0084b1;
+}

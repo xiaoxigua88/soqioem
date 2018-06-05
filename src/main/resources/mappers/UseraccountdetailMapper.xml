@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.UseraccountdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Useraccountdetail" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="Change" property="change" jdbcType="DECIMAL" />
+    <result column="Freeze" property="freeze" jdbcType="DECIMAL" />
+    <result column="Balance" property="balance" jdbcType="DECIMAL" />
+    <result column="TradeType" property="tradetype" jdbcType="INTEGER" />
+    <result column="TradeId" property="tradeid" jdbcType="VARCHAR" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from UserAccountDetail
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Useraccountdetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into UserAccountDetail (UserId, "Change", "Freeze", 
+      Balance, TradeType, TradeId, 
+      Description, AddTime)
+    values (#{userid,jdbcType=INTEGER}, #{change,jdbcType=DECIMAL}, #{freeze,jdbcType=DECIMAL}, 
+      #{balance,jdbcType=DECIMAL}, #{tradetype,jdbcType=INTEGER}, #{tradeid,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Useraccountdetail" >
+    update UserAccountDetail
+    set UserId = #{userid,jdbcType=INTEGER},
+      "Change" = #{change,jdbcType=DECIMAL},
+      "Freeze" = #{freeze,jdbcType=DECIMAL},
+      Balance = #{balance,jdbcType=DECIMAL},
+      TradeType = #{tradetype,jdbcType=INTEGER},
+      TradeId = #{tradeid,jdbcType=VARCHAR},
+      Description = #{description,jdbcType=VARCHAR},
+      AddTime = #{addtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select Id, UserId, "Change", "Freeze", Balance, TradeType, TradeId, Description, 
+    AddTime
+    from UserAccountDetail
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select Id, UserId, "Change", "Freeze", Balance, TradeType, TradeId, Description, 
+    AddTime
+    from UserAccountDetail
+  </select>
+</mapper>

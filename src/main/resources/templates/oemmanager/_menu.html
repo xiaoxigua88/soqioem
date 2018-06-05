@@ -1,0 +1,114 @@
+<div th:fragment="menu">
+	<!-- menu -->
+	<div class="sidebar-limit">
+		<div class="sidebar-scroll-container">
+			<div class="sidebar-main link-undecorated">
+				<!-- 菜单 -->
+				<div class="sq-menu default-transition-tree-fast" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="selfHeading">
+							<a class="collapsed upper-menu menu-icon-home" role="button" data-toggle="collapse" data-parent="#accordion" href="#selfCollapse" aria-expanded="true" aria-controls="selfCollapse">
+								管理中心
+							</a>
+						</div>
+						<div id="selfCollapse" class="collapse" role="tabpanel" aria-labelledby="selfHeading">
+							<ul class="sub-menu">
+								<li><a href="/oemmanager/main" th:href="@{/oemmanager/main}" data-named="self_default">信息总览</a></li>
+								<li><a href="/oemmanager/self/customerEdit" th:href="@{/oemmanager/self/customerEdit}" data-named="self_baseinfo">编辑资料</a></li>
+								<li><a href="/oemmanager/self/passwordEdit" th:href="@{/oemmanager/self/passwordEdit}" data-named="self_password">修改密码</a></li>
+								<li><a href="/oemmanager/self/self/operateLog" th:href="@{/oemmanager/self/operateLog}" data-named="self_operatelog">操作日志</a></li>
+							</ul>
+						</div>
+					</div>
+					<shiro shiro:hasPermission="1003:1">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="userHeading">
+							<a class="collapsed upper-menu menu-icon-user" role="button" data-toggle="collapse" data-parent="#accordion" href="#userCollapse" aria-expanded="true" aria-controls="userCollapse">
+								用户管理
+							</a>
+						</div>
+						<div id="userCollapse" class="collapse" role="tabpanel" aria-labelledby="userHeading">
+							<ul class="sub-menu">
+								<shiro shiro:hasPermission="1301:7">                                       
+   									<li><a href="/oemmanager/userinfo/userlist" th:href="@{/oemmanager/userinfo/userlist}" data-named="user_list">用户列表</a></li>      
+   								</shiro>
+   								<li><a href="/oemmanager/userinfo/userloginlog" th:href="@{/oemmanager/userinfo/userloginlog}" data-named="user_loginlog">用户登录日志</a></li>    
+   								<li><a href="/oemmanager/userinfo/verify" th:href="@{/oemmanager/userinfo/verify}" data-named="user_verify">用户实名认证</a></li>                                              
+                                <!-- <shiro shiro:hasPermission="1304:7">                        
+  									<li><a href="#" data-named="user_list">代理列表</a></li>      
+  								</shiro>
+  								<shiro shiro:hasPermission="1303:7">                        
+  									<li><a href="#" data-named="user_list">实名认证</a></li>      
+  								</shiro> -->             								
+							</ul>
+						</div>
+					</div>
+					</shiro>
+					<shiro shiro:hasPermission="1007:63">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="seoHeading">
+							<a class="collapsed upper-menu menu-icon-virtual" role="button" data-toggle="collapse" data-parent="#accordion" href="#seoCollapse" aria-expanded="true" aria-controls="seoCollapse">
+								优帮云排名
+							</a>
+						</div>
+						<div id="seoCollapse" class="collapse" role="tabpanel" aria-labelledby="seoHeading">
+							<ul class="sub-menu">
+								<li><a href="#" data-named="seo_list">云排名管理</a></li>
+							</ul>
+						</div>
+					</div>
+					</shiro>
+					<shiro shiro:hasPermission="1008:63">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="siteyunHeading">
+							<a class="collapsed upper-menu menu-icon-siteyun" role="button" data-toggle="collapse" data-parent="#accordion" href="#siteyunCollapse" aria-expanded="true" aria-controls="siteyunCollapse">
+								优帮云建站
+							</a>
+						</div>
+						<div id="siteyunCollapse" class="collapse" role="tabpanel" aria-labelledby="siteyunHeading">
+							<ul class="sub-menu">
+								<li><a href="#" data-named="siteyun_list">云建站管理</a></li>
+							</ul>
+						</div>
+					</div>
+					</shiro>
+					
+					<shiro shiro:hasPermission="1002:1">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="Div1">
+							<a class="collapsed upper-menu menu-icon-user" role="button" data-toggle="collapse" data-parent="#accordion" href="#customerCollapse" aria-expanded="true" aria-controls="customerCollapse">
+								内务管理
+							</a>
+						</div>
+						<div id="customerCollapse" class="collapse" role="tabpanel" aria-labelledby="customerHeading">
+							<ul class="sub-menu">
+								<shiro shiro:hasPermission="1201:19"><li><a href="/oemmanager/customer/privilege" th:href="@{/oemmanager/customer/privilege}" data-named="customer_privilege">权限列表</a></li></shiro>
+								<shiro shiro:hasPermission="1202:63"><li><a href="/oemmanager/customer/role" th:href="@{/oemmanager/customer/role}" data-named="customer_role">角色列表</a></li></shiro>
+								<shiro shiro:hasPermission="1203:63"><li><a href="/oemmanager/customer/customerlist" th:href="@{/oemmanager/customer/customerlist}" data-named="customer_list">员工列表</a></li></shiro>
+								<li><a href="/oemmanager/customer/operatelog" th:href="@{/oemmanager/customer/operatelog}" data-named="customer_operatelog">操作日志</a></li>
+							</ul>
+						</div>
+					</div>
+					</shiro>
+					<shiro shiro:hasPermission="1004:1">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="financeHeading">
+							<a class="collapsed upper-menu menu-icon-finance" role="button" data-toggle="collapse" data-parent="#accordion" href="#financeCollapse" aria-expanded="false" aria-controls="financeCollapse">
+								财务管理
+							</a>
+						</div>
+						<div id="financeCollapse" class="collapse" role="tabpanel" aria-labelledby="customerHeading">
+							<ul class="sub-menu">
+								<li><a href="/oemmanager/finance/rechargelist"  th:href="@{/oemmanager/finance/rechargelist}" data-named="recharge">资金充值记录</a></li>
+								<li><a href="/oemmanager/finance/accountdetail"  th:href="@{/oemmanager/finance/accountdetail}" data-named="accountdetail">资金收支明细</a></li>
+							</ul>
+						</div>
+					</div>
+					</shiro>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- menu end -->
+
+</div>

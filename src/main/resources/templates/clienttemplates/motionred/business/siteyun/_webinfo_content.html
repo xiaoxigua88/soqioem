@@ -1,0 +1,210 @@
+        <div class="sq-panel">
+#parse("${templateFolder}\\business\\siteyun\\_web_manage_nav.htm")
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container margin-bottom-20 clearfix">
+#set($web_nav = "webinfo")
+#parse("${templateFolder}\\business\\siteyun\\_web_nav.htm")
+				</div>
+		        <div class="alert-warn margin-bottom-20">
+					    以下信息将展示在网站上，请务必真实填写！
+				    </div>
+			    <form class="form-horizontal sq-form sq-tab-container" id="saveForm" action="?action=Save">
+		            <div class="form-group validate-control">
+			            <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+				            公司名称：
+			            </div>
+			            <div class="col-xs-8 sq-form-control sq-input-group validate-control">
+					        <div class="input-contain">
+				                <input type="text" name="company" class="sq-input-reset sq-long-input necessary" autocomplete="off" value="{{siteInfo.company}}" />
+					        </div>
+					        <div class="input-reminder">在网站的联系信息部分显示</div>
+			            </div>
+		            </div>
+		            <div class="form-group validate-control">
+			            <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+				            联系地址：
+			            </div>
+			            <div class="col-xs-8 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="linkaddress" class="sq-input-reset sq-long-input necessary" autocomplete="off" value="{{siteInfo.linkaddress}}" />
+			            </div>
+		            </div>
+		            <div class="form-group validate-control">
+			            <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+				            联系人：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="linkman" class="sq-input-reset necessary" autocomplete="off" value="{{siteInfo.linkman}}" />
+			            </div>
+			            <div class="sq-control-label">
+				            电话：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="phone" class="sq-input-reset" autocomplete="off" value="{{siteInfo.phone}}" />
+			            </div>
+		            </div>
+		            <div class="form-group validate-control">
+			            <div class="sq-control-label">
+				            手机：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="mobile" class="sq-input-reset" autocomplete="off" value="{{siteInfo.mobile}}" />
+			            </div>
+			            <div class="sq-control-label">
+				            邮箱：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="email" class="sq-input-reset" autocomplete="off" value="{{siteInfo.email}}" />
+			            </div>
+		            </div>
+		            <div class="form-group validate-control">
+			            <div class="sq-control-label">
+				            QQ：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="qq" class="sq-input-reset" autocomplete="off" value="{{siteInfo.qq}}" />
+			            </div>
+			            <div class="sq-control-label">
+				            微信：
+			            </div>
+			            <div class="col-xs-2 sq-form-control sq-input-group validate-control">
+				            <input type="text" name="wx" class="sq-input-reset" autocomplete="off" value="{{siteInfo.wx}}" />
+			            </div>
+		            </div>
+				    <div class="form-group">
+					    <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+						    网站名称：
+					    </div>
+					    <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain">
+						        <input type="text" name="name" class="sq-input-reset sq-long-input necessary" value="{{siteInfo.name}}" />
+					        </div>
+					        <div class="input-reminder">网站名称将自动添加到每个页面的title中，请认真填写</div>
+						    <span class="error-reminder"></span>
+					    </div>
+				    </div>
+				    <div class="form-group validate-control">
+				        <div class="col-xs-1 sq-control-label">
+						    <span class="necessary-mark">*</span>
+					        首页标题：
+				        </div>
+				        <div class="col-xs-11 sq-form-control sq-input-group validate-control">
+					        <div class="input-contain sq-seotitle-input">
+					            <input type="text" name="seotitle" class="sq-input-reset sq-seotitle-input necessary" autocomplete="off" value="{{siteInfo.seotitle}}" />
+					        </div>
+					        <div class="input-reminder">首页标题的质量对SEO具有重要的作用，请认真提炼，建议不要超过30个汉字</div>
+				        </div>
+			        </div>
+			        <div class="form-group validate-control">
+				        <div class="col-xs-1 sq-control-label">
+						    <span class="necessary-mark">*</span>
+					        首页关键词：
+				        </div>
+				        <div class="col-xs-11 sq-form-control sq-input-group validate-control">
+					        <div class="input-contain sq-seotitle-input">
+					            <input type="text" name="seokeyword" class="sq-input-reset sq-seotitle-input necessary" autocomplete="off" value="{{siteInfo.seokeyword}}" />
+					        </div>
+					        <div class="input-reminder">首页关键词的质量对SEO具有重要的作用，请认真提炼，建议不要超过5个关键词</div>
+				        </div>
+			        </div>
+			        <div class="form-group validate-control">
+				        <div class="col-xs-1 sq-control-label">
+						    <span class="necessary-mark">*</span>
+					        首页描述：
+				        </div>
+				        <div class="col-xs-11 sq-form-control sq-input-group validate-control">
+					        <div class="input-contain sq-seodescription-area">
+					            <textarea name="seodescription" class="sq-input-reset sq-seodescription-area necessary">{{siteInfo.seodescription}}</textarea>
+					        </div>
+					        <div class="input-reminder">首页描述的质量对SEO具有重要的作用，请认真提炼，建议不要超过75个汉字</div>
+				        </div>
+			        </div>
+				    <div class="form-group">
+					    <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+						    {{if template.adaptation == 1}}电脑端{{/if}}LOGO：
+					    </div>
+                        <div class="col-xs-2 sq-form-control validate-control">
+                            <input type="text" name="imageurl" class="hide necessary" value="{{siteInfo.imageurl}}" data-error="请上传电脑端LOGO" />
+                            <button class="sq-btn btn-primary btn-upload" data-uptype="logo" data-ismobi="0">{{if siteInfo.imageurl && siteInfo.imageurl.length > 0}}重新选择{{else}}选择图片{{/if}}</button>
+                            <b class="text-red">尺寸：{{template.logosize}}px，格式：PNG、JPG</b>
+                        </div>
+                        {{if template.adaptation == 1}}
+					    <div class="sq-control-label">
+						    <span class="necessary-mark">*</span>
+						    移动端LOGO：
+					    </div>
+                        <div class="col-xs-2 sq-form-control validate-control">
+                            <input type="text" name="mobiimageurl" class="hide necessary" value="{{siteInfo.mobiimageurl}}" data-error="请上传手机端LOGO" />
+                            <button class="sq-btn btn-primary btn-upload" data-uptype="logo" data-ismobi="1">{{if siteInfo.mobiimageurl && siteInfo.mobiimageurl.length > 0}}重新选择{{else}}选择图片{{/if}}</button>
+                            <b class="text-red">尺寸：{{template.mobilogosize}}px，格式：PNG、JPG</b>
+                        </div>
+                        {{/if}}
+				    </div>
+				    <div class="form-group">
+					    <div class="sq-control-label">
+						    工信部备案号：
+					    </div>
+					    <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain">
+						        <input type="text" name="icp" class="sq-input-reset sq-long-input" value="{{siteInfo.icp}}" />
+					        </div>
+					        <div class="input-reminder">如果未备案，请留空，如果已备案填写正确的备案号，不可乱填</div>
+						    <span class="error-reminder"></span>
+					    </div>
+				    </div>
+				    <div class="form-group">
+					    <div class="sq-control-label">
+						    公安备案号：
+					    </div>
+					    <div class="col-xs-10 sq-form-control validate-control">
+					        <div class="input-contain">
+						        <input type="text" name="picp" class="sq-input-reset sq-long-input" value="{{siteInfo.picp}}" />
+					        </div>
+					        <div class="input-reminder">如果未备案，请留空，如果已备案填写正确的备案号，不可乱填</div>
+						    <span class="error-reminder"></span>
+					    </div>
+				    </div>
+			        <div class="form-group">
+				        <div class="col-xs-1 sq-control-label">
+					        JS扩展：
+				        </div>
+				        <div class="col-xs-8 sq-form-control sq-input-group">
+                            <textarea name="cjs" class="sq-input-reset sq-seodescription-area">{{siteInfo.cjs}}</textarea><label class="margin-left-10">
+                            <input type="checkbox" value="1" name="AddCustomerJsToAll" {{if siteInfo.AddCustomerJsToAll}}checked{{/if}} />全站生效</label>
+				        </div>
+			        </div>
+			        <div class="form-group">
+				        <div class="col-xs-1 sq-control-label">
+					        HEAD扩展：
+				        </div>
+				        <div class="col-xs-8 sq-form-control sq-input-group">
+                            <textarea name="chead" class="sq-input-reset sq-seodescription-area">{{siteInfo.chead}}</textarea>
+                            <label class="margin-left-10"><input type="checkbox" value="1" name="AddCustomerHeadToAll" {{if siteInfo.AddCustomerHeadToAll}}checked{{/if}} />全站生效</label>
+				        </div>
+			        </div>
+			        <div class="form-group">
+				        <div class="col-xs-1 sq-control-label">
+					        页脚扩展：
+				        </div>
+				        <div class="col-xs-8 sq-form-control sq-input-group">
+                            <textarea name="cfooter" class="sq-input-reset sq-seodescription-area">{{siteInfo.cfooter}}</textarea><label class="margin-left-10">
+                            <input type="checkbox" value="1" name="AddCustomerFooterToAll" {{if siteInfo.AddCustomerFooterToAll}}checked{{/if}} />全站生效</label>
+				        </div>
+			        </div>
+				    <div class="form-group">
+					    <div class="sq-control-label">
+						    &nbsp;
+					    </div>
+					    <div class="col-xs-10 sq-form-control">
+						    <a href="#a_null" class="sq-btn btn-strong btn-save">保 存</a>
+					    </div>
+				    </div>
+                    <input type="hidden" data-image-owner-id="{{site.YunId}}" />
+                    <input type="hidden" name="wsid" value="{{site.YunId}}" />
+			    </form>
+		    </div>
+		</div>

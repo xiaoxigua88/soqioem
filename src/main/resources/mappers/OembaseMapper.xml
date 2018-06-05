@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.OembaseMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Oembase" >
+    <id column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="MealId" property="mealid" jdbcType="INTEGER" />
+    <result column="TempId" property="tempid" jdbcType="INTEGER" />
+    <result column="Domain" property="domain" jdbcType="VARCHAR" />
+    <result column="CompanylName" property="companylname" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="ExpiryTime" property="expirytime" jdbcType="TIMESTAMP" />
+    <result column="TotalUsersCount" property="totaluserscount" jdbcType="INTEGER" />
+    <result column="TotalTaskCount" property="totaltaskcount" jdbcType="INTEGER" />
+    <result column="OemLevel" property="oemlevel" jdbcType="INTEGER" />
+    <result column="ParentOemId" property="parentoemid" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="MealStatus" property="mealstatus" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from OemBase
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Oembase" >
+    insert into OemBase (OemId, MealId, TempId, 
+      "Domain", CompanylName, Phone, 
+      ExpiryTime, TotalUsersCount, TotalTaskCount, 
+      OemLevel, ParentOemId, "Status", 
+      MealStatus)
+    values (#{oemid,jdbcType=INTEGER}, #{mealid,jdbcType=INTEGER}, #{tempid,jdbcType=INTEGER}, 
+      #{domain,jdbcType=VARCHAR}, #{companylname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{expirytime,jdbcType=TIMESTAMP}, #{totaluserscount,jdbcType=INTEGER}, #{totaltaskcount,jdbcType=INTEGER}, 
+      #{oemlevel,jdbcType=INTEGER}, #{parentoemid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{mealstatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oembase" >
+    update OemBase
+    set MealId = #{mealid,jdbcType=INTEGER},
+      TempId = #{tempid,jdbcType=INTEGER},
+      "Domain" = #{domain,jdbcType=VARCHAR},
+      CompanylName = #{companylname,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      ExpiryTime = #{expirytime,jdbcType=TIMESTAMP},
+      TotalUsersCount = #{totaluserscount,jdbcType=INTEGER},
+      TotalTaskCount = #{totaltaskcount,jdbcType=INTEGER},
+      OemLevel = #{oemlevel,jdbcType=INTEGER},
+      ParentOemId = #{parentoemid,jdbcType=INTEGER},
+      "Status" = #{status,jdbcType=INTEGER},
+      MealStatus = #{mealstatus,jdbcType=INTEGER}
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select OemId, MealId, TempId, "Domain", CompanylName, Phone, ExpiryTime, TotalUsersCount, 
+    TotalTaskCount, OemLevel, ParentOemId, "Status", MealStatus
+    from OemBase
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select OemId, MealId, TempId, "Domain", CompanylName, Phone, ExpiryTime, TotalUsersCount, 
+    TotalTaskCount, OemLevel, ParentOemId, "Status", MealStatus
+    from OemBase
+  </select>
+</mapper>

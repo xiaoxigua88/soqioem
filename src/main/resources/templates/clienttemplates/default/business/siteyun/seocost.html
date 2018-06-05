@@ -1,0 +1,17 @@
+#set($diy_css_files = ["/static/css/ucModule/business/keyword.css${version_skin}"])
+#parse("${templateFolder}\\_header.htm")
+#parse("${templateFolder}\\_menu.htm")
+
+    <div class="sq-main">
+	    <div class="crumb-container" data-nav="siteyun_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+    	
+	    <!-- 关键词优化消费记录 -->
+	    <script type="text/html" id="contentTemplate">
+#parse("${templateFolder}\\business\\siteyun\\_seocost_content.htm")
+	    </script>
+    </div>
+
+#parse("${templateFolder}\\_footer.htm")

@@ -1,0 +1,138 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">员工列表
+               <button id="btnAdd" href="#a_null"class="sq-btn btn-strong btn-operate margin-left-10">
+                <span class="operate-icon operate-icon-add"></span>
+                新增
+               </button>
+           </div>
+		<div class="pull-right clearfix">
+		    <form action="" class="pull-left" id="searchForm">
+	            <label class="pull-left search-group-label">账户：</label>
+		        <input type="text" name="customername" class="pull-left sq-input-reset search-group-input" value="{{filter.customername}}" placeholder="工号、手机" />
+		        <label class="pull-left search-group-label">状态：</label>
+		        <div data-field_name="status" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			        <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				        <span class="selected-content"></span>
+				        <span class="sq-caret"></span>
+			        </a>
+			        <ul class="dropdown-menu sq-search-dropdown">
+		                {{each statusList as item i}}
+			            <li><a href="#a_null" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			            {{/each}}
+			        </ul>
+		        </div>
+			    <input class="hide" type="text" name="status" value="{{filter.status}}" />
+		        <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+		    </form>
+	    </div>
+	</div>
+	<div class="sq-panel-body">
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:35px">
+					<input type="checkbox" id="checkAll" />
+				</th>
+				<th class="text-center" style="width:105px">
+					工号
+				</th>
+				<th class="text-center" style="width:105px">
+					手机
+				</th>
+				<th class="text-center" style="width:100px">
+					真实姓名
+				</th>
+				<th class="text-center" style="width:100px">
+					称呼
+				</th>
+				<th class="text-center" style="width:105px">
+					QQ
+				</th>
+				<th class="text-center" style="width:105px">
+					微信
+				</th>
+				<th class="text-center" style="width:135px" data-order_name="registertime">
+					加入时间
+				</th>
+				<th class="text-center" style="width:135px" data-order_name="registertime">
+					上次分配时间
+				</th>
+				<th class="text-center" style="width:135px" data-order_name="currentlogintime">
+					登录时间
+				</th>
+				<th class="text-center" style="width:65px" data-order_name="logincount">
+					次数
+				</th>
+				<th class="text-center" style="width:55px" data-order_name="status">
+					状态
+				</th>
+				<th>
+					操作
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each lst as item i}}
+				<tr>
+					<td>
+						<input type="checkbox" class="list-checkbox" value="{{item.customerid}}" />
+					</td>
+					<td class="text-center">
+					    {{item.customerid}}
+					</td>
+					<td>
+					    <a href="#a_null" class="customer-view" data-customerid="{{item.customerid}}" title="查看用户{{item.mobile}}的详细资料">{{item.mobile}}</a>
+					</td>
+					<td class="text-center">
+					    {{item.realname}}
+					</td>
+					<td class="text-center">
+					    {{item.callname}}
+					</td>
+					<td class="text-center">
+					    {{item.qq}}
+					</td>
+					<td class="text-center">
+					    {{item.weixin}}
+					</td>
+					<td class="text-center">
+					    {{item.addtime}}
+					</td>
+					<td class="text-center">
+					    {{item.assigntime}}
+					</td>
+					<td class="text-center">
+					    {{item.currentlogintime}}
+					</td>
+					<td class="text-center">
+					    {{item.logincount}}
+					</td>
+					<td class="text-center">
+					    <span class="{{item.status | getUserStatusClass:"className"}}">
+						{{item.status | getUserStatusClass:"name"}}
+						</span>
+					</td>
+					<td>
+					    <a href="#a_null" class="customer-view" data-customerid="{{item.customerid}}">详情</a>
+						<span class="text-muted operate-spacing">|</span>
+					    <a href="#a_null" class="customer-edit" data-customerid="{{item.customerid}}">编辑</a>
+						<span class="text-muted operate-spacing">|</span>
+						<a href="#a_null" class="customer-pwd" data-customerid="{{item.customerid}}">改密</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+		<tfoot>
+		    <tr>
+		        <td><input type="checkbox" id="checkAllBottom" /></td>
+		        <td colspan="12">
+	                <!-- 引入分页 -->
+		                {{include "paginationTpl"}}
+			        </td>
+			    </tr>
+			</tfoot>
+		</table>
+	</div>
+</div>

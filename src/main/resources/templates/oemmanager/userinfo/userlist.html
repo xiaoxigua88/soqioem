@@ -1,0 +1,36 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<!-- <meta charset="utf-8"/> -->
+	<title>管理员欢迎页</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/adModule/adCommon.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="/oemmanager/_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="/oemmanager/_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="/oemmanager/_menu::menu"/>
+	<div class="sq-main">
+	    <div class="crumb-container" data-nav="user_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+	    <!-- 用户列表 -->
+	    <div th:replace="/oemmanager/userinfo/_userlist_content"/>
+	    <!-- 用户编辑 -->
+	    <div th:replace="/oemmanager/userinfo/_userlist_edit"/>
+	    <!-- 用户添加 -->
+	    <div th:replace="/oemmanager/userinfo/_userlist_add"/>
+	    <!-- 用户充值 -->
+	    <!-- <div th:replace="/oemmanager/userinfo/_userlist_content"/> -->
+    </div>
+	<div th:replace="/oemmanager/_footer::copy"/>
+	<div>
+		<div th:replace="/oemmanager/_script::commonJs"></div>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/userlist.js}"></script>
+	</div>
+</body>
+</html>

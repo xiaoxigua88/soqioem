@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.SetmealdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Setmealdetail" >
+    <id column="ItemId" property="itemid" jdbcType="INTEGER" />
+    <result column="ItemName" property="itemname" jdbcType="VARCHAR" />
+    <result column="ItemNameEn" property="itemnameen" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SetMealDetail
+    where ItemId = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Setmealdetail" >
+    insert into SetMealDetail (ItemId, ItemName, ItemNameEn, 
+      "value")
+    values (#{itemid,jdbcType=INTEGER}, #{itemname,jdbcType=VARCHAR}, #{itemnameen,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Setmealdetail" >
+    update SetMealDetail
+    set ItemName = #{itemname,jdbcType=VARCHAR},
+      ItemNameEn = #{itemnameen,jdbcType=VARCHAR},
+      "value" = #{value,jdbcType=VARCHAR}
+    where ItemId = #{itemid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select ItemId, ItemName, ItemNameEn, "value"
+    from SetMealDetail
+    where ItemId = #{itemid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ItemId, ItemName, ItemNameEn, "value"
+    from SetMealDetail
+  </select>
+</mapper>

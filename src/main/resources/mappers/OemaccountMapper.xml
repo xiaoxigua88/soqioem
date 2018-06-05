@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.OemaccountMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Oemaccount" >
+    <id column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="TotalAmount" property="totalamount" jdbcType="DECIMAL" />
+    <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
+    <result column="SeoAmountNeed" property="seoamountneed" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from OemAccount
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Oemaccount" >
+    insert into OemAccount (OemId, TotalAmount, FreezeAmount, 
+      SeoAmountNeed)
+    values (#{oemid,jdbcType=INTEGER}, #{totalamount,jdbcType=DECIMAL}, #{freezeamount,jdbcType=DECIMAL}, 
+      #{seoamountneed,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oemaccount" >
+    update OemAccount
+    set TotalAmount = #{totalamount,jdbcType=DECIMAL},
+      FreezeAmount = #{freezeamount,jdbcType=DECIMAL},
+      SeoAmountNeed = #{seoamountneed,jdbcType=DECIMAL}
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select OemId, TotalAmount, FreezeAmount, SeoAmountNeed
+    from OemAccount
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select OemId, TotalAmount, FreezeAmount, SeoAmountNeed
+    from OemAccount
+  </select>
+</mapper>

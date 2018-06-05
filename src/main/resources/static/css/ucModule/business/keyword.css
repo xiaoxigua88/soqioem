@@ -1,0 +1,239 @@
+.task-location-select .btn-select {
+	background-image: url(img/drop_icon_location.png) ;
+}
+.task-location-select .dropdown-menu > li > a {
+	background-image: url(img/drop_state_on.png);
+}
+.task-location-select .dropdown-menu > li > a:hover,
+.task-location-select .dropdown-menu > li > a:focus,
+.task-location-select .dropdown-menu > li > a.sq-drop-active {
+	background-image: url(img/drop_state_reverse.png);
+}
+.task-operates .btn-operate-add {
+	font-size: 14px;
+}
+.operate-icon {
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	z-index: 10;
+	width: 16px;
+	height: 16px;
+	margin-top: -8px;
+	background: no-repeat center;
+}
+.operate-icon-refresh {
+	background-image: url(img/operate_refresh.png);
+	left: 50%;
+	margin-left: -8px;
+}
+.operate-icon-restart {
+	background-image: url(img/operate_restart.png);
+}
+.operate-icon-start {
+	background-image: url(img/operate_start.png);
+}
+.operate-icon-stop {
+	background-image: url(img/operate_stop.png);
+}
+.operate-icon-export {
+	background-image: url(img/operate_export.png);
+}
+.operate-icon-delete {
+	background-image: url(img/operate_delete.png);
+}
+.operate-icon-clear {
+	background-image: url(img/operate_clear.png);
+}
+.operate-icon-edit {
+	background-image: url(img/operate_edit.png);
+}
+.operate-icon-add {
+	background-image: url(img/operate_add.png);
+}
+.task-help {
+	margin-top: 10px;
+	padding-left: 20px;
+	background: url(img/operate_help.png) no-repeat left center;
+}
+.task-process {
+    display:block;
+    width:180px; 
+    height:24px; 
+    line-height:24px;
+    background:#FFF3E5;
+    border:1px solid #FF8800
+}
+.task-process .pass {
+    float:left; 
+    display:block; 
+    height:22px; 
+    background:#FF8800; 
+    font-weight:bold;
+    padding-left:5px;
+}
+.timeset {
+    width:720px; overflow:hidden;
+}
+.timeset label {
+    width:50px; height:20px; line-height:19px; display:block; float:left; margin-right:10px;
+}
+
+.edit-name {
+	display: inline-block;
+	width: 16px;
+}
+tr:hover .edit-name,
+.manage-edit-name {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(img/operate_edit.png) no-repeat center;
+	vertical-align: sub;
+}
+.forbidden-cover {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: -10;
+	left: 0;
+	right: 0;
+	cursor: not-allowed;
+}
+.operates-disabled .forbidden-cover {
+	display: block;
+	z-index: 10;
+	/* IE下不设置背景颜色时无法达到遮盖效果 */
+	background-color: #fff;
+	opacity: 0.01;
+	filter: alpha(opacity=1);
+}
+
+/* 任务状态 */
+.task-state-opening {
+	background-image: url(img/task_state_opening.png);
+}
+.task-state-run {
+	background-image: url(img/task_state_run.png);
+}
+.task-state-paused {
+	background-image: url(img/task_state_paused.png);
+}
+.task-state-stop {
+	background-image: url(img/task_state_stop.png);
+}
+.task-state-fail {
+	background-image: url(img/task_state_fail.png);
+}
+.task-state-upgrading {
+	background-image: url(img/task_state_upgrading.png);
+}
+.task-state-down {
+	background-image: url(img/task_state_down.png);
+}
+.task-state-loading {
+	background-image: url(img/task_state_loading.gif);
+}
+.not-data{
+	position:absolute;
+	top: 30%;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+.not-data i{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	vertical-align: middle;
+	background: url(img/tip_icon_info_16.png) no-repeat center center;
+}
+.not-data span > a{
+	margin-left: 5px;
+}
+.percent{
+	color: #28a928;
+}
+
+
+
+.tabel-list {
+	width: 100%;
+}
+.time-btn-group{
+	position: absolute;
+	top: 252px;
+	right: 12px;
+	z-index: 10;
+}
+.time-btn-group span{
+	margin-right: 30px;
+	padding-top:5px;
+}
+.time-btn {
+	background-color: #f5f5f5;
+}
+.btn-active{
+	background-color: #009fd9;
+	color:#fff;
+}
+.round{
+	margin:0 auto;
+}
+.bg-round span{
+	position: absolute;
+	left: 29%;
+}
+.round span.upload{
+ 	top:32px;
+}
+.round span.download{
+	top:60px;
+}
+.bg-round{
+	background:url(img/up_down_load.png) no-repeat center;
+	height: 110px;
+	width: 110px;
+	position: relative;
+}
+.err-text{
+	font-size: 24px;
+	color:#bbb;
+	line-height: 80px;
+}
+.text-right .btn {
+	font-size: 12px;
+	padding: 4px 8px;
+}
+.text-right .btn:hover {
+	color: #009FD9;
+}
+.text-right .btn-active:hover {
+	color: #fff;
+}
+
+.seo-submit {
+    position:fixed;
+    top:138px;
+    right:40px;
+    font-size:16px;
+    background:#FFF3E5;
+    border:#FF8800 1px solid;
+    padding:6px 12px;
+}
+.btn-strong.btn-strong-high {
+    width:120px;
+    height:30px;
+    line-height:30px;
+    text-align:center;
+	font-size: 15px;
+}
+.balance-int {
+    font-size:24px;
+}
+@media screen and (max-width: 1660px) {
+	
+}

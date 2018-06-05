@@ -1,0 +1,71 @@
+		<div class="alert-warn alert-protect margin-bottom-20">
+			图片请严格按照标注的尺寸上传，网址必须是http或https开头的并且以斜杠结尾的完整格式。
+		</div>
+		
+		<form action="?action=Save" class="form-horizontal sq-form font-size-14 sq-tab-container" id="importForm">
+			<div class="form-group validate-control">
+                <div class="sq-control-label">
+                    <span class="necessary-mark">*</span>
+                    {{if template.adaptation == 1}}电脑端{{/if}}图片：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="hidden" name="imageurl" value="{{if model}}{{model.imageurl}}{{/if}}" data-error="请上传{{if template.adaptation == 1}}电脑端{{/if}}图片" />
+                    <button class="sq-btn btn-primary btn-upload" data-uptype="banner" data-ismobi="0">{{if model&&model.imageurl.length>0}}重新选择{{else}}选择图片{{/if}}</button>
+                    <b class="text-primary">格式：PNG、JPG，尺寸：{{template.bannersize}}px</b>
+                </div>
+			</div>
+			<div class="form-group">
+                <div class="sq-control-label">
+                    {{if template.adaptation == 1}}电脑端{{/if}}链接：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="text" name="link" value="{{if model}}{{model.link}}{{/if}}" class="sq-input-reset sq-long-input" />
+                </div>
+			</div>
+			{{if template.adaptation == 1}}
+			<div class="form-group">
+                <div class="sq-control-label">
+                    <span class="necessary-mark">*</span>
+                    移动端图片：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="hidden" name="mobiimageurl" value="{{if model}}{{model.mobiimageurl}}{{/if}}" data-error="请上传手机端图片" />
+                    <button class="sq-btn btn-primary btn-upload btn-upload-mobi" data-uptype="banner" data-ismobi="1">{{if model&&model.mobiimageurl.length>0}}重新选择{{else}}选择图片{{/if}}</button>
+                    <b class="text-primary">格式：PNG、JPG，尺寸：{{template.mobibannersize}}px</b>
+                </div>
+			</div>
+			<div class="form-group">
+                <div class="sq-control-label">
+                    移动端链接：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="text" name="mobilink" value="{{if model}}{{model.mobilink}}{{/if}}" class="sq-input-reset sq-long-input" />
+                </div>
+			</div>
+			{{/if}}
+			<div class="form-group">
+                <div class="sq-control-label">
+                    ALT信息：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="text" name="alt" value="{{if model}}{{model.alt}}{{/if}}" class="sq-input-reset sq-long-input" />
+                </div>
+			</div>
+			<div class="form-group">
+                <div class="sq-control-label">
+                    TITLE信息：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="text" name="title" value="{{if model}}{{model.title}}{{/if}}" class="sq-input-reset sq-long-input" />
+                </div>
+			</div>
+			<div class="form-group">
+                <div class="sq-control-label">
+                    排序值：
+                </div>
+                <div class="col-xs-8 sq-form-control validate-control">
+                    <input type="text" name="listorder" value="{{if model}}{{model.listorder}}{{else}}99{{/if}}" class="sq-input-reset" />
+                </div>
+			</div>
+			{{if model}}<input type="hidden" name="bannerid" value="{{model.bannerid}}" />{{/if}}
+		 </form>

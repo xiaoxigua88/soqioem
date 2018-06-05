@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.SetmealMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Setmeal" >
+    <id column="MealId" property="mealid" jdbcType="INTEGER" />
+    <result column="MealName" property="mealname" jdbcType="VARCHAR" />
+    <result column="Comment" property="comment" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SetMeal
+    where MealId = #{mealid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Setmeal" >
+    insert into SetMeal (MealId, MealName, "Comment", 
+      CreateTime)
+    values (#{mealid,jdbcType=INTEGER}, #{mealname,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Setmeal" >
+    update SetMeal
+    set MealName = #{mealname,jdbcType=VARCHAR},
+      "Comment" = #{comment,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where MealId = #{mealid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select MealId, MealName, "Comment", CreateTime
+    from SetMeal
+    where MealId = #{mealid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select MealId, MealName, "Comment", CreateTime
+    from SetMeal
+  </select>
+</mapper>

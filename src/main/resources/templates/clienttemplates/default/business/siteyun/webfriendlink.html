@@ -1,0 +1,24 @@
+#set($diy_css_files = ["/static/css/ucModule/business/siteyun.css${version_skin}"])
+#set($diy_js_files = ["/static/js/ucModule/business/siteyun_web.js${version_skin}"])
+#parse("${templateFolder}\\_header.htm")
+#parse("${templateFolder}\\_menu.htm")
+#set($hidePageSize = true)
+    
+    <div class="sq-main">
+	    <div class="crumb-container" data-nav="siteyun_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+    	
+	    <!-- 云建站友情链接列表 -->
+	    <script type="text/html" id="contentTemplate">
+#parse("${templateFolder}\\business\\siteyun\\_webfriendlink_content.htm")
+	    </script>
+    	
+	    <!-- 一对一友情链接导入 -->
+	    <script type="text/html" id="importInformation">
+#parse("${templateFolder}\\business\\siteyun\\_webfriendlink_import.htm")
+	    </script>
+    </div>
+
+#parse("${templateFolder}\\_footer.htm")

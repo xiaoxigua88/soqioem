@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Customer" >
+    <id column="CustomerId" property="customerid" jdbcType="INTEGER" />
+    <result column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="Pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="Mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="RealName" property="realname" jdbcType="VARCHAR" />
+    <result column="CallName" property="callname" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="Weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="LastLoginTime" property="lastlogintime" jdbcType="TIMESTAMP" />
+    <result column="LastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="CurrentLoginTime" property="currentlogintime" jdbcType="TIMESTAMP" />
+    <result column="CurrentLoginIp" property="currentloginip" jdbcType="VARCHAR" />
+    <result column="Domain" property="domain" jdbcType="VARCHAR" />
+    <result column="LoginCount" property="logincount" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="BIT" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Customer
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Customer" >
+    insert into Customer (CustomerId, OemId, Pwd, 
+      Mobile, RealName, CallName, 
+      QQ, Phone, Weixin, 
+      LastLoginTime, LastLoginIp, CurrentLoginTime, 
+      CurrentLoginIp, Domain, LoginCount, Status, 
+      AddTime)
+    values (#{customerid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{callname,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
+      #{lastlogintime,jdbcType=TIMESTAMP}, #{lastloginip,jdbcType=VARCHAR}, #{currentlogintime,jdbcType=TIMESTAMP}, 
+      #{currentloginip,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, #{logincount,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Customer" >
+    update Customer
+    set OemId = #{oemid,jdbcType=INTEGER},
+      Pwd = #{pwd,jdbcType=VARCHAR},
+      Mobile = #{mobile,jdbcType=VARCHAR},
+      RealName = #{realname,jdbcType=VARCHAR},
+      CallName = #{callname,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      Weixin = #{weixin,jdbcType=VARCHAR},
+      LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      LastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      CurrentLoginTime = #{currentlogintime,jdbcType=TIMESTAMP},
+      CurrentLoginIp = #{currentloginip,jdbcType=VARCHAR},
+      LoginCount = #{logincount,jdbcType=INTEGER},
+      Status = #{status,jdbcType=BIT},
+      AddTime = #{addtime,jdbcType=TIMESTAMP}
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select CustomerId, OemId, Pwd, Mobile, RealName, CallName, QQ, Phone, Weixin, LastLoginTime, 
+    LastLoginIp, Domain, CurrentLoginTime, CurrentLoginIp, LoginCount, Status, AddTime
+    from Customer
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByDomainAndMobile" resultMap="BaseResultMap" parameterType="map" >
+    select CustomerId, OemId, Pwd, Mobile, RealName, CallName, QQ, Phone, Weixin, LastLoginTime, 
+    LastLoginIp, Domain, CurrentLoginTime, CurrentLoginIp, LoginCount, Status, AddTime
+    from Customer
+    where Mobile = #{mobile,jdbcType=VARCHAR} and Domain = #{domain,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="qryCustomersByCusIdAndOemid" resultMap="BaseResultMap" parameterType="map" >
+    select CustomerId, OemId, Pwd, Mobile, RealName, CallName, QQ, Phone, Weixin, LastLoginTime, 
+    LastLoginIp, Domain, CurrentLoginTime, CurrentLoginIp, LoginCount, Status, AddTime
+    from Customer
+    where CustomerId != #{customerid,jdbcType=INTEGER} and OemId = #{oemid,jdbcType=INTEGER} Order by CustomerId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  
+  <select id="qryCountByCusIdAndOemid" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) as total
+    from Customer
+    where CustomerId != #{customerid,jdbcType=INTEGER} and OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select CustomerId, OemId, Pwd, Mobile, RealName, CallName, QQ, Phone, Weixin, LastLoginTime, 
+    LastLoginIp, CurrentLoginTime, CurrentLoginIp, Domain, LoginCount, Status, AddTime
+    from Customer
+  </select>
+</mapper>

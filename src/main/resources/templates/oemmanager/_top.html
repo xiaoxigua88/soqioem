@@ -1,0 +1,27 @@
+
+	<!-- header -->
+	<div th:fragment="top" class="sq-header link-undecorated">
+		<div class="sq-logo pull-left">
+			<a href="${homepage}" class="text-hide" title="返回官网首页" target="_blank">优帮云首页</a>
+		</div>
+		<div class="header-main text-right">
+			<div class="menu-control-outer pull-left">
+				<a href="#a_null" id="menuControl" class="menu-collapse-control" title="折叠菜单">
+				</a>
+			</div>
+			<span class="hello-user">
+				你好，<span id="helloUserName"></span>
+			</span>
+			<div class="pull-right">
+				<!-- <a href="${domain_adm}/message/message.aspx" class="header-link header-link-message">
+					站内信
+					<span class="header-message-count hide"></span>
+				</a> -->
+				<!-- <a href="${domain_adm}/workorder/question.aspx" class="header-link header-link-workorder">工单服务</a> -->
+				<a href="#a_null" class="header-link header-link-docs">帮助文档</a>
+				<a href="#" target="_blank" class="header-link header-link-home">官网首页</a>
+				<a href="#" class="header-link header-link-logout">退出登录</a>
+			</div>
+		</div>
+	</div>
+	<!-- header end-->

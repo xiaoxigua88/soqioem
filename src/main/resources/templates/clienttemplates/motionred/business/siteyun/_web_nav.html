@@ -1,0 +1,18 @@
+
+<ul class="text-center pull-left">
+	<li class="sq-tab#if(${web_nav}=="webinfo") sq-tab--current#end">
+		<a href="webinfo.aspx?yunId={{site.YunId}}"> 基本信息 </a>
+	</li>
+	<li class="sq-tab#if(${web_nav}=="webcolumn") sq-tab--current#end"">
+		<a href="webcolumn.aspx?yunId={{site.YunId}}"> 栏目管理 </a>
+	</li>
+	<li class="sq-tab#if(${web_nav}=="webarticle") sq-tab--current#end"">
+		<a href="webarticle.aspx?yunId={{site.YunId}}"> 文章管理 </a>
+	</li>
+	<li class="sq-tab#if(${web_nav}=="webbanner") sq-tab--current#end"">
+		<a href="webbanner.aspx?yunId={{site.YunId}}"> BANNER管理 </a>
+	</li>
+	<li class="sq-tab#if(${web_nav}=="webfriendlink") sq-tab--current#end"">
+		<a href="webfriendlink.aspx?yunId={{site.YunId}}"> 友情链接 </a>
+	</li>
+</ul>

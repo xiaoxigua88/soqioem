@@ -1,0 +1,257 @@
+<script th:fragment="defaultContent" type="text/html"
+	id="contentTemplate">
+		<div class="container-fluid">
+				<div class="tier-1-block">
+					<div class="sq-panel home-tier-1">
+						<ul class="nav nav-tabs detail-tabs text-center" role="tablist">
+							<li role="presentation" class="active"><a href="#cashCouponPanel" aria-controls="cashCouponPanel" role="tab" data-toggle="tab" aria-expanded="false">账户统计</a></li>
+							<li role="presentation" class=""><a href="#toRenewPanel" aria-controls="imagePanel" role="tab" data-toggle="tab" id="settingPortraitTab" aria-expanded="false">待续费</a></li>
+							<li role="presentation" class=""><a href="#woPanel" aria-controls="woPanel" role="tab" data-toggle="tab" aria-expanded="true">工单处理</a></li>
+						</ul>
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane clearfix coupon-panel active" id="cashCouponPanel">
+								<ul class="products-renew-lists text-link">
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-not-payed">
+											<a href="" class="user-product-icon">账户充值</a>
+											<span class="product-limit">（30天内）</span>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">{{count.MonthRechargeAmount}}</span> 元
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-hosting">
+											<a href="">现金消费</a>
+											<span class="product-limit">（30天内）</span>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">{{count.MonthCostAmount}}</span> 元
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-hosting">
+											<a href="">优币消费</a>
+											<span class="product-limit">（30天内）</span>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">{{count.MonthCostGold}}</span> 个
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+							<div role="tabpanel" class="tab-pane clearfix renew-panel" id="toRenewPanel">
+								<ul class="products-renew-lists text-link">
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-cloud">
+											<a href="#" class="user-product-icon">优帮云排名</a>
+											<span class="product-limit">（7天到期）</span>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-virtual">
+											<a href="#a_null">优帮云建站</a>
+											<span class="product-limit">（7天到期）</span>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-hosting">
+											<a href="">优帮云站通</a>
+											<span class="product-limit">（7天到期）</span>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+							<div role="tabpanel" class="tab-pane clearfix wo-panel" id="woPanel">
+								<ul class="products-renew-lists text-link">
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-wo-detail user-wo-undone">
+											<a href="" class="">待处理工单</a>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-wo-detail user-wo-unevaluated">
+											<a href="">处理中工单</a>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-wo-detail user-wo-closed">
+											<a href="#">已关闭工单</a>
+										</span>
+										<span class="pull-right">
+											<a href="">
+												共 <span class="user-detail-count">0</span> 个
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="home-tier-2">
+				<div class="sq-panel">
+					<div class="operate-container clearfix">
+						<div class="clearfix operate-container-left">
+							<div class="pull-left">
+								<span class="user-operate-name">总余额：</span>
+								<span class="detail-count-container">
+									<span class="user-balance">#</span><span>#</span> 元
+								</span>
+								<span class="user-operate-name">冻结金额：</span>
+								<span class="detail-count-container">
+									<span class="user-balance">#</span><span>#</span> 元
+								</span>
+								<span class="user-operate-name">可用金额：</span>
+								<span class="detail-count-container">
+									<span class="user-balance">#</span><span>#</span> 元
+								</span>
+								<span class="user-operate-buttons">
+									<a href="#" class="sq-btn btn-strong user-recharge">立即充值</a>
+								</span>
+								<span class="user-operate-name">优币数量：</span>
+								<span class="detail-count-container">
+									<span class="user-balance">#</span> 个
+								</span>
+								<span class="user-operate-name">云监控需求：</span>
+								<span class="detail-count-container">
+									<span class="user-balance">#</span> 个
+								</span>
+								<span class="user-operate-buttons">
+									<a href="#" class="sq-btn btn-primary">立即购买</a>
+								</span>
+								<span class="user-operate-name margin-left-10">排名结算开始时间：</span>
+								<span class="detail-count-container">
+									每天 <span class="user-balance">#</span> 左右
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="home-tier-3">
+				<div class="clearfix">
+					<div class="pull-left home-tier-3-left">
+						<div class="sq-panel">
+							<div class="home-panel-heading">监控预消费优币与今日统计</div>
+							<div class="clearfix products-detail-panel clearfix">
+								<ul class="user-products-lists pull-left text-link">
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-cloud">
+											<a href="#" class="user-product-icon">关键词排名监控</a>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												估 <span class="user-detail-count">#</span> 个优币
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-hosting">
+											<a href="#">域名SEO监控</a>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												估 <span class="user-detail-count">#</span> 个优币
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-service">
+											<a href="#">域名备案监控</a>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												估 <span class="user-detail-count">#</span> 个优币
+											</a>
+										</span>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-virtual">
+											<a href="#">网址收录监控</a>
+										</span>
+										<span class="pull-right">
+											<a href="#">
+												估 <span class="user-detail-count">#</span> 个优币
+											</a>
+										</span>
+									</li>
+								</ul>
+								<ul class="user-wo-lists pull-left text-link">
+									<li>
+										<div class="clearfix">
+											<span class="pull-left user-detail-item user-not-payed">
+												<a href="#">今日现金充值</a>
+											</span>
+											<span class="pull-right">
+												<a href="#">
+									                共 <span class="user-detail-count">#</span><span class="user-detail-decimal">#</span> 元
+												</a>
+											</span>
+										</div>
+									</li>
+									<li>
+										<div class="clearfix">
+											<span class="pull-left user-detail-item user-not-payed">
+												<a href="#">今日现金消费</a>
+											</span>
+											<span class="pull-right">
+												<a href="#">
+									                共 <span class="user-detail-count">#</span><span class="user-detail-decimal">#</span> 元
+												</a>
+											</span>
+										</div>
+									</li>
+									<li class="clearfix">
+										<span class="pull-left user-detail-item user-not-payed">
+											<a href="#a_null" class="user-product-icon">今日优币使用</a>
+										</span>
+										<span class="pull-right">
+											<a href="#a_null">
+												共 <span class="user-detail-count">#</span> 个
+											</a>
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+</script>

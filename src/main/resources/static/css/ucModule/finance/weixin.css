@@ -1,0 +1,72 @@
+
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	font-size:14px;
+	font-family:microsoft yahei;
+	color:#555
+}
+h1 {
+	font-size:16px;
+	text-align:center;
+	height:30px;
+	line-height:30px;
+	font-weight:normal;
+	margin-top:20px;
+}
+h2 {
+	font-size:16px;
+	text-align:center;
+	height:30px;
+	line-height:30px;
+	font-weight:normal;
+}
+h2 strong{
+	color:#f60;
+	padding-right:4px;
+}
+a {
+	text-decoration:none;
+	color:#385487;
+}
+.title h1 {
+	font-size:22px;
+	font-weight:bold;
+	padding:0;
+	margin:0;
+	line-height:1.2;
+	color:#1f1f1f;
+}
+#order-msg{text-align:center;}
+
+.qrcode_logo{
+	background:url(img/qrcode_logo.png) no-repeat center center;
+	height:50px;
+	width:50px;
+	position: absolute;
+	top: 50%;
+	margin-top: -25px;
+	left: 50%;
+	margin-left: -25px;
+
+}
+#qrcode {
+	margin:0 auto;
+	padding: 0!important;
+	width:240px;
+	height:240px;
+	padding:5px;
+	background:#fff;
+	border:1px solid #ccc;
+	margin-top:20px;
+	position:relative;
+}
+#status {
+    text-align:center;
+    height:30px;
+    line-height:30px;
+    color:#999;
+    margin-top:10px
+}

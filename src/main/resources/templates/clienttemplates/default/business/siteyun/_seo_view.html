@@ -1,0 +1,80 @@
+<div class="sq-panel-title margin-bottom-20">达标计费标准</div>
+<table class="sq-table margin-bottom-20">
+	<thead>
+		<tr>
+			<th style="width:100px">
+				达标位置
+			</th>
+			<th style="width:150px">
+				原价（元/天）
+			</th>
+			<th>
+				成交价格（元/天）
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each priceList as item i}}
+			<tr>
+			    <td>
+				    前<span class="text-red">{{item.ToRank}}</span>名
+			    </td>
+			    <td class="text-stress">
+				    ￥{{item.PriceOri | toFixed}}
+			    </td>
+			    <td class="text-stress">
+				    ￥{{item.Price | toFixed}}
+			    </td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+<div class="sq-panel-title margin-bottom-20">消费记录</div>
+<table class="sq-table">
+	<thead>
+		<tr>
+			<th style="width:55px">
+				序号
+			</th>
+			<th style="width:85px">
+				消费日期
+			</th>
+			<th style="width:65px">
+				排名
+			</th>
+			<th style="width:65px">
+				消费
+			</th>
+			<th style="width:65px">
+				解冻
+			</th>
+			<th style="width:150px">
+				计费时间
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each balanceList as item i}}
+			<tr>
+			    <td>
+				    {{i+1}}
+			    </td>
+			    <td>
+			        {{item.ConsumeDate | dateFormat:'yyyy-MM-dd'}}
+			    </td>
+			    <td>
+			        {{item.RankLast}}
+			    </td>
+			    <td class="text-stress">
+				    ￥{{item.Amount | toFixed}}
+			    </td>
+			    <td class="text-stress">
+				    ￥{{item.FreeAmount | toFixed}}
+			    </td>
+			    <td>
+			        {{item.AddTime}}
+			    </td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

@@ -1,0 +1,182 @@
+.balance-int {
+	font-size: 24px;
+}
+/* 支付方式 */
+.form-group.recharge-amount {
+	margin-bottom: 30px;
+}
+.recharge-type {
+	line-height: 42px;
+}
+.recharge-tier {
+	margin-bottom: 15px;
+}
+.recharge-item {
+	float: left;
+	width: 200px;
+	margin-bottom: 6px;
+	line-height: 1;
+}
+.radio-outer {
+	width: 25px;
+}
+.recharge-item input {
+	height: 42px;
+	margin: 0;
+}
+.recharge-item input[type=radio] {
+	outline: none;
+}
+.recharge-item label {
+	margin: 0;
+}
+.recharge-choose {
+	float: left;
+	display: inline-block;
+	width: 132px;
+	height: 42px;
+	border: 1px solid #eee;
+	margin-left: 5px;
+	background: url(img/bank_icons.png) no-repeat;
+	cursor: pointer;
+}
+.recharge-choose:hover {
+	border-color: #ff8800;
+}
+.b2b-label {
+	float: left;
+	width: 20px;
+	height: 42px;
+	border: 1px solid #eee;
+	border-left: none;
+	background-color: #c9e9f5;
+	line-height: 20px;
+	word-wrap: break-word;
+	white-space: normal;
+	text-align: center;
+}
+/* 银行 */
+.recharge-alipay {
+	background: url(img/pay_alipay.png) no-repeat;
+	background-position: center;
+}
+.recharge-weixin {
+	background: url(img/pay_weixin.png) no-repeat;
+	background-position: center;
+}
+.recharge-boc {
+	background-position: 13px -515px;
+}
+.recharge-icbc {
+	background-position: 8px -35px;
+}
+.recharge-cmb {
+	background-position: 13px -75px;
+}
+.recharge-ccb {
+	background-position: 8px -315px;
+}
+.recharge-abc {
+	background-position: 5px -475px;
+}
+.recharge-spdb {
+	background-position: 21px -355px;
+}
+.recharge-cib {
+	background-position: 5px -3360px;
+}
+.recharge-gdb {
+	background-position: 3px -275px;
+}
+.recharge-fdb {
+	background-position: 21px -1315px;
+}
+.recharge-hxb {
+	background-position: 15px -675px;
+}
+.recharge-hzcb {
+	background-position: 18px -755px;
+}
+.recharge-shbank {
+	background-position: 18px -835px;
+}
+.recharge-nbbank {
+	background-position: 18px -1235px;
+}
+.recharge-spabank {
+	background-position: 15px -1875px;
+}
+.recharge-postgc {
+	background-position: 10px -395px;
+}
+.recharge-comm {
+	background-position: 15px -595px;
+}
+.recharge-ceb {
+	background-position: 10px -435px;
+}
+.recharge-bjbank {
+	background-position: 6px -3235px;
+}
+.recharge-dlb {
+	background-position: 8px -2116px;
+}
+.recharge-shrcb {
+	background-position: 5px -2475px;
+}
+.recharge-czsb {
+	background-position: 17px -1034px;
+}
+.recharge-wzcb {
+	background-position: 17px -1715px;
+}
+.recharge-cmbc {
+	background-position: 10px -115px;
+}
+.recharge-citic {
+	background-position: 12px -195px;
+}
+.recharge-bjrcb {
+	background-position: 8px -2635px;
+}
+.recharge-szdb {
+	background-position: 8px -234px;
+}
+.recharge-hsbc {
+	background-position: 8px -3865px;
+}
+.recharge-sjb {
+	background-position: 2px -3905px;
+}
+.selectchange {
+	height: 30px;
+	width: 120px;
+}
+.btn-strong.btn-strong-high
+{
+    width:120px;
+    height:45px;
+    line-height:45px;
+    text-align:center;
+	font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+<!-- menu -->
+	<div th:fragment="menu" class="sidebar-limit">
+		<div class="sidebar-scroll-container">
+			<div class="sidebar-main link-undecorated">
+				<!-- 菜单 -->
+				<div class="sq-menu default-transition-tree-fast" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab">
+							<a href="/client/main" th:href="@{/client/main}" data-named="phoenix" class="collapsed upper-menu menu-linkable menu-icon-home">后台总览</a>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="seoHeading">
+							<a class="collapsed upper-menu menu-icon-virtual" role="button" data-toggle="collapse" data-parent="#accordion" href="#seoCollapse" aria-expanded="true" aria-controls="seoCollapse">
+								优帮云排名
+							</a>
+						</div>
+						<div id="seoCollapse" class="collapse" role="tabpanel" aria-labelledby="seoHeading">
+							<ul class="sub-menu">
+								<li><a href="/client/business/seo/manage" th:href="@{/client/business/seo/manage}" data-named="seo_list">云排名管理</a></li>
+								<li><a href="/client/business/seo/apply" th:href="@{/client/business/seo/apply}"  data-named="seo_apply">云排名购买</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="siteyunHeading">
+							<a class="collapsed upper-menu menu-icon-siteyun" role="button" data-toggle="collapse" data-parent="#accordion" href="#siteyunCollapse" aria-expanded="true" aria-controls="siteyunCollapse">
+								优帮云建站
+							</a>
+						</div>
+						<div id="siteyunCollapse" class="collapse" role="tabpanel" aria-labelledby="siteyunHeading">
+							<ul class="sub-menu">
+								<li><a href="/client/business/siteyun/yunlist" th:href="@{/client/business/siteyun/yunlist}" data-named="siteyun_list">云建站管理</a></li>
+								<li><a href="/client/business/siteyun/create" th:href="@{/client/business/siteyun/create}" data-named="siteyun_apply">云建站购买</a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="financeHeading">
+							<a class="collapsed upper-menu menu-icon-finance" role="button" data-toggle="collapse" data-parent="#accordion" href="#financeCollapse" aria-expanded="false" aria-controls="financeCollapse">
+								财务管理
+							</a>
+						</div>
+						<div id="financeCollapse" class="collapse" role="tabpanel" aria-labelledby="financeHeading">
+							<ul class="sub-menu">
+								<li><a href="/client/finance/recharge" th:href="@{/client/finance/recharge}" data-named="recharge">充值中心</a></li>
+								<li><a href="/client/finance/accountdetail" th:href="@{/client/finance/accountdetail}" data-named="accountdetail">收支明细</a></li>
+								<li><a href="/client/finance/contract" th:href="@{/client/finance/contract}" data-named="contract">合同管理</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="accountHeading">
+							<a class="collapsed upper-menu menu-icon-account" role="button" data-toggle="collapse" data-parent="#accordion" href="#accountCollapse" aria-expanded="false" aria-controls="accountCollapse">
+								账户管理
+							</a>
+						</div>
+						<div id="accountCollapse" class="collapse" role="tabpanel" aria-labelledby="accountHeading">
+							<ul class="sub-menu">
+								<li><a href="/client/userinf/default" th:href="@{/client/userinf/default}" data-named="userinfo">基本信息</a></li>
+								<li><a href="/client/userinf/safety" th:href="@{/client/userinf/safety}" data-named="safety">安全设置</a></li>
+								<li><a href="/client/userinf/verify" th:href="@{/client/userinf/verify}" data-named="verify">实名认证</a></li>
+								<li><a href="/client/userinf/rights" th:href="@{/client/userinf/rights}" data-named="rights">认证权益</a></li>
+								<li><a href="/client/userinf/address" th:href="@{/client/userinf/address}" data-named="address">常用地址</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- menu end -->

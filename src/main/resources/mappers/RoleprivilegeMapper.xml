@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.RoleprivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Roleprivilege" >
+    <id column="RoleId" property="roleid" jdbcType="INTEGER" />
+    <id column="PriId" property="priid" jdbcType="INTEGER" />
+    <result column="Value" property="value" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="PrivResultMap" type="com.soqi.oem.gentry.Privilege" >
+    <id column="PriId" property="priid" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="ValueConfig" property="valueconfig" jdbcType="INTEGER" />
+    <result column="DefValue" property="defvalue" jdbcType="INTEGER" />
+    <result column="GroupId" property="groupid" jdbcType="INTEGER" />
+    <result column="PriName" property="priname" jdbcType="VARCHAR" />
+    <result column="GroupName" property="groupname" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from RolePrivilege
+    where RoleId = #{roleid,jdbcType=INTEGER}
+      and PriId = #{priid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Roleprivilege" >
+    insert into RolePrivilege (RoleId, PriId, "Value"
+      )
+    values (#{roleid,jdbcType=INTEGER}, #{priid,jdbcType=INTEGER}, #{value,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Roleprivilege" >
+    update RolePrivilege
+    set "Value" = #{value,jdbcType=INTEGER}
+    where RoleId = #{roleid,jdbcType=INTEGER}
+      and PriId = #{priid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select RoleId, PriId, "Value"
+    from RolePrivilege
+    where RoleId = #{roleid,jdbcType=INTEGER}
+      and PriId = #{priid,jdbcType=INTEGER}
+  </select>
+  <select id="selectPrivsByRoleID" resultMap="BaseResultMap" parameterType="INTEGER" >
+  	select RoleId, PriId, Value
+    from RolePrivilege
+    where RoleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <select id="selectRolePrisByCustId" resultMap="BaseResultMap" parameterType="INTEGER" >
+    select r.RoleId, r.PriId, r.Value
+    from RolePrivilege r,CustomerRole c where c.RoleId = r.RoleId and c.CustomerId=#{customerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectPrivsByCustId" resultMap="PrivResultMap" parameterType="INTEGER" >
+  	select r.PriId,r.RoleId,a.Name,a.GroupId,(case when r.Value is null then a.DefValue else r.Value end) ValueConfig,r.Value 
+  	from RolePrivilege r,CustomerRole c,privilege a  
+  	where r.RoleId =c.RoleId and a.PriId=r.PriId and c.Customerid=#{customerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="PrivResultMap" >
+  	select m.PriId,m.GroupId,m.DefValue,m.ValueConfig,m.Name as PriName,n.Name as GroupName from  privilege m left join (select priid,groupid,name from privilege where priid  in(select groupid from privilege group by groupid)) n on m.GroupId=n.GroupId order by m.groupid asc
+  </select>
+</mapper>

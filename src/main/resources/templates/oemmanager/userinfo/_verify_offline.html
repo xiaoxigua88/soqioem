@@ -1,0 +1,63 @@
+<script type="text/html"  id="offlineInformation">
+<form action="?action=Offline" class="form-horizontal sq-form sq-tab-container font-size-12" id="offlineForm">
+	<div class="form-group">
+		<div class="sq-control-label">
+		<span class="necessary-mark">*</span>
+			认证类型：
+		</div>
+		<div class="col-xs-8 sq-form-control">
+			<div class="sq-btn-group" id="verifyTypeBtn">
+				<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-verify_type="3" data-tab_group="true" value="企业" />
+				<input type="button" class="sq-btn btn-primary btn-reverse" data-verify_type="2" data-tab_group="true" value="个体工商户" />
+				<input type="button" class="sq-btn btn-primary btn-reverse" data-verify_type="1" data-tab_group="false" value="个人" />
+	            <input type="hidden" name="verifyType" id="verifyType" value="3" />
+			</div>
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			认证名称：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" name="authName" class="sq-input-reset sq-input-desc necessary" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control" id="authNumberTypePanel">
+		<div class="sq-control-label">
+			证件类型：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<div class="sq-btn-group" id="authNumberTypeBtn">
+				<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-authnumber_type="1" data-tab_group="1" value="工商注册号" />
+				<input type="button" class="sq-btn btn-primary btn-reverse" data-authnumber_type="2" data-tab_group="2" value="信用代码" />
+	            <input type="hidden" name="authNumberType" id="authNumberType" value="1" />
+			</div>
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			证件号码：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" name="authNumber" class="sq-input-reset sq-input-desc necessary" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control" id="legalPersonNamePanel">
+		<div class="sq-control-label">
+			法定代表人：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input type="text" id="legalPersonNameInput" name="legalPersonName" class="sq-input-reset necessary" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+			备忘录：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<textarea name="memo" class="sq-input-reset sq-input-desc necessary" autocomplete="off"></textarea>
+		</div>
+	</div>
+	<input type="hidden" name="userId" value="{{user.UserId}}" />
+</form>
+</script>
