@@ -43,6 +43,13 @@ public class OemCustomerController extends BaseController{
 	@Autowired
 	private OemCustomerService oemCustomerService;
 	
+	/**
+	 * 功能：查询内部员工列表包括分页
+	 * @param model
+	 * @param pageNo
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping("/oemmanager/customer/customerlist")
 	public String customerlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
@@ -66,7 +73,7 @@ public class OemCustomerController extends BaseController{
 		jsonObj.put("lst", lst);
 		jsonObj.put("oemid", ct.getOemid());
 		//获取状态字典
-		String statusList = "[{\"Name\":\"All\",\"Value\":-999,\"Description\":\"全部\"},{\"Name\":\"Normal\",\"Value\":1,\"Description\":\"正常\"},{\"Name\":\"Profile\",\"Value\":2,\"Description\":\"待完善\"},{\"Name\":\"Lock\",\"Value\":3,\"Description\":\"锁定\"}]";
+		String statusList = "[{\"name\":\"All\",\"value\":-999,\"description\":\"全部\"},{\"name\":\"Normal\",\"value\":1,\"description\":\"正常\"},{\"name\":\"Profile\",\"value\":2,\"description\":\"待完善\"},{\"name\":\"Lock\",\"value\":3,\"description\":\"锁定\"}]";
 		jsonObj.put("statusList", FastJsonUtil.parseObject(statusList, List.class));
 		//获取角色列表
 		List<Role> roleList = roleService.qryRolesByOemid(ct.getOemid());
@@ -75,9 +82,16 @@ public class OemCustomerController extends BaseController{
 		
 		return "/oemmanager/customer/customerlist";
     }
-	@RequestMapping("/oemmanager/customer/customeredit")
+	
+	/**分页页面修改每个员工的详细信息
+	 * @param customerid
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/customer/customerinfo")
 	@ResponseBody
-	public ResultFontJS customerEdit(@RequestParam(value="customerid",required=true) Integer customerid, HttpServletRequest req,  HttpServletResponse resp){
+	public ResultFontJS customerInfo(@RequestParam(value="customerid",required=true) Integer customerid, HttpServletRequest req,  HttpServletResponse resp){
 		Customer customer = oemCustomerService.selectByCustomerId(customerid);
 		if(customer==null){
 			return ResultFontJS.error("未查询到对应数据请核对");
@@ -85,7 +99,7 @@ public class OemCustomerController extends BaseController{
 		Map<String, Object> jsonObj = new HashMap<String, Object>();
 		jsonObj.put("customer", customer);
 		Customer ct = this.getCustomer();
-		List<Role> roleList = roleService.qryRolesByOemid(ct.getOemid());
+		List<Role> roleList = roleService.selectCheckedRoleList(customerid, ct.getOemid());
 		jsonObj.put("roleList", roleList);
 		return ResultFontJS.ok(jsonObj);
 	}

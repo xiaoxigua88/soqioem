@@ -19,7 +19,7 @@
 			        </a>
 			        <ul class="dropdown-menu sq-search-dropdown">
 		                {{each statusList as item i}}
-			            <li><a href="#a_null" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			            <li><a href="#a_null" class="{{if filter.status == item.value}}sq-default-option{{/if}}" data-drop="{{item.value}}">{{item.description}}</a></li>
 			            {{/each}}
 			        </ul>
 		        </div>
@@ -55,9 +55,6 @@
 				</th>
 				<th class="text-center" style="width:135px" data-order_name="registertime">
 					加入时间
-				</th>
-				<th class="text-center" style="width:135px" data-order_name="registertime">
-					上次分配时间
 				</th>
 				<th class="text-center" style="width:135px" data-order_name="currentlogintime">
 					登录时间
@@ -101,9 +98,6 @@
 					    {{item.addtime}}
 					</td>
 					<td class="text-center">
-					    {{item.assigntime}}
-					</td>
-					<td class="text-center">
 					    {{item.currentlogintime}}
 					</td>
 					<td class="text-center">
@@ -136,3 +130,4 @@
 		</table>
 	</div>
 </div>
+</script>

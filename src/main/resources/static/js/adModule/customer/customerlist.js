@@ -3,7 +3,7 @@ $(function() {
     //用户新增
     $("#btnAdd").click(function() {
         $.dialog({
-            title: "员工资料编辑",
+            title: "员工资料新增",
             cancel: true,
             okVal: "保存",
             cancelVal: "关闭",
@@ -31,11 +31,11 @@ $(function() {
 
     //用户编辑
     $(".customer-edit").click(function() {
-        var customerId = $(this).data("customerid");
+        var customerid = $(this).data("customerid");
         SQ.post({
-            url: "?action=GetCustomerInfo",
+            url: "/oemmanager/customer/customerinfo",
             data: {
-                customerId: customerId
+            	customerid: customerid
             },
             isCoverSuccess: true,
             success: function(json) {
@@ -48,7 +48,7 @@ $(function() {
                     cancel: true,
                     okVal: "保存",
                     cancelVal: "关闭",
-                    content: template("editInformation", { customer: json.customer, statusList: jsData.statusList, roleList: json.roleList }),
+                    content: template("editInformation", { customer: json.customer, statusList: jsData.statusList, roleList: json.roleList}),
                     init: function() {
                         // 初始化sq-btn-group
                         SQ.component.initTabs();

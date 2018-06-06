@@ -93,13 +93,6 @@ public class PrivilegeService {
 		return setRoles;
 	}
 	
-	public List<Role> getCheckedRoleListForCustomer(Integer customerId,Integer oemid){
-		//根据员工Id获取员工角色
-		List<Role> custRoles = customerroleMapper.selectRoleListByCustomerId(customerId);
-		List<Role> oemRoles = rm.selectRolseByOemid(oemid);
-		return custRoles;
-	}
-	
 	//更新角色
 	@Transactional("primaryTransactionManager")
 	public boolean updateRoleAndRolePrivilege(Role role){

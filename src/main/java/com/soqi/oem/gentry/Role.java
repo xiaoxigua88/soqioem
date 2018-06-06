@@ -20,6 +20,8 @@ public class Role implements Serializable {
 
     private List<Privilege> privileges;
     
+    private Integer exist;
+    
     private static final long serialVersionUID = 1L;
 
     public Integer getRoleid() {
@@ -69,6 +71,15 @@ public class Role implements Serializable {
 
 	public void setPrivileges(List<Privilege> privileges) {
 		this.privileges = privileges;
+	}
+
+	
+	public Integer getExist() {
+		return exist;
+	}
+
+	public void setExist(Integer exist) {
+		this.exist = exist;
 	}
 
 	@Override

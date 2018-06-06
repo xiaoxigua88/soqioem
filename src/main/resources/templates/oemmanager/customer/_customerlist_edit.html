@@ -11,7 +11,7 @@
 	{{/if}}
 	<div class="form-group validate-control">
 		<div class="sq-control-label">
-			姓名1：
+			姓名：
 		</div>
 		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
 			<input type="text" name="realname" class="sq-input-reset necessary" value="{{if customer}}{{customer.realname}}{{/if}}" autocomplete="off" />
@@ -71,7 +71,7 @@
 		</div>
 		<div class="col-xs-8 sq-form-control sq-input-group">
 			{{each roleList as item i}}
-	        <label><input type="checkbox" name="roleId" value="{{item.roleid}}" {{if item.Exist}} checked="checked"{{/if}} />{{item.rolename}}<span class="text-muted">（{{item.description}}）</span></label><br />
+	        <label><input type="checkbox" name="roleId" value="{{item.roleid}}" {{if item.exist}} checked="checked"{{/if}} />{{item.rolename}}<span class="text-muted">（{{item.description}}）</span></label><br />
 			{{/each}}
 		</div>
 	</div>
@@ -80,9 +80,9 @@
         <div class="col-xs-8">
 			<div class="sq-btn-group" id="statusBtn">
 				{{each statusList as item i}}
-				{{if item.Value >0}}
-				<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-degree="{{item.Value}}" data-tab_group="{{item.Value}}" value="{{item.Description}}" />
-				{{if i==1}}<input type="hidden" name="status" id="status" value="{{item.Value}}" />{{/if}}
+				{{if item.value >0}}
+				<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-degree="{{item.value}}" data-tab_group="{{item.value}}" value="{{item.description}}" />
+				{{if i==1}}<input type="hidden" name="status" id="status" value="{{item.value}}" />{{/if}}
 				{{/if}}
 				{{/each}}
 			</div>
