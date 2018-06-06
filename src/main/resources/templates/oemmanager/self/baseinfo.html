@@ -19,14 +19,12 @@
 		    <!-- JS填充 -->
 	    </div>
 	    <div id="contentBox"></div>
-	    <script type="text/html" id="contentTemplate">
-
-	    </script>
+	    <div th:replace="/oemmanager/self/_baseinfo_content"/>
     </div>
 	<div th:replace="/oemmanager/_footer::copy"/>
 	<div>
 		<div th:replace="/oemmanager/_script::commonJs"></div>
-		<!-- <script type="text/javascript" charset="utf-8" th:src="@{/js/common/ucCommon.js}"></script> -->
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/self.js}"></script>
 	</div>
 </body>
 </html>

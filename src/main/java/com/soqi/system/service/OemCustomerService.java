@@ -82,4 +82,12 @@ public class OemCustomerService {
 		int count = customerMapper.updateByPrimaryKey(modCus);
 		return count >0 ? ("SQ." + num) : null;
 	}
+	
+	/**修改个人资料
+	 * @param customer
+	 * @return
+	 */
+	public int updateSelfInfo(Customer customer){
+		return customerMapper.updateByPrimaryKey(customer);
+	}
 }

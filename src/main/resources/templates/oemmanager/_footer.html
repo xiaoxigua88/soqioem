@@ -139,13 +139,22 @@
     
     <!-- 操作保护模板 -->
     <script type="text/html" id="operateProtectTpl">
-#parse("${templateFolder}\\_footer_protect.htm")
+		<div class="alert-warn alert-protect margin-bottom-20 dialog-alert">
+			 为了确保您并非误操作，请输入登录密码进行验证！
+		</div>
+		<div class="form-horizontal sq-form sq-tab-container font-size-12 protect-block">
+ 			<div class="form-group">
+  				<div class="sq-control-label">
+  				 登录密码：
+  				</div>
+  				<div class="col-xs-8 sq-form-control">
+   					<input type="password" name="password" class="sq-input-reset sq-long-input necessary" placeholder="请输入密码" autofocus />
+  				</div>
+ 			</div>
+		</div>
     </script>    
     <!-- 用户概况模板 -->
-    <script type="text/html" id="userViewTpl">
-#parse("${templateFolder}\\_userview.htm")
-    </script>
-    
+    <div th:replace="/oemmanager/_userview"/>
     <!-- 验证码确认 -->
     <div id="captchaCheck" class="captcha-box" style="display:none;">
         <table>

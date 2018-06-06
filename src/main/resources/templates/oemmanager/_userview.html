@@ -1,0 +1,511 @@
+<script type="text/html" id="userViewTpl">
+<div class="sq-tabs-container clearfix margin-bottom-20">
+	<ul class="text-center pull-left clearfix">
+		<li class="sq-tab sq-user-tab" control="userview">
+			<a href="#a_null">
+				用户概览
+			</a>
+		</li>
+		<li class="sq-tab sq-user-tab sq-tab--current" control="verify">
+			<a href="#a_null">
+				实名认证
+			</a>
+		</li>
+		<li class="sq-tab sq-user-tab" control="loginlog">
+			<a href="#a_null">
+				登录日志
+			</a>
+		</li>
+		<li class="sq-tab sq-user-tab" control="accountdetail">
+			<a href="#a_null">
+				资金明细
+			</a>
+		</li>
+		<li class="sq-tab sq-user-tab" control="goldcost">
+			<a href="#a_null">
+				优币消费
+			</a>
+		</li>
+	</ul>
+</div>
+
+<div class="form-horizontal sq-form font-size-13 hide sq-overview sq-userview" id="userview">
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">账户信息：</div>
+		<div class="col-xs-3">
+			{{user.UserId}} - {{user.Mobile}}
+		</div>
+		<div class="sq-control-label sq-label-mini">Email：</div>
+		<div class="col-xs-5">
+			{{user.Email}} {{if user.EmailVeirfy}}<span class="text-finished">已绑定</span>{{else}}<span class="text-unfinished">未绑定</span>{{/if}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">账户状态：</div>
+		<div class="col-xs-3 text-left">
+			<span class="{{user.UserStatus | getUserStatusClass:"className"}}">{{user.UserStatus | getUserStatusClass:"name"}}</span>
+		</div>
+		<div class="sq-control-label sq-label-mini">实名认证：</div>
+		<div class="col-xs-5 text-left">
+			<span class="{{verify.VerifyStatus | getVerifyStatusClass:"className"}}">{{verify.VerifyStatus | getVerifyStatusClass:"name"}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">称呼：</div>
+		<div class="col-xs-3 text-left">
+			{{user.CallName}}
+		</div>
+		<div class="sq-control-label sq-label-mini">QQ：</div>
+		<div class="col-xs-5 text-left">
+			{{user.QQ}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">注册时间：</div>
+		<div class="col-xs-3 text-left">
+			{{user.RegisterTime}}
+		</div>
+		<div class="sq-control-label sq-label-mini">注册IP：</div>
+		<div class="col-xs-5 text-left">
+			{{user.RegisterIp}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">登录次数：</div>
+		<div class="col-xs-3 text-left">
+			{{user.LoginCount}}
+		</div>
+		<div class="sq-control-label sq-label-mini">注册标识：</div>
+		<div class="col-xs-5 text-left">
+			{{user.RegisterStamp}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">最新登录：</div>
+		<div class="col-xs-3 text-left">
+			{{user.CurrentLoginTime}}
+		</div>
+		<div class="sq-control-label sq-label-mini">登录IP：</div>
+		<div class="col-xs-5 text-left">
+			{{user.CurrentLoginIp}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">上次登录：</div>
+		<div class="col-xs-3 text-left">
+			{{user.LastLoginTime}}
+		</div>
+		<div class="sq-control-label sq-label-mini">登录IP：</div>
+		<div class="col-xs-5 text-left">
+			{{user.LastLoginIp}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">优币数量：</div>
+		<div class="col-xs-3 text-left">
+			{{user.UserAccount.TotalGold}}个
+		</div>
+		<div class="sq-control-label sq-label-mini">账户余额：</div>
+		<div class="col-xs-5 text-left">
+			￥{{user.UserAccount.TotalAmount | toFixed}}（冻结￥{{user.UserAccount.FreezeAmount | toFixed}}）
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">累计充值：</div>
+		<div class="col-xs-3 text-left">
+			￥{{count.TotalRecharge | toFixed}}
+		</div>
+		<div class="sq-control-label sq-label-mini">最近充值：</div>
+		<div class="col-xs-5 text-left">
+			{{if count.LastRecharge>0}}￥{{count.LastRecharge | toFixed}}（{{count.LastRechargeTime}}）{{else}}无{{/if}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">累计消费：</div>
+		<div class="col-xs-3 text-left">
+			￥{{count.TotalCost | toFixed}}
+		</div>
+		<div class="sq-control-label sq-label-mini">最近消费：</div>
+		<div class="col-xs-5 text-left">
+			{{if count.LastCost>0}}￥{{count.LastCost | toFixed}}（{{count.LastCostTime}}）{{else}}无{{/if}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">优币消费：</div>
+		<div class="col-xs-3 text-left">
+			{{count.TotalGoldCost}}个
+		</div>
+		<div class="sq-control-label sq-label-mini">30天消费：</div>
+		<div class="col-xs-5 text-left">
+			{{count.TotalGoldCost30}}个（日均：{{count.GoldCostPerday}}个）
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">监控任务：</div>
+		<div class="col-xs-3 text-left">
+			{{count.WatchTotalCount}}个
+		</div>
+		<div class="sq-control-label sq-label-mini">优币需求：</div>
+		<div class="col-xs-5 text-left">
+			{{count.WatchTotalBudget}}个
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">API ID：</div>
+		<div class="col-xs-3 text-left">
+			{{if api.UserId>0}}{{api.UserId}} <span class="text-finished">已激活</span>{{else}}<span class="text-unfinished">未开通</span>{{/if}}
+			{{if api.Md5Encode.length>0}}<span class="text-primary">{{api.Md5Encode}}</span>{{/if}}
+		</div>
+		<div class="sq-control-label sq-label-mini">API密钥：</div>
+		<div class="col-xs-3 text-left">
+			{{api.ApiToken}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">通知地址：</div>
+		<div class="col-xs-8 text-left">
+			{{api.NotifyUrl}}
+		</div>
+	</div>
+</div>
+
+<div class="form-horizontal sq-form font-size-13 sq-overview sq-userview" id="verify">
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">账户信息：</div>
+		<div class="col-xs-3">
+			{{user.UserId}} - {{user.Mobile}}
+		</div>
+		<div class="sq-control-label sq-label-mini">Email：</div>
+		<div class="col-xs-5">
+			{{user.Email}} {{if user.EmailVeirfy}}<span class="text-finished">已绑定</span>{{else}}<span class="text-unfinished">未绑定</span>{{/if}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">账户状态：</div>
+		<div class="col-xs-3 text-left">
+			<span class="{{user.UserStatus | getUserStatusClass:"className"}}">{{user.UserStatus | getUserStatusClass:"name"}}</span>
+		</div>
+		<div class="sq-control-label sq-label-mini">实名认证：</div>
+		<div class="col-xs-5 text-left">
+			<span class="{{verify.VerifyStatus | getVerifyStatusClass:"className"}}">{{verify.VerifyStatus | getVerifyStatusClass:"name"}}</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">认证类型：</div>
+		<div class="col-xs-3 text-left">
+			<span class="{{verify.VerifyType | getVerifyTypeClass:"className"}}">{{verify.VerifyType | getVerifyTypeClass:"name"}}</span>
+		</div>
+		<div class="sq-control-label sq-label-mini">认证名称：</div>
+		<div class="col-xs-5 text-left">
+			{{verify.AuthName}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">证件号码：</div>
+		<div class="col-xs-3 text-left">
+			{{verify.AuthNumber}}
+		</div>
+		<div class="sq-control-label sq-label-mini">法定代表人：</div>
+		<div class="col-xs-5 text-left">
+			{{verify.LegalPersonName}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">认证途径：</div>
+		<div class="col-xs-3 text-left">
+			<span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">{{verify.VerifyMethod | getVerifyMethodClass:"name"}}</span>
+		</div>
+		{{if verify.VerifyMethod !=3}}
+		<div class="sq-control-label sq-label-mini">认证金额：</div>
+		<div class="col-xs-5 text-left">
+			￥{{verify.TestMoney}}
+		</div>
+		{{/if}}
+	</div>
+	{{if verify.VerifyMethod !=3}}
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">开户名称：</div>
+		<div class="col-xs-8 text-left">
+			{{if verify.AccountOpenType==1}}{{verify.AuthName}}{{else}}{{verify.LegalPersonName}}{{/if}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">开户银行：</div>
+		<div class="col-xs-8 text-left">
+			{{verify.BankName}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">收款账户：</div>
+		<div class="col-xs-8 text-left">
+			{{verify.BankAccount}}
+		</div>
+	</div>
+	{{/if}}
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">申请时间：</div>
+		<div class="col-xs-3 text-left">
+			{{verify.ApplyTime}}
+		</div>
+		<div class="sq-control-label sq-label-mini">更新时间：</div>
+		<div class="col-xs-5 text-left">
+			{{verify.UpdateTime}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">通过时间：</div>
+		<div class="col-xs-3 text-left">
+			{{verify.PassTime}}
+		</div>
+		<div class="sq-control-label sq-label-mini">失败次数：</div>
+		<div class="col-xs-5 text-left">
+			{{verify.FailCount}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">当前进度：</div>
+		<div class="col-xs-3 text-left">
+			<span class="{{verify.VerifyState | getVerifyStateClass:"className"}}">{{verify.VerifyState | getVerifyStateClass:"name"}}</span>
+		</div>
+		<div class="sq-control-label sq-label-mini">备忘录：</div>
+		<div class="col-xs-5 text-left">
+			{{verify.Memo}}
+		</div>
+	</div>
+	{{if company}}
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">企业类型：</div>
+		<div class="col-xs-8 text-left">
+			{{company.EnterpriseType}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">工商注册号：</div>
+		<div class="col-xs-3 text-left">
+			{{company.RegNo}}
+		</div>
+		<div class="sq-control-label sq-label-mini">信用代码：</div>
+		<div class="col-xs-5 text-left">
+			{{company.CreditCode}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">法定代表人：</div>
+		<div class="col-xs-3 text-left">
+			{{company.FrName}}
+		</div>
+		<div class="sq-control-label sq-label-mini">注册资金：</div>
+		<div class="col-xs-5 text-left">
+			{{company.RegCap}}万元
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">开业日期：</div>
+		<div class="col-xs-3 text-left">
+			{{company.EsDate}}
+		</div>
+		<div class="sq-control-label sq-label-mini">注册币种：</div>
+		<div class="col-xs-5 text-left">
+			{{company.RegCapCur}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">经营状态：</div>
+		<div class="col-xs-3 text-left">
+			{{company.EnterpriseStatus}}
+		</div>
+		<div class="sq-control-label sq-label-mini">经营期限：</div>
+		<div class="col-xs-5 text-left">
+			{{company.OpenFrom}}至{{company.OpenTo}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">注销日期：</div>
+		<div class="col-xs-3 text-left">
+			{{company.CancelDate}}
+		</div>
+		<div class="sq-control-label sq-label-mini">吊销日期：</div>
+		<div class="col-xs-5 text-left">
+			{{company.RevokeDate}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">注册地址：</div>
+		<div class="col-xs-8 text-left">
+			{{company.Address}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">许可经营：</div>
+		<div class="col-xs-8 text-left">
+			{{company.AbuItem}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">一般经营：</div>
+		<div class="col-xs-8 text-left">
+			{{company.CbuItem}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">经营(业务)范围：</div>
+		<div class="col-xs-8 text-left">
+			{{company.OperateScope}}
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="sq-control-label sq-label-mini">经营(业务)范围及方式：</div>
+		<div class="col-xs-8 text-left">
+			{{company.OperateScopeAndForm}}
+		</div>
+	</div>
+	{{/if}}
+</div>
+
+<table class="sq-table hide sq-overview sq-userview" id="loginlog">
+	<thead>
+		<tr>
+			<th class="text-center" style="width:130px">
+				登录时间
+			</th>
+			<th class="text-center" style="width:110px">
+				登录IP
+			</th>
+			<th class="text-center" style="width:110px">
+				所在区域
+			</th>
+			<th class="text-center" style="width:80px">
+				浏览器
+			</th>
+			<th class="text-center" style="width:80px">
+				操作系统
+			</th>
+			<th>
+				登录标识
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each logList as item i}}
+			<tr>
+				<td class="text-center">
+				    {{item.LoginTime}}
+				</td>
+				<td class="text-center">
+				    {{item.Ip}}
+				</td>
+				<td class="text-center">
+				    {{item.Area}}
+				</td>
+				<td class="text-center">
+				    {{item.Brower}}
+				</td>
+				<td class="text-center">
+				    {{item.OS}}
+				</td>
+				<td class="text-center">
+				    {{item.Stamp}}
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+
+<table class="sq-table hide sq-overview sq-userview" id="accountdetail">
+	<thead>
+		<tr>
+			<th class="text-center" style="width:130px">
+				交易时间
+			</th>
+			<th class="text-center" style="width:80px">
+				资金变化
+			</th>
+			<th class="text-center" style="width:80px">
+				冻结解冻
+			</th>
+			<th class="text-center" style="width:80px">
+				余额
+			</th>
+			<th class="text-center" style="width:80px">
+				业务类型
+			</th>
+			<th class="text-center" style="width:135px">
+				业务单号
+			</th>
+			<th>
+				备注
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each accountList as item i}}
+			<tr>
+				<td class="text-center">
+				    <span class="text-muted">{{item.AddTime}}</span>
+				</td>
+				<td class="text-center">
+				    {{if item.Change > 0 }}
+					<span class="text-orange">+{{item.Change | toFixed}}</span>
+					{{else}}
+					<span class="text-primary">{{item.Change | toFixed}}</span>
+				    {{/if}}
+				</td>
+				<td class="text-center">
+				    {{if item.Freeze > 0 }}
+					<span class="text-orange">+{{item.Freeze | toFixed}}</span>
+					{{else}}
+					<span class="text-primary">{{item.Freeze | toFixed}}</span>
+				    {{/if}}
+				</td>
+				<td class="text-center">
+				    <span class="text-orange">￥ {{item.Balance | toFixed}}</span>
+				</td>
+				<td class="text-center">
+				    {{item.TradeType | getTradeTypeClass:"name"}}
+				</td>
+				<td class="text-center">
+				    {{item.TradeId}}
+				</td>
+				<td>
+				    {{item.Description}}
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+
+<table class="sq-table hide sq-overview sq-userview" id="goldcost">
+	<thead>
+		<tr>
+			<th style="width:100px">
+				日期
+			</th>
+			<th style="width:150px">
+				业务类型
+			</th>
+			<th style="width:100px">
+				消费优币
+			</th>
+			<th>
+				备注
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each goldList as item i}}
+			<tr>
+			    <td>
+				    {{item.AddTime | dateFormat:'yyyy-MM-dd'}}
+			    </td>
+			    <td>
+				    {{item.Type | getBusinessTypeClass:"name"}}
+			    </td>
+			    <td class="text-stress">
+				    {{item.Gold}}
+			    </td>
+			    <td></td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>

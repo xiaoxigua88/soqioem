@@ -1,0 +1,90 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">编辑资料</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="alert-warn margin-bottom-20">
+			您若修改信息，请务必确保正确！
+		</div>
+		<form class="form-horizontal sq-form sq-tab-container" action="/oemmanager/self/updateinfo" id="basicInfoForm">
+			<div class="form-group">
+				<div class="sq-control-label">
+					工号：
+				</div>
+				<div class="col-xs-10 sq-form-control">
+					{{customer.customerid}}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					真实姓名：
+				</div>
+				<div class="col-xs-10 sq-form-control">
+					{{customer.realname}}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					手机：
+				</div>
+				<div class="col-xs-10 sq-form-control">
+					{{customer.mobile}}
+					<input type="hidden" name="mobile" id="mobile" value="{{customer.mobile}}" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					称呼：
+				</div>
+				<div class="col-xs-10 sq-form-control validate-control">
+					<input type="text" name="callname" class="sq-input-reset sq-long-input necessary" value="{{customer.callname}}" placeholder="请输入称呼" />
+					<span class="error-reminder"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					电话号码：
+				</div>
+				<div class="col-xs-10 sq-form-control validate-control">
+					<input type="text" name="phone" class="sq-input-reset sq-long-input necessary" value="{{customer.phone}}" placeholder="请输入电话号码" />
+					<span class="error-reminder"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					QQ：
+				</div>
+				<div class="col-xs-10 sq-form-control validate-control">
+					<input type="text" name="qq" class="sq-input-reset sq-long-input necessary" value="{{customer.qq}}" placeholder="请输入QQ" />
+					<span class="error-reminder"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					<span class="necessary-mark">*</span>
+					微信：
+				</div>
+				<div class="col-xs-10 sq-form-control validate-control">
+					<input type="text" name="weixin" class="sq-input-reset sq-long-input necessary" value="{{customer.weixin}}" placeholder="请输入微信" />
+					<span class="error-reminder"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="sq-control-label">
+					&nbsp;
+				</div>
+				<div class="col-xs-10 sq-form-control">
+					<a href="#a_null" class="sq-btn btn-strong" id="savingInfo">保 存</a>
+				    <a href="#a_null" class="hide protection-enabled"></a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</script>
