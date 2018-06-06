@@ -24,37 +24,67 @@
     delete from Customer
     where CustomerId = #{customerid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.soqi.oem.gentry.Customer" >
-    insert into Customer (CustomerId, OemId, Pwd, 
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Customer">
+    insert into Customer (OemId, Pwd, 
       Mobile, RealName, CallName, 
       QQ, Phone, Weixin, 
-      LastLoginTime, LastLoginIp, CurrentLoginTime, 
-      CurrentLoginIp, Domain, LoginCount, Status, 
+      Domain, Status, 
       AddTime)
-    values (#{customerid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
+    values (#{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{callname,jdbcType=VARCHAR}, 
       #{qq,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
-      #{lastlogintime,jdbcType=TIMESTAMP}, #{lastloginip,jdbcType=VARCHAR}, #{currentlogintime,jdbcType=TIMESTAMP}, 
-      #{currentloginip,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, #{logincount,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
-      #{addtime,jdbcType=TIMESTAMP})
+      #{domain,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      sysdatetime())
+      <selectKey resultType="java.lang.Integer" keyProperty="customerid" order="AFTER">
+    	select @@IDENTITY as customerid
+  	  </selectKey>
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Customer" >
     update Customer
-    set OemId = #{oemid,jdbcType=INTEGER},
+    set 
+      <if test="pwd!=null and pwd!=''">
       Pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile!=null and mobile!=''">
       Mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="realname!=null and realname!=''">
       RealName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="callname!=null and callname!=''">
       CallName = #{callname,jdbcType=VARCHAR},
+      </if>
+      <if test="qq!=null and qq!=''">
       QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="phone!=null and phone!=''">
       Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin!=null and weixin!=''">
       Weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime!=null and lastlogintime!=''">
       LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip!=null and lastloginip!=''">
       LastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="currentlogintime!=null and currentlogintime!=''">
       CurrentLoginTime = #{currentlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentloginip!=null and currentloginip!=''">
       CurrentLoginIp = #{currentloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount!=null and logincount!=''">
       LoginCount = #{logincount,jdbcType=INTEGER},
-      Status = #{status,jdbcType=BIT},
-      AddTime = #{addtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="addtime!=null and paddtime!=''">
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status!=null and status!=''">
+      Status = #{status,jdbcType=BIT}
+      </if>
+           
     where CustomerId = #{customerid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

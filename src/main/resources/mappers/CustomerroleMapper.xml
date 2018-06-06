@@ -19,10 +19,15 @@
     where CustomerId = #{customerid,jdbcType=INTEGER}
       and RoleId = #{roleid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByCustomerrole" parameterType="com.soqi.oem.gentry.Customerrole" >
+    delete from CustomerRole
+    where CustomerId = #{customerid,jdbcType=INTEGER}
+      and RoleId = #{roleid,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Customerrole" >
     insert into CustomerRole (CustomerId, RoleId, AddTime, 
       Description)
-    values (#{customerid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP}, 
+    values (#{customerid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, sysdatetime(), 
       #{description,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Customerrole" >
@@ -37,6 +42,11 @@
     from CustomerRole
     where CustomerId = #{customerid,jdbcType=INTEGER}
       and RoleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="INTEGER" >
+    select CustomerId, RoleId, AddTime, Description
+    from CustomerRole
+    where CustomerId = #{customerid,jdbcType=INTEGER}
   </select>
   <select id="selectRoleListByCustomerId" resultMap="RoleResultMap" parameterType="INTEGER" >
     select m.roleid,n.oemid,n.rolename,n.AddTime,n.Description from customerRole m left join role n on m.RoleId = n.RoleId left join Customer l on m.CustomerId = l.CustomerId where l.OemId = n.OemId and m.CustomerId = #{customerid,jdbcType=INTEGER}

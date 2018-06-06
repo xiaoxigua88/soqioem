@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
+import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.PriUtil;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.oem.gentry.Customer;
@@ -103,6 +104,28 @@ public class OemCustomerController extends BaseController{
 		jsonObj.put("roleList", roleList);
 		return ResultFontJS.ok(jsonObj);
 	}
+	@RequestMapping("/oemmanager/customer/customersave")
+	@ResponseBody
+	public ResultFontJS customerSave(Customer customer, Integer[] roleId, HttpServletRequest req){
+		Customer ct = this.getCustomer();
+		customer.setOemid(ct.getOemid());
+		if(customer.getCustomerid() !=null){
+			//根据customerid查询用户信息
+			Customer cus = oemCustomerService.selectByCustomerId(customer.getCustomerid());
+			if(cus == null){
+				return ResultFontJS.error("提交修改数据异常");
+			}
+			oemCustomerService.updateCustomerInfo(customer, roleId);
+			return ResultFontJS.ok("员工数据修改成功");
+		}else{
+			//新增
+			customer.setPwd(MD5Utils.encrypt(customer.getMobile(), "12345678"));
+			customer.setDomain(req.getServerName());
+			oemCustomerService.saveCustomerInfo(customer, roleId);
+			return ResultFontJS.ok("员工添加成功");
+		}
+	}
+	
 	@RequestMapping("/oemmanager/customer/operatelog")
 	public String operatelog(Model model){
 		return "/oemmanager/customer/operatelog";

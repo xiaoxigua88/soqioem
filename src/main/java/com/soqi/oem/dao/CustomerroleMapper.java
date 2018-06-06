@@ -11,13 +11,18 @@ import com.soqi.oem.gentry.Role;
 public interface CustomerroleMapper {
     int deleteByPrimaryKey(@Param("customerid") Integer customerid, @Param("roleid") Integer roleid);
 
+    int deleteByCustomerrole(Customerrole record);
+    
     int insert(Customerrole record);
 
     Customerrole selectByPrimaryKey(@Param("customerid") Integer customerid, @Param("roleid") Integer roleid);
 
     List<Customerrole> selectAll();
     
+    List<Customerrole> selectByCustomerId(Integer customerid);
+    
     List<Role> selectRoleListByCustomerId(Integer customerid);
 
     int updateByPrimaryKey(Customerrole record);
+    
 }

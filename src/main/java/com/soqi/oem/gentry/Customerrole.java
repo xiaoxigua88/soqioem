@@ -14,7 +14,16 @@ public class Customerrole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getCustomerid() {
+    public Customerrole() {
+		super();
+	}
+    public Customerrole(Integer customerid, Integer roleid) {
+		super();
+		this.customerid = customerid;
+		this.roleid = roleid;
+	}
+
+	public Integer getCustomerid() {
         return customerid;
     }
 
