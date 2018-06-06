@@ -41,7 +41,7 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Customer" >
     update Customer
-    set 
+    <trim prefix="set" suffixOverrides=",">
       <if test="pwd!=null and pwd!=''">
       Pwd = #{pwd,jdbcType=VARCHAR},
       </if>
@@ -84,7 +84,7 @@
       <if test="status!=null and status!=''">
       Status = #{status,jdbcType=BIT}
       </if>
-           
+    </trim>       
     where CustomerId = #{customerid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

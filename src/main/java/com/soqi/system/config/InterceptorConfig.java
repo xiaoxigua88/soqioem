@@ -65,8 +65,6 @@ public class InterceptorConfig implements HandlerInterceptor{
 				jsonData.put("oemid", ou.getOemid());
 			}
 			jsonData.put("domain", WebAddrUtils.getDomain(request));
-			//jsonData.put("specialContent", "{{each priEnumList as item2 j}}<label class=\"margin-right-10 {{if (item2.value & item.valueconfig) ==0}}text-muted{{else}}text-orange{{/if}}\"><input type=\"checkbox\" class=\"chk_defval defval{{item.priid}}\" data-for=\"{{item.priid}}\" value=\"{{item2.value}}\" {{if (item2.value & item.valueconfig ==0)}} disabled=\"disabled\"  {{else if (item.defvalue & item2.value== item2.value)}} checked=\"checked\"{{/if}}/>{{item2.description}}</label>{{/each}}");
-			jsonData.put("specialContent", "item2.value== item2.value");
 			jsonData.put("httpDomain", WebAddrUtils.getHttpDomain(request));
 			modelAndView.addAllObjects(map);
 			System.out.println(">>>MyInterceptor1>>>>>>>请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）");

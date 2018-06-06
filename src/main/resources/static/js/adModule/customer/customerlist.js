@@ -74,14 +74,14 @@ $(function() {
 
     //重置密码
     $(".customer-pwd").click(function() {
-        var customerId = $(this).data("customerid");
+        var customerid = $(this).data("customerid");
         SQ.tips.ask({
             title: "重置员工密码确认",
             content: "确认为员工重置密码？",
             ok: function() {
                 SQ.post({
-                    data: { action: "InitPwd", customerId: customerId },
-                    url: ""
+                    data: { action: "InitPwd", customerid: customerid },
+                    url: "/oemmanager/customer/customerinitpwd"
                 });
             }
         });

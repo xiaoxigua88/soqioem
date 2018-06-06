@@ -41,11 +41,19 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
+	/*@RequestMapping("/oemmanager/logout")
+	public String adminLogout(Model model){
+		return "/oemmanager/login";
+    }*/
+	
+	/**代理管理员退出页
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/oemManagerLogin")
 	public String adminLoginPage(Model model){
 		return "/oemmanager/login";
     }
-	
 	@RequestMapping("/")
 	public String index(Model model){
 		return "/login";

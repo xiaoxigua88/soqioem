@@ -104,6 +104,12 @@ public class OemCustomerController extends BaseController{
 		jsonObj.put("roleList", roleList);
 		return ResultFontJS.ok(jsonObj);
 	}
+	/**功能内部员工数据修改和保存
+	 * @param customer
+	 * @param roleId
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping("/oemmanager/customer/customersave")
 	@ResponseBody
 	public ResultFontJS customerSave(Customer customer, Integer[] roleId, HttpServletRequest req){
@@ -124,6 +130,28 @@ public class OemCustomerController extends BaseController{
 			oemCustomerService.saveCustomerInfo(customer, roleId);
 			return ResultFontJS.ok("员工添加成功");
 		}
+	}
+	/**功能：初始化员工密码
+	 * @param action
+	 * @param customerid
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/customer/customerinitpwd")
+	@ResponseBody
+	public ResultFontJS customerInitPwd(@RequestParam(value="action",required=true) String action, @RequestParam(value="customerid",required=true) Integer customerid){
+		//更新员工密码
+		if(customerid != null){
+			//根据customerid查询用户信息
+			Customer cus = oemCustomerService.selectByCustomerId(customerid);
+			if(cus == null){
+				return ResultFontJS.error("提交修改数据异常");
+			}
+			String pwd = oemCustomerService.InitPwd(cus);
+			if (pwd != null) {
+				return ResultFontJS.ok("密码重置成功，新密码为"+pwd, false).put("time", 10);
+			}
+		}
+		return ResultFontJS.error();
 	}
 	
 	@RequestMapping("/oemmanager/customer/operatelog")

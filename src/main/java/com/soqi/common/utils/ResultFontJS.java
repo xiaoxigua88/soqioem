@@ -28,6 +28,12 @@ public class ResultFontJS extends HashMap<String, Object> {
 		r.put("reload", true);
 		return r;
 	}
+	public static ResultFontJS ok(String text, boolean reload) {
+		ResultFontJS r = new ResultFontJS(text);
+		r.put("result", true);
+		r.put("reload", reload);
+		return r;
+	}
 
 	public static ResultFontJS ok(Map<String, Object> map) {
 		ResultFontJS r = new ResultFontJS("操作成功");

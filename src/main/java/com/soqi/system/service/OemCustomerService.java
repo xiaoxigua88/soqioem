@@ -1,12 +1,14 @@
 package com.soqi.system.service;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.soqi.common.exception.BDException;
+import com.soqi.common.utils.MD5Utils;
+import com.soqi.common.utils.RandomUtil;
 import com.soqi.oem.dao.CustomerMapper;
 import com.soqi.oem.dao.CustomerroleMapper;
 import com.soqi.oem.gentry.Customer;
@@ -65,5 +67,19 @@ public class OemCustomerService {
 			Customerrole record = new Customerrole(customer.getCustomerid(),roleid);
 			customerroleMapper.insert(record);
 		}
+	}
+	
+	/**密码重置
+	 * @param customer
+	 * @return
+	 */
+	public String InitPwd(Customer customer){
+		int num = RandomUtil.getNotSimple(RandomUtil.SEEDARR, 6);
+		String pwd = MD5Utils.encrypt(customer.getMobile(),"SQ." + num);
+		Customer modCus = new Customer();
+		modCus.setPwd(pwd);
+		modCus.setCustomerid(customer.getCustomerid());
+		int count = customerMapper.updateByPrimaryKey(modCus);
+		return count >0 ? ("SQ." + num) : null;
 	}
 }
