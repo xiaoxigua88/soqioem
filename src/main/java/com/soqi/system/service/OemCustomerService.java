@@ -11,8 +11,10 @@ import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.RandomUtil;
 import com.soqi.oem.dao.CustomerMapper;
 import com.soqi.oem.dao.CustomerroleMapper;
+import com.soqi.oem.dao.OembaseMapper;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Customerrole;
+import com.soqi.oem.gentry.Oembase;
 
 @Service
 public class OemCustomerService {
@@ -22,6 +24,9 @@ public class OemCustomerService {
 
 	@Autowired
 	private CustomerroleMapper customerroleMapper;
+	
+	@Autowired
+	private OembaseMapper oembaseMapper;
 	
 	//根据员工ID和所属代理编号获取当前代理系统下的员工信息表
 	public List<Customer> qryCustomersByCusIdAndOemid(int customerid, int oemid, int start, int size){
@@ -34,6 +39,19 @@ public class OemCustomerService {
 	
 	public Customer selectByCustomerId(Integer customerid){
 		return customerMapper.selectByPrimaryKey(customerid);
+	}
+	
+	/**功能：根据员工ID获取员工信息和当前代理信息
+	 * @param customerid
+	 * @return
+	 */
+	public Customer qryCustomerAndOemBaseInfo(Integer customerid){
+		//查询当前登录人员信息
+		Customer customer = customerMapper.selectByPrimaryKey(customerid);
+		//查询当前人员所属代理信息
+		Oembase oembase = oembaseMapper.selectByPrimaryKey(customer.getOemid());
+		customer.setOembase(oembase);
+		return customer;
 	}
 	
 	/**功能：修改员工信息

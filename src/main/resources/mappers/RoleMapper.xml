@@ -13,8 +13,11 @@
     where RoleId = #{roleid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Role" >
-    insert into Role (RoleId, OemId, RoleName, Description)
-    values ( #{roleid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+    insert into Role (OemId, RoleName, Description)
+    values (#{oemid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Integer" keyProperty="roleid" order="AFTER">
+    	select @@IDENTITY as roleid
+  	</selectKey>
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Role" >
     update Role

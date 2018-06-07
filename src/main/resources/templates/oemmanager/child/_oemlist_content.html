@@ -1,0 +1,177 @@
+<script type="text/html"  id="contentTemplate">
+		<div class="sq-panel">
+			<div class="sq-panel-heading clearfix">
+				<div class="pull-left sq-panel-title">代理列表</div>
+				<div class="pull-left">
+					<a href="#a_null" id="user-add" data-oemid="{{oemid}}" class="pull-left sq-btn btn-strong btn-operate-add margin-left-20">代理添加</a>
+            	</div>
+			</div>
+			
+			<div class="sq-panel-body">
+				<div class="task-operates clearfix margin-bottom-10">
+				<form action="" class="pull-left" id="searchForm">
+			        <label class="pull-left search-group-label">代理编号：</label>
+				    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.oemid}}" placeholder="代理编号" />
+			        <label class="pull-left search-group-label">代理域名：</label>
+				    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.domain}}" placeholder="www.baidu.com" />
+			        <label class="pull-left search-group-label">公司名称：</label>
+				    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.companyname}}" placeholder="公司名称" />
+			        <label class="pull-left search-group-label">添加时间：</label>
+				    <input type="text" name="minRegisterTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.addtime}}" />
+			        
+				    <label class="pull-left search-group-label">状态：</label>
+				    <div data-field_name="status" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+					    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="selected-content"></span>
+						    <span class="sq-caret"></span>
+					    </a>
+					    <ul class="dropdown-menu sq-search-dropdown">
+				            {{each statusList as item i}}
+					        <li><a href="#a_null" class="{{if filter.status == item.value}}sq-default-option{{/if}}" data-drop="{{item.value}}">{{item.description}}</a></li>
+					        {{/each}}
+					    </ul>
+				    </div>
+					<input class="hide" type="text" name="status" value="{{filter.status}}" />
+				    <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+				</form>
+			    </div>
+				<table class="sq-table margin-bottom-20" id="mainList">
+					<thead>
+						<tr>
+							<th rowspan="2" style="width:35px">
+								<input type="checkbox" id="checkAll" />
+							</th>
+							<th rowspan="2" class="text-center" style="width:105px">
+								代理编号
+							</th>
+							<th rowspan="2" class="text-center" style="width:200px">
+								公司名称
+							</th>
+							<th rowspan="2" class="text-center" style="width:155px">
+								公司域名
+							</th>
+							<th rowspan="2" class="text-center" style="width:105px">
+								联系电话
+							</th>
+							
+							<th colspan="4" class="text-center" style="width:400px">
+							           统计
+							</th>
+							<th colspan="2" class="text-center" style="width:245px">
+								时间
+							</th>
+
+							<th rowspan="2" class="text-center" style="width:80px" data-order_name="userstatus">
+								状态
+							</th>
+							<th rowspan="2">
+								操作
+							</th>
+						</tr>
+						<tr>
+							<th class="text-center" style="width:100px" data-order_name="totalamount">
+							    总金额
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="freezeamount">
+							    冻结
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="totalamount">
+							   总任务
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="freezeamount">
+							    总客户
+							</th>
+							
+							<th class="text-center" style="width:100px" data-order_name="totalamount">
+							     添加时间
+							</th>
+							<th class="text-center" style="width:100px" data-order_name="freezeamount">
+							     到期时间
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr>
+								<td>
+									<input type="checkbox" class="list-checkbox" value="{{item.TaskId}}" />
+								</td>
+								<td>
+								    <a href="#a_null" class="user-view" data-oemid="{{item.oemid}}" title="查看代理{{item.companyname}}的详细资料">{{item.oemid}}</a>
+								</td>
+								<td class="text-center">
+								    {{item.companyname}}
+								</td>
+								<td class="text-center">
+								    {{item.domain}}
+								</td>
+								<td class="text-center">
+								    {{item.phone}}
+								</td>
+								<td class="text-center">
+								    <span class="text-orange">￥{{item.totalamount | toFixed}}</span>
+								</td>
+								<td class="text-center">
+								    <span class="text-orange">￥{{item.freezeamount | toFixed}}</span>
+								</td>
+								<td class="text-center">
+								    {{if item.seoamountneed>0}}<span class="text-orange">￥{{item.seoamountneed | tofixed}}</span>{{else}}<span class="text-muted">-</span>{{/if}}
+								</td>
+								<td class="text-center">
+								    {{if item.amountcanuseday>=0}}<span class="text-orange">{{item.amountcanuseday}}</span>{{else}}<span class="text-muted">-</span>{{/if}}
+								</td>
+								<td class="text-center">
+								    {{item.addtime}}
+								</td>
+								<td class="text-center">
+								    {{item.expirytime}}
+								</td>
+								<td class="text-center">
+								    <span class="{{item.status | getOemStatusClass:"className"}}">
+									{{item.status | getOemStatusClass:"name"}}
+									</span>
+								</td>
+								<td>
+									<a href="#a_null" class="user-view" data-userid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:4')==true ? '详情':''}"></a>
+								    <a href="#a_null" class="user-edit" data-userid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:16')==true ? '|编辑':''}">编辑</a>
+									<span class="text-muted operate-spacing">|</span>
+									<div  class="btn-group btn-group-mini">
+										<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="selected-content text-primary">更多</span>
+											<span class="sq-caret text-primary"></span>
+										</a>
+										<ul class="dropdown-menu">
+											{{if item.status==1}}
+											<li><a href="#a_null" class="user-recharge" data-userid="{{item.oemid}}" th:utext="${#PeUtils.hasPermission('1004:16')==true ? '账户充值':''}">账户充值</a></li>
+											{{/if}}
+											
+										</ul>
+									</div>
+								</td>
+							</tr>
+						{{/each}}
+					</tbody>
+					<tfoot>
+					    <tr>
+					        <td><input type="checkbox" id="checkAllBottom" /></td>
+					        <td colspan="18">
+					            <div class="pull-left">
+					                <button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+						                <span class="operate-icon operate-icon-delete"></span>
+						                	激活
+					                </button>
+					                <button id="Button1" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+						                <span class="operate-icon operate-icon-delete"></span>
+						               		 锁定
+					                </button>
+					            </div>
+				                <!-- 引入分页 -->
+				                <!-- 引入分页 -->
+				                {{include "paginationTpl"}}
+					        </td>
+					    </tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+</script>

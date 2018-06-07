@@ -1,0 +1,199 @@
+<script type="text/html"  id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">实名认证</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="task-operates clearfix margin-bottom-10">
+		<form action="" class="pull-left" id="searchForm">
+	        <label class="pull-left search-group-label">用户：</label>
+		    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.userName}}" placeholder="用户ID、手机、Email" />
+	        <label class="pull-left search-group-label">名称：</label>
+		    <input type="text" name="authName" class="pull-left sq-input-reset search-group-input" value="{{filter.authName}}" placeholder="认证名称" />
+		    <label class="pull-left search-group-label">类型：</label>
+		    <div data-field_name="verifyType" class="pull-left sq-dropdown-container btn-group">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each verifyTypeList as item i}}
+			        <li><a href="#a_null" class="{{if filter.verifyType == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+		    <label class="pull-left search-group-label">途径：</label>
+		    <div data-field_name="verifyMethod" class="pull-left sq-dropdown-container btn-group">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each verifyMethodList as item i}}
+			        <li><a href="#a_null" class="{{if filter.verifyMethod == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+		    <label class="pull-left search-group-label">步骤：</label>
+		    <div data-field_name="verifyState" class="pull-left sq-dropdown-container btn-group">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each verifyStateList as item i}}
+			        <li><a href="#a_null" class="{{if filter.verifyState == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+		    <label class="pull-left search-group-label">状态：</label>
+		    <div data-field_name="verifyStatus" class="pull-left sq-dropdown-container btn-group">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each verifyStatusList as item i}}
+			        <li><a href="#a_null" class="{{if filter.verifyStatus == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+			<input class="hide" type="text" name="verifyType" value="{{filter.verifyType}}" />
+			<input class="hide" type="text" name="verifyMethod" value="{{filter.verifyMethod}}" />
+			<input class="hide" type="text" name="verifyState" value="{{filter.verifyState}}" />
+			<input class="hide" type="text" name="verifyStatus" value="{{filter.verifyStatus}}" />
+		    <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+		</form>
+	    </div>
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th class="text-center" style="width:65px">
+	用户ID
+</th>
+<th class="text-center" style="width:100px">
+	手机
+</th>
+<th class="text-center" style="width:85px" data-order_name="verifytype">
+	认证类型
+</th>
+<th class="text-center" style="width:85px" data-order_name="paymenttype">
+    认证途径
+</th>
+<th class="text-center" style="width:200px">
+	认证名称
+</th>
+<th class="text-center" style="width:130px">
+	证件号码
+</th>
+<th class="text-center" style="width:65px">
+	法人
+</th>
+<th class="text-center" style="width:135px" data-order_name="applytime">
+	申请时间
+</th>
+<th class="text-center" style="width:135px" data-order_name="updatetime">
+	更新时间
+</th>
+<th class="text-center" style="width:135px" data-order_name="passtime">
+	通过时间
+</th>
+<th class="text-center" style="width:85px" data-order_name="failcount">
+	失败次数
+</th>
+<th class="text-center" style="width:85px" data-order_name="verifystate">
+    认证进度
+</th>
+<th class="text-center" style="width:85px" data-order_name="userstatus">
+			认证状态
+		</th>
+		<th>
+			操作
+		</th>
+	</tr>
+</thead>
+<tbody>
+	{{each lst as item i}}
+		<tr>
+			<td>
+			    <a href="#a_null" class="user-view" data-userid="{{item.UserId}}" title="查看用户{{item.Mobile}}的详细资料">{{item.UserId}}</a>
+			</td>
+			<td>
+			    <a href="#a_null" class="user-view" data-userid="{{item.UserId}}" title="查看用户{{item.Mobile}}的详细资料">{{item.Mobile}}</a>
+			</td>
+			<td class="text-center">
+			    <span class="{{item.VerifyType | getVerifyTypeClass:"className"}}">
+				{{item.VerifyType | getVerifyTypeClass:"name"}}
+				</span>
+			</td>
+			<td class="text-center">
+			    <span class="{{item.VerifyMethod | getVerifyMethodClass:"className"}}">
+				{{item.VerifyMethod | getVerifyMethodClass:"name"}}
+				</span>
+			</td>
+			<td class="text-center">
+			    {{item.AuthName}}
+			</td>
+			<td class="text-center">
+			    {{item.AuthNumber}}
+			</td>
+			<td class="text-center">
+			    {{item.LegalPersonName}}
+			</td>
+			<td class="text-center">
+			    {{item.ApplyTime}}
+			</td>
+			<td class="text-center">
+			    {{item.UpdateTime}}
+			</td>
+			<td class="text-center">
+			    {{item.PassTime}}
+			</td>
+			<td class="text-center">
+			    {{item.FailCount}}
+			</td>
+			<td class="text-center">
+			    <span class="{{item.VerifyState | getVerifyStateClass:"className"}}">
+				{{item.VerifyState | getVerifyStateClass:"name"}}
+				</span>
+			</td>
+			<td class="text-center">
+			    <span class="{{item.VerifyStatus | getVerifyStatusClass:"className"}}">
+				{{item.VerifyStatus | getVerifyStatusClass:"name"}}
+				</span>
+			</td>
+			<td>
+			    #if(${this.ExistPrivilege(1302, ${pe_Model})})<a href="#a_null" class="user-view" data-control="verify" data-userid="{{item.UserId}}">详情</a>
+				<span class="text-muted operate-spacing">|</span>#end
+			    #if(${this.ExistPrivilege(1302, ${pe_Model})})<a href="#a_null" class="verify-log" data-userid="{{item.UserId}}">认证记录</a>#end
+				{{if item.VerifyState==100}}
+				#if(${this.ExistPrivilege(1302, ${pe_Update})})<span class="text-muted operate-spacing">|</span>
+			    <a href="#a_null" class="verify-review" data-userid="{{item.UserId}}">审核资料</a>#end
+				{{else if item.VerifyState==101}}
+				#if(${this.ExistPrivilege(1302, ${pe_Update})})<span class="text-muted operate-spacing">|</span>
+			    <a href="#a_null" class="verify-payment" data-userid="{{item.UserId}}">打认证款</a>#end
+				{{else if item.VerifyState==102}}
+				#if(${this.ExistPrivilege(1302, ${pe_Update})})<span class="text-muted operate-spacing">|</span>
+			    <a href="#a_null" class="verify-paymentstatus" data-userid="{{item.UserId}}">打款状态</a>#end
+				{{else if item.VerifyState==1 || item.VerifyState==600 || item.VerifyState==601}}
+				#if(${this.ExistPrivilege(1302, ${pe_Update})})<span class="text-muted operate-spacing">|</span>
+			    <a href="#a_null" class="verify-offline" data-userid="{{item.UserId}}">线下认证</a>#end
+				{{/if}}
+				#if(${this.ExistPrivilege(1302, ${pe_Update})})<span class="text-muted operate-spacing">|</span>
+			    <a href="#a_null" class="verify-reset" data-userid="{{item.UserId}}">重新认证</a>#end
+			</td>
+		</tr>
+	{{/each}}
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="14">
+               <!-- 引入分页 -->
+		                {{include "paginationTpl"}}
+			        </td>
+			    </tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+</script>

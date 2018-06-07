@@ -43,6 +43,9 @@
     where CustomerId = #{customerid,jdbcType=INTEGER}
       and RoleId = #{roleid,jdbcType=INTEGER}
   </select>
+  <select id="selectSingleOemRelation" resultMap="BaseResultMap" parameterType="map" >
+    select m.CustomerId, m.RoleId, m.AddTime, m.Description from customerRole m,Customer n where n.CustomerId = m.CustomerId and n.OemId = #{oemid,jdbcType=INTEGER} and n.IsOemManager = #{isoemmanager,jdbcType=INTEGER}
+  </select>
   <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="INTEGER" >
     select CustomerId, RoleId, AddTime, Description
     from CustomerRole

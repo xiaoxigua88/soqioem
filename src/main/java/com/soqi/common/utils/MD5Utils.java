@@ -30,7 +30,7 @@ public class MD5Utils {
 	}
 	public static void main(String[] args) {
 		
-		System.out.println(MD5Utils.encrypt("18897123456", "12345678"));
+		System.out.println(MD5Utils.encrypt("13456889246", "12345678"));
 	}
 
 }

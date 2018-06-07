@@ -1,0 +1,36 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<!-- <meta charset="utf-8"/> -->
+	<title>二级代理管理页</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/adModule/adCommon.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="/oemmanager/_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="/oemmanager/_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="/oemmanager/_menu::menu"/>
+	<div class="sq-main">
+	    <div class="crumb-container" data-nav="childoem_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+	    <!-- 代理列表 -->
+	    <div th:replace="/oemmanager/child/_oemlist_content"/>
+	    <!-- 代理编辑 -->
+	    <!-- <div th:replace="/oemmanager/userinfo/_oemlist_edit"/> -->
+	    <!-- 代理添加 -->
+	    <div th:replace="/oemmanager/child/_oemlist_add"/>
+	    <!-- 代理充值 -->
+	    <!-- <div th:replace="/oemmanager/userinfo/_userlist_content"/> -->
+    </div>
+	<div th:replace="/oemmanager/_footer::copy"/>
+	<div>
+		<div th:replace="/oemmanager/_script::commonJs"></div>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/oemlist.js}"></script>
+	</div>
+</body>
+</html>

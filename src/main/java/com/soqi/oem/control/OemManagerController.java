@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.OemCustomerService;
-import com.soqi.system.service.STService;
 import com.soqi.system.service.UserService;
 
 @Controller
@@ -69,7 +67,7 @@ public class OemManagerController extends BaseController{
 		String verifyCodeMD5 = MD5Utils.encrypt(customer.getMobile(), verifyCode);
 		if(StringUtils.equals(verifyCodeMD5, qrycst.getPwd())){
 			int count = oemCustomerService.updateSelfInfo(customer);
-			Customer newcst = oemCustomerService.selectByCustomerId(this.getCustomer().getCustomerid());
+			Customer newcst = oemCustomerService.qryCustomerAndOemBaseInfo(this.getCustomer().getCustomerid());
 			//一种是通过重新更新Principal达到更新内存中用户信息的目的
 			ShiroUtils.updatePrincipal(newcst);
 			//另一种通过对像属性拷贝的方式达到更新内存中用户信息的目的

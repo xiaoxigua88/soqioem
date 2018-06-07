@@ -1,10 +1,7 @@
 <script type="text/html" id="editInformation">
 <form action="/oemmanager/customer/rolePrivilegeSave?operateType={{if role}}1{{else}}0{{/if}}" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:700px;" id="editForm">
 	<div class="form-group validate-control">
-		<div class="sq-control-label">角色编号：</div>
-        <div class="col-xs-3">
-			<input type="text" name="roleid" class="sq-input-reset necessary" value="{{if role}}{{role.roleid}}{{/if}}" autocomplete="off" {{if role}} readonly="readonly"{{/if}} />
-        </div>
+		
 		<div class="sq-control-label">角色名称：</div>
         <div class="col-xs-3">
 			<input type="text" name="rolename" class="sq-input-reset necessary" value="{{if role}}{{role.rolename}}{{/if}}" autocomplete="off" />

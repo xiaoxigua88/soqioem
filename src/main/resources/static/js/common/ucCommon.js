@@ -229,6 +229,13 @@ $(function() {
         "3": { className: "text-red", name: "锁定" }
     };
     SQ.biz.createObjectMapHelper("getUserStatusClass", userStatusMap);
+    
+    //代理状态映射
+    var oemStatusMap = {
+    		"1": { className: "text-finished", name: "正常" },
+    		"0": { className: "text-red", name: "锁定" }
+    };
+    SQ.biz.createObjectMapHelper("getOemStatusClass", oemStatusMap);
 
     //业务查询映射
     var businessTypeMap = {

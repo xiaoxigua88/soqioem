@@ -3,6 +3,8 @@ package com.soqi.oem.gentry;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Oembase implements Serializable {
     private Integer oemid;
 
@@ -12,11 +14,15 @@ public class Oembase implements Serializable {
 
     private String domain;
 
-    private String companylname;
+    private String companyname;
 
     private String phone;
-
+    
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date expirytime;
+    
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date addtime;
 
     private Integer totaluserscount;
 
@@ -30,6 +36,8 @@ public class Oembase implements Serializable {
 
     private Integer mealstatus;
 
+    private Integer hasnextoem;
+    
     private static final long serialVersionUID = 1L;
 
     public Integer getOemid() {
@@ -64,15 +72,17 @@ public class Oembase implements Serializable {
         this.domain = domain == null ? null : domain.trim();
     }
 
-    public String getCompanylname() {
-        return companylname;
-    }
+   
 
-    public void setCompanylname(String companylname) {
-        this.companylname = companylname == null ? null : companylname.trim();
-    }
+    public String getCompanyname() {
+		return companyname;
+	}
 
-    public String getPhone() {
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname == null ? null : companyname.trim();
+	}
+
+	public String getPhone() {
         return phone;
     }
 
@@ -136,7 +146,24 @@ public class Oembase implements Serializable {
         this.mealstatus = mealstatus;
     }
 
-    @Override
+    public Integer getHasnextoem() {
+		return hasnextoem;
+	}
+
+	public void setHasnextoem(Integer hasnextoem) {
+		this.hasnextoem = hasnextoem;
+	}
+
+	
+	public Date getAddtime() {
+		return addtime;
+	}
+
+	public void setAddtime(Date addtime) {
+		this.addtime = addtime;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
@@ -146,7 +173,7 @@ public class Oembase implements Serializable {
         sb.append(", mealid=").append(mealid);
         sb.append(", tempid=").append(tempid);
         sb.append(", domain=").append(domain);
-        sb.append(", companylname=").append(companylname);
+        sb.append(", companyname=").append(companyname);
         sb.append(", phone=").append(phone);
         sb.append(", expirytime=").append(expirytime);
         sb.append(", totaluserscount=").append(totaluserscount);

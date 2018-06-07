@@ -6,57 +6,75 @@
     <result column="MealId" property="mealid" jdbcType="INTEGER" />
     <result column="TempId" property="tempid" jdbcType="INTEGER" />
     <result column="Domain" property="domain" jdbcType="VARCHAR" />
-    <result column="CompanylName" property="companylname" jdbcType="VARCHAR" />
+    <result column="CompanyName" property="companyname" jdbcType="VARCHAR" />
     <result column="Phone" property="phone" jdbcType="VARCHAR" />
     <result column="ExpiryTime" property="expirytime" jdbcType="TIMESTAMP" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
     <result column="TotalUsersCount" property="totaluserscount" jdbcType="INTEGER" />
     <result column="TotalTaskCount" property="totaltaskcount" jdbcType="INTEGER" />
     <result column="OemLevel" property="oemlevel" jdbcType="INTEGER" />
     <result column="ParentOemId" property="parentoemid" jdbcType="INTEGER" />
     <result column="Status" property="status" jdbcType="INTEGER" />
     <result column="MealStatus" property="mealstatus" jdbcType="INTEGER" />
+    <result column="HasNextOem" property="hasnextoem" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from OemBase
     where OemId = #{oemid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Oembase" >
-    insert into OemBase (OemId, MealId, TempId, 
-      "Domain", CompanylName, Phone, 
+    insert into OemBase (MealId, TempId, 
+      Domain, CompanyName, Phone, 
       ExpiryTime, TotalUsersCount, TotalTaskCount, 
-      OemLevel, ParentOemId, "Status", 
+      OemLevel, ParentOemId, Status, AddTime, HasNextOem,
       MealStatus)
-    values (#{oemid,jdbcType=INTEGER}, #{mealid,jdbcType=INTEGER}, #{tempid,jdbcType=INTEGER}, 
-      #{domain,jdbcType=VARCHAR}, #{companylname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+    values (#{mealid,jdbcType=INTEGER}, #{tempid,jdbcType=INTEGER}, 
+      #{domain,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{expirytime,jdbcType=TIMESTAMP}, #{totaluserscount,jdbcType=INTEGER}, #{totaltaskcount,jdbcType=INTEGER}, 
-      #{oemlevel,jdbcType=INTEGER}, #{parentoemid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{oemlevel,jdbcType=INTEGER}, #{parentoemid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, sysdatetime(), #{hasnextoem,jdbcType=INTEGER},
       #{mealstatus,jdbcType=INTEGER})
+      <selectKey resultType="java.lang.Integer" keyProperty="oemid" order="AFTER">
+    	select @@IDENTITY as oemid
+  	  </selectKey>
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oembase" >
     update OemBase
     set MealId = #{mealid,jdbcType=INTEGER},
       TempId = #{tempid,jdbcType=INTEGER},
       "Domain" = #{domain,jdbcType=VARCHAR},
-      CompanylName = #{companylname,jdbcType=VARCHAR},
+      CompanyName = #{companyname,jdbcType=VARCHAR},
       Phone = #{phone,jdbcType=VARCHAR},
       ExpiryTime = #{expirytime,jdbcType=TIMESTAMP},
       TotalUsersCount = #{totaluserscount,jdbcType=INTEGER},
       TotalTaskCount = #{totaltaskcount,jdbcType=INTEGER},
       OemLevel = #{oemlevel,jdbcType=INTEGER},
       ParentOemId = #{parentoemid,jdbcType=INTEGER},
-      "Status" = #{status,jdbcType=INTEGER},
+      Status = #{status,jdbcType=INTEGER},
       MealStatus = #{mealstatus,jdbcType=INTEGER}
     where OemId = #{oemid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select OemId, MealId, TempId, "Domain", CompanylName, Phone, ExpiryTime, TotalUsersCount, 
-    TotalTaskCount, OemLevel, ParentOemId, "Status", MealStatus
+    select OemId, MealId, TempId, Domain, CompanyName, Phone, ExpiryTime, TotalUsersCount, 
+    TotalTaskCount, OemLevel, ParentOemId, Status, MealStatus,HasNextOem
     from OemBase
     where OemId = #{oemid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select OemId, MealId, TempId, "Domain", CompanylName, Phone, ExpiryTime, TotalUsersCount, 
+    select OemId, MealId, TempId, "Domain", CompanyName, Phone, ExpiryTime, TotalUsersCount, 
     TotalTaskCount, OemLevel, ParentOemId, "Status", MealStatus
     from OemBase
   </select>
+  
+  <select id="qryChildOemsByOemId" resultMap="BaseResultMap" parameterType="map" >
+    select OemId, MealId, TempId, Domain, CompanyName, Phone, ExpiryTime, TotalUsersCount, 
+    TotalTaskCount, OemLevel, ParentOemId, Status, MealStatus, HasNextOem, AddTime
+    from OemBase where ParentOemId = #{parentoemid,jdbcType=INTEGER} Order by OemId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  
+  <select id="qryCountChildOemsByOemId" resultType="java.lang.Integer" parameterType="map" >
+    select count(1) as total
+    from OemBase
+    where ParentOemId = #{parentoemid,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

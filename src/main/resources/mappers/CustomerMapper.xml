@@ -18,6 +18,7 @@
     <result column="Domain" property="domain" jdbcType="VARCHAR" />
     <result column="LoginCount" property="logincount" jdbcType="INTEGER" />
     <result column="Status" property="status" jdbcType="BIT" />
+    <result column="IsOemManager" property="isoemmanager" jdbcType="BIT" />
     <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -28,12 +29,12 @@
     insert into Customer (OemId, Pwd, 
       Mobile, RealName, CallName, 
       QQ, Phone, Weixin, 
-      Domain, Status, 
+      Domain, Status, IsOemManager,
       AddTime)
     values (#{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{callname,jdbcType=VARCHAR}, 
       #{qq,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
-      #{domain,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{domain,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{isoemmanager,jdbcType=BIT}, 
       sysdatetime())
       <selectKey resultType="java.lang.Integer" keyProperty="customerid" order="AFTER">
     	select @@IDENTITY as customerid

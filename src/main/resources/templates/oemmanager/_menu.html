@@ -44,6 +44,18 @@
 						</div>
 					</div>
 					</shiro>
+					<div class="panel" th:if="${#PeUtils.hasNextOem()==true}">
+						<div class="upper-menu-wrap" role="tab" id="childOem">
+							<a class="collapsed upper-menu menu-icon-user" role="button" data-toggle="collapse" data-parent="#accordion" href="#childOmeCollapse" aria-expanded="true" aria-controls="childOmeCollapse">
+								代理管理
+							</a>
+						</div>
+						<div id="childOmeCollapse" class="collapse" role="tabpanel" aria-labelledby="childOemHeading">
+							<ul class="sub-menu">
+   								<li><a href="/oemmanager/child/childoemlist" th:href="@{/oemmanager/child/childoemlist}" data-named="childoem_list">代理列表</a></li>    
+							</ul>
+						</div>
+					</div>
 					<shiro shiro:hasPermission="1007:63">
 					<div class="panel">
 						<div class="upper-menu-wrap" role="tab" id="seoHeading">

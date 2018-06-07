@@ -2,6 +2,8 @@ package com.soqi.common.utils;
 
 import at.pollux.thymeleaf.shiro.processor.ShiroFacade;
 
+import com.soqi.oem.gentry.Customer;
+
 /**
  * @author 孙傲
  * 功能：权限要解校验工具
@@ -31,5 +33,13 @@ public class PeUtils {
 	
 	public static boolean hasPermission(final String permission) {
 		return ShiroFacade.hasPermission(permission);
+	}
+	
+	public static boolean hasNextOem(){
+		Customer c = ShiroUtils.getCustomer();
+		if(c.getOembase().getHasnextoem().intValue()==1){
+			return true;
+		}
+		return false;
 	}
 }

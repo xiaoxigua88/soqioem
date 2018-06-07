@@ -36,10 +36,14 @@ public class Customer implements Serializable {
     
     private String domain;
 
+    private Oembase oembase;
 
 	private Integer logincount;
 
 	private Integer status;
+	
+	private Integer isoemmanager;
+	
 	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addtime;
 
@@ -189,6 +193,23 @@ public class Customer implements Serializable {
 
 	public void setOldPwd(String oldPwd) {
 		this.oldPwd = oldPwd;
+	}
+
+	
+	public Oembase getOembase() {
+		return oembase;
+	}
+
+	public void setOembase(Oembase oembase) {
+		this.oembase = oembase;
+	}
+
+	public Integer getIsoemmanager() {
+		return isoemmanager;
+	}
+
+	public void setIsoemmanager(Integer isoemmanager) {
+		this.isoemmanager = isoemmanager;
 	}
 
 	@Override

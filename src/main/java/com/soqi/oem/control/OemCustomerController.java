@@ -74,7 +74,7 @@ public class OemCustomerController extends BaseController{
 		jsonObj.put("lst", lst);
 		jsonObj.put("oemid", ct.getOemid());
 		//获取状态字典
-		String statusList = "[{\"name\":\"All\",\"value\":-999,\"description\":\"全部\"},{\"name\":\"Normal\",\"value\":1,\"description\":\"正常\"},{\"name\":\"Profile\",\"value\":2,\"description\":\"待完善\"},{\"name\":\"Lock\",\"value\":3,\"description\":\"锁定\"}]";
+		String statusList = "[{\"name\":\"All\",\"value\":-999,\"description\":\"全部\"},{\"name\":\"Normal\",\"value\":1,\"description\":\"正常\"},{\"name\":\"Lock\",\"value\":3,\"description\":\"锁定\"}]";
 		jsonObj.put("statusList", FastJsonUtil.parseObject(statusList, List.class));
 		//获取角色列表
 		List<Role> roleList = roleService.qryRolesByOemid(ct.getOemid());
