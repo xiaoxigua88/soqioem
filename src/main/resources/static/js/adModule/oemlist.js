@@ -56,11 +56,11 @@ $(function() {
     
     //代理编辑
     $(".user-edit").click(function() {
-        var userid = $(this).data("userid");
+        var oemid = $(this).data("oemid");
         SQ.post({
-            url: "/oemmanager/userinfo/useredit",
+            url: "/oemmanager/child/childoemedit",
             data: {
-            	userid: userid
+            	oemid: oemid
             },
             isCoverSuccess: true,
             success: function(json) {
@@ -69,11 +69,11 @@ $(function() {
                     return;
                 }
                 $.dialog({
-                    title: "用户资料编辑",
+                    title: "代理编辑",
                     cancel: true,
                     okVal: "保存",
                     cancelVal: "关闭",
-                    content: template("editInformation", { user: json.user }),
+                    content: template("editInformation", { oembase: json.oembase }),
                     init: function() {
                     },
                     ok: function() {

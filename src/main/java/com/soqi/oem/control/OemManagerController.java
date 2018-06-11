@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.MD5Utils;
-import com.soqi.common.utils.ResultDTO;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.OemCustomerService;
 import com.soqi.system.service.UserService;
+import com.soqi.system.vo.Filter;
+import com.soqi.system.vo.Page;
 
 @Controller
 public class OemManagerController extends BaseController{
@@ -81,8 +83,8 @@ public class OemManagerController extends BaseController{
 	
 	@RequestMapping("/oemmanager/self/customerUpdate")
 	@ResponseBody
-	public ResultDTO customerEdit(Customer customer){
-		return ResultDTO.ok();
+	public ResultFontJS customerEdit(Customer customer){
+		return ResultFontJS.ok();
     }
 	
 	@RequestMapping("/oemmanager/self/passwordEdit")
@@ -92,12 +94,46 @@ public class OemManagerController extends BaseController{
 	
 	@RequestMapping("/oemmanager/self/passwordUpdate")
 	@ResponseBody
-	public ResultDTO passwordUpdate(Customer customer){
-		return ResultDTO.ok();
+	public ResultFontJS passwordUpdate(@RequestParam(value="oldPassword", required=true) String oldPassword, @RequestParam(value="password", required=true) String password, @RequestParam(value="password2", required=true) String password2){
+		if(StringUtils.isBlank(oldPassword) || StringUtils.isBlank(password) || StringUtils.isBlank(password2)){
+			return ResultFontJS.error("密码参数为空请检查");
+		}
+		if(!StringUtils.equals(password, password2)){
+			return ResultFontJS.error("新密码输入不一致请重新输入");
+		}
+		if(StringUtils.equals(password, oldPassword)){
+			return ResultFontJS.error("新旧密码输入一致不作更改");
+		}
+		Customer cus = oemCustomerService.selectByCustomerId(this.getCustomer().getCustomerid());
+		String pwd = MD5Utils.encrypt(this.getCustomer().getMobile(),oldPassword);
+		if(!StringUtils.equals(pwd, cus.getPwd())){
+			return ResultFontJS.error("旧密码输入错误、请得新输入");
+		}
+		Customer customer = new Customer();
+		customer.setCustomerid(cus.getCustomerid());
+		String newpwd = MD5Utils.encrypt(this.getCustomer().getMobile(), password);
+		customer.setPwd(newpwd);
+		int c = oemCustomerService.updateSelfInfo(customer);
+		return c > 0 ? ResultFontJS.ok("密码更新成功") : ResultFontJS.error("密码更新失败");
     }
 	
 	@RequestMapping("/oemmanager/self/operateLog")
-	public String operateLog(Model model){
+	public String operateLog( @RequestParam(value="page", defaultValue="1") int pageNo){
+		//添加cookie
+		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
+		if(StringUtils.isBlank(ybl_ui_ul)){
+			ybl_ui_ul="1";
+			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
+		}
+		Filter filter = new Filter("desc", "", "");
+		int size = Integer.valueOf(ybl_ui_ul);
+		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
+		
+		
+		Page pager = new Page(pageNo, size, 0);
+		pager.setCookieName("oem_ui_ul");
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		
 		return "/oemmanager/self/operatelog";
     }
 }

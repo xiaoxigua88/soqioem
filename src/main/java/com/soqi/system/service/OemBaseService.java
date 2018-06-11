@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.soqi.common.utils.MD5Utils;
 import com.soqi.oem.dao.CustomerMapper;
 import com.soqi.oem.dao.CustomerroleMapper;
@@ -66,6 +65,10 @@ public class OemBaseService {
 		target.setTotaluserscount(0);
 	}
 	
+	public Oembase qryOembaseInfo(Integer oemid){
+		return oembaseMapper.selectByPrimaryKey(oemid);
+	}
+	
 	@Transactional("primaryTransactionManager")
 	public void saveOemBase(Customer customer, Oembase oembase){
 		//查询当前的系统的oembase
@@ -95,5 +98,9 @@ public class OemBaseService {
 			//获取系统超级管理员创建的各个顶级代理角色
 			
 		}
+	}
+	
+	public int childoemUpdate(Oembase oembase){
+		return oembaseMapper.updateByPrimaryKey(oembase);
 	}
 }

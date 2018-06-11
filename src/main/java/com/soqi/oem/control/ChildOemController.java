@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
-import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oembase;
@@ -62,5 +61,27 @@ public class ChildOemController extends BaseController {
 		oembase.setParentoemid(this.getCustomer().getOemid());
 		oemBaseService.saveOemBase(customer, oembase);
 		return ResultFontJS.ok("创建代理成功！");
+	}
+	
+	
+	/**功能：查询当前需要修改的信息
+	 * @param oemid
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/child/childoemedit")
+	@ResponseBody
+	public ResultFontJS childoemEdit(@RequestParam(value="oemid", required=true) Integer oemid, HttpServletRequest req){
+		Oembase oembase = oemBaseService.qryOembaseInfo(oemid);
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		jsonObj.put("oembase", oembase);
+		return ResultFontJS.ok(jsonObj);
+	}
+	
+	@RequestMapping("/oemmanager/child/childoemupdate")
+	@ResponseBody
+	public ResultFontJS childoemUpdate(Oembase oembase, HttpServletRequest req){
+		int c = oemBaseService.childoemUpdate(oembase);
+		return c > 0 ? ResultFontJS.ok("代理数据修改成功！") : ResultFontJS.error("代理修改失败");
 	}
 }

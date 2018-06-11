@@ -1,7 +1,18 @@
 <script type="text/html" id="editInformation">
 <form action="/oemmanager/customer/rolePrivilegeSave?operateType={{if role}}1{{else}}0{{/if}}" class="form-horizontal sq-form sq-tab-container font-size-12" style="width:700px;" id="editForm">
+	{{if role}}
 	<div class="form-group validate-control">
-		
+		<div class="sq-control-label">角色ID：</div>
+        <div class="col-xs-3">
+			<input type="text" name="roleid" class="sq-input-reset necessary" value="{{if role}}{{role.roleid}}{{/if}}" autocomplete="off" />
+        </div>
+		<div class="sq-control-label">上级代理ID：</div>
+        <div class="col-xs-3">
+			<input type="text" name="oemid" class="sq-input-reset necessary" value="{{if role}}{{role.oemid}}{{/if}}" autocomplete="off" />
+        </div>
+	</div>
+	{{/if}}
+	<div class="form-group validate-control">
 		<div class="sq-control-label">角色名称：</div>
         <div class="col-xs-3">
 			<input type="text" name="rolename" class="sq-input-reset necessary" value="{{if role}}{{role.rolename}}{{/if}}" autocomplete="off" />
@@ -13,6 +24,7 @@
 			<input type="text" name="description" value="{{if role}}{{role.description}}{{/if}}" class="sq-input-reset" style="width:320px" />
         </div>
 	</div>
+	
 	<div class="form-group validate-control">
 		<div class="sq-control-label">权限分配：</div>
         <div class="col-xs-9">

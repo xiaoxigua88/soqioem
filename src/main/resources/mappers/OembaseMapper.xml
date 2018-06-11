@@ -39,19 +39,45 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oembase" >
     update OemBase
-    set MealId = #{mealid,jdbcType=INTEGER},
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mealid!=null and mealid!=''">
+      MealId = #{mealid,jdbcType=INTEGER},
+      </if>
+      <if test="tempid!=null and tempid!=''">
       TempId = #{tempid,jdbcType=INTEGER},
+      </if>
+      <if test="domain!=null and domain!=''">
       "Domain" = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname!=null and companyname!=''">
       CompanyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone!=null and phone!=''">
       Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="expirytime!=null">
       ExpiryTime = #{expirytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totaluserscount!=null and totaluserscount!=''">
       TotalUsersCount = #{totaluserscount,jdbcType=INTEGER},
+      </if>
+      <if test="totaltaskcount!=null and totaltaskcount!=''">
       TotalTaskCount = #{totaltaskcount,jdbcType=INTEGER},
+      </if>
+      <if test="oemlevel!=null and oemlevel!=''">
       OemLevel = #{oemlevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentoemid!=null and parentoemid!=''">
       ParentOemId = #{parentoemid,jdbcType=INTEGER},
+      </if>
+      <if test="status!=null and status!=''">
       Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="mealstatus!=null and mealstatus!=''">
       MealStatus = #{mealstatus,jdbcType=INTEGER}
-    where OemId = #{oemid,jdbcType=INTEGER}
+      </if>
+    </trim>
+     where OemId = #{oemid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select OemId, MealId, TempId, Domain, CompanyName, Phone, ExpiryTime, TotalUsersCount, 

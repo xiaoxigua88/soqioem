@@ -3,11 +3,16 @@ package com.soqi.oem.gentry;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Userloginlog implements Serializable {
     private Long id;
 
     private Integer userid;
+    
+    private Integer oemid;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date logintime;
 
     private String ip;
@@ -96,7 +101,15 @@ public class Userloginlog implements Serializable {
         this.stamp = stamp == null ? null : stamp.trim();
     }
 
-    @Override
+    public Integer getOemid() {
+		return oemid;
+	}
+
+	public void setOemid(Integer oemid) {
+		this.oemid = oemid;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

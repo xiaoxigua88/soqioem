@@ -158,7 +158,7 @@ $(function() {
         return r;
     });
     
-  //权限勾选置灰格式化
+    //权限勾选置灰格式化
     template.helper("privilegeFormate",function(item2, item){
     	if ((item2.value & item.valueconfig) ==0){
     		return ' disabled="disabled" ';
@@ -176,6 +176,10 @@ $(function() {
     	}
     });
     
+    //返回特殊字符串、该字符串之所以放在js中，是因为会被hymeleaf板引擎解读
+    template.helper("passwordComment",function(){
+    	return 'a. 密码由字母、数字和 _()`~!@#$%^&*-+=|{}[]:;<>,.?/ 中的特殊符号组成。';
+    });
 });
 
 /* 状态枚举映射 */

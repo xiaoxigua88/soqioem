@@ -53,6 +53,8 @@ public class Oemuser implements Serializable {
 
     private BigDecimal seoamountneed;
     
+    private boolean isinsertlog = false;
+    
     public BigDecimal getTotalamount() {
 		return totalamount;
 	}
@@ -237,6 +239,14 @@ public class Oemuser implements Serializable {
 
 	public void setVerifystatus(Integer verifystatus) {
 		this.verifystatus = verifystatus;
+	}
+
+	public boolean isIsinsertlog() {
+		return isinsertlog;
+	}
+
+	public void setIsinsertlog(boolean isinsertlog) {
+		this.isinsertlog = isinsertlog;
 	}
 
 	@Override

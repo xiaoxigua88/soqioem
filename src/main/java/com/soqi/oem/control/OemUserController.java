@@ -24,7 +24,9 @@ import com.soqi.common.utils.ResultDTO;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
+import com.soqi.oem.gentry.Userloginlog;
 import com.soqi.system.control.BaseController;
+import com.soqi.system.service.LogService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
@@ -34,7 +36,8 @@ public class OemUserController extends BaseController{
 	private final Logger logger = LoggerFactory.getLogger(OemUserController.class);
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private LogService LogService;
 	@RequiresPermissions("1301:7")//权限管理;
 	@RequestMapping(value="/oemmanager/userinfo/userlist")
 	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
@@ -142,12 +145,31 @@ public class OemUserController extends BaseController{
 
 	
 	@RequestMapping("/oemmanager/userinfo/userloginlog")
-	public String userloginlog(Customer customer){
+	public String userloginlog(Model model, @RequestParam(value="page", defaultValue="1") int pageNo){
+		//添加cookie
+		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
+		if(StringUtils.isBlank(ybl_ui_ul)){
+			ybl_ui_ul="1";
+			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
+		}
+		Filter filter = new Filter("desc", "", "");
+		int size = Integer.valueOf(ybl_ui_ul);
+		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
+		List<Userloginlog> lst =LogService.qryUserLogsByOemid(this.getCustomer().getOemid(), start, size);
+		int total = LogService.qryUserLogsCountByOemid(this.getCustomer().getOemid());
+		Page pager = new Page(pageNo, size, total);
+		pager.setCookieName("oem_ui_ul");
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		jsonObj.put("filter", filter);
+		jsonObj.put("pager", pager);
+		jsonObj.put("lst", lst);
+		model.addAttribute("jsonData",jsonObj);
 		return "/oemmanager/userinfo/userloginlog";
 	}
 	
 	@RequestMapping("/oemmanager/userinfo/verify")
-	public String verify(Customer customer){
+	public String verify(Model model, @RequestParam(value="page", defaultValue="1") int pageNo){
+		
 		return "/oemmanager/userinfo/verify";
 	}
 	

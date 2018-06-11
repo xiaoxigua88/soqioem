@@ -132,8 +132,8 @@
 									</span>
 								</td>
 								<td>
-									<a href="#a_null" class="user-view" data-userid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:4')==true ? '详情':''}"></a>
-								    <a href="#a_null" class="user-edit" data-userid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:16')==true ? '|编辑':''}">编辑</a>
+									<a href="#a_null" class="user-view" data-oemid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:4')==true ? '详情':''}"></a>
+								    <a href="#a_null" class="user-edit" data-oemid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:16')==true ? '|编辑':''}">编辑</a>
 									<span class="text-muted operate-spacing">|</span>
 									<div  class="btn-group btn-group-mini">
 										<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -142,7 +142,7 @@
 										</a>
 										<ul class="dropdown-menu">
 											{{if item.status==1}}
-											<li><a href="#a_null" class="user-recharge" data-userid="{{item.oemid}}" th:utext="${#PeUtils.hasPermission('1004:16')==true ? '账户充值':''}">账户充值</a></li>
+											<li><a href="#a_null" class="user-recharge" data-oemid="{{item.oemid}}" th:utext="${#PeUtils.hasPermission('1004:16')==true ? '账户充值':''}">账户充值</a></li>
 											{{/if}}
 											
 										</ul>

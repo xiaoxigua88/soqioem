@@ -1,45 +1,41 @@
 <script type="text/html"  id="editInformation">
-<form action="/oemmanager/userinfo/userUpdate" class="form-horizontal sq-form sq-tab-container font-size-12 sq-overview" id="editForm">
+<form action="/oemmanager/child/childoemupdate" class="form-horizontal sq-form sq-tab-container font-size-12 sq-overview" id="editForm">
 	<div class="form-group validate-control">
-		<div class="sq-control-label sq-label-mini">用户ID：</div>
-        <div class="col-xs-3">
-	        {{user.userid}}
-        </div>
-        <div class="sq-control-label sq-label-mini">状态：</div>
-        <div class="col-xs-5">
-			<input id="Text1" type="text" name="status" class="sq-input-reset" autocomplete="off" value="{{user.status}}"/>
+		<div class="sq-control-label">代理编号：</div>
+        <div class="col-xs-8">
+	        {{oembase.oemid}}
         </div>
 	</div>
 	<div class="form-group validate-control">
-		<div class="sq-control-label sq-label-mini">
-			手机号：
+		<div class="sq-control-label">
+			公司名称：
 		</div>
-		<div class="col-xs-3 sq-form-control sq-input-group validate-control">
-			<input id="mobileInput" type="text" name="mobile" class="sq-input-reset" autocomplete="off" value="{{user.mobile}}"/>
+		<div class="col-xs-3">
+			<input id="companynameInput" type="text" name="companyname" class="sq-input-reset" autocomplete="off" value="{{oembase.companyname}}"/>
 		</div>
-		<div class="sq-control-label sq-label-mini">
-			Email：
+		<div class="sq-control-label">
+			公司域名：
 		</div>
-		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
-			<input id="emailInput" type="text" name="email" class="sq-input-reset sq-input-memo" autocomplete="off" value="{{user.email}}"/>
+		<div class="col-xs-3">
+			<input id="domainInput" type="text" name="email" class="sq-input-reset" autocomplete="off" value="{{oembase.domain}}"/>
 		</div>
 	</div>
+	
 	<div class="form-group validate-control">
-		<div class="sq-control-label sq-label-mini">
-			称呼：
+		<div class="sq-control-label">
+			到期时间：
 		</div>
-		<div class="col-xs-3 sq-form-control sq-input-group validate-control">
-			<input id="callNameInput" type="text" name="callname" class="sq-input-reset" autocomplete="off" value="{{user.callname}}"/>
+		<div class="col-xs-3">
+			<input id="expirytimeInput" type="text" name="expirytime" class="sq-input-reset" autocomplete="off" value="{{oembase.expirytime}}"/>
 		</div>
-		<div class="sq-control-label sq-label-mini">
-			QQ：
+		<div class="sq-control-label">
+			状态：
 		</div>
-		<div class="col-xs-5 sq-form-control sq-input-group validate-control">
-			<input id="qqInput" type="text" name="qq" class="sq-input-reset" autocomplete="off" value="{{user.qq}}"/>
+		<div class="col-xs-3">
+			<input id="statusInput" type="text" name="status" class="sq-input-reset" autocomplete="off" value="{{oembase.status}}"/>
 		</div>
 	</div>
-	<input type="hidden" name="userid" value="{{user.userid}}" />
-	<input type="hidden" name="oemid" value="{{user.oemid}}" />
+	<input type="hidden" name="oemid" value="{{oembase.oemid}}" />
 </form>
 <style type="text/css">
          .sq-form-control .btn-reverse {

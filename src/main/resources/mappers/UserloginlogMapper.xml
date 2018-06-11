@@ -3,6 +3,7 @@
 <mapper namespace="com.soqi.oem.dao.UserloginlogMapper" >
   <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Userloginlog" >
     <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="OemId" property="oemid" jdbcType="INTEGER" />
     <result column="UserId" property="userid" jdbcType="INTEGER" />
     <result column="LoginTime" property="logintime" jdbcType="TIMESTAMP" />
     <result column="Ip" property="ip" jdbcType="VARCHAR" />
@@ -17,13 +18,10 @@
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Userloginlog" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into UserLoginLog (UserId, LoginTime, Ip, 
+    insert into UserLoginLog (UserId, OemId, LoginTime, Ip, 
       IpLong, Area, Brower, 
       OS, Stamp)
-    values (#{userid,jdbcType=INTEGER}, #{logintime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, 
+    values (#{userid,jdbcType=INTEGER}, #{oemid,jdbcType=INTEGER}, sysdatetime(), #{ip,jdbcType=VARCHAR}, 
       #{iplong,jdbcType=BIGINT}, #{area,jdbcType=VARCHAR}, #{brower,jdbcType=VARCHAR}, 
       #{os,jdbcType=VARCHAR}, #{stamp,jdbcType=VARCHAR})
   </insert>
@@ -47,5 +45,13 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select Id, UserId, LoginTime, Ip, IpLong, Area, Brower, OS, Stamp
     from UserLoginLog
+  </select>
+  
+  <select id="qryUserLogsByOemid" resultMap="BaseResultMap" parameterType="map" >
+    select Id, UserId, LoginTime, Ip, IpLong, Area, Brower, OS, Stamp
+    from UserLoginLog where OemId = #{oemid,jdbcType=INTEGER} Order by Id Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  <select id="qryUserLogsCountByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1) as total from UserLoginLog where OemId = #{oemid,jdbcType=INTEGER}
   </select>
 </mapper>
