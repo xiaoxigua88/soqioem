@@ -1,7 +1,7 @@
 package com.soqi.system.service;
 
 
-public interface YbCloudApiService {
+public interface UserCountService {
 	/** 错误码 */
     public static final String RSP_CODE = "RspCode";
 

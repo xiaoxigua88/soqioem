@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.soqi.oem.gentry.Student;
-import com.soqi.system.service.STService;
+import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.StudentTService2;
 import com.soqi.system.service.UserService;
 
@@ -19,12 +19,12 @@ import com.soqi.system.service.UserService;
 @EnableTransactionManagement
 //@Transactional
 public class SoqioemApplicationTests {
-	@Autowired
+	/*@Autowired
     private StudentTService2 ss;
 	@Autowired
     private STService sf;
 	@Autowired
-    private UserService us;
+    private UserService us;*/
 	/*@Autowired
 	private UserService us;*/
 	/*@Autowired

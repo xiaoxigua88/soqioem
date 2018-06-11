@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.soqi.oem.gentry.Customer;
-import com.soqi.system.service.STService;
+import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 
 @Controller
@@ -16,7 +16,7 @@ public class ClientFinanceController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-    private STService sf;
+    private OemCountService sf;
 	
 	@RequestMapping("/client/finance/accountdetail")
 	public String accountdetail(Customer customer){

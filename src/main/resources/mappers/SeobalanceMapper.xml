@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.SeobalanceMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Seobalance" >
+    <id column="TaskId" property="taskid" jdbcType="BIGINT" />
+    <id column="ConsumeDate" property="consumedate" jdbcType="DATE" />
+    <result column="FromRank" property="fromrank" jdbcType="INTEGER" />
+    <result column="ToRank" property="torank" jdbcType="INTEGER" />
+    <result column="RankLast" property="ranklast" jdbcType="INTEGER" />
+    <result column="Amount" property="amount" jdbcType="DECIMAL" />
+    <result column="FreeAmount" property="freeamount" jdbcType="DECIMAL" />
+    <result column="PayFlag" property="payflag" jdbcType="INTEGER" />
+    <result column="PayId" property="payid" jdbcType="INTEGER" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from SeoBalance
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and ConsumeDate = #{consumedate,jdbcType=DATE}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Seobalance" >
+    insert into SeoBalance (TaskId, ConsumeDate, FromRank, 
+      ToRank, RankLast, Amount, 
+      FreeAmount, PayFlag, PayId, 
+      AddTime)
+    values (#{taskid,jdbcType=BIGINT}, #{consumedate,jdbcType=DATE}, #{fromrank,jdbcType=INTEGER}, 
+      #{torank,jdbcType=INTEGER}, #{ranklast,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+      #{freeamount,jdbcType=DECIMAL}, #{payflag,jdbcType=INTEGER}, #{payid,jdbcType=INTEGER}, 
+      #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seobalance" >
+    update SeoBalance
+    set FromRank = #{fromrank,jdbcType=INTEGER},
+      ToRank = #{torank,jdbcType=INTEGER},
+      RankLast = #{ranklast,jdbcType=INTEGER},
+      Amount = #{amount,jdbcType=DECIMAL},
+      FreeAmount = #{freeamount,jdbcType=DECIMAL},
+      PayFlag = #{payflag,jdbcType=INTEGER},
+      PayId = #{payid,jdbcType=INTEGER},
+      AddTime = #{addtime,jdbcType=TIMESTAMP}
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and ConsumeDate = #{consumedate,jdbcType=DATE}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, PayFlag, 
+    PayId, AddTime
+    from SeoBalance
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and ConsumeDate = #{consumedate,jdbcType=DATE}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, PayFlag, 
+    PayId, AddTime
+    from SeoBalance
+  </select>
+</mapper>

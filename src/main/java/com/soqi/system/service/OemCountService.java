@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.soqi.oem.dao.StudentMapper;
 import com.soqi.oem.gentry.Student;
 @Service
-public class STService {
+public class OemCountService {
 	@Autowired
 	private StudentMapper sm;
 	@Transactional("primaryTransactionManager")

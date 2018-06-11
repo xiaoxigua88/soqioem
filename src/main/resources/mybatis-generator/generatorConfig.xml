@@ -84,14 +84,22 @@
             数据库表主键
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table> -->
-       	<table tableName="Role" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+       	<table tableName="Seo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="SqlServer" identity="true" />
+        </table>
+       	<table tableName="SeoBalance" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="SqlServer" identity="true" />
+        </table>
+       	<table tableName="SeoPrice" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="SqlServer" identity="true" />
+        </table>
+       	<!-- <table tableName="CustomerRole" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
-        </table>
-       	<table tableName="CustomerRole" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
-            <property name="useActualColumnNames" value="false" />
-            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
-        </table>
+        </table> -->
         <!-- <table tableName="%User%" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />

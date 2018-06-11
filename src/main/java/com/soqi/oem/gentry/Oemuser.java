@@ -18,6 +18,8 @@ public class Oemuser implements Serializable {
     private String answer;
 
     private String mobile;
+    
+    private String domain;
 
     private String email;
 
@@ -247,6 +249,15 @@ public class Oemuser implements Serializable {
 
 	public void setIsinsertlog(boolean isinsertlog) {
 		this.isinsertlog = isinsertlog;
+	}
+
+	
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 
 	@Override

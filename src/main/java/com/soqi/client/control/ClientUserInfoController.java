@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.soqi.common.constants.Constant;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
-import com.soqi.system.service.STService;
+import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.shiro.UsernamePasswordUserTypeToken;
 
@@ -33,7 +33,7 @@ public class ClientUserInfoController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-    private STService sf;
+    private OemCountService sf;
 	
 	@RequestMapping("/client/userinf/default")
 	public String userinfo(@RequestParam(value="userid",required=false) Integer userid, @RequestParam(value="action",required=false) String action, HttpServletRequest req, HttpServletResponse res){

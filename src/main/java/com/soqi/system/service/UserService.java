@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soqi.common.utils.MD5Utils;
+import com.soqi.common.utils.RandomUtil;
 import com.soqi.oem.dao.OemuserMapper;
+import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
 @Service
 public class UserService {
@@ -52,5 +55,19 @@ public class UserService {
 	
 	public Oemuser qryOemuser(Integer userid){
 		return ou.selectByPrimaryKey(userid);
+	}
+	
+	/**密码重置
+	 * @param customer
+	 * @return
+	 */
+	public String InitPwd(Oemuser oemuser){
+		//int num = RandomUtil.getNotSimple(RandomUtil.SEEDARR, 6);
+		String pwd = MD5Utils.encrypt(oemuser.getMobile(),"12345678");
+		Oemuser moduser = new Oemuser();
+		moduser.setPwd(pwd);
+		moduser.setUserid(oemuser.getUserid());
+		int count = ou.updateByPrimaryKey(moduser);
+		return count >0 ? "12345678" : null;
 	}
 }

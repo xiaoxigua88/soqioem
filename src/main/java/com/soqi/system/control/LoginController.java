@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.soqi.common.constants.Constant;
 import com.soqi.common.utils.ResultDTO;
 import com.soqi.common.utils.WebAddrUtils;
-import com.soqi.system.service.STService;
+import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.shiro.UsernamePasswordUserTypeToken;
 
@@ -32,7 +32,7 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-    private STService sf;
+    private OemCountService sf;
 	@RequestMapping("/login")
 	public String login(Model model){
 		return "/login";

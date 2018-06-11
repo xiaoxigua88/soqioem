@@ -170,11 +170,11 @@
 											<span class="sq-caret text-primary"></span>
 										</a>
 										<ul class="dropdown-menu">
-											{{if item.userstatus==1}}
+											{{if item.status==1}}
 											<li><a href="#a_null" class="user-verify" data-userid="{{item.userid}}">实名认证</a></li>
 											<li><a href="#a_null" class="user-recharge" data-userid="{{item.userid}}" th:utext="${#PeUtils.hasPermission('1004:16')==true ? '账户充值':''}">账户充值</a></li>
 											{{/if}}
-											<li><a href="#a_null" class="user-pwd" data-userid="{{item.UserId}}" th:utext="${#PeUtils.hasPermission('1301:16')==true ? '重置密码':''}">重置密码</a></li>
+											<li><a href="#a_null" class="user-pwd" data-userid="{{item.userid}}" th:utext="${#PeUtils.hasPermission('1301:16')==true ? '重置密码':''}">重置密码</a></li>
 											<li><a href="/client/userinf/default?action=LoginUser&userid={{item.userid}}" target="_blank" th:utext="${#PeUtils.hasPermission('1301:4')==true ? '无密登录':''}">无密登录</a></li>
 										</ul>
 									</div>

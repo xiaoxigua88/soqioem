@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.SeoMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Seo" >
+    <id column="TaskId" property="taskid" jdbcType="BIGINT" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="Keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="Url" property="url" jdbcType="VARCHAR" />
+    <result column="SeoUrl" property="seourl" jdbcType="VARCHAR" />
+    <result column="SearchType" property="searchtype" jdbcType="INTEGER" />
+    <result column="RankFirst" property="rankfirst" jdbcType="INTEGER" />
+    <result column="RankLast" property="ranklast" jdbcType="INTEGER" />
+    <result column="RankLastChange" property="ranklastchange" jdbcType="INTEGER" />
+    <result column="RankUpdateTime" property="rankupdatetime" jdbcType="TIMESTAMP" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="FromType" property="fromtype" jdbcType="INTEGER" />
+    <result column="FromId" property="fromid" jdbcType="BIGINT" />
+    <result column="BuyTime" property="buytime" jdbcType="TIMESTAMP" />
+    <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
+    <result column="CostCount" property="costcount" jdbcType="INTEGER" />
+    <result column="CostAmount" property="costamount" jdbcType="DECIMAL" />
+    <result column="CostTime" property="costtime" jdbcType="TIMESTAMP" />
+    <result column="SettleHour" property="settlehour" jdbcType="INTEGER" />
+    <result column="SettleTime" property="settletime" jdbcType="TIMESTAMP" />
+    <result column="SettleStart" property="settlestart" jdbcType="TIMESTAMP" />
+    <result column="ApiPriceTaskId" property="apipricetaskid" jdbcType="BIGINT" />
+    <result column="ApiRankTaskId" property="apiranktaskid" jdbcType="BIGINT" />
+    <result column="ApiWatchTaskId" property="apiwatchtaskid" jdbcType="BIGINT" />
+    <result column="ErrorMsg" property="errormsg" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Seo
+    where TaskId = #{taskid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Seo" >
+    insert into Seo (TaskId, UserId, Keyword, 
+      Url, SeoUrl, SearchType, 
+      RankFirst, RankLast, RankLastChange, 
+      RankUpdateTime, AddTime, FromType, 
+      FromId, BuyTime, FreezeAmount, 
+      CostCount, CostAmount, CostTime, 
+      SettleHour, SettleTime, SettleStart, 
+      ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
+      ErrorMsg, "Status")
+    values (#{taskid,jdbcType=BIGINT}, #{userid,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{seourl,jdbcType=VARCHAR}, #{searchtype,jdbcType=INTEGER}, 
+      #{rankfirst,jdbcType=INTEGER}, #{ranklast,jdbcType=INTEGER}, #{ranklastchange,jdbcType=INTEGER}, 
+      #{rankupdatetime,jdbcType=TIMESTAMP}, #{addtime,jdbcType=TIMESTAMP}, #{fromtype,jdbcType=INTEGER}, 
+      #{fromid,jdbcType=BIGINT}, #{buytime,jdbcType=TIMESTAMP}, #{freezeamount,jdbcType=DECIMAL}, 
+      #{costcount,jdbcType=INTEGER}, #{costamount,jdbcType=DECIMAL}, #{costtime,jdbcType=TIMESTAMP}, 
+      #{settlehour,jdbcType=INTEGER}, #{settletime,jdbcType=TIMESTAMP}, #{settlestart,jdbcType=TIMESTAMP}, 
+      #{apipricetaskid,jdbcType=BIGINT}, #{apiranktaskid,jdbcType=BIGINT}, #{apiwatchtaskid,jdbcType=BIGINT}, 
+      #{errormsg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seo" >
+    update Seo
+    set UserId = #{userid,jdbcType=INTEGER},
+      Keyword = #{keyword,jdbcType=VARCHAR},
+      Url = #{url,jdbcType=VARCHAR},
+      SeoUrl = #{seourl,jdbcType=VARCHAR},
+      SearchType = #{searchtype,jdbcType=INTEGER},
+      RankFirst = #{rankfirst,jdbcType=INTEGER},
+      RankLast = #{ranklast,jdbcType=INTEGER},
+      RankLastChange = #{ranklastchange,jdbcType=INTEGER},
+      RankUpdateTime = #{rankupdatetime,jdbcType=TIMESTAMP},
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      FromType = #{fromtype,jdbcType=INTEGER},
+      FromId = #{fromid,jdbcType=BIGINT},
+      BuyTime = #{buytime,jdbcType=TIMESTAMP},
+      FreezeAmount = #{freezeamount,jdbcType=DECIMAL},
+      CostCount = #{costcount,jdbcType=INTEGER},
+      CostAmount = #{costamount,jdbcType=DECIMAL},
+      CostTime = #{costtime,jdbcType=TIMESTAMP},
+      SettleHour = #{settlehour,jdbcType=INTEGER},
+      SettleTime = #{settletime,jdbcType=TIMESTAMP},
+      SettleStart = #{settlestart,jdbcType=TIMESTAMP},
+      ApiPriceTaskId = #{apipricetaskid,jdbcType=BIGINT},
+      ApiRankTaskId = #{apiranktaskid,jdbcType=BIGINT},
+      ApiWatchTaskId = #{apiwatchtaskid,jdbcType=BIGINT},
+      ErrorMsg = #{errormsg,jdbcType=VARCHAR},
+      "Status" = #{status,jdbcType=INTEGER}
+    where TaskId = #{taskid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
+    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
+    CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
+    ErrorMsg, "Status"
+    from Seo
+    where TaskId = #{taskid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
+    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
+    CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
+    ErrorMsg, "Status"
+    from Seo
+  </select>
+</mapper>

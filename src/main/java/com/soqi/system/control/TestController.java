@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.soqi.system.service.YbCloudApiService;
+import com.soqi.system.service.UserCountService;
 
 
 
@@ -19,7 +19,7 @@ import com.soqi.system.service.YbCloudApiService;
 public class TestController {
 	
 	@Autowired
-	private YbCloudApiService ybCloudApiService;
+	private UserCountService ybCloudApiService;
 	private static Logger logger = LogManager.getLogger(TestController.class.getName());
 	
 	@RequestMapping("/hello")

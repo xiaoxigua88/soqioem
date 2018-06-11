@@ -42,14 +42,14 @@
   </select>
   
   <insert id="insert" parameterType="com.soqi.oem.gentry.Oemuser">
-    insert into OemUser (OemId, Pwd, 
+    insert into OemUser (OemId, Pwd, Domain, 
       Question, Answer, Mobile, 
       Email, EmailVerify, CallName, 
       QQ, RegisterTime, RegisterIp, 
       LastLoginTime, LastLoginIp, CurrentLoginTime, 
       CurrentLoginIp, LoginCount, RegisterStamp, 
       Status)
-    values (#{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, 
+    values (#{oemid,jdbcType=INTEGER}, #{pwd,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR},
       #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{emailverify,jdbcType=BIT}, #{callname,jdbcType=VARCHAR}, 
       #{qq,jdbcType=VARCHAR}, sysdatetime(), #{registerip,jdbcType=VARCHAR}, 
@@ -59,7 +59,7 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oemuser">
     update OemUser
-    set 
+    <trim prefix="set" suffixOverrides=",">
       <if test="pwd!=null and pwd!=''">
       	Pwd = #{pwd,jdbcType=VARCHAR},
       </if>
@@ -103,8 +103,9 @@
       RegisterStamp = #{registerstamp,jdbcType=VARCHAR},
       </if>
       <if test="status!=null and status!=''">
-      Status = #{status,jdbcType=INTEGER}
+      Status = #{status,jdbcType=INTEGER},
       </if>
+    </trim>
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

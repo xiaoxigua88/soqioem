@@ -44,7 +44,7 @@ public class OemUserController extends BaseController{
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
-			ybl_ui_ul="1";
+			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
 		Filter filter = new Filter("desc", "", "");
@@ -117,8 +117,8 @@ public class OemUserController extends BaseController{
 		if(StringUtils.isEmpty(user.getMobile())){
 			return ResultFontJS.error("手机号参为空");
 		}
+		Customer ct = this.getCustomer();
 		if(user.getOemid()==null || user.getOemid()==0){
-			Customer ct = this.getCustomer();
 			user.setOemid(ct.getOemid());
 		}
 		//根据手机号和代理号判断会不会有重号加入
@@ -128,12 +128,62 @@ public class OemUserController extends BaseController{
 		}
 		//用户密码生成
 		user.setPwd(MD5Utils.encrypt(user.getMobile(), "12345678"));
+		//用户所属站点绑定
+		user.setDomain(ct.getDomain());
 		int record = userService.saveOemuser(user);
 		if(record >0){
 			return ResultFontJS.ok("数据保存成功");
 		}else{
 			return ResultFontJS.error("数据保存失败");
 		}
+	}
+	
+	/**功能：初始化用户密码
+	 * @param action
+	 * @param customerid
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/userinfo/userinitpwd")
+	@ResponseBody
+	public ResultFontJS userinitpwd(@RequestParam(value="action",required=true) String action, @RequestParam(value="userid",required=true) Integer userid){
+		//更新用户
+		if(userid != null){
+			//根据userid查询用户信息
+			Oemuser oemuser = userService.qryOemuser(userid);
+			if(oemuser == null){
+				return ResultFontJS.error("未查询到需要修改密码的用户");
+			}
+			if(oemuser.getOemid().intValue() != this.getCustomer().getOemid().intValue()){
+				return ResultFontJS.error("不是同一个代理下的用户无法修改其密码");
+			}
+			String pwd = userService.InitPwd(oemuser);
+			if (pwd != null) {
+				return ResultFontJS.ok("密码重置成功，新密码为"+pwd, false).put("time", 10);
+			}
+		}
+		return ResultFontJS.error();
+	}
+	
+	
+	@RequestMapping("/oemmanager/userinfo/userrecharge")
+	@ResponseBody
+	public ResultFontJS userRecharge(@RequestParam(value="rechargeAmount",required=true) Integer rechargeAmount, @RequestParam(value="rechargeMemo",required=false) String rechargeMemo, @RequestParam(value="userid",required=false) Integer userid){
+		//给用户充值
+		if(userid != null){
+			//根据userid查询用户信息
+			Oemuser oemuser = userService.qryOemuser(userid);
+			if(oemuser == null){
+				return ResultFontJS.error("未查询到需要修改密码的用户");
+			}
+			if(oemuser.getOemid().intValue() != this.getCustomer().getOemid().intValue()){
+				return ResultFontJS.error("不是同一个代理下的用户无法修改其密码");
+			}
+			String pwd = userService.InitPwd(oemuser);
+			if (pwd != null) {
+				return ResultFontJS.ok("密码重置成功，新密码为"+pwd, false).put("time", 10);
+			}
+		}
+		return ResultFontJS.error();
 	}
 	
 	@RequiresPermissions("1301:16")//权限管理;

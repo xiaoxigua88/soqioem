@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.SeopriceMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Seoprice" >
+    <id column="TaskId" property="taskid" jdbcType="BIGINT" />
+    <id column="FromRank" property="fromrank" jdbcType="INTEGER" />
+    <id column="ToRank" property="torank" jdbcType="INTEGER" />
+    <result column="PriceOri" property="priceori" jdbcType="DECIMAL" />
+    <result column="Price" property="price" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from SeoPrice
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and FromRank = #{fromrank,jdbcType=INTEGER}
+      and ToRank = #{torank,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Seoprice" >
+    insert into SeoPrice (TaskId, FromRank, ToRank, 
+      PriceOri, Price)
+    values (#{taskid,jdbcType=BIGINT}, #{fromrank,jdbcType=INTEGER}, #{torank,jdbcType=INTEGER}, 
+      #{priceori,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seoprice" >
+    update SeoPrice
+    set PriceOri = #{priceori,jdbcType=DECIMAL},
+      Price = #{price,jdbcType=DECIMAL}
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and FromRank = #{fromrank,jdbcType=INTEGER}
+      and ToRank = #{torank,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select TaskId, FromRank, ToRank, PriceOri, Price
+    from SeoPrice
+    where TaskId = #{taskid,jdbcType=BIGINT}
+      and FromRank = #{fromrank,jdbcType=INTEGER}
+      and ToRank = #{torank,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select TaskId, FromRank, ToRank, PriceOri, Price
+    from SeoPrice
+  </select>
+</mapper>

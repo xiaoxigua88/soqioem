@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.UserrechargeMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Userrecharge" >
+    <id column="OrderId" property="orderid" jdbcType="BIGINT" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="Amount" property="amount" jdbcType="DECIMAL" />
+    <result column="PayType" property="paytype" jdbcType="INTEGER" />
+    <result column="Bank" property="bank" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="BIT" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="FinishTime" property="finishtime" jdbcType="TIMESTAMP" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UserRecharge
+    where OrderId = #{orderid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Userrecharge" >
+    insert into UserRecharge (OrderId, UserId, Amount, 
+      PayType, Bank, "Status", 
+      AddTime, FinishTime, Memo
+      )
+    values (#{orderid,jdbcType=BIGINT}, #{userid,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+      #{paytype,jdbcType=INTEGER}, #{bank,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{finishtime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Userrecharge" >
+    update UserRecharge
+    set UserId = #{userid,jdbcType=INTEGER},
+      Amount = #{amount,jdbcType=DECIMAL},
+      PayType = #{paytype,jdbcType=INTEGER},
+      Bank = #{bank,jdbcType=VARCHAR},
+      "Status" = #{status,jdbcType=BIT},
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      FinishTime = #{finishtime,jdbcType=TIMESTAMP},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where OrderId = #{orderid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select OrderId, UserId, Amount, PayType, Bank, "Status", AddTime, FinishTime, Memo
+    from UserRecharge
+    where OrderId = #{orderid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select OrderId, UserId, Amount, PayType, Bank, "Status", AddTime, FinishTime, Memo
+    from UserRecharge
+  </select>
+</mapper>

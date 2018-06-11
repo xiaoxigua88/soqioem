@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.soqi.system.service.STService;
+import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 
 @Controller
@@ -16,7 +16,7 @@ public class AdminHomeController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-    private STService sf;
+    private OemCountService sf;
 	/**管理员页面欢迎页
 	 * @param model
 	 * @return

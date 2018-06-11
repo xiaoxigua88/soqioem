@@ -89,11 +89,11 @@ $(function() {
         });
         return false;
     });
-    //用户编辑
+    //用户添加
     $("#user-add").click(function() {
     	var oemid = $(this).data("oemid");
     	$.dialog({
-            title: "用户资料编辑",
+            title: "用户添加",
             cancel: true,
             okVal: "保存",
             cancelVal: "关闭",
@@ -116,118 +116,64 @@ $(function() {
     });
     //账户充值
     $(".user-recharge").click(function() {
-        var userId = $(this).data("userid");
-        SQ.post({
-            url: "?action=Recharge",
-            data: {
-                userId: userId
+    	var userid = $(this).data("userid");
+    	$.dialog({
+            title: "账户充值",
+            cancel: true,
+            okVal: "充值",
+            cancelVal: "关闭",
+            content: template("rechargeInformation", {userid}),
+            init: function() {
+                // 初始化sq-btn-group
+                SQ.component.initTabs();
+                $(".recharge-diy").hide();
             },
-            isCoverSuccess: true,
-            success: function(json) {
-                if (json.result == false) {
-                    SQ.tips.error({ content: json.text });
-                    return;
+            ok: function() {
+                var $_rechargeForm = $("#rechargeForm");
+                var $_rechargeInput = $("#rechargeInput");
+                var $_rechargeMemoInput = $("#rechargeMemoInput");
+                var _rechargeAmount = parseInt($_rechargeInput.val());
+                var content = "";
+                if ($_rechargeInput.val().length > 0 && isNaN(_rechargeAmount)) {
+                    SQ.tips.error({ content: "充值金额为数字且为整数！" });
+                    return false;
                 }
-                $.dialog({
-                    title: "账户充值",
-                    cancel: true,
-                    okVal: "充值",
-                    cancelVal: "关闭",
-                    content: template("rechargeInformation", { user: json.user, goldList: json.goldList }),
-                    init: function() {
-                        // 初始化sq-btn-group
-                        SQ.component.initTabs();
-                        $(".recharge-diy").hide();
-                        $("#productBtn input").click(function() {
-                            var productId = parseInt($(this).data("product_id"));
-                            $("#product").val(productId);
-                            if (productId == 0) {
-                                $(".recharge-diy").show();
-                            }
-                            else {
-                                $(".recharge-diy").hide();
-                            }
-                        });
-                        $("#goldAmountInput").keyup(function() {
-                            var _goldAmount = parseInt($(this).val());
-                            if (isNaN(_goldAmount)) {
-                                $("#oriGoldInput").val("");
-                            }
-                            else {
-                                $("#oriGoldInput").val(json.goldRate * _goldAmount);
-                            }
-                            $("#giftGoldInput").val("");
-                        });
-                    },
+                if(_rechargeAmount < 0 && $.trim($_rechargeMemoInput.val()) == '') {
+                	SQ.tips.error({ content: "账户充值请求被拒绝！原因：充值金额小于0时，必须备注原因！" });
+                    return false;
+                }
+                if ($_rechargeInput.val().length > 0 && !isNaN(_rechargeAmount)) {
+                    content += "充值金额<b class='text-red'>￥" + _rechargeAmount + "</b>元，"
+                }
+                if (content == "") {
+                    SQ.tips.error({ content: "你尚未填写账户充值数据！" });
+                    return false;
+                }
+                SQ.tips.ask({
+                    title: "账户充值确认",
+                    content: "您将提交" + content + "是否继续？",
                     ok: function() {
-                        var $_rechargeForm = $("#rechargeForm");
-                        var $_rechargeInput = $("#rechargeInput");
-                        var $_goldAmountInput = $("#goldAmountInput");
-                        var _rechargeAmount = parseInt($_rechargeInput.val());
-                        var _product = parseInt($("#product").val());
-                        var _goldAmount = parseInt($_goldAmountInput.val());
-                        var _oriGold = parseInt($("#oriGoldInput").val());
-                        var _giftGold = parseInt($("#giftGoldInput").val());
-                        var content = "";
-                        if ($_rechargeInput.val().length > 0 && isNaN(_rechargeAmount)) {
-                            SQ.tips.error({ content: "充值金额为数字且为整数！" });
-                            return false;
-                        }
-                        if (_product == 0) {
-                            if (isNaN(_goldAmount)) {
-                                SQ.tips.error({ content: "优币购买金额为数字且为整数！" });
-                                return false;
-                            }
-                            if (isNaN(_oriGold)) {
-                                SQ.tips.error({ content: "原始优币数量必须为整数！" });
-                                return false;
-                            }
-                            if (isNaN(_giftGold)) {
-                                SQ.tips.error({ content: "赠送优币数量必须为整数！" });
-                                return false;
-                            }
-                        }
-                        if ($_rechargeInput.val().length > 0 && !isNaN(_rechargeAmount)) {
-                            content += "充值金额<b class='text-red'>￥" + _rechargeAmount + "</b>元，"
-                        }
-                        if (_product == 0) {
-                            content += "自定义购买优币金额<b class='text-red'>￥" + _goldAmount + "</b>元，优币数量<b class='text-red'>"
-                            + _oriGold + "</b> + <b class='text-red'>" + _giftGold + "</b> = <b class='text-red'>" + (_oriGold + _giftGold) + "</b>个，";
-                        }
-                        else if (_product > 0) {
-                            content += "优币套餐<b class='text-red'>" + $("input.sq-tab-selected").val() + "</b>，";
-                        }
-                        if (content == "") {
-                            SQ.tips.error({ content: "你尚未填写账户充值数据！" });
-                            return false;
-                        }
-                        SQ.tips.ask({
-                            title: "账户充值确认",
-                            content: "您将提交" + content + "是否继续？",
-                            ok: function() {
-                                SQ.post({
-                                    url: $_rechargeForm.attr("action"),
-                                    data: $_rechargeForm.serialize()
-                                });
-                            }
+                        SQ.post({
+                            url: $_rechargeForm.attr("action"),
+                            data: $_rechargeForm.serialize()
                         });
-                        return false;
                     }
                 });
+                return false;
             }
         });
         return false;
     });
     //重置密码
     $(".user-pwd").click(function() {
-        var userId = $(this).data("userid");
+        var userid = $(this).data("userid");
         SQ.tips.ask({
             title: "重置用户密码确认",
             content: "确认为用户重置密码？",
             ok: function() {
                 SQ.post({
-                    data: { action: "InitPwd", userId: userId },
-                    url: ""
+                    data: { action: "InitPwd", userid: userid },
+                    url: "/oemmanager/userinfo/userinitpwd"
                 });
             }
         });
