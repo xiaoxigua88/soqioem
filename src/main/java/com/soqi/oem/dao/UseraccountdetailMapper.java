@@ -4,11 +4,11 @@ import com.soqi.oem.gentry.Useraccountdetail;
 import java.util.List;
 
 public interface UseraccountdetailMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Useraccountdetail record);
 
-    Useraccountdetail selectByPrimaryKey(Integer id);
+    Useraccountdetail selectByPrimaryKey(Long id);
 
     List<Useraccountdetail> selectAll();
 

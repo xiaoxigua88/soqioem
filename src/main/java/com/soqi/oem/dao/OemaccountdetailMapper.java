@@ -4,11 +4,11 @@ import com.soqi.oem.gentry.Oemaccountdetail;
 import java.util.List;
 
 public interface OemaccountdetailMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Oemaccountdetail record);
 
-    Oemaccountdetail selectByPrimaryKey(Integer id);
+    Oemaccountdetail selectByPrimaryKey(Long id);
 
     List<Oemaccountdetail> selectAll();
 

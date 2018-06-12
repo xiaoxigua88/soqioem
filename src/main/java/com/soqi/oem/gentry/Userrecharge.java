@@ -15,7 +15,7 @@ public class Userrecharge implements Serializable {
 
     private String bank;
 
-    private Boolean status;
+    private Integer status;
 
     private Date addtime;
 
@@ -65,15 +65,15 @@ public class Userrecharge implements Serializable {
         this.bank = bank == null ? null : bank.trim();
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
+    public Integer getStatus() {
+		return status;
+	}
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public Date getAddtime() {
+	public Date getAddtime() {
         return addtime;
     }
 

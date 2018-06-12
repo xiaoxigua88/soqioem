@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.soqi.oem.dao.UseraccountdetailMapper" >
   <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Useraccountdetail" >
-    <id column="Id" property="id" jdbcType="INTEGER" />
+    <id column="Id" property="id" jdbcType="BIGINT" />
     <result column="UserId" property="userid" jdbcType="INTEGER" />
     <result column="Change" property="change" jdbcType="DECIMAL" />
     <result column="Freeze" property="freeze" jdbcType="DECIMAL" />
@@ -12,15 +12,12 @@
     <result column="Description" property="description" jdbcType="VARCHAR" />
     <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from UserAccountDetail
-    where Id = #{id,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Useraccountdetail" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into UserAccountDetail (UserId, "Change", "Freeze", 
+    insert into UserAccountDetail (UserId, Change, Freeze, 
       Balance, TradeType, TradeId, 
       Description, AddTime)
     values (#{userid,jdbcType=INTEGER}, #{change,jdbcType=DECIMAL}, #{freeze,jdbcType=DECIMAL}, 
@@ -37,13 +34,13 @@
       TradeId = #{tradeid,jdbcType=VARCHAR},
       Description = #{description,jdbcType=VARCHAR},
       AddTime = #{addtime,jdbcType=TIMESTAMP}
-    where Id = #{id,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select Id, UserId, "Change", "Freeze", Balance, TradeType, TradeId, Description, 
     AddTime
     from UserAccountDetail
-    where Id = #{id,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select Id, UserId, "Change", "Freeze", Balance, TradeType, TradeId, Description, 

@@ -1,5 +1,7 @@
 package com.soqi.oem.control;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soqi.common.constants.Constant;
 import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.IDUtils;
 import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.ResultDTO;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
 import com.soqi.oem.gentry.Userloginlog;
+import com.soqi.oem.gentry.Userrecharge;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.LogService;
+import com.soqi.system.service.RechargeService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
@@ -38,6 +44,8 @@ public class OemUserController extends BaseController{
 	private UserService userService;
 	@Autowired
 	private LogService LogService;
+	@Autowired
+	private RechargeService rechargeService ;
 	@RequiresPermissions("1301:7")//权限管理;
 	@RequestMapping(value="/oemmanager/userinfo/userlist")
 	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
@@ -167,23 +175,19 @@ public class OemUserController extends BaseController{
 	
 	@RequestMapping("/oemmanager/userinfo/userrecharge")
 	@ResponseBody
-	public ResultFontJS userRecharge(@RequestParam(value="rechargeAmount",required=true) Integer rechargeAmount, @RequestParam(value="rechargeMemo",required=false) String rechargeMemo, @RequestParam(value="userid",required=false) Integer userid){
-		//给用户充值
-		if(userid != null){
-			//根据userid查询用户信息
-			Oemuser oemuser = userService.qryOemuser(userid);
-			if(oemuser == null){
-				return ResultFontJS.error("未查询到需要修改密码的用户");
-			}
-			if(oemuser.getOemid().intValue() != this.getCustomer().getOemid().intValue()){
-				return ResultFontJS.error("不是同一个代理下的用户无法修改其密码");
-			}
-			String pwd = userService.InitPwd(oemuser);
-			if (pwd != null) {
-				return ResultFontJS.ok("密码重置成功，新密码为"+pwd, false).put("time", 10);
-			}
-		}
-		return ResultFontJS.error();
+	public ResultFontJS userRecharge(@RequestParam(value="rechargeAmount",required=true) Integer rechargeAmount, @RequestParam(value="rechargeMemo",required=false) String rechargeMemo, @RequestParam(value="userid",required=true) Integer userid){
+		Userrecharge recharge = new Userrecharge();
+		Date date  = new Date();
+		recharge.setAddtime(date);
+		recharge.setAmount(BigDecimal.valueOf(rechargeAmount));
+		recharge.setMemo(rechargeMemo);
+		recharge.setUserid(userid);
+		recharge.setOrderid(Long.valueOf(IDUtils.createID()));
+		recharge.setPaytype(Constant.REHARGE_CASH);
+		recharge.setStatus(1);
+		recharge.setFinishtime(date);
+		rechargeService.userRecharge(recharge);
+		return ResultFontJS.ok("用户充值成功");
 	}
 	
 	@RequiresPermissions("1301:16")//权限管理;
