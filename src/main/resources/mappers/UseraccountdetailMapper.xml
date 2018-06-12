@@ -43,8 +43,16 @@
     where Id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select Id, UserId, "Change", "Freeze", Balance, TradeType, TradeId, Description, 
+    select Id, UserId, Change, Freeze, Balance, TradeType, TradeId, Description, 
     AddTime
     from UserAccountDetail
+  </select>
+  <select id="qryUserAcDtlsByOemid" resultMap="BaseResultMap" parameterType="map" >
+   select Id, UserId, Change, Freeze, Balance, TradeType, TradeId, Description, 
+    AddTime
+    from UserAccountDetail d where exists (select * from OemUser u where u.OemId = #{oemid,jdbcType=INTEGER} and u.UserId = d.UserId) Order by Id Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  <select id="qryCountUserAcDtlsByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1) as total from UserAccountDetail d where exists (select * from OemUser u where u.OemId = #{oemid,jdbcType=INTEGER} and u.UserId = d.UserId)
   </select>
 </mapper>

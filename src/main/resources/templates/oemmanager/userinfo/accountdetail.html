@@ -1,7 +1,7 @@
 <head>
 	<!-- 个性化标题部分 -->
 	<!-- <meta charset="utf-8"/> -->
-	<title>二级代理管理页</title>
+	<title>管理员欢迎页</title>
 	<!-- 引用个性化样式部分开始 -->
 	<link rel="stylesheet" th:href="@{/css/adModule/adCommon.css}"/>
 	<!-- 引用个性化样式部分结束 -->
@@ -14,23 +14,17 @@
 	<!-- 菜单部分 -->
 	<div th:replace="/oemmanager/_menu::menu"/>
 	<div class="sq-main">
-	    <div class="crumb-container" data-nav="childoem_list" id="crumbNavContainer">
+	    <div class="crumb-container" data-nav="user_accountdetail" id="crumbNavContainer">
 		    <!-- JS填充 -->
 	    </div>
 	    <div id="contentBox"></div>
-	    <!-- 代理列表 -->
-	    <div th:replace="/oemmanager/child/_oemlist_content"/>
-	    <!-- 代理编辑 -->
-	    <div th:replace="/oemmanager/child/_oemlist_edit"/>
-	    <!-- 代理添加 -->
-	    <div th:replace="/oemmanager/child/_oemlist_add"/>
-	    <!-- 代理充值 -->
-	    <div th:replace="/oemmanager/child/_oemlist_recharge"/>
+	    <!-- 资金明细表 -->
+	    <div th:replace="/oemmanager/userinfo/_accountdetail_content"/>
+	    
     </div>
 	<div th:replace="/oemmanager/_footer::copy"/>
 	<div>
 		<div th:replace="/oemmanager/_script::commonJs"></div>
-		<script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/oemlist.js}"></script>
 	</div>
 </body>
 </html>

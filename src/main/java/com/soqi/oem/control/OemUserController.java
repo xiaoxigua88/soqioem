@@ -32,7 +32,7 @@ import com.soqi.oem.gentry.Userloginlog;
 import com.soqi.oem.gentry.Userrecharge;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.LogService;
-import com.soqi.system.service.RechargeService;
+import com.soqi.system.service.FinanceService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
@@ -45,7 +45,7 @@ public class OemUserController extends BaseController{
 	@Autowired
 	private LogService LogService;
 	@Autowired
-	private RechargeService rechargeService ;
+	private FinanceService rechargeService ;
 	@RequiresPermissions("1301:7")//权限管理;
 	@RequestMapping(value="/oemmanager/userinfo/userlist")
 	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){

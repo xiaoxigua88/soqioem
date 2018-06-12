@@ -1,0 +1,114 @@
+<script type="text/html"  id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">资金充值记录</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="task-operates clearfix margin-bottom-10">
+		<form action="" class="pull-left" id="searchForm">
+	        <label class="pull-left search-group-label">用户：</label>
+		    <input type="text" name="userName" class="pull-left sq-input-reset search-group-input" value="{{filter.userName}}" placeholder="用户ID、手机、Email" />
+	        <label class="pull-left search-group-label">流水编号：</label>
+		    <input type="text" name="orderId" class="pull-left sq-input-reset search-group-input" value="{{filter.orderId}}" />
+		    <label class="pull-left search-group-label">充值方式：</label>
+		    <div data-field_name="payType" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each payTypeList as item i}}
+			        <li><a href="#a_null" class="{{if filter.payType == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+	        <label class="pull-left search-group-label">提交日期：</label>
+		    <input type="text" name="minAddTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minAddTime}}" />
+	        <label class="pull-left search-group-label">至</label>
+		    <input type="text" name="maxAddTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxAddTime}}" />
+		    <label class="pull-left search-group-label">成功：</label>
+		    <div data-field_name="status" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <span class="selected-content"></span>
+				    <span class="sq-caret"></span>
+			    </a>
+			    <ul class="dropdown-menu sq-search-dropdown">
+		            {{each statusList as item i}}
+			        <li><a href="#a_null" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			        {{/each}}
+			    </ul>
+		    </div>
+			<input class="hide" type="text" name="payType" value="{{filter.payType}}" />
+			<input class="hide" type="text" name="status" value="{{filter.status}}" />
+		    <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+		</form>
+	    </div>
+		<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="当前条件查询的资金资金充值记录为空">
+			<thead>
+				<tr>
+					<th style="width:50px">
+						序列
+					</th>
+					<th style="width:70px">
+						用户ID
+					</th>
+					<th style="width:150px">
+						流水编号
+					</th>
+					<th style="width:100px">
+						充值金额
+					</th>
+					<th style="width:100px">
+						充值方式
+					</th>
+					<th style="width:150px">
+						提交时间
+					</th>
+					<th style="width:150px">
+						完成时间
+					</th>
+					<th style="width:50px">
+						成功
+					</th>
+					<th>
+						备注
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+						<td class="text-muted">
+							{{i+1}}
+						</td>
+						<td>
+						    <a href="#a_null" class="user-view" data-userid="{{item.oemid}}" title="查看用户{{item.oemid}}的详细资料">{{item.oemid}}</a>
+						</td>
+						<td>
+							{{item.orderid}}
+						</td>
+						<td class="text-stress">
+							￥{{item.amount}}
+						</td>
+						<td class="text-stress">
+							{{item.paytype | getPayTypeClass:"name"}}
+						</td>
+						<td class="text-muted">
+							{{item.addtime}}
+						</td>
+						<td class="text-muted">
+							{{item.finishtime}}
+						</td>
+						<td class="text-muted">
+							{{if item.status}}<span class="text-orange">是</span>{{else}}否{{/if}}
+						</td>
+						<td>{{item.memo}}</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<!-- 引入分页 -->
+		{{include "paginationTpl"}}
+	</div>
+</div>
+</script>

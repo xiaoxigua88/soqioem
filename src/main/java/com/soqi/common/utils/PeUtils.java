@@ -42,4 +42,12 @@ public class PeUtils {
 		}
 		return false;
 	}
+	
+	public static boolean hasParentOem(){
+		Customer c = ShiroUtils.getCustomer();
+		if(c.getOembase().getParentoemid().intValue() != 0){
+			return true;
+		}
+		return false;
+	}
 }

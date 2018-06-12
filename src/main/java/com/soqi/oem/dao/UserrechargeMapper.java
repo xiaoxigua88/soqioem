@@ -1,7 +1,10 @@
 package com.soqi.oem.dao;
 
 import com.soqi.oem.gentry.Userrecharge;
+
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface UserrechargeMapper {
     int deleteByPrimaryKey(Long orderid);
@@ -13,4 +16,8 @@ public interface UserrechargeMapper {
     List<Userrecharge> selectAll();
 
     int updateByPrimaryKey(Userrecharge record);
+    
+    public List<Userrecharge> qryUserRechargesByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
+    
+    public int qryCountUserRechargesByOemid(Integer oemid);
 }

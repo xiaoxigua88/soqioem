@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Oemrecharge implements Serializable {
     private Long orderid;
 
@@ -15,10 +17,12 @@ public class Oemrecharge implements Serializable {
 
     private String bank;
 
-    private Boolean status;
+    private Integer status;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addtime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date finishtime;
 
     private String memo;
@@ -65,15 +69,17 @@ public class Oemrecharge implements Serializable {
         this.bank = bank == null ? null : bank.trim();
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
+    
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+    public Integer getStatus() {
+		return status;
+	}
 
-    public Date getAddtime() {
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Date getAddtime() {
         return addtime;
     }
 

@@ -1,5 +1,7 @@
 package com.soqi.oem.control;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soqi.common.constants.Constant;
 import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
+import com.soqi.common.utils.IDUtils;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oembase;
+import com.soqi.oem.gentry.Oemrecharge;
 import com.soqi.system.control.BaseController;
+import com.soqi.system.service.FinanceService;
 import com.soqi.system.service.OemBaseService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
@@ -29,7 +35,8 @@ import com.soqi.system.vo.Page;
 public class ChildOemController extends BaseController {
 	@Autowired
 	private OemBaseService oemBaseService;
-	
+	@Autowired
+	private FinanceService rechargeService ;
 	@RequestMapping("/oemmanager/child/childoemlist")
 	public String childoemlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
@@ -83,5 +90,25 @@ public class ChildOemController extends BaseController {
 	public ResultFontJS childoemUpdate(Oembase oembase, HttpServletRequest req){
 		int c = oemBaseService.childoemUpdate(oembase);
 		return c > 0 ? ResultFontJS.ok("代理数据修改成功！") : ResultFontJS.error("代理修改失败");
+	}
+	
+	/*
+	 * 代理充值
+	 */
+	@RequestMapping("/oemmanager/child/oemrecharge")
+	@ResponseBody
+	public ResultFontJS oemRecharge(@RequestParam(value="rechargeAmount",required=true) Integer rechargeAmount, @RequestParam(value="rechargeMemo",required=false) String rechargeMemo, @RequestParam(value="oemid",required=true) Integer oemid){
+		Oemrecharge recharge = new Oemrecharge();
+		Date date  = new Date();
+		recharge.setAddtime(date);
+		recharge.setAmount(BigDecimal.valueOf(rechargeAmount));
+		recharge.setMemo(rechargeMemo);
+		recharge.setOemid(oemid);
+		recharge.setOrderid(Long.valueOf(IDUtils.createID()));
+		recharge.setPaytype(Constant.REHARGE_CASH);
+		recharge.setStatus(1);
+		recharge.setFinishtime(date);
+		rechargeService.oemRecharge(recharge);
+		return ResultFontJS.ok("用户充值成功");
 	}
 }

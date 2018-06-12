@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Oemaccountdetail implements Serializable {
     private Long id;
 
@@ -21,6 +23,7 @@ public class Oemaccountdetail implements Serializable {
 
     private String description;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addtime;
 
     private static final long serialVersionUID = 1L;

@@ -1,75 +1,38 @@
-		<div class="alert-warn alert-protect margin-bottom-20">
-			自定义购买优币的金额必须大于等于0，金额大于0时，优币数量必须大于0。
+<script type="text/html" id="rechargeInformation">
+<form action="/oemmanager/child/oemrecharge" class="form-horizontal sq-form sq-tab-container font-size-12" id="rechargeForm" style="width:700px">
+	<div class="form-group validate-control">
+		<div class="sq-control-label sq-label-mini">
+			充值金额：
 		</div>
-		<form action="?action=RechargeDo" class="form-horizontal sq-form sq-tab-container font-size-12" id="rechargeForm" style="width:700px">
-			<div class="form-group validate-control">
-				<div class="sq-control-label sq-label-mini">
-					充值金额：
-				</div>
-				<div class="col-xs-8 sq-form-control sq-input-group validate-control">
-					<input id="rechargeInput" type="text" name="rechargeAmount" class="sq-input-reset sq-input-number sq-input-amount" autocomplete="off" />
-					<span class="sq-input-addon">元</span>
-					大于0为充值，产生充值单号和资金流水；小于0为人工扣款，仅产生资金流水。
-				</div>
-			</div>
-			<div class="form-group validate-control">
-				<div class="sq-control-label sq-label-mini">
-					充值备注：
-				</div>
-				<div class="col-xs-8 sq-form-control sq-input-group validate-control">
-					<input id="rechargeMemoInput" type="text" name="rechargeMemo" class="sq-input-reset sq-input-memo" autocomplete="off" />
-				</div>
-			</div>
-			<div class="form-group validate-control">
-				<div class="sq-control-label sq-label-mini">
-					优币购买：
-				</div>
-				<div class="col-xs-10 sq-form-control">
-					<div class="sq-btn-group" id="productBtn">
-						<input type="button" class="sq-btn btn-primary btn-reverse sq-tab-selected" data-product_id="-1" data-amount="-1" data-tab_group="-1" value="不购买优币" />
-						<input type="button" class="sq-btn btn-primary btn-reverse" data-product_id="0" data-amount="0" data-tab_group="0" value="手工输入购买" />
-						{{each goldList as item i}}
-						<input type="button" class="sq-btn btn-primary btn-reverse" data-product_id="{{item.ProductId}}" data-amount="{{item.Amount}}" data-tab_group="{{item.ProductId}}" value="￥{{item.Amount}}元={{item.TotalCount}}个" />
-						{{/each}}
-					</div>
-				</div>
-			</div>
-			<div class="form-group validate-control recharge-diy">
-				<div class="sq-control-label sq-label-mini">
-					购买金额：
-				</div>
-				<div class="col-xs-8 sq-form-control sq-input-group validate-control">
-					<input id="goldAmountInput" type="text" name="goldAmount" class="sq-input-reset sq-input-number sq-input-amount" autocomplete="off" />
-					<span class="sq-input-addon">元</span>
-					原始：<input id="oriGoldInput" type="text" name="oriGold" class="sq-input-reset sq-input-number sq-input-gold" autocomplete="off" disabled="disabled" />
-					<span class="sq-input-addon">个</span>
-					赠送：<input id="giftGoldInput" type="text" name="giftGold" class="sq-input-reset sq-input-number sq-input-gold" autocomplete="off" />
-					<span class="sq-input-addon">个</span>
-				</div>
-			</div>
-			<div class="form-group validate-control">
-				<div class="sq-control-label sq-label-mini">
-					优币备注：
-				</div>
-				<div class="col-xs-8 sq-form-control sq-input-group validate-control">
-					<input id="goldOrderMemoInput" type="text" name="goldOrderMemo" class="sq-input-reset sq-input-memo" autocomplete="off" />
-				</div>
-			</div>
-			<input type="hidden" id="product" name="productId" value="-1" />
-			<input type="hidden" name="userId" value="{{user.UserId}}" />
-		</form>
-		<style type="text/css">
-            .sq-form-control .btn-reverse {
-	            width: 256px;
-	            height:50px;
-	            line-height:49px;
-	            font-size:18px;
-	            font-weight:bold;
-	            margin:10px;
-	            margin-left:0px;
-	            float:left;
-            }
-            .sq-btn-group .sq-tab-selected, .sq-btn-group .sq-tab-selected:hover {
-                background-position: 227px 21px;
-            }
-		</style>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input id="rechargeInput" type="text" name="rechargeAmount" class="sq-input-reset sq-input-number sq-input-amount" autocomplete="off" />
+			<span class="sq-input-addon">元</span>
+			大于0为充值，产生充值单号和资金流水；小于0为人工扣款，仅产生资金流水。
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label sq-label-mini">
+			充值备注：
+		</div>
+		<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+			<input id="rechargeMemoInput" type="text" name="rechargeMemo" class="sq-input-reset sq-input-memo" autocomplete="off" />
+		</div>
+	</div>
+	<input type="hidden" name="oemid" value="{{oemid}}" />
+</form>
+<style type="text/css">
+          .sq-form-control .btn-reverse {
+           width: 256px;
+           height:50px;
+           line-height:49px;
+           font-size:18px;
+           font-weight:bold;
+           margin:10px;
+           margin-left:0px;
+           float:left;
+          }
+          .sq-btn-group .sq-tab-selected, .sq-btn-group .sq-tab-selected:hover {
+              background-position: 227px 21px;
+          }
+</style>
+</script>

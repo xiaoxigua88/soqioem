@@ -17,10 +17,7 @@
     where Id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Oemaccountdetail" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT SCOPE_IDENTITY()
-    </selectKey>
-    insert into OemAccountDetail (OemId, "Change", "Freeze", 
+    insert into OemAccountDetail (OemId, Change, Freeze, 
       Balance, TradeType, TradeId, 
       Description, AddTime)
     values (#{oemid,jdbcType=INTEGER}, #{change,jdbcType=DECIMAL}, #{freeze,jdbcType=DECIMAL}, 
@@ -30,8 +27,8 @@
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oemaccountdetail" >
     update OemAccountDetail
     set OemId = #{oemid,jdbcType=INTEGER},
-      "Change" = #{change,jdbcType=DECIMAL},
-      "Freeze" = #{freeze,jdbcType=DECIMAL},
+      Change = #{change,jdbcType=DECIMAL},
+      Freeze = #{freeze,jdbcType=DECIMAL},
       Balance = #{balance,jdbcType=DECIMAL},
       TradeType = #{tradetype,jdbcType=INTEGER},
       TradeId = #{tradeid,jdbcType=VARCHAR},
@@ -40,12 +37,19 @@
     where Id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select Id, OemId, "Change", "Freeze", Balance, TradeType, TradeId, Description, AddTime
+    select Id, OemId, Change, Freeze, Balance, TradeType, TradeId, Description, AddTime
     from OemAccountDetail
     where Id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select Id, OemId, "Change", "Freeze", Balance, TradeType, TradeId, Description, AddTime
     from OemAccountDetail
+  </select>
+  <select id="qryOemAcDtlsByOemid" resultMap="BaseResultMap" parameterType="map" >
+   select Id, OemId, Change, Freeze, Balance, TradeType, TradeId, Description, AddTime
+   from OemAccountDetail d where exists (select * from OemBase u where u.ParentOemId = #{oemid,jdbcType=INTEGER} and u.OemId = d.OemId) Order by Id Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  <select id="qryCountOemAcDtlsByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1) as total from OemAccountDetail d where exists (select * from OemBase u where u.ParentOemId = #{oemid,jdbcType=INTEGER} and u.OemId = d.OemId)
   </select>
 </mapper>

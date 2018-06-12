@@ -18,7 +18,7 @@
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Oemrecharge" >
     insert into OemRecharge (OrderId, OemId, Amount, 
-      PayType, Bank, "Status", 
+      PayType, Bank, Status, 
       AddTime, FinishTime, Memo
       )
     values (#{orderid,jdbcType=BIGINT}, #{oemid,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
@@ -46,5 +46,12 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select OrderId, OemId, Amount, PayType, Bank, "Status", AddTime, FinishTime, Memo
     from OemRecharge
+  </select>
+  <select id="qryOemRechargesByOemid" resultMap="BaseResultMap" parameterType="map" >
+   select OrderId, OemId, Amount, PayType, Bank, Status, AddTime, FinishTime, Memo
+   from OemRecharge d where exists (select * from OemBase u where u.ParentOemId = #{oemid,jdbcType=INTEGER} and u.OemId = d.OemId) Order by AddTime Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  <select id="qryCountOemRechargesByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1) as total from OemRecharge d where exists (select * from OemBase u where u.ParentOemId = #{oemid,jdbcType=INTEGER} and u.OemId = d.OemId)
   </select>
 </mapper>

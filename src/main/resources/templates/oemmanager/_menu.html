@@ -33,7 +33,9 @@
    									<li><a href="/oemmanager/userinfo/userlist" th:href="@{/oemmanager/userinfo/userlist}" data-named="user_list">用户列表</a></li>      
    								</shiro>
    								<li><a href="/oemmanager/userinfo/userloginlog" th:href="@{/oemmanager/userinfo/userloginlog}" data-named="user_loginlog">用户登录日志</a></li>    
-   								<li><a href="/oemmanager/userinfo/verify" th:href="@{/oemmanager/userinfo/verify}" data-named="user_verify">用户实名认证</a></li>                                              
+   								<li><a href="/oemmanager/userinfo/verify" th:href="@{/oemmanager/userinfo/verify}" data-named="user_verify">用户实名认证</a></li>
+   								<li><a href="/oemmanager/userinfo/rechargelist"  th:href="@{/oemmanager/userinfo/rechargelist}" data-named="user_recharge">资金充值记录</a></li>
+								<li><a href="/oemmanager/userinfo/accountdetail"  th:href="@{/oemmanager/userinfo/accountdetail}" data-named="user_accountdetail">资金收支明细</a></li>                                              
                                 <!-- <shiro shiro:hasPermission="1304:7">                        
   									<li><a href="#" data-named="user_list">代理列表</a></li>      
   								</shiro>
@@ -52,7 +54,9 @@
 						</div>
 						<div id="childOmeCollapse" class="collapse" role="tabpanel" aria-labelledby="childOemHeading">
 							<ul class="sub-menu">
-   								<li><a href="/oemmanager/child/childoemlist" th:href="@{/oemmanager/child/childoemlist}" data-named="childoem_list">代理列表</a></li>    
+   								<li><a href="/oemmanager/child/childoemlist" th:href="@{/oemmanager/child/childoemlist}" data-named="childoem_list">代理列表</a></li>
+   								<li><a href="/oemmanager/child/rechargelist"  th:href="@{/oemmanager/child/rechargelist}" data-named="oem_recharge">资金充值记录</a></li>
+								<li><a href="/oemmanager/child/accountdetail"  th:href="@{/oemmanager/child/accountdetail}" data-named="oem_accountdetail">资金收支明细</a></li>    
 							</ul>
 						</div>
 					</div>
@@ -102,8 +106,7 @@
 						</div>
 					</div>
 					</shiro>
-					<shiro shiro:hasPermission="1004:1">
-					<div class="panel">
+					<div class="panel" th:if="${#PeUtils.hasParentOem()==true}">
 						<div class="upper-menu-wrap" role="tab" id="financeHeading">
 							<a class="collapsed upper-menu menu-icon-finance" role="button" data-toggle="collapse" data-parent="#accordion" href="#financeCollapse" aria-expanded="false" aria-controls="financeCollapse">
 								财务管理
@@ -111,12 +114,10 @@
 						</div>
 						<div id="financeCollapse" class="collapse" role="tabpanel" aria-labelledby="customerHeading">
 							<ul class="sub-menu">
-								<li><a href="/oemmanager/finance/rechargelist"  th:href="@{/oemmanager/finance/rechargelist}" data-named="recharge">资金充值记录</a></li>
-								<li><a href="/oemmanager/finance/accountdetail"  th:href="@{/oemmanager/finance/accountdetail}" data-named="accountdetail">资金收支明细</a></li>
+								<li><a href="/oemmanager/finance/rechargelist"  th:href="@{/oemmanager/finance/rechargelist}" data-named="recharge">我的账单</a></li>
 							</ul>
 						</div>
 					</div>
-					</shiro>
 				</div>
 			</div>
 		</div>
