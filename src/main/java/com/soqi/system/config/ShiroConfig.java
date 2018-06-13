@@ -23,6 +23,7 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
 import com.soqi.system.shiro.SystemLogoutFilter;
 import com.soqi.system.shiro.UserRealm;
+import com.soqi.system.shiro.UserSeparatorFilter;
 
 /**
  * @author bootdo 1992lcg@163.com
@@ -67,6 +68,7 @@ public class ShiroConfig {
 		//自定义拦截器
 		Map<String, Filter> filterMap = new HashMap<String, Filter>();
 		filterMap.put("systemLogoutFilter", new SystemLogoutFilter());
+		filterMap.put("userSeparatorFilter", new UserSeparatorFilter());
 		shiroFilterFactoryBean.setFilters(filterMap);
         //map里面key值要为authc才能使用自定义的过滤器
         //filterMap.put("authc", getLogoutFilter());
@@ -89,7 +91,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/upload/**", "anon");
 		filterChainDefinitionMap.put("/files/**", "anon");
 		filterChainDefinitionMap.put("/logout", "systemLogoutFilter");
-		filterChainDefinitionMap.put("/**", "authc");
+		//filterChainDefinitionMap.put("/logout", "logout");
+		filterChainDefinitionMap.put("/**", "authc,userSeparatorFilter");
 		//shiroFilterFactoryBean.setFilters(filterMap);
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilterFactoryBean;

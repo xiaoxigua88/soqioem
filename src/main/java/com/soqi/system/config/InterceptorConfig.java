@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.soqi.common.utils.FastJsonUtil;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.common.utils.WebAddrUtils;
 import com.soqi.oem.gentry.Customer;
@@ -23,9 +21,9 @@ public class InterceptorConfig implements HandlerInterceptor{
 	private static final Logger logger = LoggerFactory.getLogger(InterceptorConfig.class);
 
 	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println(">>>MyInterceptor1>>>>>>>在请求处理之前进行调用（Controller方法调用之前）");
+		System.out.println(">>>"+request.getRequestURI()+"<<<");
 		return true;
 	}
 

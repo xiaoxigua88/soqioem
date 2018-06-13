@@ -20,12 +20,12 @@ $(function() {
                     return false;
                 },
                 cancel: function() {
-                    goldCheck();
+                	verifyCheck();
                 }
             });
         }
         else {
-            goldCheck();
+        	verifyCheck();
         }
         return false;
     };
