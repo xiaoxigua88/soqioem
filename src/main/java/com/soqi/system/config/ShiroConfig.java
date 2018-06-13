@@ -1,6 +1,10 @@
 package com.soqi.system.config;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.servlet.Filter;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -17,7 +21,7 @@ import org.springframework.context.annotation.DependsOn;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
-import com.soqi.system.shiro.StatelessSessionManager;
+import com.soqi.system.shiro.SystemLogoutFilter;
 import com.soqi.system.shiro.UserRealm;
 
 /**
@@ -52,9 +56,7 @@ public class ShiroConfig {
 		System.out.println("ShiroConfig.shiroFilter()");
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
-		//Map<String, Filter> filterMap = new HashMap<>();
-        //map里面key值要为authc才能使用自定义的过滤器
-        //filterMap.put("authc", getpermissionSpecial());
+		
 		// 如果不设置默认会寻找WEB根目录下的login.jsp界面
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		// 登录成功后跳转界面
@@ -62,6 +64,14 @@ public class ShiroConfig {
 		// 未授权界面
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
+		//自定义拦截器
+		Map<String, Filter> filterMap = new HashMap<String, Filter>();
+		filterMap.put("systemLogoutFilter", new SystemLogoutFilter());
+		shiroFilterFactoryBean.setFilters(filterMap);
+        //map里面key值要为authc才能使用自定义的过滤器
+        //filterMap.put("authc", getLogoutFilter());
+		
+		//拦截器
 		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		//配置记住我或认证通过可以访问的地址  
 		filterChainDefinitionMap.put("/", "anon");
@@ -78,7 +88,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		filterChainDefinitionMap.put("/upload/**", "anon");
 		filterChainDefinitionMap.put("/files/**", "anon");
-		filterChainDefinitionMap.put("/logout", "logout");
+		filterChainDefinitionMap.put("/logout", "systemLogoutFilter");
 		filterChainDefinitionMap.put("/**", "authc");
 		//shiroFilterFactoryBean.setFilters(filterMap);
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -151,9 +161,4 @@ public class ShiroConfig {
         return advisorAutoProxyCreator;
     }
 
-    //注解自定义过滤器
-    /*@Bean
-    public PermissionSpecialAuthorizationFilter getpermissionSpecial(){
-    	return new PermissionSpecialAuthorizationFilter();
-    }*/
 }
