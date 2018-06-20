@@ -72,4 +72,17 @@ public class Constant {
 	//云建站SEO停止
 	public static final int TRADE_TYPE_YUNSIT_SEOSTOP = 45;
 	
+	//关键词状态
+	//检测中
+	public static final int SEO_STATUS_CHECKING = 1;
+	//不可用
+	public static final int SEO_STATUS_CHECKERROR = 2;
+	//待付款
+	public static final int SEO_STATUS_NEEDPAY = 3;
+	//优化中
+	public static final int SEO_STATUS_DOING = 4;
+	//已停止
+	public static final int SEO_STATUS_STOP = 5;
+	//已删除
+	public static final int SEO_STATUS_DELETE = -1;
 }

@@ -169,4 +169,143 @@ $(function() {
         });
         return false;
     });
+  //任务价格设置
+    $(".task-price").click(function() {
+        var taskId = $(this).data("taskid");
+        SQ.post({
+            url: "?action=View",
+            data: {
+                taskId: taskId
+            },
+            isCoverSuccess: true,
+            success: function(json) {
+                if (json.result == false) {
+                    SQ.tips.error({ content: json.text });
+                    return;
+                }
+                $.dialog({
+                    title: "任务价格设置",
+                    okVal: "保存",
+                    cancel: true,
+                    cancelVal: "关闭",
+                    content: template("priceInformation", { taskId: taskId, priceList: json.PriceList }),
+                    ok: function() {
+                        var $_form = $("#priceForm");
+                        if (fieldEmptyValidate($_form)) {
+                            SQ.post({
+                                url: $_form.attr("action"),
+                                data: $_form.serialize()
+                            });
+                        }
+                        return false;
+                    }
+                });
+            }
+        });
+        return false;
+    });
+
+    $(".btn-add-diff").click(function() {
+        $.dialog({
+            title: "不同价关键词批量提交",
+            cancel: true,
+            content: template("importDiffInformation", { searchTypeList: jsData.searchTypeList }),
+            init: function() {
+                $(".chk_st").change(function() {
+                    var _e = $(this);
+                    if (_e.prop("checked")) {
+                        $(".sq-torank-" + _e.val()).prop("disabled", false);
+                        $(".sq-torank-" + _e.val()).addClass("necessary");
+
+                        $(".sq-price-" + _e.val()).prop("disabled", false);
+                        $(".sq-price-" + _e.val()).addClass("necessary");
+                    }
+                    else {
+                        $(".sq-torank-" + _e.val()).prop("disabled", true);
+                        $(".sq-torank-" + _e.val()).removeClass("necessary");
+
+                        $(".sq-price-" + _e.val()).prop("disabled", true);
+                        $(".sq-price-" + _e.val()).removeClass("necessary");
+                    }
+                });
+            },
+            ok: function() {
+                if ($(".chk_st:checked").length == 0) {
+                    SQ.tips.warn({
+                        content: "你至少选择一个搜索引擎！",
+                        cancel: true,
+                        cancelVal: "关闭"
+                    });
+                    return false;
+                }
+                var $_form = $("#importForm");
+                if (fieldEmptyValidate($_form)) {
+                    SQ.post({
+                        url: $_form.attr("action"),
+                        data: $_form.serialize(),
+                        successResultFalse: function(json) {
+                            if (json.reload) {
+                                window.location.reload();
+                            }
+                            else {
+                                validateShowError(json.name, json.text, $_form);
+                            }
+                        }
+                    });
+                }
+                // 阻止对话框消失
+                return false;
+            }
+        });
+    });
+
+    $(".btn-add-same").click(function() {
+        $.dialog({
+            title: "相同价关键词批量提交",
+            cancel: true,
+            content: template("importSameInformation", { searchTypeList: jsData.searchTypeList }),
+            init: function() {
+                $(".chk_st").change(function() {
+                    var _e = $(this);
+                    if (_e.prop("checked")) {
+                        $("input[name='torank1_" + _e.val() + "']").prop("disabled", false);
+                        $("input[name='torank2_" + _e.val() + "']").prop("disabled", false);
+                        $("input[name='torank1_" + _e.val() + "']").addClass("necessary");
+
+                        $("input[name='price1_" + _e.val() + "']").prop("disabled", false);
+                        $("input[name='price2_" + _e.val() + "']").prop("disabled", false);
+                        $("input[name='price1_" + _e.val() + "']").addClass("necessary");
+                    }
+                    else {
+                        $("input[name='torank1_" + _e.val() + "']").prop("disabled", true);
+                        $("input[name='torank2_" + _e.val() + "']").prop("disabled", true);
+                        $("input[name='torank1_" + _e.val() + "']").removeClass("necessary");
+
+                        $("input[name='price1_" + _e.val() + "']").prop("disabled", true);
+                        $("input[name='price2_" + _e.val() + "']").prop("disabled", true);
+                        $("input[name='price1_" + _e.val() + "']").removeClass("necessary");
+                    }
+                });
+            },
+            ok: function() {
+                var $_form = $("#importForm");
+                if (fieldEmptyValidate($_form)) {
+                    SQ.post({
+                        url: $_form.attr("action"),
+                        data: $_form.serialize(),
+                        successResultFalse: function(json) {
+                            if (json.reload) {
+                                window.location.reload();
+                            }
+                            else {
+                                validateShowError(json.name, json.text, $_form);
+                            }
+                        }
+                    });
+                }
+                // 阻止对话框消失
+                return false;
+            }
+        });
+    });
 });

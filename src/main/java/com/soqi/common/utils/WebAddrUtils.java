@@ -1,5 +1,7 @@
 package com.soqi.common.utils;
 
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class WebAddrUtils {
 	private static Logger logger = LoggerFactory.getLogger(WebAddrUtils.class);
-
 	/**
 	 * 获取IP地址
 	 * 
@@ -173,5 +174,18 @@ public class WebAddrUtils {
         // 将高24位置0    
         sb.append(String.valueOf((longIp & 0x000000FF)));    
         return sb.toString();    
-    }  
+    }
+    
+    public static boolean isUrlRight(String url){
+    	Pattern pattern = Pattern.compile("");
+    	return pattern.matcher(url).matches();
+    }
+    
+    public static void main(String args[]){
+    	if(isUrlRight("htt/www.baidu.com?")){
+    		System.out.println("是正确的网址");
+    	}else{
+    		System.out.println("是错误的网址");
+    	}
+    }
 }

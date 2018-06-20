@@ -4,7 +4,28 @@ $(function() {
     var reload = function() {
         window.location.reload();
     };
-
+    $.fn.serializeObject = function() {
+        var o = [];
+        var a = this.serializeArray();
+        var t = {};
+        $.each(a, function(i,data) {
+             if(t[data.name]){
+             	 o.push(t);
+                 t={};
+                 t[data.name] = this.value || '';
+             }else{
+            	 t[data.name] = this.value || '';
+            	 if(i==a.length-1){
+            		 o.push(t);
+            	 }
+             }
+         });
+         if(o.length==1){
+        	 //如果数组中对象长度为1则无必要生成数组
+        	 return t;
+         }
+         return o;
+     };
     var singleSiteDialog = function() {
         $.dialog({
             title: "优帮云排名-单域名关键词批量提交",
@@ -18,7 +39,7 @@ $(function() {
                     if (typeof (checkTimeSet) != 'undefined' && !checkTimeSet()) {
                         return false;
                     }
-                    captchaCheck($_importForm.attr("action"), $_importForm.serialize(), function() {
+                    captchaCheck($_importForm.attr("action"), $_importForm.serializeArray()/*JSON.stringify($_importForm.serializeObject())*/, function() {
                         setTimeout(reload, 5000);
                     });
                 }
@@ -137,9 +158,9 @@ $(function() {
         };
     };
     // 批量删除
-    $_batchDelete.click(createBatchHandle("删除", "?action=Delete", 1));
+    $_batchDelete.click(createBatchHandle("删除", "/client/business/seo/batchdel?action=Delete", 1));
     // 清空
-    $_batchClear.click(createBatchHandle("清空", "?action=Clear", 3));
+    $_batchClear.click(createBatchHandle("清空", "/client/business/seo/batchdel?action=Clear", 3));
 
     //立即购买
     $_payBtn.click(createBatchHandle("购买", "?action=Pay", 1, function() {

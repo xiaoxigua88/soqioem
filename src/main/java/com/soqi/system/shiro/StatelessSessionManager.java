@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StatelessSessionManager extends DefaultWebSessionManager {
-	private final Logger logger = LoggerFactory.getLogger(DefaultWebSessionManager.class);
+	private final Logger logger = LoggerFactory.getLogger(StatelessSessionManager.class);
 	 /**
      * 这个是服务端要返回给客户端，
      */
@@ -25,11 +28,19 @@ public class StatelessSessionManager extends DefaultWebSessionManager {
      * 这个是客户端请求给服务端带的header
      */
     public final static String HEADER_TOKEN_NAME = "token";
+    
+    /*public StatelessSessionManager() {
+        Cookie cookie = new SimpleCookie(HEADER_TOKEN_NAME);
+        cookie.setHttpOnly(true); //more secure, protects against XSS attacks
+        this.setSessionIdCookie(cookie);
+        this.setSessionIdCookieEnabled(true);
+        this.setSessionIdUrlRewritingEnabled(true);
+    }*/
 
     @Override
     public Serializable getSessionId(SessionKey key) {
         Serializable sessionId = key.getSessionId();
-        if(sessionId == null){
+        if(sessionId == null && WebUtils.isWeb(key)){
             HttpServletRequest request = WebUtils.getHttpRequest(key);
             HttpServletResponse response = WebUtils.getHttpResponse(key);
             sessionId = this.getSessionId(request,response);

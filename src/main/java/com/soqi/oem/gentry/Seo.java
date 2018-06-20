@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Seo implements Serializable {
     private Long taskid;
 
@@ -23,14 +25,17 @@ public class Seo implements Serializable {
 
     private Integer ranklastchange;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date rankupdatetime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addtime;
 
     private Integer fromtype;
 
     private Long fromid;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date buytime;
 
     private BigDecimal freezeamount;
@@ -39,12 +44,15 @@ public class Seo implements Serializable {
 
     private BigDecimal costamount;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date costtime;
 
     private Integer settlehour;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date settletime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date settlestart;
 
     private Long apipricetaskid;
@@ -57,6 +65,12 @@ public class Seo implements Serializable {
 
     private Integer status;
 
+    private BigDecimal priceoem;
+    
+    private BigDecimal priceori;
+    
+    private BigDecimal price;
+    
     private static final long serialVersionUID = 1L;
 
     public Long getTaskid() {
@@ -267,7 +281,31 @@ public class Seo implements Serializable {
         this.status = status;
     }
 
-    @Override
+	public BigDecimal getPriceoem() {
+		return priceoem;
+	}
+
+	public void setPriceoem(BigDecimal priceoem) {
+		this.priceoem = priceoem;
+	}
+
+	public BigDecimal getPriceori() {
+		return priceori;
+	}
+
+	public void setPriceori(BigDecimal priceori) {
+		this.priceori = priceori;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

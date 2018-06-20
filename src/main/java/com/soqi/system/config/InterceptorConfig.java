@@ -53,7 +53,9 @@ public class InterceptorConfig implements HandlerInterceptor{
 			Object obj = ShiroUtils.getUser();
 			if(obj instanceof Customer){
 				Customer ct = (Customer)obj;
-				jsonData.put("username", ct.getCallname());
+				if(StringUtils.isBlank((String)jsonData.get("username"))){
+					jsonData.put("username", ct.getCallname());
+				}
 				jsonData.put("customerid", ct.getCustomerid());
 				jsonData.put("oemid", ct.getOemid());
 			}else if(obj instanceof Oemuser){

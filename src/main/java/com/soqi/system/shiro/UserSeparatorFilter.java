@@ -5,6 +5,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -25,6 +26,7 @@ public class UserSeparatorFilter extends AccessControlFilter{
         	String userid = request.getParameter("userid");
         	String action = request.getParameter("action");
             Subject subject = getSubject(request, response);
+            PrincipalCollection pc = subject.getPrincipals();
             if(subject == null){
             	return false;
             }

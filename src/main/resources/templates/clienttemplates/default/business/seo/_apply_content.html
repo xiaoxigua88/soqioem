@@ -1,133 +1,136 @@
-		<div class="sq-panel">
-			<div class="sq-panel-heading clearfix">
-				<div class="pull-left sq-panel-title">云排名购买</div>
-				<div class="pull-left margin-left-20">
-					<a href="#a_null" class="pull-left sq-btn btn-strong btn-operate-add btn-single-add">多对一加词</a>
-					<a href="#a_null" class="pull-left sq-btn btn-strong btn-operate-add btn-multiple-add margin-left-10">一对一加词</a>
-					<a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
-						<span class="operate-icon operate-icon-refresh"></span>
-					</a>
-					<button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
-						<span class="operate-icon operate-icon-delete"></span>
-						删除
-					</button>
-					<button id="batchClear" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
-						<span class="operate-icon operate-icon-clear"></span>
-						清空
-					</button>
-				</div>
-			</div>
-			<div class="sq-panel-body">
-				<div class="alert-warn margin-bottom-20">
-				    购买后将冻结您{{seoFreezeDay}}天的达标费用，连续未达标超过<b class="text-red">{{seoFailedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。不接受涉政、违法、违规、打擦边球、敏感的行业优化。
-				</div>
-				<table class="sq-table margin-bottom-20" id="mainList">
-					<thead>
-						<tr>
-							<th style="width:35px">
-								<input type="checkbox" id="checkAll" />
-							</th>
-							<th style="width:80px">
-								任务编号
-							</th>
-							<th style="width:240px">
-								关键词
-							</th>
-							<th style="width:320px">
-								网址
-							</th>
-							<th class="text-center" style="width:94px" data-order_name="searchtype">
-								搜索引擎
-							</th>
-							<th class="text-center" style="width:94px" data-order_name="ranklast">
-								当前排名
-							</th>
-							<th class="text-center" style="width:94px" data-order_name="torank">
-								扣费规则
-							</th>
-							<th class="text-center" style="width:94px" data-order_name="price">
-								价格(元)
-							</th>
-							<th>
-								状态
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{{each lst as item i}}
-							<tr id="tr_{{item.TaskId}}">
-								<td>
-									<input type="checkbox" class="list-checkbox" id="chk_{{item.TaskId}}" value="{{item.TaskId}}" data-price ="{{item.Price}}" data-status="{{item.Status}}" />
-								</td>
-								<td>
-								    {{item.TaskId}}
-								</td>
-								<td>
-								    {{item.Keyword}}
-								</td>
-								<td>
-								    {{item.Url}}
-								</td>
-								<td class="text-center">
-								    <span class="{{item.SearchType | getSearchTypeClass:"className"}}">
-								    {{item.SearchType | getSearchTypeClass:"name"}}
-								    </span>
-								</td>
-								<td class="text-center" id="td_rank_{{item.TaskId}}">
-								    {{if item.RankLast>50}}<span class="text-muted">五页外</span>{{else if item.RankLast>0}}{{item.RankLast}}{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
-								</td>
-								<td class="text-center" id="td_costby_{{item.TaskId}}">
-								    {{if item.Status == 3}}前{{item.ToRank}}名按天{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
-								</td>
-								<td class="text-center" id="td_price_{{item.TaskId}}">
-								    {{if item.Status == 3}}￥{{item.Price | toFixed}}{{else}}<span class="sq-state-icon {{item.Status | getSeoStatusClass:"className"}}"></span>{{/if}}
-								</td>
-								<td id="td_status_{{item.TaskId}}">
-								    <span class="sq-state-icon sq-state-text {{item.Status | getSeoStatusClass:"className"}}">
-									    {{item.Status | getSeoStatusClass:"name"}}
-								    </span>
-								</td>
-							</tr>
-						{{/each}}
-					</tbody>
-				</table>
-			</div>
-			<div class="config-view-outer">
-				<div class="config-view-inner">
-					<div class="title1">
-						<h2 class="config-view-title">已选择的关键词配置</h2>
-					</div>
-					<div class="block01 mt10">
-						<ul class="list01 config-view-list">
-							<li>
-								<span class="config-view-item-title">计费方式：</span><em>达标按天扣除</em>
-							</li>
-							<li>
-								<span class="config-view-item-title">优化周期：</span><em>约20天</em>
-							</li>
-							<li>
-								<span class="config-view-item-title">关键词数：</span><em id="keyword_count">0个</em>
-							</li>
-							<li>
-								<span class="config-view-item-title">起购天数：</span>
-								<em>{{seoFreezeDay}}天</em>
-							</li>
-							<li class="price-container">
-								<span class="config-view-item-title price-title">达标每天：</span>
-								<span class="text-stress server-price">
-									<span class="rmb-symbol">￥</span><span id="amount_perday">0.00</span>
-								</span>
-							</li>
-							<li class="price-container">
-								<span class="config-view-item-title price-title">冻结费用：</span>
-								<span class="text-stress server-price">
-									<span class="rmb-symbol">￥</span><span id="amount_total">0.00</span>
-								</span>
-							</li>
-							<li class="text-center">
-								<input type="button" class="server-buy-btn strong default-transition buyButton" value="购买当前关键词" id="payBtn" disabled />
-							</li>
-						</ul>
-					</div>
-				</div>            </div>
+<!-- 关键词优化购买列表 -->
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">云排名购买</div>
+		<div class="pull-left margin-left-20">
+			<a href="#a_null" class="pull-left sq-btn btn-strong btn-operate-add btn-single-add">多对一加词</a>
+			<a href="#a_null" class="pull-left sq-btn btn-strong btn-operate-add btn-multiple-add margin-left-10">一对一加词</a>
+			<a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
+				<span class="operate-icon operate-icon-refresh"></span>
+			</a>
+			<button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+				<span class="operate-icon operate-icon-delete"></span>
+				删除
+			</button>
+			<button id="batchClear" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
+				<span class="operate-icon operate-icon-clear"></span>
+				清空
+			</button>
 		</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="alert-warn margin-bottom-20">
+		    购买后将冻结您{{seoFreezeDay}}天的达标费用，连续未达标超过<b class="text-red">{{seoFailedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。不接受涉政、违法、违规、打擦边球、敏感的行业优化。
+		</div>
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:35px">
+						<input type="checkbox" id="checkAll" />
+					</th>
+					<th style="width:80px">
+						任务编号
+					</th>
+					<th style="width:240px">
+						关键词
+					</th>
+					<th style="width:320px">
+						网址
+					</th>
+					<th class="text-center" style="width:94px" data-order_name="searchtype">
+						搜索引擎
+					</th>
+					<th class="text-center" style="width:94px" data-order_name="ranklast">
+						当前排名
+					</th>
+					<th class="text-center" style="width:94px" data-order_name="torank">
+						扣费规则
+					</th>
+					<th class="text-center" style="width:94px" data-order_name="price">
+						价格(元)
+					</th>
+					<th>
+						状态
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr id="tr_{{item.taskid}}">
+						<td>
+							<input type="checkbox" class="list-checkbox" id="chk_{{item.taskid}}" value="{{item.taskid}}" data-price ="{{item.price}}" data-status="{{item.status}}" />
+						</td>
+						<td>
+						    {{item.taskid}}
+						</td>
+						<td>
+						    {{item.keyword}}
+						</td>
+						<td>
+						    {{item.url}}
+						</td>
+						<td class="text-center">
+						    <span class="{{item.searchtype | getSearchTypeClass:"className"}}">
+						    {{item.searchtype | getSearchTypeClass:"name"}}
+						    </span>
+						</td>
+						<td class="text-center" id="td_rank_{{item.taskid}}">
+						    {{if item.ranklast>50}}<span class="text-muted">五页外</span>{{else if item.ranklast>0}}{{item.ranklast}}{{else}}<span class="sq-state-icon {{item.status | getSeoStatusClass:"className"}}"></span>{{/if}}
+						</td>
+						<td class="text-center" id="td_costby_{{item.taskid}}">
+						    {{if item.status == 3}}前{{item.torank}}名按天{{else}}<span class="sq-state-icon {{item.status | getSeoStatusClass:"className"}}"></span>{{/if}}
+						</td>
+						<td class="text-center" id="td_price_{{item.taskid}}">
+						    {{if item.status == 3}}￥{{item.price | toFixed}}{{else}}<span class="sq-state-icon {{item.status | getSeoStatusClass:"className"}}"></span>{{/if}}
+						</td>
+						<td id="td_status_{{item.taskid}}">
+						    <span class="sq-state-icon sq-state-text {{item.status | getSeoStatusClass:"className"}}">
+							    {{item.status | getSeoStatusClass:"name"}}
+						    </span>
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<div class="config-view-outer">
+		<div class="config-view-inner">
+			<div class="title1">
+				<h2 class="config-view-title">已选择的关键词配置</h2>
+			</div>
+			<div class="block01 mt10">
+				<ul class="list01 config-view-list">
+					<li>
+						<span class="config-view-item-title">计费方式：</span><em>达标按天扣除</em>
+					</li>
+					<li>
+						<span class="config-view-item-title">优化周期：</span><em>约20天</em>
+					</li>
+					<li>
+						<span class="config-view-item-title">关键词数：</span><em id="keyword_count">0个</em>
+					</li>
+					<li>
+						<span class="config-view-item-title">起购天数：</span>
+						<em>{{seoFreezeDay}}天</em>
+					</li>
+					<li class="price-container">
+						<span class="config-view-item-title price-title">达标每天：</span>
+						<span class="text-stress server-price">
+							<span class="rmb-symbol">￥</span><span id="amount_perday">0.00</span>
+						</span>
+					</li>
+					<li class="price-container">
+						<span class="config-view-item-title price-title">冻结费用：</span>
+						<span class="text-stress server-price">
+							<span class="rmb-symbol">￥</span><span id="amount_total">0.00</span>
+						</span>
+					</li>
+					<li class="text-center">
+						<input type="button" class="server-buy-btn strong default-transition buyButton" value="购买当前关键词" id="payBtn" disabled />
+					</li>
+				</ul>
+			</div>
+		</div>    </div>
+</div>
+</script>

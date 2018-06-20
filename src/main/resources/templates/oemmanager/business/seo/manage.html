@@ -1,0 +1,38 @@
+<head>
+	<!-- 个性化标题部分 -->
+	<!-- <meta charset="utf-8"/> -->
+	<title>管理员欢迎页</title>
+	<!-- 引用个性化样式部分开始 -->
+	<link rel="stylesheet" th:href="@{/css/ucModule/business/keyword.css}"/>
+	<!-- 引用个性化样式部分结束 -->
+	<head th:replace="/oemmanager/_header"/>
+	<!-- 引入公共js部分开始 -->
+</head>
+<body>
+	<!-- 导航部分 -->
+	<div th:replace="/oemmanager/_top::top"/>
+	<!-- 菜单部分 -->
+	<div th:replace="/oemmanager/_menu::menu"/>
+	<div class="sq-main">
+	    <div class="crumb-container" data-nav="seo_list" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div id="contentBox"></div>
+	    <!-- 关键词排名查询列表 -->
+	    <div th:replace="/oemmanager/business/seo/_manage_content"/>
+	    <!-- 关键词排名详情 -->
+	    <!-- <div th:replace="/oemmanager/business/seo/_manage_view"/> -->
+	    <!-- SEO优化地址设置 -->
+	    <!-- <div th:replace="/oemmanager/business/seo/_manage_seourl"/> -->
+	    <!-- 关键词优化不同价导入表单 -->
+	    <div th:replace="/oemmanager/business/seo/_manage_importdiff"/>
+	    <!-- 关键词优化相同价导入表单 -->
+	    <div th:replace="/oemmanager/business/seo/_manage_importsame"/>
+    </div>
+	<div th:replace="/oemmanager/_footer::copy"/>
+	<div>
+		<div th:replace="/oemmanager/_script::commonJs"></div>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/adModule/seo.js}"></script>
+	</div>
+</body>
+</html>

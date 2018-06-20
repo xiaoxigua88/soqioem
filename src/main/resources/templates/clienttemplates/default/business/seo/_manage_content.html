@@ -1,228 +1,231 @@
-		<div class="sq-panel">
-			<div class="sq-panel-heading clearfix">
-				<div class="sq-panel-title">云排名管理</div>
-				<div class="sq-dropdown-container btn-group btn-group-short select-with-icon task-location-select margin-left-10">
-					<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<span class="selected-content"></span>
-						<span class="sq-caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						{{each seoStatusList as item i}}
-					    <li><a href="?status={{item.Value}}" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
-						{{/each}}
-					</ul>
-				</div>
+<!-- 关键词排名查询列表 -->
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="sq-panel-title">云排名管理</div>
+		<div class="sq-dropdown-container btn-group btn-group-short select-with-icon task-location-select margin-left-10">
+			<a type="button" href="#a_null" class="sq-btn btn-select dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="selected-content"></span>
+				<span class="sq-caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				{{each seoStatusList as item i}}
+			    <li><a href="?status={{item.Value}}" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="alert-warn margin-bottom-20">
+		    冻结金额消费完毕后会直接消费可用余额。连续未达标超过<b class="text-red">{{seoFailedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。
+		    <input type="hidden" value="{{seoFreezeDay}}" id="seoFreezeDay" />
+		</div>
+		<div class="task-operates clearfix margin-bottom-20">
+			<div class="pull-left">
+				<a href="/client/business/seo/apply" class="pull-left sq-btn btn-strong btn-operate-add">购买新词</a>
+				<a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
+					<span class="operate-icon operate-icon-refresh"></span>
+				</a>
+				<button id="batchExport" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
+					<span class="operate-icon operate-icon-export"></span>
+					导出
+				</button>
 			</div>
-			<div class="sq-panel-body">
-				<div class="alert-warn margin-bottom-20">
-				    冻结金额消费完毕后会直接消费可用余额。连续未达标超过<b class="text-red">{{seoFailedDay}}</b>天的关键词，您可自行决定是否停止优化并解冻金额。
-				    <input type="hidden" value="{{seoFreezeDay}}" id="seoFreezeDay" />
-				</div>
-				<div class="task-operates clearfix margin-bottom-20">
-					<div class="pull-left">
-						<a href="apply.aspx" class="pull-left sq-btn btn-strong btn-operate-add">购买新词</a>
-						<a href="#a_null" class="window-reload pull-left sq-btn btn-primary margin-left-10" title="刷新">
-							<span class="operate-icon operate-icon-refresh"></span>
-						</a>
-						<button id="batchExport" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 betch-all"{{if lst.length == 0}} disabled{{/if}}>
-							<span class="operate-icon operate-icon-export"></span>
-							导出
-						</button>
-					</div>
-					<div class="pull-right">
-				        <form action="" class="pull-left" id="searchForm">
-				            <label class="pull-left search-group-label">关键词</label>
-				            <div data-field_name="keywordLike" class="pull-left sq-dropdown-container btn-group btn-group-mini">
-					            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <span class="selected-content"></span>
-						            <span class="sq-caret"></span>
-					            </a>
-					            <ul class="dropdown-menu sq-search-dropdown">
-				                    {{each keywordLikeList as item i}}
-					                <li><a href="#a_null" class="{{if filter.keywordLike == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
-					                {{/each}}
-					            </ul>
-				            </div>
-					        <input type="text" name="keyword" class="pull-left sq-input-reset search-group-input" placeholder="输入关键词搜索" value="{{filter.keyword}}" />
-				            <label class="pull-left search-group-label">网址</label>
-					        <input type="text" name="url" class="pull-left sq-input-reset search-group-input" placeholder="输入网址搜索" value="{{filter.url}}" />
-				            <label class="pull-left search-group-label">搜索引擎</label>
-				            <div data-field_name="searchType" class="pull-left sq-dropdown-container btn-group btn-group-mini">
-					            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <span class="selected-content"></span>
-						            <span class="sq-caret"></span>
-					            </a>
-					            <ul class="dropdown-menu sq-search-dropdown">
-					                {{each searchTypeList as item i}}
-						            <li><a href="#a_null" class="{{if filter.searchType == item.TypeId}}sq-default-option{{/if}}" data-drop="{{item.TypeId}}">{{item.Name}}</a></li>
-						            {{/each}}
-					            </ul>
-				            </div>
-			                <label class="pull-left search-group-label">购买日期</label>
-				            <input type="text" name="minBuyTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minBuyTime}}" />
-			                <label class="pull-left search-group-label">至</label>
-				            <input type="text" name="maxBuyTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxBuyTime}}" />
-				            <label class="pull-left search-group-label">今天</label>
-				            <div data-field_name="settleStatus" class="pull-left sq-dropdown-container btn-group btn-group-mini">
-					            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <span class="selected-content"></span>
-						            <span class="sq-caret"></span>
-					            </a>
-					            <ul class="dropdown-menu sq-search-dropdown">
-				                    {{each settleStatusList as item i}}
-					                <li><a href="#a_null" class="{{if filter.settleStatus == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
-					                {{/each}}
-					            </ul>
-				            </div>
-				            <label class="pull-left search-group-label">状态</label>
-				            <div data-field_name="status" class="pull-left sq-dropdown-container btn-group btn-group-mini">
-					            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						            <span class="selected-content"></span>
-						            <span class="sq-caret"></span>
-					            </a>
-					            <ul class="dropdown-menu sq-search-dropdown">
-				                    {{each seoStatusList as item i}}
-					                <li><a href="#a_null" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
-					                {{/each}}
-					            </ul>
-				            </div>
-					        <input class="hide" type="text" name="keywordLike" value="{{filter.keywordLike}}" />
-					        <input class="hide" type="text" name="searchType" value="{{filter.searchType}}" />
-					        <input class="hide" type="text" name="settleStatus" value="{{filter.settleStatus}}" />
-					        <input class="hide" type="text" name="status" value="{{filter.status}}" />
-				            <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
-				        </form>
-					</div>
-				</div>
-				<table class="sq-table margin-bottom-20" id="mainList">
-					<thead>
-						<tr>
-							<th style="width:35px">
-								<input type="checkbox" id="checkAll" />
-							</th>
-							<th style="width:80px">
-								任务编号
-							</th>
-							<th style="width:240px">
-								关键词
-							</th>
-							<th style="width:240px">
-								网址
-							</th>
-							<th class="text-center" style="width:94px" data-order_name="searchtype">
-								搜索引擎
-							</th>
-							<th class="text-center" style="width:66px" data-order_name="ranklast">
-								排名
-							</th>
-							<th class="text-center" style="width:135px" data-order_name="buytime">
-								购买时间
-							</th>
-							<th style="width:66px" data-order_name="price">
-								价格
-							</th>
-							<th style="width:66px" data-order_name="freezeamount">
-								冻结
-							</th>
-							<th class="text-center" style="width:80px" data-order_name="costcount">
-								达标天
-							</th>
-							<th style="width:80px" data-order_name="costamount">
-								总消费
-							</th>
-							<th style="width:80px">
-								今日结算
-							</th>
-							<th class="text-center" style="width:80px" data-order_name="status">
-								状态
-							</th>
-							<th>
-								操作
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{{each lst as item i}}
-							<tr>
-								<td>
-									<input type="checkbox" class="list-checkbox" value="{{item.TaskId}}" data-canstop="{{item.CanStop}}" data-status="{{item.Status}}" />
-								</td>
-								<td>
-								    {{item.TaskId}}
-								</td>
-								<td>
-								    {{item.Keyword}}
-								</td>
-								<td>
-								    {{item.Url}}
-								</td>
-								<td class="text-center">
-								    <span class="{{item.SearchType | getSearchTypeClass:"className"}}">
-								    {{item.SearchType | getSearchTypeClass:"name"}}
-								    </span>
-								</td>
-								<td class="text-center">
-								    {{#item.RankLast | formatRank:10}}
-								</td>
-								<td class="text-center">
-									<span class="text-muted">{{item.BuyTime}}</span>
-								</td>
-								<td class="text-right">
-								    <span class="text-orange margin-right-10">￥{{item.Price | toFixed}}</span>
-								</td>
-								<td class="text-right">
-								{{if item.FreezeAmount > 0 }}
-								    <span class="text-red margin-right-10">￥{{item.FreezeAmount | toFixed}}</span>
-								{{else}}
-								    <span class="text-muted margin-right-10">￥{{item.FreezeAmount | toFixed}}</span>
-							    {{/if}}
-								</td>
-								<td class="text-right">
-								    <span class="text-primary margin-right-10">{{item.CostCount}}</span>
-								</td>
-								<td class="text-right">
-								    <span class="text-primary margin-right-10">￥{{item.CostAmount | toFixed}}</span>
-								</td>
-								<td>
-								    <span class="sq-state-icon sq-state-text {{item.SettleStatus | getSeoSettleStatusClass:"className"}}">{{item.SettleStatus | getSeoSettleStatusClass:"name"}}</span>
-								</td>
-								<td>
-								    <span class="sq-state-icon sq-state-text {{item.Status | getSeoStatusClass:"className"}}">
-									    {{item.Status | getSeoStatusClass:"name"}}
-								    </span>
-								</td>
-								<td>
-								    <a href="#a_null" class="task-view" data-taskid="{{item.TaskId}}">详情</a>
-								    {{if item.CanStop}}
-									<span class="text-muted operate-spacing">|</span>
-								    <a href="#a_null" class="task-stop" data-taskid="{{item.TaskId}}">停止</a>
-								    {{else if item.Status==5}}
-									<span class="text-muted operate-spacing">|</span>
-								    <a href="#a_null" class="task-start text-red" data-taskid="{{item.TaskId}}">启动</a>
-								    {{/if}}
-								</td>
-							</tr>
-						{{/each}}
-					</tbody>
-					<tfoot>
-					    <tr>
-					        <td><input type="checkbox" id="checkAllBottom" /></td>
-					        <td colspan="13">
-					            <div class="pull-left">
-						            <button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
-							            <span class="operate-icon operate-icon-start"></span>
-							            启动
-						            </button>
-						            <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
-							            <span class="operate-icon operate-icon-delete"></span>
-							            停止
-						            </button>
-					            </div>
-				                <!-- 引入分页 -->
-				                {{include "paginationTpl"}}
-					        </td>
-					    </tr>
-					</tfoot>
-				</table>
+			<div class="pull-right">
+		        <form action="" class="pull-left" id="searchForm">
+		            <label class="pull-left search-group-label">关键词</label>
+		            <div data-field_name="keywordLike" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				            <span class="selected-content"></span>
+				            <span class="sq-caret"></span>
+			            </a>
+			            <ul class="dropdown-menu sq-search-dropdown">
+		                    {{each keywordLikeList as item i}}
+			                <li><a href="#a_null" class="{{if filter.keywordLike == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			                {{/each}}
+			            </ul>
+		            </div>
+			        <input type="text" name="keyword" class="pull-left sq-input-reset search-group-input" placeholder="输入关键词搜索" value="{{filter.keyword}}" />
+		            <label class="pull-left search-group-label">网址</label>
+			        <input type="text" name="url" class="pull-left sq-input-reset search-group-input" placeholder="输入网址搜索" value="{{filter.url}}" />
+		            <label class="pull-left search-group-label">搜索引擎</label>
+		            <div data-field_name="searchType" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				            <span class="selected-content"></span>
+				            <span class="sq-caret"></span>
+			            </a>
+			            <ul class="dropdown-menu sq-search-dropdown">
+			                {{each searchTypeList as item i}}
+				            <li><a href="#a_null" class="{{if filter.searchType == item.TypeId}}sq-default-option{{/if}}" data-drop="{{item.TypeId}}">{{item.Name}}</a></li>
+				            {{/each}}
+			            </ul>
+		            </div>
+	                <label class="pull-left search-group-label">购买日期</label>
+		            <input type="text" name="minBuyTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minBuyTime}}" />
+	                <label class="pull-left search-group-label">至</label>
+		            <input type="text" name="maxBuyTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxBuyTime}}" />
+		            <label class="pull-left search-group-label">今天</label>
+		            <div data-field_name="settleStatus" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				            <span class="selected-content"></span>
+				            <span class="sq-caret"></span>
+			            </a>
+			            <ul class="dropdown-menu sq-search-dropdown">
+		                    {{each settleStatusList as item i}}
+			                <li><a href="#a_null" class="{{if filter.settleStatus == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			                {{/each}}
+			            </ul>
+		            </div>
+		            <label class="pull-left search-group-label">状态</label>
+		            <div data-field_name="status" class="pull-left sq-dropdown-container btn-group btn-group-mini">
+			            <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				            <span class="selected-content"></span>
+				            <span class="sq-caret"></span>
+			            </a>
+			            <ul class="dropdown-menu sq-search-dropdown">
+		                    {{each seoStatusList as item i}}
+			                <li><a href="#a_null" class="{{if filter.status == item.Value}}sq-default-option{{/if}}" data-drop="{{item.Value}}">{{item.Description}}</a></li>
+			                {{/each}}
+			            </ul>
+		            </div>
+			        <input class="hide" type="text" name="keywordLike" value="{{filter.keywordLike}}" />
+			        <input class="hide" type="text" name="searchType" value="{{filter.searchType}}" />
+			        <input class="hide" type="text" name="settleStatus" value="{{filter.settleStatus}}" />
+			        <input class="hide" type="text" name="status" value="{{filter.status}}" />
+		            <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+		        </form>
 			</div>
 		</div>
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:35px">
+						<input type="checkbox" id="checkAll" />
+					</th>
+					<th style="width:80px">
+						任务编号
+					</th>
+					<th style="width:240px">
+						关键词
+					</th>
+					<th style="width:240px">
+						网址
+					</th>
+					<th class="text-center" style="width:94px" data-order_name="searchtype">
+						搜索引擎
+					</th>
+					<th class="text-center" style="width:66px" data-order_name="ranklast">
+						排名
+					</th>
+					<th class="text-center" style="width:135px" data-order_name="buytime">
+						购买时间
+					</th>
+					<th style="width:66px" data-order_name="price">
+						价格
+					</th>
+					<th style="width:66px" data-order_name="freezeamount">
+						冻结
+					</th>
+					<th class="text-center" style="width:80px" data-order_name="costcount">
+						达标天
+					</th>
+					<th style="width:80px" data-order_name="costamount">
+						总消费
+					</th>
+					<th style="width:80px">
+						今日结算
+					</th>
+					<th class="text-center" style="width:80px" data-order_name="status">
+						状态
+					</th>
+					<th>
+						操作
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+						<td>
+							<input type="checkbox" class="list-checkbox" value="{{item.taskid}}" data-canstop="{{item.canstop}}" data-status="{{item.status}}" />
+						</td>
+						<td>
+						    {{item.taskid}}
+						</td>
+						<td>
+						    {{item.keyword}}
+						</td>
+						<td>
+						    {{item.url}}
+						</td>
+						<td class="text-center">
+						    <span class="{{item.searchtype | getSearchTypeClass:"className"}}">
+						    {{item.searchtype | getSearchTypeClass:"name"}}
+						    </span>
+						</td>
+						<td class="text-center">
+						    {{#item.ranklast | formatRank:10}}
+						</td>
+						<td class="text-center">
+							<span class="text-muted">{{item.buytime}}</span>
+						</td>
+						<td class="text-right">
+						    <span class="text-orange margin-right-10">￥{{item.price | toFixed}}</span>
+						</td>
+						<td class="text-right">
+						{{if item.freezeamount > 0 }}
+						    <span class="text-red margin-right-10">￥{{item.freezeamount | toFixed}}</span>
+						{{else}}
+						    <span class="text-muted margin-right-10">￥{{item.freezeamount | toFixed}}</span>
+					    {{/if}}
+						</td>
+						<td class="text-right">
+						    <span class="text-primary margin-right-10">{{item.costcount}}</span>
+						</td>
+						<td class="text-right">
+						    <span class="text-primary margin-right-10">￥{{item.costamount | toFixed}}</span>
+						</td>
+						<td>
+						    <span class="sq-state-icon sq-state-text {{item.settlestatus | getSeoSettleStatusClass:"className"}}">{{item.settlestatus | getSeoSettleStatusClass:"name"}}</span>
+						</td>
+						<td>
+						    <span class="sq-state-icon sq-state-text {{item.status | getSeoStatusClass:"className"}}">
+							    {{item.status | getSeoStatusClass:"name"}}
+						    </span>
+						</td>
+						<td>
+						    <a href="#a_null" class="task-view" data-taskid="{{item.taskid}}">详情</a>
+						    {{if item.canstop}}
+							<span class="text-muted operate-spacing">|</span>
+						    <a href="#a_null" class="task-stop" data-taskid="{{item.taskid}}">停止</a>
+						    {{else if item.Status==5}}
+							<span class="text-muted operate-spacing">|</span>
+						    <a href="#a_null" class="task-start text-red" data-taskid="{{item.taskid}}">启动</a>
+						    {{/if}}
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+			<tfoot>
+			    <tr>
+			        <td><input type="checkbox" id="checkAllBottom" /></td>
+			        <td colspan="13">
+			            <div class="pull-left">
+				            <!--<button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+					            <span class="operate-icon operate-icon-start"></span>
+					            启动
+				            </button>-->
+				            <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+					            <span class="operate-icon operate-icon-delete"></span>
+					            停止
+				            </button>
+			            </div>
+		                <!-- 引入分页 -->
+		                {{include "paginationTpl"}}
+			        </td>
+			    </tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+</script>

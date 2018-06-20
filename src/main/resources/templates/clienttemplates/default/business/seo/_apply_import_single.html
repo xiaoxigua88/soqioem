@@ -1,36 +1,38 @@
-		<div class="alert-warn alert-protect margin-bottom-20">
-			关键词一行一个，搜索引擎可选择多个，提交后，系统会对其可优化性进行评估并计算价格。
+<script type="text/html" id="importSingleInformation">
+<div class="alert-warn alert-protect margin-bottom-20">
+	关键词一行一个，搜索引擎可选择多个，提交后，系统会对其可优化性进行评估并计算价格。
+</div>
+<form action="/client/business/seo/importsingle?" class="form-horizontal sq-form font-size-14 sq-tab-container" id="importSingleForm">
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+		<span class="necessary-mark">*</span>
+			网址或域名：
 		</div>
-		<form action="?action=ImportSingle" class="form-horizontal sq-form font-size-14 sq-tab-container" id="importSingleForm">
-			<div class="form-group validate-control">
-				<div class="sq-control-label">
-				<span class="necessary-mark">*</span>
-					网址或域名：
-				</div>
-				<div class="col-xs-8 sq-form-control">
-				    <input type="text" name="url" value="" class="sq-input-reset sq-long-input necessary" />
-				</div>
-			</div>
-			<div class="form-group validate-control">
-				<div class="sq-control-label">
-				<span class="necessary-mark">*</span>
-					关键词：
-				</div>
-				<div class="col-xs-8 sq-form-control">
-					<textarea class="sq-input-reset sq-keyword-area necessary" name="keyword" id="keyword"></textarea>
-				</div>
-			</div>
-			<div class="form-group validate-control">
-				<div class="sq-control-label">
-				<span class="necessary-mark">*</span>
-					搜索引擎：
-				</div>
-				<div class="col-xs-8 sq-form-control">
-					{{each searchTypeList as item i}}
-					{{if item.TypeId >0}}
-					<input type="checkbox" id="chk_{{item.TypeId}}" name="searchType" value="{{item.TypeId}}" /><label for="chk_{{item.TypeId}}" class="margin-right-10">{{item.Name}}</label>
-					{{/if}}
-					{{/each}}
-				</div>
-			</div>
-		</form>
+		<div class="col-xs-8 sq-form-control">
+		    <input type="text" name="url" value="" class="sq-input-reset sq-long-input necessary" />
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+		<span class="necessary-mark">*</span>
+			关键词：
+		</div>
+		<div class="col-xs-8 sq-form-control">
+			<textarea class="sq-input-reset sq-keyword-area necessary" name="keyword" id="keyword"></textarea>
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="sq-control-label">
+		<span class="necessary-mark">*</span>
+			搜索引擎：
+		</div>
+		<div class="col-xs-8 sq-form-control">
+			{{each searchTypeList as item i}}
+			{{if item.TypeId >0}}
+			<input type="checkbox" id="chk_{{item.TypeId}}" name="searchType" value="{{item.TypeId}}" /><label for="chk_{{item.TypeId}}" class="margin-right-10">{{item.Name}}</label>
+			{{/if}}
+			{{/each}}
+		</div>
+	</div>
+</form>
+</script>

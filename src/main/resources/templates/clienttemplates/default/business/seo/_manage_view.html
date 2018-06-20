@@ -1,3 +1,4 @@
+ <script type="text/html" id="taskViewTemplate">
 <div class="sq-panel-title margin-bottom-20">达标计费标准</div>
 <table class="sq-table margin-bottom-20">
 	<thead>
@@ -17,13 +18,13 @@
 		{{each priceList as item i}}
 			<tr>
 			    <td>
-				    前<span class="text-red">{{item.ToRank}}</span>名
+				    前<span class="text-red">{{item.torank}}</span>名
 			    </td>
 			    <td class="text-stress">
-				    ￥{{item.PriceOri | toFixed}}
+				    ￥{{item.priceori | toFixed}}
 			    </td>
 			    <td class="text-stress">
-				    ￥{{item.Price | toFixed}}
+				    ￥{{item.price | toFixed}}
 			    </td>
 			</tr>
 		{{/each}}
@@ -60,21 +61,22 @@
 				    {{i+1}}
 			    </td>
 			    <td>
-			        {{item.ConsumeDate | dateFormat:'yyyy-MM-dd'}}
+			        {{item.consumedate | dateFormat:'yyyy-MM-dd'}}
 			    </td>
 			    <td>
-			        {{item.RankLast}}
+			        {{item.ranklast}}
 			    </td>
 			    <td class="text-stress">
-				    ￥{{item.Amount | toFixed}}
+				    ￥{{item.amount | toFixed}}
 			    </td>
 			    <td class="text-stress">
-				    ￥{{item.FreeAmount | toFixed}}
+				    ￥{{item.freeamount | toFixed}}
 			    </td>
 			    <td>
-			        {{item.AddTime}}
+			        {{item.addtime}}
 			    </td>
 			</tr>
 		{{/each}}
 	</tbody>
 </table>
+</script>

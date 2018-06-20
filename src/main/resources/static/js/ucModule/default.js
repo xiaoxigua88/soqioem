@@ -77,5 +77,5 @@ $(function() {
         };
     };
     /* 先检测金额，在检测优币，最后检测认证 */
-    amountCheck();
+    //amountCheck();
 });

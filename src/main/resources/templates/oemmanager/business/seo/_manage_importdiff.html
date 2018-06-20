@@ -1,0 +1,41 @@
+<script type="text/html" id="importDiffInformation">
+<form action="?action=ImportDiff" class="form-horizontal sq-form font-size-14 sq-tab-container" id="importForm" style="width:1460px;">
+	<div class="form-group validate-control">
+		<div class="col-xs-2 sq-form-control">
+			<span class="necessary-mark">*</span>
+			账户：<input type="text" name="userName" class="sq-input-reset search-group-input necessary" placeholder="用户ID、手机、Email" />
+		</div>
+		<div class="col-xs-10 sq-form-control">
+			<span class="necessary-mark">*</span>搜索及达标条件：
+	    {{each searchTypeList as item i}}
+	    {{if item.TypeId >0}}
+		    <label class="margin-right-10"><input type="checkbox" checked="checked" class="chk_st" value="{{item.TypeId}}" /><span class="text-red">{{item.Name}}</span>
+		    前<input type="text" name="torank_{{item.TypeId}}" class="sq-input-reset sq-input-number sq-input-mini sq-torank-{{item.TypeId}} necessary" value="10" />名</label>
+	    {{/if}}
+	    {{/each}}
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="col-xs-12 sq-form-control">
+			<div class="pull-left" style="width:303px;"><span class="necessary-mark">*</span>关键词：</div>
+			<div class="pull-left" style="width:472px;"><span class="necessary-mark">*</span>网址：</div>
+	    {{each searchTypeList as item i}}
+	    {{if item.TypeId >0}}
+			<div class="pull-left" style="width:95px;">{{item.Name}}价格</div>
+	    {{/if}}
+	    {{/each}}
+		</div>
+	</div>
+	<div class="form-group validate-control">
+		<div class="col-xs-12 sq-form-control">
+			<textarea class="sq-input-reset sq-keyword-area necessary" name="keyword" id="keyword"></textarea>
+			<textarea class="sq-input-reset sq-url-area necessary" name="url" id="url"></textarea>
+	    {{each searchTypeList as item i}}
+	    {{if item.TypeId >0}}
+			<textarea class="sq-input-reset sq-keyword-area sq-price-{{item.TypeId}} necessary margin-left-10" name="price_{{item.TypeId}}" style="width:80px;"></textarea>
+	    {{/if}}
+	    {{/each}}
+		</div>
+	</div>
+</form>
+</script>

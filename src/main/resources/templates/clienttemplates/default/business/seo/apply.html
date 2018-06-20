@@ -20,7 +20,12 @@
 			<!-- JS填充 -->
 		</div>
 		<div id="contentBox"></div>
-		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+		<!-- 关键词优化购买列表 -->
+		<div th:replace="${templDir}+'business/seo/_apply_content'"/>
+		<!-- 单域名关键词优化表单 -->
+		<div th:replace="${templDir}+'business/seo/_apply_import_single'"/>
+		<!-- 一对一关键词优化表单 -->
+		<div th:replace="${templDir}+'business/seo/_apply_import_multiple'"/>
 	</div>
 	<!-- 页脚部分 -->
 	<div th:replace="${templDir}+_footer::copy"/>

@@ -84,13 +84,13 @@
       <if test="qq!=null and qq!=''">
       QQ = #{qq,jdbcType=VARCHAR},
       </if>
-      <if test="lastlogintime!=null and lastlogintime!=''">
+      <if test="lastlogintime!=null">
       LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastloginip!=null and lastloginip!=''">
       LastLoginIp = #{lastloginip,jdbcType=VARCHAR},
       </if>
-      <if test="currentlogintime!=null and currentlogintime!=''">
+      <if test="currentlogintime!=null">
       CurrentLoginTime = #{currentlogintime,jdbcType=TIMESTAMP},
       </if>
       <if test="currentloginip!=null and currentloginip!=''">

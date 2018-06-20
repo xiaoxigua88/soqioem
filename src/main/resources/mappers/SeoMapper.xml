@@ -94,7 +94,78 @@
     select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
     RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
     CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
-    ErrorMsg, "Status"
+    ErrorMsg, Status
     from Seo
   </select>
+  
+  <select id="qrySeoManageListByUserId" resultMap="BaseResultMap" parameterType="map">
+    select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
+    m.ErrorMsg, m.Status
+    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+  </select>
+  
+  <select id="qryCountSeoManageListByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="qrySeoManageListByOemId" resultMap="BaseResultMap" parameterType="map">
+    select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
+    m.ErrorMsg, m.Status
+    from Seo m  where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+  </select>
+  
+  <select id="qryCountSeoManageListByOemId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) as total from Seo m where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER})
+  </select>
+  <!-- 批量增加操作 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+	  insert into seo (UserId, Keyword, 
+      Url, SeoUrl, SearchType, 
+      RankFirst, RankLast, RankLastChange, 
+      RankUpdateTime, AddTime, FromType, 
+      FromId, BuyTime, FreezeAmount, 
+      CostCount, CostAmount, CostTime, 
+      SettleHour, SettleTime, SettleStart, 
+      ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
+      ErrorMsg, Status) values
+		<foreach item="item" index="index" collection="list" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.userid},#{item.keyword},#{item.url},
+				<choose>
+					<when test="item.seourl!=null and item.seourl!=''">
+						#{item.seourl},
+					</when>
+					<otherwise>
+						'',
+					</otherwise>
+				</choose>
+				#{item.searchtype},0,0,0,sysdatetime(),#{item.addtime},1,
+				0,#{item.buytime},0,
+				0,0,#{item.costtime},
+				#{item.settlehour},#{item.settletime},#{item.settlestart},
+				0,0,0,
+				<choose>
+					<when test="item.errormsg!=null and item.errormsg!=''">
+						#{item.errormsg},
+					</when>
+					<otherwise>
+						'',
+					</otherwise>
+				</choose>
+				#{item.status}
+			</trim>
+		</foreach> 
+  </insert>
+  <!-- 批量删除操作 -->
+  <delete id="batchDel" parameterType="java.lang.Integer">
+        delete from seo where TaskId in
+        <foreach item="taskid" collection="array" open="(" separator="," close=")">
+            #{taskid}
+        </foreach>
+  </delete>
+  
 </mapper>

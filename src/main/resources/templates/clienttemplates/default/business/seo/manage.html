@@ -19,7 +19,10 @@
 			<!-- JS填充 -->
 		</div>
 		<div id="contentBox"></div>
-		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+		<!-- 云排名管理列表 -->
+		<div th:replace="${templDir}+'business/seo/_manage_content'"/>
+		<!-- 关键词排名详情 -->
+		<div th:replace="${templDir}+'business/seo/_manage_view'"/>
 	</div>
 	<!-- 页脚部分 -->
 	<div th:replace="${templDir}+_footer::copy"/>
