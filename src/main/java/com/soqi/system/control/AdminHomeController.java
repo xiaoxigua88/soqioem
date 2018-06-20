@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.soqi.common.utils.CookieUtils;
 import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 
@@ -23,7 +24,7 @@ public class AdminHomeController {
 	 */
 	@RequestMapping("/administrator/main")
 	public String adminMainPage(Model model){
-		
+		CookieUtils.addCookie("oem_manager", "oem_manager");
 		return "/administrator/default";
     }
 }

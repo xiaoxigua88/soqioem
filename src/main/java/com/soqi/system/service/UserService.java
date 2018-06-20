@@ -53,6 +53,10 @@ public class UserService {
 		return oemuser == null ? true : false;
 	}
 	
+	public Oemuser selectOemuserByUseridAndOemid(Integer oemid, Integer userid){
+		return ou.selectOemuserByUseridAndOemid(oemid, userid);
+	}
+	
 	public Oemuser qryOemuser(Integer userid){
 		return ou.selectByPrimaryKey(userid);
 	}

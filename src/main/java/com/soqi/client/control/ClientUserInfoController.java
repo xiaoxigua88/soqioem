@@ -25,11 +25,12 @@ import com.soqi.common.constants.Constant;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
+import com.soqi.system.control.BaseController;
 import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 
 @Controller
-public class ClientUserInfoController {
+public class ClientUserInfoController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(ClientUserInfoController.class);
 	@Autowired
 	private UserService userService;
@@ -39,21 +40,21 @@ public class ClientUserInfoController {
 	@RequestMapping("/client/userinf/default")
 	public String userinfo(Model model, @RequestParam(value="userid",required=false) Integer userid, @RequestParam(value="action",required=false) String action, HttpServletRequest req, HttpServletResponse res){
 		if(userid>0 && StringUtils.equals(action, "LoginUser")){
-			Oemuser oemuser = userService.qryOemuser(userid);
+			//Oemuser oemuser = userService.qryOemuser(userid);
 			/*UsernamePasswordUserTypeToken token = new UsernamePasswordUserTypeToken(oemuser.getMobile(), oemuser.getPwd(), false, null, null, Constant.USERTYPE_USER, Constant.NO_PASSWORD);
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(token);*/
 			//return oemuser == null ? "/userinfo/default" : "/login"; 
 			
-			PrincipalCollection principals = new SimplePrincipalCollection(oemuser, "MobileRealm");
+			/*PrincipalCollection principals = new SimplePrincipalCollection(oemuser, "MobileRealm");
 			Builder builder = new WebSubject.Builder(req, res);
 			builder.principals(principals);
 			builder.authenticated(true);
 			WebSubject subject = builder.buildWebSubject();
 			ThreadContext.bind(subject);
-			WebUtils.saveRequest(req);
+			WebUtils.saveRequest(req);*/
 			Map<String,Object> jsonData = new HashMap<String,Object>();
-			jsonData.put("username", oemuser.getCallname());
+			jsonData.put("username", this.getOemuser().getCallname());
 			model.addAttribute("jsonData",jsonData);
 		}
 		/*PrincipalCollection principals = new SimplePrincipalCollection(  

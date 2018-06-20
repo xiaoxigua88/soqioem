@@ -38,6 +38,11 @@ public class OemManagerController extends BaseController{
 	 */
 	@RequestMapping("/oemmanager/main")
 	public String adminMainPage(Model model){
+		//添加cookie
+		String oem_manager = CookieUtils.getCookie("oem_manager");
+		if(StringUtils.isBlank(oem_manager)){
+			CookieUtils.addCookie("oem_manager", this.getCustomer().getDomain().trim()+"_"+this.getCustomer().getMobile().trim());
+		}
 		return "/oemmanager/default";
     }
 	//@RequiresPermissions("1102:3")//权限管理;

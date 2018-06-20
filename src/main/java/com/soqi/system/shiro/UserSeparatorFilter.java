@@ -10,8 +10,13 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
+import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
+import com.soqi.system.config.ApplicationContextRegister;
+import com.soqi.system.service.AuthenticateService;
+import com.soqi.system.service.UserService;
 
 public class UserSeparatorFilter extends AccessControlFilter{
 
@@ -30,7 +35,45 @@ public class UserSeparatorFilter extends AccessControlFilter{
             if(subject == null){
             	return false;
             }
+            //如果系统当前用户是代理操作跳到客户端无密登录
+            if(subject.getPrincipal() instanceof Customer){
+            	Customer customer = (Customer)subject.getPrincipal();
+            	if(StringUtils.contains(uri, "client")){
+            		 UserService us = ApplicationContextRegister.getBean(UserService.class);
+            		if(StringUtils.isNotBlank(action) && StringUtils.isNotBlank(userid)){
+            			Oemuser user = us.selectOemuserByUseridAndOemid(customer.getOemid(), Integer.valueOf(userid));
+            			if(user == null){
+            				return false;
+            			}else{
+            				//无密登录替换成客户端session
+            				ShiroUtils.replacePrincipal(user, request, response);
+            			}
+            		}else{
+            			return false;
+            		}
+            	}
+            }
             if(subject.getPrincipal() instanceof Oemuser){
+            	String oem_manager = CookieUtils.getCookie("oem_manager");
+            	if(StringUtils.isNotBlank(oem_manager)){
+            		if(StringUtils.contains(uri, "oemmanager")){
+	            		String[] domain_mobile = oem_manager.split("_");
+	            		if(StringUtils.isNotBlank(domain_mobile[0]) && StringUtils.isNotBlank(domain_mobile[1])){
+	            			AuthenticateService as = ApplicationContextRegister.getBean(AuthenticateService.class);
+	                		Customer customer = as.qryCustomerByDomainAndMobile(domain_mobile[0], domain_mobile[1]);
+	                		if(customer == null){
+	                			return false;
+	                		}else{
+	                			//代理无密登录查看用户后、再回头去操作代理页需要切换成代理的subject
+	                			ShiroUtils.replacePrincipal(customer, request, response);
+	                		}
+	            		}else{
+	            			return false;
+	            		}
+            		}
+            	}
+            }
+            /*if(subject.getPrincipal() instanceof Oemuser){
             	Oemuser user = (Oemuser)subject.getPrincipal();
             	if(StringUtils.contains(uri, "oemmanager")){
             		//同一浏览器下、代理端登录后、然后再客户端登录、再回去刷新代理页面、session是客户端的内容，程序不加校验导致报错
@@ -50,7 +93,7 @@ public class UserSeparatorFilter extends AccessControlFilter{
             			return false;
             		}
             	}
-            }
+            }*/
             return true;
         }
 		

@@ -21,6 +21,8 @@ public interface OemuserMapper {
     
     Oemuser selectOemuserByMobileAndOemid(@Param("oemid") Integer oemid, @Param("mobile") String mobile, @Param("userid") Integer userid);
     
+    Oemuser selectOemuserByUseridAndOemid(@Param("oemid") Integer oemid, @Param("userid") Integer userid);
+    
     List<Oemuser> selectAll();
 
     int updateByPrimaryKey(Oemuser record);

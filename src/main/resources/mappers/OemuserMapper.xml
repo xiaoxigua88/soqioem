@@ -147,4 +147,13 @@
     	AND UserId != #{userid,jdbcType=INTEGER}
 	</if>  
   </select>
+  
+  <select id="selectOemuserByUseridAndOemid" parameterType="map" resultMap="BaseResultMap">
+  	select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+    where  OemId = #{oemid,jdbcType=INTEGER} and UserId = #{userid,jdbcType=INTEGER}  
+  </select>
+  
 </mapper>
