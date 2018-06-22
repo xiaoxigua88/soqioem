@@ -32,9 +32,9 @@ public class SeoWrapper {
 					seo.setUserid(userId);
 					//模拟冻结资产
 					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.valueOf(20.12));
-					seo.setPriceori(BigDecimal.valueOf(10.26));
-					seo.setPriceoem(BigDecimal.valueOf(8.00));
+					seo.setPrice(BigDecimal.ZERO);
+					seo.setPriceori(BigDecimal.ZERO);
+					seo.setPriceoem(BigDecimal.ZERO);
 					seo.setAddtime(new Date());
 					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 					//消费时间
@@ -71,9 +71,9 @@ public class SeoWrapper {
 						seo.setUserid(userId);
 						//模拟冻结资产
 						seo.setFreezeamount(BigDecimal.ZERO);
-						seo.setPrice(BigDecimal.valueOf(20.12));
-						seo.setPriceori(BigDecimal.valueOf(10.26));
-						seo.setPriceoem(BigDecimal.valueOf(8.00));
+						seo.setPrice(BigDecimal.ZERO);
+						seo.setPriceori(BigDecimal.ZERO);
+						seo.setPriceoem(BigDecimal.ZERO);
 						seo.setAddtime(new Date());
 						seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 						//消费时间
@@ -95,9 +95,9 @@ public class SeoWrapper {
 					seo.setUserid(userId);
 					//模拟冻结资产
 					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.valueOf(20.12));
-					seo.setPriceori(BigDecimal.valueOf(10.26));
-					seo.setPriceoem(BigDecimal.valueOf(8.00));
+					seo.setPrice(BigDecimal.ZERO);
+					seo.setPriceori(BigDecimal.ZERO);
+					seo.setPriceoem(BigDecimal.ZERO);
 					seo.setAddtime(new Date());
 					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 					//消费时间
@@ -122,9 +122,9 @@ public class SeoWrapper {
 					seo.setUserid(userId);
 					//模拟冻结资产
 					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.valueOf(20.12));
-					seo.setPriceori(BigDecimal.valueOf(10.26));
-					seo.setPriceoem(BigDecimal.valueOf(8.00));
+					seo.setPrice(BigDecimal.ZERO);
+					seo.setPriceori(BigDecimal.ZERO);
+					seo.setPriceoem(BigDecimal.ZERO);
 					seo.setAddtime(new Date());
 					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 					//消费时间
@@ -146,9 +146,9 @@ public class SeoWrapper {
 				seo.setUserid(userId);
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
-				seo.setPrice(BigDecimal.valueOf(20.12));
-				seo.setPriceori(BigDecimal.valueOf(10.26));
-				seo.setPriceoem(BigDecimal.valueOf(8.00));
+				seo.setPrice(BigDecimal.ZERO);
+				seo.setPriceori(BigDecimal.ZERO);
+				seo.setPriceoem(BigDecimal.ZERO);
 				seo.setAddtime(new Date());
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//消费时间

@@ -312,4 +312,16 @@ public class DateUtil extends DateUtils {
 		}
 		return weekNum;
 	}
+	
+	/**获取时间秒数
+	 * @param date
+	 * @return
+	 */
+	public static int getSecondTimestampTwo(Date date){
+		if(null == date){
+			return 0;
+		}
+		String timestamp = String.valueOf(date.getTime()/1000);
+		return Integer.valueOf(timestamp);
+	}
 }

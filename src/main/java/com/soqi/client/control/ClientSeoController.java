@@ -74,8 +74,8 @@ public class ClientSeoController extends BaseController{
 		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
-		List<Seo> lst = seoService.qrySeoManageListByUserId(this.getOemuser().getUserid(), start, size);
-		int total = seoService.qryCountSeoManageListByUserId(this.getOemuser().getUserid());
+		List<Seo> lst = seoService.qrySeoApplyListByUserId(this.getOemuser().getUserid(), start, size);
+		int total = seoService.qryCountSeoApplyListByUserId(this.getOemuser().getUserid());
 		Page pager = new Page(pageNo, size, total);
 		pager.setCookieName("oem_ui_ul");
 		String searchTypeList = "[{\"TypeId\":1010,\"Sort\":1,\"Name\":\"百度PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1015,\"Sort\":2,\"Name\":\"360PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1030,\"Sort\":3,\"Name\":\"搜狗PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7010,\"Sort\":4,\"Name\":\"百度手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7015,\"Sort\":5,\"Name\":\"360手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7030,\"Sort\":6,\"Name\":\"搜狗手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7070,\"Sort\":7,\"Name\":\"神马\",\"MaxPage\":5,\"Enabled\":true}]";
@@ -86,6 +86,23 @@ public class ClientSeoController extends BaseController{
 		jsonObj.put("lst", lst);
 		model.addAttribute("jsonData",jsonObj);
 		return "/business/seo/apply";
+	}
+	/**功能:刷新状态
+	 * @param url
+	 * @param keyword
+	 * @param searchType
+	 * @param verifycode
+	 * @return
+	 */
+	@RequestMapping("/client/business/seo/refreshstatus")
+	@ResponseBody
+	public ResultFontJS refreshStatus(@RequestParam(value="taskId",required=true) String taskId){
+		if(StringUtils.isBlank(taskId)){
+			return ResultFontJS.error("刷新任务的ID号不能为空");
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("status", 1);
+		return ResultFontJS.ok(map);
 	}
 	
 	/**功能:多对一加词

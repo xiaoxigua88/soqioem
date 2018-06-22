@@ -173,7 +173,7 @@ $(function() {
 
     var refreshSeoCheckStatus = function(taskId) {
         $.get({
-            url: "?action=GetSeoStatus&taskId=" + taskId,
+            url: "/client/business/seo/refreshstatus?taskId=" + taskId,
             dataType: "json",
             success: function(json) {
                 if (json.status == 1) {

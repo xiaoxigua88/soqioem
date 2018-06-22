@@ -103,11 +103,23 @@
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
     m.ErrorMsg, m.Status
-    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} and m.Status = 4 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
   </select>
   
   <select id="qryCountSeoManageListByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER}
+    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER} and m.Status = 4
+  </select>
+  
+  <select id="qrySeoApplyListByUserId" resultMap="BaseResultMap" parameterType="map">
+    select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
+    m.ErrorMsg, m.Status
+    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} and m.Status &lt;= 3 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+  </select>
+  
+  <select id="qryCountSeoApplyListByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER} and m.Status &lt;= 3 
   </select>
   
   <select id="qrySeoManageListByOemId" resultMap="BaseResultMap" parameterType="map">
@@ -147,7 +159,23 @@
 				0,#{item.buytime},0,
 				0,0,#{item.costtime},
 				#{item.settlehour},#{item.settletime},#{item.settlestart},
-				0,0,0,
+				<choose>
+					<when test="item.apipricetaskid!=null">
+						#{item.apipricetaskid},
+					</when>
+					<otherwise>
+						0,
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="item.apiranktaskid!=null">
+						#{item.apiranktaskid},
+					</when>
+					<otherwise>
+						0,
+					</otherwise>
+				</choose>
+				0,
 				<choose>
 					<when test="item.errormsg!=null and item.errormsg!=''">
 						#{item.errormsg},

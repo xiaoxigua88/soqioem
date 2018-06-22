@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soqi.apido.SeoDoBusiness;
 import com.soqi.oem.dao.SeoMapper;
 import com.soqi.oem.dao.SeobalanceMapper;
 import com.soqi.oem.dao.SeopriceMapper;
@@ -20,7 +21,8 @@ public class SeoService {
 	private SeopriceMapper piceMapper;
 	@Autowired
 	private SeobalanceMapper banlanceMapper;
-	
+	@Autowired
+	private SeoDoBusiness seoDoBusiness;
 	/**客户端查询云排名管理列表
 	 * @param userid
 	 * @param start
@@ -37,6 +39,24 @@ public class SeoService {
 	 */
 	public int qryCountSeoManageListByUserId(Integer userid){
 		return seoMapper.qryCountSeoManageListByUserId(userid);
+	}
+	
+	/**客户端查询云排名购买列表
+	 * @param userid
+	 * @param start
+	 * @param size
+	 * @return
+	 */
+	public List<Seo> qrySeoApplyListByUserId(Integer userid, int start, int size){
+		return seoMapper.qrySeoApplyListByUserId(userid, start, size);
+	}
+	
+	/**客户查询云排名购买条目
+	 * @param userid
+	 * @return
+	 */
+	public int qryCountSeoApplyListByUserId(Integer userid){
+		return seoMapper.qryCountSeoApplyListByUserId(userid);
 	}
 	
 	/**代理端查询云排名管理列表
@@ -60,8 +80,10 @@ public class SeoService {
 	@Transactional("primaryTransactionManager")
 	public int addSeoTask(List<Seo> seos){
 		//TODO
-		//调用接口对任务进行处理如原始价格
-		//调用该用户的执行价格方式是打折还是统一一口价
+		//调用接口获取关键词任务id
+		seoDoBusiness.keywordRankSearchAdd(seos);
+		//调用接口对接关键词价格id
+		seoDoBusiness.KeywordPriceSearchAdd(seos);
 		return seoMapper.batchInsert(seos);
 	}
 	@Transactional("primaryTransactionManager")

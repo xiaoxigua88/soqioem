@@ -23,9 +23,13 @@ public interface SeoMapper {
     
     public List<Seo> qrySeoManageListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     
+    public List<Seo> qrySeoApplyListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
+    
     public List<Seo> qrySeoManageListByOemId(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
     
     public int qryCountSeoManageListByUserId(Integer userid);
+    
+    public int qryCountSeoApplyListByUserId(Integer userid);
     
     public int qryCountSeoManageListByOemId(Integer oemid);
 }
