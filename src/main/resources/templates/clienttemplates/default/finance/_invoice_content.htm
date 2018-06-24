@@ -1,0 +1,76 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">发票管理</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="sq-tabs-container clearfix margin-bottom-20">
+					<div class="pull-left sq-tab-title">请选择：</div>
+					<ul class="text-center pull-left clearfix">
+						<li class="sq-tab">
+							<a href="invoiceapply.aspx">
+								发票申请
+							</a>
+						</li>
+						<li class="sq-tab sq-tab--current">
+							<a href="#a_null">
+								发票列表
+							</a>
+						</li>
+					</ul>
+				</div>
+				<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="您的发票申请记录为空">
+					<thead>
+						<tr>
+							<th data-order_name="invoiceID">
+								发票ID
+							</th>
+							<th data-order_name="invoiceTitle">
+								发票抬头
+							</th>
+							<th data-order_name="invoiceAmount">
+								金额（元）
+							</th>
+							<th data-order_name="invoiceTime">
+								申请时间
+							</th>
+							<th data-order_name="invoiceStatus">
+								状态
+							</th>
+							<th>
+								操作
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+						<tr>
+							<td>
+								<span class="text-primary">{{item.invoiceID}}</span>
+							</td>
+							<td>
+								{{item.invoiceTitle}}
+							</td>
+							<td>
+								<span class="text-orange">￥{{item.invoiceAmount | toFixed}}</span>
+							</td>
+							<td>
+								<span class="text-muted">{{item.invoiceTime}}</span>
+							</td>
+							<td>
+								{{if item.invoiceStatus == 1}}
+								<span class="sq-state-icon sq-state-text {{item.invoiceResult | getInvoiceStatusClass:"className"}}">{{item.invoiceResult | getInvoiceStatusClass:"name"}}</span>
+								{{else}}
+								<span class="sq-state-icon sq-state-text state-icon-waiting text-primary">审核中</span>
+								{{/if}}
+							</td>
+							<td>
+								<a href="/user/invoice/view.html?id={{item.invoiceID}}" class="text-primary">查看</a>
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+				<!-- 引入分页 -->
+				{{include "paginationTpl"}}
+			</div>
+		</div>

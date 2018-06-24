@@ -1,0 +1,107 @@
+<script type="text/html"  id="contentTemplate">
+<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">我的账单</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="task-operates clearfix margin-bottom-10">
+				<form action="" class="pull-left" id="searchForm">
+				    <label class="pull-left search-group-label">业务单号：</label>
+				    <input type="text" name="tradeId" class="pull-left sq-input-reset search-group-input" value="{{filter.tradeid}}" />
+				    <label class="pull-left search-group-label">业务类型：</label>
+				    <div data-field_name="tradeType" class="pull-left sq-dropdown-container btn-group">
+					    <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="selected-content"></span>
+						    <span class="sq-caret"></span>
+					    </a>
+					    <ul class="dropdown-menu sq-search-dropdown">
+				            {{each tradeTypeList as item i}}
+					        <li><a href="#a_null" class="{{if filter.tradetype == item.value}}sq-default-option{{/if}}" data-drop="{{item.value}}">{{item.description}}</a></li>
+					        {{/each}}
+					    </ul>
+				    </div>
+			        <label class="pull-left search-group-label">交易日期：</label>
+				    <input type="text" name="minAddTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minaddtime}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxAddTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxaddtime}}" />
+			        <label class="pull-left search-group-label">金额变化：</label>
+				    <input type="text" name="minChange" class="pull-left sq-input-reset sq-input-number sq-input-amount search-group-input" value="{{filter.minchange}}" />
+			        <label class="pull-left search-group-label">至</label>
+				    <input type="text" name="maxChange" class="pull-left sq-input-reset sq-input-number sq-input-amount search-group-input" value="{{filter.maxchange}}" />
+					<input class="hide" type="text" name="tradeType" value="{{filter.tradeType}}" />
+				    <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+				</form>
+			    </div>
+				<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="当前条件查询的资金收支明细为空">
+					<thead>
+						<tr>
+							<th style="width:50px">
+						序列
+					</th>
+					<th style="width:150px;">
+						交易时间
+					</th>
+					<th style="width:130px;">
+						变化
+					</th>
+					<th style="width:130px;">
+						冻结解冻
+					</th>
+					<th style="width:130px;">
+						余额
+					</th>
+					<th style="width:100px;">
+						业务类型
+					</th>
+					<th style="width:170px;">
+						业务单号
+					</th>
+					<th>
+						备注
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			{{each lst as item i}}
+				<tr>
+					<td class="text-muted">
+						{{i+1}}
+					</td>
+					<td>
+						<span class="text-muted">{{item.addtime}}</span>
+					</td>
+					<td>
+					    {{if item.change > 0 }}
+						<span class="text-orange">+{{item.change | toFixed}}</span>
+						{{else}}
+						<span class="text-primary">{{item.change | toFixed}}</span>
+					    {{/if}}
+					</td>
+					<td>
+					    {{if item.freeze > 0 }}
+						<span class="text-orange">+{{item.freeze | toFixed}}</span>
+						{{else}}
+						<span class="text-primary">{{item.freeze | toFixed}}</span>
+					    {{/if}}
+					</td>
+					<td>
+						<span class="text-orange">￥{{item.balance | toFixed}}</span>
+					</td>
+					<td>
+						{{item.tradetype | getTradeTypeClass:"name"}}
+					</td>
+					<td>
+						{{item.tradeid}}
+					</td>
+					<td>
+						{{item.description}}
+					</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+		<!-- 引入分页 -->
+		{{include "paginationTpl"}}
+	</div>
+</div>
+</script>

@@ -19,5 +19,9 @@ public interface OemaccountdetailMapper {
     
     public List<Oemaccountdetail> qryOemAcDtlsByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
     
+    public List<Oemaccountdetail> qrySecondOemPersonBill(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
+    
+    public int qryCountSecondOemPersonBill(Integer oemid);
+    
     public int qryCountOemAcDtlsByOemid(Integer oemid);
 }

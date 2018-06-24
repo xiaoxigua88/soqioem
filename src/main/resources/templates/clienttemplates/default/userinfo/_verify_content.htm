@@ -1,0 +1,398 @@
+<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">实名认证</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="step-bar-outer clearfix text-center margin-bottom-20">
+					<div class="step-bar step-bar-begin
+					{{if verify.Step == 1}}step--current{{/if}}">
+						<div class="step-colored">
+							<span class="step-prefix">
+							</span>
+							<span>
+								填写认证资料
+							</span>
+						</div>
+						<span class="step-arrow-right"></span>
+					</div>
+					<div class="step-bar step-bar-center
+					{{if verify.Step == 2}}step--current{{/if}}">
+						<span class="step-arrow-left"></span>
+						<div class="step-colored">
+							<span class="step-prefix">
+							</span>
+							<span>
+								等待系统打款
+							</span>
+						</div>
+						<span class="step-arrow-right"></span>
+					</div>
+					<div class="step-bar step-bar-center
+					{{if verify.Step == 3}}step--current{{/if}}">
+					<span class="step-arrow-left"></span>
+						<div class="step-colored">
+							<span class="step-prefix">
+							</span>
+							<span>
+								填写收款金额
+							</span>
+						</div>
+						<span class="step-arrow-right"></span>
+					</div>
+					<div class="step-bar step-bar-end
+					{{if verify.Step == 4}}step--current{{if !verify.Success}} step--failed{{/if}}{{/if}}">
+						<span class="step-arrow-left"></span>
+						<div class="step-colored">
+							<span class="step-prefix">
+							</span>
+							<span>
+								实名认证{{if verify.Step == 4}}{{if !verify.Success}}失败{{else}}成功{{/if}}{{/if}}
+							</span>
+						</div>
+					</div>
+				</div>
+			<!-- step 1 资料填写 -->
+			{{if verify.Step == 1}}
+				<form id="verifyProfileForm" action="?action=Save" class="form-horizontal sq-form sq-tab-container margin-bottom-60">
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							会员ID：
+						</div>
+						<div class="col-xs-8 sq-form-control">
+							{{common.userID}}
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							认证类型：
+						</div>
+						<div class="col-xs-8 sq-form-control">
+							<div class="sq-btn-group" id="verifyTypeChange">
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-tab_group="3" data-verify_type="3" value="企业认证" {{if verify.State==601}}disabled{{/if}} />
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-tab_group="2" data-verify_type="2" value="个体工商户" {{if verify.State==601}}disabled{{/if}} />
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-tab_group="1" data-verify_type="1" value="个人认证" {{if verify.State==601}}disabled{{/if}} />
+							</div>
+							<div class="input-reminder text-orange">提醒：云站通用户必须是企业或个体工商户认证，详情查看<a href="rights.aspx">>>认证权益</a></div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							<span class="inline-block-relate-1">个人姓名：</span>
+							<span class="inline-block-relate-2">个体工商户名称：</span>
+							<span class="inline-block-relate-3">企业名称：</span>
+						</div>
+						<div class="col-xs-8 sq-form-control validate-control">
+							<div class="input-contain">
+								<input id="authNameInput" type="text" name="authName" value="{{verify.AuthName}}" class="sq-input-reset sq-long-input necessary" placeholder="请输入您的真实名称" {{if verify.State==601}}disabled{{/if}} />
+							</div>
+							<div class="input-reminder">认证后无法修改，请认真填写</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							<span class="inline-block-relate-1">身份证号码：</span>
+							<span class="inline-block-relate-2">证件号码：</span>
+							<span class="inline-block-relate-3">企业证件号码：</span>
+						</div>
+						<div class="col-xs-8 sq-form-control validate-control">
+							<div class="input-contain">
+								<input type="text" name="authNumber" value="{{verify.AuthNumber}}" class="sq-input-reset sq-long-input necessary" placeholder="请输入证件号码" {{if verify.State==601}}disabled{{/if}} />
+							</div>
+							<div class="input-reminder">
+							    必须和<span class="inline-block-relate-1">个人姓名</span><span class="inline-block-relate-2">个体工商户名称</span><span class="inline-block-relate-3">企业名称</span>一致
+							    <span class="inline-block-relate-2 inline-block-relate-3">，可以是<span class="text-red">工商注册号、统一社会信用代码、组织机构代码</span>其一</span>
+							</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group inline-block-relate-2 inline-block-relate-3">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							<span>法定代表人：</span>
+						</div>
+						<div class="col-xs-8 sq-form-control validate-control">
+							<div class="input-contain">
+								<input type="text" name="legalPersonName" value="{{verify.LegalPersonName}}" class="sq-input-reset sq-long-input necessary" placeholder="请输入法定代表人" {{if verify.State==601}}disabled{{/if}} />
+							</div>
+							<div class="input-reminder">认证后无法修改，请认真填写</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							认证途径：
+						</div>
+						<div class="col-xs-8 sq-form-control">
+							<div class="sq-btn-group" id="verifyMethodChange">
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-verify_method="1" value="支付宝(推荐)" />
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-verify_method="2" value="银行卡" />
+							</div>
+							<div class="input-reminder">推荐使用支付宝，认证款系统可实时汇出；银行卡则需客服人员工作时间手工转账</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group inline-block-relate-2">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							账户类型：
+						</div>
+						<div class="col-xs-8 sq-form-control">
+							<div class="sq-btn-group" id="accountOpenTypeChange">
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-account_opentype="1" value="对公账户" />
+								<input type="button" class="sq-btn btn-primary btn-reverse" data-account_opentype="2" value="法人账户" />
+							</div>
+							<div class="input-reminder">个体工商户若没有对公账户，可以选择法人账户认证</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group" id="bankNameBlock">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							开户银行：
+						</div>
+						<div class="col-xs-8 sq-form-control validate-control">
+							<div class="input-contain">
+								<input type="text" id="bankNameInput" name="bankName" value="{{verify.BankName}}" class="sq-input-reset sq-long-input necessary" placeholder="请输入开户银行" />
+							</div>
+							<div class="input-reminder">如：中国工商银行杭州未来科技城支行</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							<span class="necessary-mark">*</span>
+							<span class="inline-block-relate-1 bank-account-num">个人银行账号：</span>
+							<span class="inline-block-relate-2 bank-account-num">(对公/经营者)银行账号：</span>
+							<span class="inline-block-relate-3 bank-account-num">对公银行账号：</span>
+							<span class="alipay-num hide">支付宝账号：</span>
+						</div>
+						<div class="col-xs-8 sq-form-control validate-control">
+							<div class="input-contain">
+								<input id="accountNumInput" type="text" name="bankAccount" value="{{verify.BankAccount}}" class="sq-input-reset sq-long-input necessary" placeholder="请输入银行账号" />
+							</div>
+							<div class="input-reminder">该帐号的户名必须和<span class="inline-block-relate-1">个人姓名</span><span class="inline-block-relate-2">个体工商户名称</span><span class="inline-block-relate-3">企业名称</span>一致，用于认证金额打款</div>
+							<div class="error-reminder"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="sq-control-label sq-label-long">
+							&nbsp;
+						</div>
+						<div class="col-xs-8 sq-form-control">
+							<div class="hide">
+								<input type="text" name="verifyType" value="{{verify.VerifyType}}" id="verifyTypeInput" />
+								<input type="text" name="verifyMethod" value="{{verify.VerifyMethod}}" id="verifyMethodInput" />
+								<input type="text" name="accountOpenType" value="{{verify.AccountOpenType}}" id="accountOpenTypeInput" />
+							</div>
+							<a href="#a_null" class="sq-btn btn-strong" id="btnSave">提交审核</a>
+						</div>
+					</div>
+				</form>
+				<div class="alert-warn-lg margin-bottom-20">
+					<div class="tip-title">
+						提交虚假认证资料，面临账户冻结风险
+					</div>
+					<div class="tip-content">
+						优帮云承诺对您的认证资料进行严格保密，认证资料通过审核后无法修改；<br />
+						请确保认证主体的名称必须和收款账户的户名保持一致，否则无法打款；<br />
+						推荐使用支付宝认证，优帮云平台可对支付宝认证的用户可对认证金额实时打款；<br />
+						银行卡认证的用户，客服人员将在收到认证资料之后的一个工作日内审核，周末及法定假日顺延。<br />
+					</div>
+				</div>
+			{{/if}}
+			<!-- step1 end -->
+			<!-- step2 begin -->
+			{{if verify.Step == 2}}
+				<div class="center-block test-pay-container">
+				    {{if verify.State==100}}
+					<div class="test-pay-content margin-bottom-20">
+						<span class="verify-result-icon tip-icon-success-large"></span>
+						认证资料已提交，系统正在对在您的认证资料进行审核，请耐心等待...
+						<br />审核通过后会给您的
+						<span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">{{verify.VerifyMethod | getVerifyMethodClass:"name"}}</span>
+						帐户打入一笔<span class="text-stress">1元以下</span>随机款项，请在到账后到此确认打款金额。
+					</div>
+					{{else if verify.State==101}}
+					<div class="test-pay-content margin-bottom-20">
+						<span class="verify-result-icon tip-icon-success-large"></span>
+						认证资料已初步审核通过！<br />
+						稍候将有一笔<span class="text-stress">1元以下</span>随机款项打入您的
+						<span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">{{verify.VerifyMethod | getVerifyMethodClass:"name"}}</span>
+						帐户，请在到账后到此确认打款金额。
+					</div>
+					{{else if verify.State==102}}
+					<div class="test-pay-content margin-bottom-20">
+						<span class="verify-result-icon tip-icon-success-large"></span>
+						认证资料已初步审核通过！<br />
+						认证款项已经打入您的
+						<span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">{{verify.VerifyMethod | getVerifyMethodClass:"name"}}</span>
+						帐户，请在到账后到此确认打款金额。
+					</div>
+					{{/if}}
+					<div class="test-pay-tips margin-bottom-20">
+						<div class="text-stress strong">
+							提示信息：
+						</div>
+						<ul class="text-muted">
+							<li>· 您需要查询收款账户的收支明细单，正确输入这笔金额才能通过认证。</li>
+							<li>· 如果您在您的收款账户上没有查询到汇款金额，那可能是退票。</li>
+							<li>· 由于返回打款成功信息有延迟，如遇实际到账但无法输入确认金额，请一天后重试。</li>
+							<li>· 如果您已收到打款，但依然看到此页面，这是由于信息同步需要时间，尚未开放确认金额入口，请您稍后重试。</li>
+						</ul>
+					</div>
+				</div>
+			{{/if}}
+			<!-- step2 end -->
+			<!-- step3 begin -->
+			{{if verify.Step == 3}}
+				<div class="center-block test-pay-container">
+					<div class="test-pay-content margin-bottom-20">
+						<span class="verify-result-icon tip-icon-warn-large"></span>
+						请填写正确的收款金额。若填写错误会导致本次认证失败，请您务必确认清楚！
+					</div>
+					<form id="verifyForm" action="?action=Finish" class="form-horizontal sq-form">
+						<div class="form-group">
+							<div class="sq-control-label">
+								认证途径：
+							</div>
+							<div class="col-xs-8 sq-form-control">
+								<span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">{{verify.VerifyMethod | getVerifyMethodClass:"name"}}</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								收款人：
+							</div>
+							<div class="col-xs-8 sq-form-control">
+								{{if verify.AccountOpenType==1}}{{verify.AuthName}}{{else}}{{verify.LegalPersonName}}<span class="text-muted">（法定代表人）</span>{{/if}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								收款账号：
+							</div>
+							<div class="col-xs-8 sq-form-control">
+								{{verify.BankAccount}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								收到金额：
+							</div>
+							<div class="col-xs-9 sq-form-control validate-control sq-input-group">
+								<input id="testPayMoneyInput" type="text" name="money" class="sq-input-reset sq-input-money necessary" maxlength="4" autocomplete="off" autofocus />
+								<span class="sq-input-addon">元</span>
+								<div class="input-reminder test-pay-remind">注：单位为元，如收到1分，请填写0.01。</div>
+								<div class="error-reminder"></div>
+								<input type="text" class="hide">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								&nbsp;
+							</div>
+							<div class="col-xs-8 sq-form-control">
+								<a href="#a_null" class="sq-btn btn-strong" id="btnVerify">确认提交</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			{{/if}}
+			<!-- step3 end -->
+			<!-- step4 begin -->
+			{{if verify.Step == 4}}
+				<div class="center-block test-pay-container">
+					{{if verify.Success}}
+					<div class="test-pay-content margin-bottom-20">
+					    <div class="margin-bottom-20">
+						    <span class="verify-result-icon tip-icon-success-large"></span><span class="font-size-16">您已通过优帮云的实名认证！</span>
+						</div>
+				        <div class="form-horizontal sq-form">
+					        <div class="form-group">
+						        <div class="sq-control-label">
+							        认证类型：
+						        </div>
+						        <div class="col-xs-8 sq-form-control">
+							        <span class="user-label user-verified-origin {{if verify.VerifyType == 1}}user-verify-personal{{else}}user-verify-company{{/if}}"></span>
+							        {{verify.VerifyType  | getVerifyTypeClass:"name"}}
+						        </div>
+					        </div>
+					        <div class="form-group">
+						        <div class="sq-control-label">
+							        认证名称：
+						        </div>
+						        <div class="col-xs-8 sq-form-control">
+							        {{verify.AuthName}}
+						        </div>
+					        </div>
+					        <div class="form-group">
+						        <div class="sq-control-label">
+							        证件号码：
+						        </div>
+						        <div class="col-xs-8 sq-form-control">
+							        {{verify.AuthNumber}}
+						        </div>
+					        </div>
+					        {{if verify.VerifyType>1}}
+					        <div class="form-group">
+						        <div class="sq-control-label">
+							        法定代表人：
+						        </div>
+						        <div class="col-xs-8 sq-form-control">
+							        {{verify.LegalPersonName}}
+						        </div>
+					        </div>
+					        {{/if}}
+					        <div class="form-group">
+						        <div class="sq-control-label">
+							        认证途径：
+						        </div>
+						        <div class="col-xs-8 sq-form-control">
+							        <span class="{{verify.VerifyMethod | getVerifyMethodClass:"className"}}">
+									{{verify.VerifyMethod | getVerifyMethodClass:"name"}}
+									</span>
+						        </div>
+					        </div>
+				        </div>
+					</div>
+					{{else}}
+					<div class="test-pay-content margin-bottom-20">
+						<span class="verify-result-icon tip-icon-error-large"></span>
+						{{if verify.LastCount > 0}}
+							对不起，您的实名认证已失败。请重新认证！（剩余认证次数<span class="text-stress">{{verify.LastCount}}</span>次）
+							<a href="?action=Reset" class="text-stress">重新认证 &gt;</a>
+						{{else}}
+							对不起，您的实名认证已失败。（剩余认证次数<span class="text-stress">{{verify.LastCount}}</span>次）
+							<span class="text-stress">需要继续认证，请联系客服</span>
+						{{/if}}
+					</div>
+					{{/if}}
+					<div class="test-pay-tips margin-bottom-20">
+						{{if verify.Success}}
+							<div class="text-stress strong">
+								提示信息：
+							</div>
+							<ul class="text-muted">
+								<li>· 实名认证后可享受API接口接入权限。</li>
+								<li>· 享受新产品优先体验权。</li>
+								<li>· 企业认证和个体工商户认证客户可使用云站通服务。</li>
+							</ul>
+						{{else}}
+							<div>
+								<span class="text-stress strong">认证失败原因：</span><span class="text-muted">{{verify.Reason}}</span>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			{{/if}}
+			<!-- step4 end -->
+			</div>
+		</div>

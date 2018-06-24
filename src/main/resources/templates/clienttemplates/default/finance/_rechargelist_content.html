@@ -1,0 +1,80 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">充值中心</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="margin-bottom-20 font-size-14">
+			<span class="margin-left-10">您的当前总额：</span>
+			<span class="balance-int text-stress">{{user.totalamount | getInt}}</span><span class="balance-decimal text-stress">{{user.totalamount | getDecimals}} 元</span>
+			<span class="margin-left-10">冻结金额：</span>
+			<span class="balance-int text-stress">{{user.freezeamount | getInt}}</span><span class="balance-decimal text-stress">{{user.freezeamount | getDecimals}} 元</span>
+			<span class="margin-left-10">可用金额：</span>
+			<span class="balance-int text-stress">{{user.availableamount | getInt}}</span><span class="balance-decimal text-stress">{{user.availableamount | getDecimals}} 元</span>
+		</div>
+		<div class="sq-tabs-container clearfix margin-bottom-20">
+			<div class="pull-left sq-tab-title">请选择：</div>
+			<ul class="text-center pull-left clearfix">
+				<li class="sq-tab">
+					<a href="/client/finance/recharge">
+						在线充值
+					</a>
+				</li>
+				<li class="sq-tab sq-tab--current">
+					<a href="#a_null">
+						充值记录
+					</a>
+				</li>
+			</ul>
+		</div>
+		<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="您的充值记录为空">
+			<thead>
+				<tr>
+					<th style="width:50px">
+						序列
+					</th>
+					<th style="width:150px">
+						流水编号
+					</th>
+					<th style="width:100px">
+						充值金额
+					</th>
+					<th style="width:100px">
+						充值方式
+					</th>
+					<th style="width:150px">
+						充值时间
+					</th>
+					<th>
+						备注
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+						<td class="text-muted">
+							{{i+1}}
+						</td>
+						<td>
+							{{item.orderid}}
+						</td>
+						<td class="text-stress">
+							￥{{item.amount}}
+						</td>
+						<td class="text-stress">
+							{{item.paytype | getPayTypeClass:"name"}}
+						</td>
+						<td class="text-muted">
+							{{item.finishtime}}
+						</td>
+						<td>{{item.memo}}</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<!-- 引入分页 -->
+		{{include "paginationTpl"}}
+	</div>
+</div>
+</script>

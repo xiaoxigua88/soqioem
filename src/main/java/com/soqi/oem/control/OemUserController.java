@@ -46,7 +46,7 @@ public class OemUserController extends BaseController{
 	private LogService LogService;
 	@Autowired
 	private FinanceService rechargeService ;
-	@RequiresPermissions("1301:7")//权限管理;
+	//@RequiresPermissions("1301:7")//权限管理;
 	@RequestMapping(value="/oemmanager/userinfo/userlist")
 	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie

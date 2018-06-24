@@ -1,0 +1,90 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">合同管理</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="margin-left-10 margin-bottom-20">
+					<div class="sq-btn btn-primary-faker">合同说明：</div>
+					<ul class="sq-panel-list">
+						<li>a. 优帮云合同由服务条款及有效订单信息组成，服务条款可自行在线阅读。</li>
+						<li>b. 优帮云合同在用户下单时委托【e签宝】提供电子签章和存证，和普通纸质协议具备同等法律效应。</li>
+						<li>c. 电子合同为标准的PDF文件，非标准PDF软件可能无法查看电子印章。推荐使用软件Adobe Reader PDF或Smart PDF软件查看。</li>
+						<li>d. 谷歌浏览器（Chrome）内核大部分版本能正常显示电子印章；IE内核、火狐等浏览器可能无法显示印章，请保存到本地使用专业的PDF软件查看。</li>
+					</ul>
+				</div>
+				<table class="sq-table margin-bottom-20" id="mainList">
+					<thead>
+						<tr>
+							<th style="width:85px;">
+								合同编号
+							</th>
+							<th style="width:150px;">
+								合同名称
+							</th>
+							<th style="width:85px;">
+								业务编号
+							</th>
+							<th style="width:85px;" class="text-center">
+								业务类型
+							</th>
+							<th style="width:85px;" class="text-center">
+								签约方式
+							</th>
+							<th style="width:100px;" class="text-center">
+								签约日期
+							</th>
+							<th style="width:100px;" class="text-center">
+								到期日期
+							</th>
+							<th style="width:85px;" class="text-center">
+								状态
+							</th>
+							<th>
+								操作
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					{{each lst as item i}}
+						<tr>
+							<td>
+							    {{item.ContractId}}
+							</td>
+							<td>
+								{{item.ContractName}}
+							</td>
+							<td>
+								{{item.OrderId}}
+							</td>
+							<td class="text-center">
+							    <span class="{{item.BusinessFrom | getContractBusinessFromClass:"className"}}">
+								    {{item.BusinessFrom | getContractBusinessFromClass:"name"}}
+							    </span>
+							</td>
+							<td class="text-center">
+							    <span class="{{item.SignMethod | getContractSignMethodClass:"className"}}">
+								    {{item.SignMethod | getContractSignMethodClass:"name"}}
+							    </span>
+							</td>
+							<td class="text-center">
+								{{item.SignTime}}
+							</td>
+							<td class="text-center">
+								{{item.ExpireTime}}
+							</td>
+							<td class="text-center">
+							    <span class="{{item.Status | getContractStatusClass:"className"}}">
+								    {{item.Status | getContractStatusClass:"name"}}
+							    </span>
+							</td>
+							<td>
+								<a href="?action=Download&contractId={{item.ContractId}}" class="sq-btn btn-primary" target="_blank">查看合同</a>
+							</td>
+						</tr>
+					{{/each}}
+					</tbody>
+				</table>
+				<!-- 引入分页 -->
+				{{include "paginationTpl"}}
+			</div>
+		</div>

@@ -1,0 +1,278 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">充值中心</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="margin-bottom-20 font-size-14">
+			<span class="margin-left-10">您的当前总额：</span>
+			<span class="balance-int text-stress">{{user.totalamount | getInt}}</span><span class="balance-decimal text-stress">{{user.totalamount | getDecimals}} 元</span>
+			<span class="margin-left-10">冻结金额：</span>
+			<span class="balance-int text-stress">{{user.freezeamount | getInt}}</span><span class="balance-decimal text-stress">{{user.freezeamount | getDecimals}} 元</span>
+			<span class="margin-left-10">可用金额：</span>
+			<span class="balance-int text-stress">{{user.availableamount | getInt}}</span><span class="balance-decimal text-stress">{{user.availableamount | getDecimals}} 元</span>
+		</div>
+		<div class="sq-tabs-container clearfix margin-bottom-20">
+			<div class="pull-left sq-tab-title">请选择：</div>
+			<ul class="text-center pull-left clearfix">
+				<li class="sq-tab sq-tab--current">
+					<a href="#a_null">
+						在线充值
+					</a>
+				</li>
+				<li class="sq-tab">
+					<a href="/client/finance/rechargelist">
+						充值记录
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="recharges-block margin-bottom-20">
+			<form id="rechargeForm" action="?action=Pay" method="post" target="_blank" class="form-horizontal sq-form">
+				<div class="form-group recharge-amount">
+					<div class="sq-control-label sq-label sq-label-darken">
+						充值金额：
+					</div>
+					<div class="col-xs-8 sq-form-control sq-input-group validate-control">
+						<input id="rechargeInput" type="text" name="amount" class="sq-input-reset sq-input-money" autocomplete="off" />
+						<span class="sq-input-addon">元</span>
+						<div class="error-reminder"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="sq-control-label sq-label sq-label-darken recharge-type">
+						支付方式：
+					</div>
+					<div class="col-xs-10 sq-form-control">
+						<div class="recharge-tier clearfix">
+							<!-- 支付宝 -->
+							<div class="recharge-item">
+								<input type="radio" id="alipay" name="payType" value="alipay" checked="checked" />
+								<label for="alipay">
+									<span class="recharge-choose recharge-alipay"></span>
+								</label>
+							</div>
+							<!-- 微信支付 -->
+							<div class="recharge-item">
+								<input type="radio" id="weixin" name="payType" value="weixin">
+								<label for="weixin">
+									<span class="recharge-choose recharge-weixin"></span>
+								</label>
+							</div>
+						</div>
+						#if(false)
+						<div class="recharge-tier clearfix">
+							<div class="recharge-item">
+								<input type="radio" id="boc" name="payType" value="BOCB2C">
+								<label for="boc">
+									<span class="recharge-choose recharge-boc"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="icbc" name="payType" value="ICBCB2C">
+								<label for="icbc">
+									<span class="recharge-choose recharge-icbc"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="cmb" name="payType" value="CMB">
+								<label for="cmb">
+									<span class="recharge-choose recharge-cmb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="ccb" name="payType" value="CCB">
+								<label for="ccb">
+									<span class="recharge-choose recharge-ccb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="abc" name="payType" value="ABC">
+								<label for="abc">
+									<span class="recharge-choose recharge-abc"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="spdb" name="payType" value="SPDB">
+								<label for="spdb">
+									<span class="recharge-choose recharge-spdb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="cib" name="payType" value="CIB">
+								<label for="cib">
+									<span class="recharge-choose recharge-cib"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="gdb" name="payType" value="GDB">
+								<label for="gdb">
+									<span class="recharge-choose recharge-gdb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="fdb" name="payType" value="FDB">
+								<label for="fdb">
+									<span class="recharge-choose recharge-fdb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="hzcb" name="payType" value="HZCBB2C">
+								<label for="hzcb">
+									<span class="recharge-choose recharge-hzcb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="shbank" name="payType" value="SHBANK">
+								<label for="shbank">
+									<span class="recharge-choose recharge-shbank"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="nbbank" name="payType" value="NBBANK">
+								<label for="nbbank">
+									<span class="recharge-choose recharge-nbbank"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="spabank" name="payType" value="SPABANK">
+								<label for="spabank">
+									<span class="recharge-choose recharge-spabank"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="postgc" name="payType" value="POSTGC">
+								<label for="postgc">
+									<span class="recharge-choose recharge-postgc"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="comm" name="payType" value="COMM">
+								<label for="comm">
+									<span class="recharge-choose recharge-comm"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="ceb" name="payType" value="CEB-DEBIT">
+								<label for="ceb">
+									<span class="recharge-choose recharge-ceb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="bjbank" name="payType" value="BJBANK">
+								<label for="bjbank">
+									<span class="recharge-choose recharge-bjbank"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="shrcb" name="payType" value="SHRCB">
+								<label for="shrcb">
+									<span class="recharge-choose recharge-shrcb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="wzcb" name="payType" value="WZCBB2C-DEBIT">
+								<label for="wzcb">
+									<span class="recharge-choose recharge-wzcb"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="cmbc" name="payType" value="CMBC">
+								<label for="cmbc">
+									<span class="recharge-choose recharge-cmbc"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="citic" name="payType" value="CITIC-DEBIT">
+								<label for="citic">
+									<span class="recharge-choose recharge-citic"></span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="bjrcb" name="payType" value="BJRCB">
+								<label for="bjrcb">
+									<span class="recharge-choose recharge-bjrcb"></span>
+								</label>
+							</div>
+						</div>
+						<div class="recharge-tier clearfix">
+							<div class="recharge-item">
+								<input type="radio" id="bocB2B" name="payType" value="BOCBTB">
+								<label for="bocB2B">
+									<span class="recharge-choose recharge-boc"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="icbcB2B" name="payType" value="ICBCBTB">
+								<label for="icbcB2B">
+									<span class="recharge-choose recharge-icbc"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="cmbB2B" name="payType" value="CMBBTB">
+								<label for="cmbB2B">
+									<span class="recharge-choose recharge-cmb"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+							<div class="recharge-item">
+								<input type="radio" id="ccbB2B" name="payType" value="CCBBTB">
+								<label for="ccbB2B">
+									<span class="recharge-choose recharge-ccb"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+							<!--农业银行-->
+							<div class="recharge-item">
+								<input type="radio" id="abcB2B" name="payType" value="ABCBTB">
+								<label for="abcB2B">
+									<span class="recharge-choose recharge-abc"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+							<!--上海浦东发展银行-->
+							<div class="recharge-item">
+								<input type="radio" id="spdbB2B" name="payType" value="SPDBB2B">
+								<label for="spdbB2B">
+									<span class="recharge-choose recharge-spdb"></span>
+									<span class="b2b-label">企业</span>
+								</label>
+							</div>
+						</div>
+						#end
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="sq-control-label">
+						&nbsp;
+					</div>
+					<div class="col-xs-8 sq-form-control">
+						<div class="hide">
+							<input id="payMinInput" type="text" value="{{user.paymin}}" />
+						</div>
+						<a href="#a_null" class="sq-btn btn-strong btn-strong-high" id="rechargeBtn">立即支付>></a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="alert-warn-lg margin-bottom-20">
+			<div class="tip-title">
+				温馨提示：
+			</div>
+			<div class="tip-content">
+				<div>
+					a. 充值最小金额{{user.paymin}}元，充值金额必须为整数
+				</div>
+				<div>
+					b. 支付过程中浏览器会有几次跳转，支付完成之前请勿关闭浏览器，否则可能造成支付失败
+				</div>
+				<div>
+					c. 如充值后款项没有到账请联系在线客服帮助处理，<a href="#" target="_blank">提交工单</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>

@@ -67,6 +67,7 @@ public class ShiroUtils {
     
     public static void replacePrincipal(Object object, ServletRequest request, ServletResponse response){
     	PrincipalCollection principals = new SimplePrincipalCollection(object, object.getClass().toString());
+    	getSubjct().runAs(principals);
 		Builder builder = new WebSubject.Builder(request, response);
 		builder.principals(principals);
 		builder.authenticated(true);

@@ -57,6 +57,10 @@ public class UserService {
 		return ou.selectOemuserByUseridAndOemid(oemid, userid);
 	}
 	
+	public Oemuser qryOemuserByDomainAndMobile(String domain, String mobile){
+		return ou.selectByDomainAndMobile(domain, mobile);
+	}
+	
 	public Oemuser qryOemuser(Integer userid){
 		return ou.selectByPrimaryKey(userid);
 	}

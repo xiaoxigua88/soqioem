@@ -1,0 +1,63 @@
+        <div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">
+					绑定邮箱
+				</div>
+				<a href="email.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+			</div>
+			<div class="sq-panel-body">
+				<div>
+					<form class="form-horizontal sq-form" action="?action=Save" id="bindEmailForm">
+						<div class="form-group">
+							<div class="sq-control-label">
+								会员ID：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{common.userID}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								原邮箱账号：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{user.Email}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								新邮箱账号：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<div class="input-contain">
+									<input type="text" id="email" name="email" class="sq-input-reset sq-long-input submit-needed necessary" placeholder="请输入新邮箱账号" />
+								</div>
+								<div class="error-reminder"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								邮件验证码：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<div class="input-contain">
+									<input type="text" name="verifyCode" class="sq-input-reset submit-needed necessary" placeholder="请输入新邮件验证码" />
+									<input type="button" href="#a_null" class="sq-btn btn-primary send-captcha" value="发送验证码" id="sendEmailCaptcha" />
+								</div>
+								<div class="error-reminder"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								&nbsp;
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								<a href="#a_null" class="sq-btn btn-strong" id="bindEmail">确认绑定邮箱</a>
+							</div>
+						</div>
+					</form>
+					<span class="hide">{{common.sendCountDown}}</span>
+				</div>
+			</div>
+		</div>

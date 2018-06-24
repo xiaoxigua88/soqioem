@@ -17,6 +17,9 @@
     <result column="Status" property="status" jdbcType="INTEGER" />
     <result column="MealStatus" property="mealstatus" jdbcType="INTEGER" />
     <result column="HasNextOem" property="hasnextoem" jdbcType="INTEGER" />
+    <result column="TotalAmount" property="totalamount" jdbcType="DECIMAL" />
+    <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
+    <result column="SeoAmountNeed" property="seoamountneed" jdbcType="DECIMAL" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from OemBase
@@ -92,9 +95,9 @@
   </select>
   
   <select id="qryChildOemsByOemId" resultMap="BaseResultMap" parameterType="map" >
-    select OemId, MealId, TempId, Domain, CompanyName, Phone, ExpiryTime, TotalUsersCount, 
-    TotalTaskCount, OemLevel, ParentOemId, Status, MealStatus, HasNextOem, AddTime
-    from OemBase where ParentOemId = #{parentoemid,jdbcType=INTEGER} Order by OemId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+    select m.OemId, m.MealId, m.TempId, m.Domain, m.CompanyName, m.Phone, m.ExpiryTime, m.TotalUsersCount, 
+    m.TotalTaskCount, m.OemLevel, m.ParentOemId, m.Status, m.MealStatus, m.HasNextOem, m.AddTime, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
+    from OemBase m left join OemAccount n on m.OemId = n.OemId where m.ParentOemId = #{parentoemid,jdbcType=INTEGER} Order by m.OemId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
   </select>
   
   <select id="qryCountChildOemsByOemId" resultType="java.lang.Integer" parameterType="map" >

@@ -127,8 +127,34 @@ public class FinanceService {
 		return userAcDetail.qryCountUserAcDtlsByOemid(oemId);
 	}
 	
+	public List<Useraccountdetail> qryUserAcDtlsByUserid(Integer userId, int start, int size){
+		return userAcDetail.qryUserAcDtlsByUserid(userId, start, size);
+	}
+	
+	public int qryCountUserAcDtlsByUserid(Integer userId){
+		return userAcDetail.qryCountUserAcDtlsByUserid(userId);
+	}
+	
 	public List<Oemaccountdetail> qryOemAcDtlsByOemid(Integer oemId, int start, int size){
 		return oemAcDetail.qryOemAcDtlsByOemid(oemId, start, size);
+	}
+	
+	/**查义二级代理个人账单
+	 * @param oemId
+	 * @param start
+	 * @param size
+	 * @return
+	 */
+	public List<Oemaccountdetail> qrySecondOemPersonBill(Integer oemId, int start, int size){
+		return oemAcDetail.qrySecondOemPersonBill(oemId, start, size);
+	}
+	
+	/**查询二级代理个人账单条目
+	 * @param oemId
+	 * @return
+	 */
+	public int qryCountSecondOemPersonBill(Integer oemId){
+		return oemAcDetail.qryCountSecondOemPersonBill(oemId);
 	}
 	
 	public int qryCountOemAcDtlsByOemid(Integer oemId){
@@ -141,6 +167,14 @@ public class FinanceService {
 	
 	public int qryCountUserRechargesByOemid(Integer oemId){
 		return userCharge.qryCountUserRechargesByOemid(oemId);
+	}
+	
+	public List<Userrecharge> qryUserRechargesByUserid(Integer userId, int start, int size){
+		return userCharge.qryUserRechargesByUserid(userId, start, size);
+	}
+	
+	public int qryCountUserRechargesByUserid(Integer userId){
+		return userCharge.qryCountUserRechargesByUserid(userId);
 	}
 	
 	public List<Userrecharge> qryOemRechargesByOemid(Integer oemId, int start, int size){

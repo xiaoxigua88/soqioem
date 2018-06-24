@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.common.utils.WebAddrUtils;
 import com.soqi.oem.gentry.Oemuser;
@@ -36,6 +38,12 @@ public class CilentHomeController extends BaseController{
 	public String clientMainPage(Model model, HttpServletRequest req){
 		//添加用户登录成功日志
 		Oemuser user = this.getOemuser();
+		//添加cookie
+		String oem_user = CookieUtils.getCookie("oem_user");
+		if(StringUtils.isNotBlank(oem_user)){
+			CookieUtils.removeCookie(oem_user);
+		}
+		CookieUtils.addCookie("oem_user", this.getOemuser().getOemid() + "_" + this.getOemuser().getUserid());
 		if(!user.isIsinsertlog()){
 			logger.debug("用户登录日志添加开始");
 			logService.addUserLoginLog(user.getUserid(), user.getOemid(), req);

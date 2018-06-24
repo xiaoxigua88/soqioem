@@ -19,10 +19,13 @@
 			<!-- JS填充 -->
 		</div>
 		<div id="contentBox"></div>
-		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+		<div th:replace="${templDir}+'userinfo/_safety_content'"/>
 	</div>
 	<!-- 页脚部分 -->
 	<div th:replace="${templDir}+_footer::copy"/>
+	<script th:inline="javascript">
+	jsData = {"user":{"RegisterTime":"2018-04-23","Email":"306***@qq.com","EmailVerify":true,"SafeRate":100,"VerifyType":1,"VerifyStatus":4},"common":{"userID":106083,"userName":"酷飞","userMobile":"153********","userEmail":"306***@qq.com","sendCountDown":0,"unReadTotal":0,"backUrl":"http://console.youbangyun.com/client/userinfo/address.aspx","domain":{"main":"http://www.youbangyun.com","uc":"http://console.youbangyun.com/client","static":"http://console.youbangyun.com/static"}}};
+	</script>
 	<div>
 		<div th:replace="${templDir}+_script::commonJs"></div>
 	</div>

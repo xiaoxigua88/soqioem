@@ -1,0 +1,132 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">安全设置</div>
+	</div>
+	<div class="sq-panel-body">
+		<div class="user-safety-info clearfix">
+			<div class="pull-left">
+				<img src="{{common.domain.static}}/img/ucModule/home/avatar_user.png" alt="">
+			</div>
+			<div class="pull-left safety-info-detail">
+				<p>
+					会员ID：{{common.userID}}
+				</p>
+				<p>
+					认证类型：
+					<span class="user-label user-verified-origin {{if user.VerifyType == 1}}user-verify-personal{{else if user.VerifyType >0}}user-verify-company{{/if}}"></span>
+				{{if user.VerifyStatus == 4}}
+					{{user.VerifyType  | getVerifyTypeClass:"name"}}
+				{{else}}
+				    <span class="{{user.VerifyStatus | getVerifyStatusClass:"className"}}">
+					{{user.VerifyStatus | getVerifyStatusClass:"name"}}
+					</span>
+				{{/if}}
+				{{if user.VerifyType == 0}}
+					<a href="${domain_uc}/userinfo/verify.aspx" class="text-stress go-verify">{{if user.VerifyStatus == 1}}前往认证{{else}}查看认证进度{{/if}}</a>
+				{{/if}}
+				</p>
+				<p>
+					注册日期：{{user.RegisterTime}}
+				</p>
+			</div>
+		</div>
+		<div class="safety-level-container clearfix">
+		<span class="text-primary pull-left">
+			您当前的账号安全程度
+		</span>
+			<div class="pull-left safety-level clearfix">
+				<div class="safety-level-bar pull-left progress">
+					<div class="progress-bar safety-bar-{{if user.SafeRate == 50}}mid progress-bar-warning{{else}}high progress-bar-success{{/if}}" role="progressbar" aria-valuenow="{{user.SafeRate}}" aria-valuemin="0" aria-valuemax="100" style="width: {{user.SafeRate}}%">
+					</div>
+				</div>
+			<span class="pull-left safety-level-text safety-level-{{if user.SafeRate == 50}}mid{{else}}high{{/if}}">
+				安全级别：
+				<span id="safetyLevel">
+					{{if user.SafeRate == 50}}中{{else}}高{{/if}}
+				</span>
+			</span>
+			</div>
+		</div>
+		<!-- 用户信息项目 -->
+		<div class="user-settings-container">
+			<div class="settings-tier clearfix">
+				<div class="settings-detail pull-left">
+					<span class="setting-name">
+						修改密码
+					</span>
+					<span class="setting-intro">
+						安全性高的密码可以使帐号更安全。建议您定期更换密码，设置一个包含字母，符号或数字中至少两项且长度超过6位的密码。
+					</span>
+				</div>
+				<div class="pull-right setting-operate">
+					<span class="setting-status setting-success">
+						已设置
+					</span>
+					<span> | </span>
+					<a href="${domain_uc}/userinfo/password.aspx">修改</a>
+				</div>
+			</div>
+			<div class="settings-tier clearfix">
+				<div class="settings-detail pull-left">
+					<span class="setting-name">
+						手机绑定
+					</span>
+					<span class="setting-intro">
+						您的手机：<span class="text-stress">{{common.userMobile}}</span>。绑定认证后可用于手机找回密码、接收手机动态验证码等，使您的账户更加安全。
+					</span>
+				</div>
+				<div class="pull-right setting-operate">
+					<span class="setting-status setting-success">
+						已设置
+					</span>
+					<span> | </span>
+					<a href="${domain_uc}/userinfo/mobile.aspx">修改</a>
+				</div>
+			</div>
+			<div class="settings-tier clearfix">
+				<div class="settings-detail pull-left">
+					<span class="setting-name ">
+						邮箱绑定
+					</span>
+					<span class="setting-intro">
+						您的邮箱：<span class="text-stress">{{user.Email}}</span>。绑定认证后可用于邮箱找回密码、接受订单提醒等，保障您的账户更加安全。
+					</span>
+				</div>
+				<div class="pull-right setting-operate">
+				{{if user.EmailVerify}}
+					<span class="setting-status setting-success">
+						已绑定
+					</span>
+					<span> | </span>
+					<a href="${domain_uc}/userinfo/email.aspx">修改</a>
+				{{else}}
+					<span class="setting-status setting-undone">
+						未设置
+					</span>
+					<span> | </span>
+					<a href="${domain_uc}/userinfo/email.aspx">去绑定</a>
+				{{/if}}
+				</div>
+			</div>
+			<div class="settings-tier clearfix">
+				<div class="settings-detail pull-left">
+					<span class="setting-name">
+						密保问题
+					</span>
+					<span class="setting-intro">
+						设置密保问题可以进一步提升您的账户安全性。是您找回登录密码的方式之一。
+					</span>
+				</div>
+				<div class="pull-right setting-operate">
+					<span class="setting-status setting-success">
+						已设置
+					</span>
+					<span> | </span>
+					<a href="${domain_uc}/userinfo/protect.aspx">修改</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>

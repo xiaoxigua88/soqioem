@@ -20,4 +20,8 @@ public interface UserrechargeMapper {
     public List<Userrecharge> qryUserRechargesByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
     
     public int qryCountUserRechargesByOemid(Integer oemid);
+    
+    public List<Userrecharge> qryUserRechargesByUserid(@Param("userid") Integer oemid, @Param("start") int start, @Param("size") int size);
+    
+    public int qryCountUserRechargesByUserid(Integer userid);
 }

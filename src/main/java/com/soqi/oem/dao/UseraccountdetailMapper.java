@@ -20,4 +20,8 @@ public interface UseraccountdetailMapper {
     public List<Useraccountdetail> qryUserAcDtlsByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
     
     public int qryCountUserAcDtlsByOemid(Integer oemid);
+    
+    public List<Useraccountdetail> qryUserAcDtlsByUserid(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
+    
+    public int qryCountUserAcDtlsByUserid(Integer oemid);
 }

@@ -1,0 +1,58 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">
+					修改绑定手机
+				</div>
+				<a href="mobile.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+			</div>
+			<div class="sq-panel-body">
+				<div>
+					<form class="form-horizontal sq-form" action="?action=Save" id="setNewMobileForm">
+						<div class="form-group">
+							<div class="sq-control-label">
+								原手机号码：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{common.userMobile}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								新手机号码：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<div class="input-contain">
+									<input type="text" id="mobile" name="mobile" class="sq-input-reset sq-long-input submit-needed necessary" placeholder="请输入新手机号" maxlength="11" />
+								</div>
+								<div class="error-reminder"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								新手机验证码：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<div class="input-contain">
+									<input type="text" name="verifyCode" class="sq-input-reset submit-needed necessary" placeholder="请输入新手机验证码" />
+									<input type="button" class="sq-btn btn-primary send-captcha" id="sendSMSCaptcha" value="发送验证码" />
+								</div>
+								<div class="error-reminder"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								&nbsp;
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								<a href="#a_null" class="sq-btn btn-strong" id="bindNewMobile">绑定新手机号码</a>
+							</div>
+						</div>
+					</form>
+					<div class="hide">
+						<span id="setLeftTime">{{common.sendCountDown}}</span>
+					</div>
+				</div>
+			</div>
+		</div>

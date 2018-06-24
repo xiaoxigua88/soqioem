@@ -1,0 +1,89 @@
+        <div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">
+					修改密保
+				</div>
+				<a href="safety.aspx" class="sq-btn btn-primary btn-reverse btn-icon-return">返 回</a>
+			</div>
+			<div class="sq-panel-body">
+				<div>
+					<form class="form-horizontal sq-form sq-tab-container" action="?action=Save" id="setNewProtectForm">
+						<div class="form-group">
+							<div class="sq-control-label">
+								会员ID：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{common.userID}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								手机号码：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{common.userMobile}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								原密保问题：
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								{{user.Question}}
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								原密保答案：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<input type="text" name="oriAnswer" class="sq-input-reset necessary" placeholder="请输入原密保答案" />
+								<span class="error-reminder"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								新密保问题：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<select name="newQuestion" class="sq-input-reset sq-long-input necessary">
+					                {{each user.QuestionList as item i}}<option value="{{item}}">{{item}}</option>{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								新密保答案：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<input type="text" name="newAnswer" class="sq-input-reset necessary" placeholder="请输入新的密保答案" />
+								<span class="error-reminder"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								<span class="necessary-mark">*</span>
+								手机验证码：
+							</div>
+							<div class="col-xs-10 sq-form-control validate-control">
+								<input type="text" name="verifyCode" class="sq-input-reset necessary" placeholder="请输入手机验证码" />
+								<input type="button" href="#a_null" class="sq-btn btn-primary send-captcha" value="发送验证码" id="sendSMSCaptcha" />
+								<span class="error-reminder"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="sq-control-label">
+								&nbsp;
+							</div>
+							<div class="col-xs-10 sq-form-control">
+								<a href="#a_null" class="sq-btn btn-strong" id="saveNewProtect">保 存</a>
+							</div>
+						</div>
+					</form>
+					<span class="hide" id="mobileLeftTime">{{common.sendCountDown}}</span>
+				</div>
+			</div>
+		</div>

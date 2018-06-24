@@ -40,20 +40,25 @@ public class UserSeparatorFilter extends AccessControlFilter{
             	Customer customer = (Customer)subject.getPrincipal();
             	if(StringUtils.contains(uri, "client")){
             		 UserService us = ApplicationContextRegister.getBean(UserService.class);
+            		 Oemuser user = null;
             		if(StringUtils.isNotBlank(action) && StringUtils.isNotBlank(userid)){
-            			Oemuser user = us.selectOemuserByUseridAndOemid(customer.getOemid(), Integer.valueOf(userid));
-            			if(user == null){
-            				return false;
-            			}else{
-            				//无密登录替换成客户端session
-            				ShiroUtils.replacePrincipal(user, request, response);
-            			}
+            			user = us.selectOemuserByUseridAndOemid(customer.getOemid(), Integer.valueOf(userid));
             		}else{
-            			return false;
+            			//可能无密登录后、用户过段时间再操作此客户页面、保证用户正常操作
+            			String oem_user = CookieUtils.getCookie("oem_user");
+            			String[] oemid_userid = oem_user.split("_");
+            			user = us.selectOemuserByUseridAndOemid(Integer.valueOf(oemid_userid[0]), Integer.valueOf(oemid_userid[1]));
             		}
+            		if(user == null){
+        				return false;
+        			}else{
+        				//无密登录替换成客户端session
+        				ShiroUtils.replacePrincipal(user, request, response);
+        			}
             	}
             }
             if(subject.getPrincipal() instanceof Oemuser){
+            	Oemuser oemuser = (Oemuser)subject.getPrincipal();
             	String oem_manager = CookieUtils.getCookie("oem_manager");
             	if(StringUtils.isNotBlank(oem_manager)){
             		if(StringUtils.contains(uri, "oemmanager")){
@@ -70,6 +75,21 @@ public class UserSeparatorFilter extends AccessControlFilter{
 	            		}else{
 	            			return false;
 	            		}
+            		}else if(StringUtils.contains(uri, "client")){
+            			//如果代理访问一个客户后该客户没关，客户又去打开另一个客户，则系统当前的subject要换成另一个客户的，这样就形成了客户到客户的切换
+            			UserService us = ApplicationContextRegister.getBean(UserService.class);
+                		if(StringUtils.isNotBlank(action) && StringUtils.isNotBlank(userid)){
+                			if(Integer.valueOf(userid) == oemuser.getUserid().intValue()){
+                				return true;
+                			}
+                			Oemuser user = us.selectOemuserByUseridAndOemid(oemuser.getOemid(), Integer.valueOf(userid));
+                			if(user == null){
+                				return false;
+                			}else{
+                				//无密登录替换成客户端session
+                				ShiroUtils.replacePrincipal(user, request, response);
+                			}
+                		}
             		}
             	}
             }

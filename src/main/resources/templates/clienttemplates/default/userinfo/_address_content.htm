@@ -1,0 +1,88 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">常用地址</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="alert-warn">
+					常用的收货地址（合同、礼品、物品等收寄），请谨慎填写！
+				</div>
+				<!-- 业务信息 -->
+				<div class="info-block">
+					<div>
+						<form action="?action=Save" id="addressInfo">
+							<table class="user-info-table">
+								<tr>
+									<td class="info-item-name">
+										<span class="necessary-mark">*</span>
+										所在地区：
+									</td>
+									<td class="validate-control">
+										<select name="province" id="province" class="selectProvince sq-input-reset necessary" placeholder="请选择省份">
+											<option value="">省份----</option>
+										</select>
+										<select name="city" id="city" class="selectCity sq-input-reset necessary" placeholder="请选择市区">
+											<option value="">市区----</option>
+										</select>
+										<span class="error-reminder" id="areaReminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="info-item-name">
+										<span class="necessary-mark">*</span>
+										详细地址：
+									</td>
+									<td class="validate-control">
+										<input class="sq-input-reset necessary" type="text" name="address" value="{{address.Address}}" placeholder="请输入详细地址" />
+										<span class="error-reminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="info-item-name">
+										邮政编码：
+									</td>
+									<td class="validate-control">
+										<input class="sq-input-reset" type="text" name="zipCode" value="{{address.ZipCode}}" placeholder="请输入邮政编码" />
+										<span class="error-reminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="info-item-name">
+										<span class="necessary-mark">*</span>
+										联系人：
+									</td>
+									<td class="validate-control">
+										<input class="sq-input-reset necessary" type="text" name="contact" value="{{address.Contact}}" placeholder="请输入联系人" />
+										<span class="error-reminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="info-item-name">
+										<span class="necessary-mark">*</span>
+										手机号码：
+									</td>
+									<td class="validate-control">
+										<input class="sq-input-reset necessary" type="text" name="mobile" value="{{address.Mobile}}" placeholder="请输入手机号码" />
+										<span class="error-reminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="info-item-name">
+										固定电话：
+									</td>
+									<td class="validate-control">
+										<input class="sq-input-reset" type="text" name="phone" value="{{address.Phone}}" placeholder="请输入固定电话" />
+										<span class="error-reminder"></span>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<a href="#a_null" class="sq-btn btn-strong" id="saveAddressInfo">保 存</a>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>

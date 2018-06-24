@@ -55,6 +55,10 @@ public class Oemuser implements Serializable {
 
     private BigDecimal seoamountneed;
     
+    private BigDecimal availableamount;
+    
+    private BigDecimal paymin;
+    
     private boolean isinsertlog = false;
     
     public BigDecimal getTotalamount() {
@@ -258,6 +262,24 @@ public class Oemuser implements Serializable {
 
 	public void setDomain(String domain) {
 		this.domain = domain;
+	}
+
+	
+	public BigDecimal getAvailableamount() {
+		return availableamount;
+	}
+
+	public void setAvailableamount(BigDecimal availableamount) {
+		this.availableamount = availableamount;
+	}
+
+	
+	public BigDecimal getPaymin() {
+		return paymin;
+	}
+
+	public void setPaymin(BigDecimal paymin) {
+		this.paymin = paymin;
 	}
 
 	@Override

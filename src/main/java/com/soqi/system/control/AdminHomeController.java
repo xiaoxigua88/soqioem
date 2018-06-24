@@ -1,5 +1,8 @@
 package com.soqi.system.control;
 
+import net.bytebuddy.asm.Advice.This;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,7 @@ import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 
 @Controller
-public class AdminHomeController {
+public class AdminHomeController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(AdminHomeController.class);
 	@Autowired
 	private UserService userService;
@@ -24,7 +27,10 @@ public class AdminHomeController {
 	 */
 	@RequestMapping("/administrator/main")
 	public String adminMainPage(Model model){
-		CookieUtils.addCookie("oem_manager", "oem_manager");
+		String oem_manager = CookieUtils.getCookie("oem_manager");
+		if(StringUtils.isBlank(oem_manager)){
+			CookieUtils.addCookie("oem_manager", this.getCustomer().getCustomerid() + "_" + this.getCustomer().getOemid());
+		}
 		return "/administrator/default";
     }
 }

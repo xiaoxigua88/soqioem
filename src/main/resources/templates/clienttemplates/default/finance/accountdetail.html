@@ -3,7 +3,7 @@
 	<meta charset="utf-8"/>
 	<title>默认模板客户欢迎页</title>
 	<!-- 引用个性化样式部分开始 -->
-	<link rel="stylesheet" th:href="@{/css/ucModule/home/home.css}"/>
+	<!-- <link rel="stylesheet" th:href="@{/css/ucModule/home/home.css}"/> -->
 	<!-- 引用个性化样式部分结束 -->
 	<head th:replace="${templDir}+_header"/>
 	<!-- 引入公共js部分开始 -->
@@ -19,7 +19,7 @@
 			<!-- JS填充 -->
 		</div>
 		<div id="contentBox"></div>
-		<!-- <div th:replace="${templDir}+_default_content::defaultContent"/> -->
+		<div th:replace="${templDir}+'finance/_accountdetail_content'"/>
 	</div>
 	<!-- 页脚部分 -->
 	<div th:replace="${templDir}+_footer::copy"/>

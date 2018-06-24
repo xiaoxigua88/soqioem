@@ -109,11 +109,12 @@
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
-    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
-    LoginCount, RegisterStamp, Status
-    from OemUser
-    where UserId = #{userid,jdbcType=INTEGER}
+    select m.UserId, m.OemId, m.Pwd, m.Question, m.Answer, m.Mobile, m.Email, m.EmailVerify, m.CallName, 
+    m.QQ, m.RegisterTime, m.RegisterIp, m.LastLoginTime, m.LastLoginIp, m.CurrentLoginTime, m.CurrentLoginIp, 
+    m.LoginCount, m.RegisterStamp, m.Status, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
+    from OemUser m left join UserAccount n
+    on m.UserId = n.UserId
+    where m.UserId = #{userid,jdbcType=INTEGER}
   </select>
   
   <select id="selectByOemId" parameterType="map" resultMap="BaseResultMap">
@@ -132,7 +133,7 @@
   <select id="selectByDomainAndMobile" resultMap="BaseResultMap" parameterType="map" >
     select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
     QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
-    LoginCount, RegisterStamp, Status
+    LoginCount, RegisterStamp, Status, VerifyStatus
     from OemUser
     where Mobile = #{mobile,jdbcType=VARCHAR} and Domain = #{domain,jdbcType=VARCHAR}
   </select>

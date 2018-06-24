@@ -52,4 +52,13 @@
   <select id="qryCountOemAcDtlsByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     select count(1) as total from OemAccountDetail d where exists (select * from OemBase u where u.ParentOemId = #{oemid,jdbcType=INTEGER} and u.OemId = d.OemId)
   </select>
+  
+  <select id="qrySecondOemPersonBill" resultMap="BaseResultMap" parameterType="map" >
+   select Id, OemId, Change, Freeze, Balance, TradeType, TradeId, Description, AddTime
+   from OemAccountDetail d where d.OemId = #{oemid,jdbcType=INTEGER} Order by Id Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+  </select>
+  
+  <select id="qryCountSecondOemPersonBill" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(1) as total from OemAccountDetail d where d.OemId = #{oemid,jdbcType=INTEGER}
+  </select>
 </mapper>

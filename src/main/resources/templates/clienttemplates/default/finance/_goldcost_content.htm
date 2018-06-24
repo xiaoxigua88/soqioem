@@ -1,0 +1,79 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">优币中心</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="margin-bottom-20 font-size-14">
+					<span class="margin-left-10">您的当前总额：</span>
+					<span class="balance-int text-stress">{{user.TotalAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.TotalAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">冻结金额：</span>
+					<span class="balance-int text-stress">{{user.FreezeAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.FreezeAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">可用金额：</span>
+					<span class="balance-int text-stress">{{user.AvailableAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.AvailableAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">优币数量：</span>
+					<span class="balance-int text-stress">{{user.TotalGold}}</span><span class="text-stress"> 个</span>
+				</div>
+				<div class="sq-tabs-container clearfix margin-bottom-20">
+					<div class="pull-left sq-tab-title">请选择：</div>
+					<ul class="text-center pull-left clearfix">
+						<li class="sq-tab">
+							<a href="gold.aspx">
+								优币购买
+							</a>
+						</li>
+						<li class="sq-tab">
+							<a href="goldorder.aspx">
+								购买记录
+							</a>
+						</li>
+						<li class="sq-tab sq-tab--current">
+							<a href="#a_null">
+								消费记录
+							</a>
+						</li>
+					</ul>
+				</div>
+				<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="您的充值记录为空">
+					<thead>
+						<tr>
+							<th style="width:50px">
+								序列
+							</th>
+							<th style="width:100px">
+								日期
+							</th>
+							<th style="width:150px">
+								业务类型
+							</th>
+							<th style="width:100px">
+								消费优币
+							</th>
+							<th>
+								备注
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{each lst as item i}}
+							<tr>
+								<td class="text-muted">
+									{{i+1}}
+								</td>
+								<td>
+									{{item.AddTime}}
+								</td>
+								<td>
+									{{item.Type | getBusinessTypeClass:"name"}}
+								</td>
+								<td class="text-stress">
+									{{item.Gold}}
+								</td>
+								<td></td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+				<!-- 引入分页 -->
+				{{include "paginationTpl"}}
+			</div>
+		</div>

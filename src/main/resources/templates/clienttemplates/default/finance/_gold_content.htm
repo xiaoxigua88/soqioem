@@ -1,0 +1,72 @@
+		<div class="sq-panel">
+			<div class="sq-panel-heading">
+				<div class="sq-panel-title">优币中心</div>
+			</div>
+			<div class="sq-panel-body">
+				<div class="margin-bottom-20 font-size-14">
+					<span class="margin-left-10">您的当前总额：</span>
+					<span class="balance-int text-stress">{{user.TotalAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.TotalAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">冻结金额：</span>
+					<span class="balance-int text-stress">{{user.FreezeAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.FreezeAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">可用金额：</span>
+					<span class="balance-int text-stress">{{user.AvailableAmount | getInt}}</span><span class="balance-decimal text-stress">{{user.AvailableAmount | getDecimals}} 元</span>
+					<span class="margin-left-10">优币数量：</span>
+					<span class="balance-int text-stress">{{user.TotalGold}}</span><span class="text-stress"> 个</span>
+				</div>
+				<div class="sq-tabs-container clearfix margin-bottom-20">
+					<div class="pull-left sq-tab-title">请选择：</div>
+					<ul class="text-center pull-left clearfix">
+						<li class="sq-tab sq-tab--current">
+							<a href="#a_null">
+								优币购买
+							</a>
+						</li>
+						<li class="sq-tab">
+							<a href="goldorder.aspx">
+								购买记录
+							</a>
+						</li>
+						<li class="sq-tab">
+							<a href="goldcost.aspx">
+								消费记录
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="recharges-block margin-bottom-20">
+					<form id="buyForm" action="?action=Buy" method="post" target="_blank" class="form-horizontal sq-form sq-tab-container">
+						<div class="form-group">
+							<div class="col-xs-10 sq-form-control">
+					            <div class="sq-btn-group" id="productBtn">
+						            {{each lst as item i}}
+						            <input type="button" class="sq-btn btn-primary btn-reverse" data-product_id="{{item.ProductId}}" data-amount="{{item.Amount}}" data-tab_group="{{item.ProductId}}" value="￥{{item.Amount}}元={{item.TotalCount}}个" />
+						            {{/each}}
+					            </div>
+					        </div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-8 sq-form-control">
+							    <input type="hidden" name="productId" id="productId" value="" />
+								<a href="#a_null" class="sq-btn btn-strong btn-strong-high" id="buyBtn" disabled>立即购买</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="alert-warn-lg margin-bottom-20">
+					<div class="tip-title">
+						温馨提示：
+					</div>
+					<div class="tip-content">
+						<div>
+							a. 优币用于数据实时查和数据云监控的业务计费，若无此业务，无需购买
+						</div>
+						<div>
+							b. 优币一旦购买，原则上不可退换，请根据实际需求量购买
+						</div>
+						<div>
+							c. 如购买后没有到账请联系在线客服帮助处理，<a href="#" target="_blank">提交工单</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

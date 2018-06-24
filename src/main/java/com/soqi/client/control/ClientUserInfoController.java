@@ -1,5 +1,6 @@
 package com.soqi.client.control;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,8 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soqi.common.constants.Constant;
+import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.MD5Utils;
+import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
@@ -39,7 +44,7 @@ public class ClientUserInfoController extends BaseController {
 	
 	@RequestMapping("/client/userinf/default")
 	public String userinfo(Model model, @RequestParam(value="userid",required=false) Integer userid, @RequestParam(value="action",required=false) String action, HttpServletRequest req, HttpServletResponse res){
-		if(userid>0 && StringUtils.equals(action, "LoginUser")){
+		//if(userid>0 && StringUtils.equals(action, "LoginUser")){
 			//Oemuser oemuser = userService.qryOemuser(userid);
 			/*UsernamePasswordUserTypeToken token = new UsernamePasswordUserTypeToken(oemuser.getMobile(), oemuser.getPwd(), false, null, null, Constant.USERTYPE_USER, Constant.NO_PASSWORD);
 			Subject subject = SecurityUtils.getSubject();
@@ -53,10 +58,16 @@ public class ClientUserInfoController extends BaseController {
 			WebSubject subject = builder.buildWebSubject();
 			ThreadContext.bind(subject);
 			WebUtils.saveRequest(req);*/
-			Map<String,Object> jsonData = new HashMap<String,Object>();
-			jsonData.put("username", this.getOemuser().getCallname());
-			model.addAttribute("jsonData",jsonData);
+		//}
+		//添加cookie
+		String oem_user = CookieUtils.getCookie("oem_user");
+		if(StringUtils.isNotBlank(oem_user)){
+			CookieUtils.removeCookie(oem_user);
 		}
+		CookieUtils.addCookie("oem_user", this.getOemuser().getOemid() + "_" + this.getOemuser().getUserid());
+		Map<String,Object> jsonData = new HashMap<String,Object>();
+		jsonData.put("user", this.getOemuser());
+		model.addAttribute("jsonData",jsonData);
 		/*PrincipalCollection principals = new SimplePrincipalCollection(  
 				                user.getId(), "MobileRealm");  
 				Builder builder = new WebSubject.Builder(  
@@ -70,6 +81,33 @@ public class ClientUserInfoController extends BaseController {
 		
 		return "/userinfo/default";
     }
+	
+	/**功能：用户资料信息修改
+	 * @param customer
+	 * @param verifyCode
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	@RequestMapping("/client/userinf/updateinfo")
+	@ResponseBody
+	public ResultFontJS updateInfo(Oemuser user){
+		if(user == null){
+			return ResultFontJS.error("传参失败、请检查参数");
+		}
+		if(user.getUserid().intValue() != this.getOemuser().getUserid().intValue()){
+			return ResultFontJS.error("非法的数据修改");
+		}
+		
+		
+		int count = userService.updateOemuser(user);
+		Oemuser newuser = userService.qryOemuser(user.getUserid());
+		//一种是通过重新更新Principal达到更新内存中用户信息的目的
+		ShiroUtils.updatePrincipal(newuser);
+		//另一种通过对像属性拷贝的方式达到更新内存中用户信息的目的
+		//BeanUtils.copyProperties(newcst, this.getCustomer());
+		return count > 0 ? ResultFontJS.ok("数据修改成功") : ResultFontJS.error("数据更新失败");
+	}
 	
 	@RequestMapping("/client/userinf/address")
 	public String address(Customer customer){

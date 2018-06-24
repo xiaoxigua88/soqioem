@@ -1,0 +1,73 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">收支明细</div>
+	</div>
+	<div class="sq-panel-body">
+		<table class="sq-table margin-bottom-20" id="mainList" data-nonedata_text="您的收支明细为空">
+			<thead>
+				<tr>
+					<th style="width:150px;">
+						交易时间
+					</th>
+					<th style="width:130px;">
+						变化
+					</th>
+					<th style="width:130px;">
+						冻结解冻
+					</th>
+					<th style="width:130px;">
+						余额
+					</th>
+					<th style="width:100px;">
+						业务类型
+					</th>
+					<th style="width:150px;">
+						业务单号
+					</th>
+					<th>
+						备注
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			{{each lst as item i}}
+				<tr>
+					<td>
+						<span class="text-muted">{{item.addtime}}</span>
+					</td>
+					<td>
+					    {{if item.change > 0 }}
+						<span class="text-orange">+{{item.change | toFixed}}</span>
+						{{else}}
+						<span class="text-primary">{{item.change | toFixed}}</span>
+					    {{/if}}
+					</td>
+					<td>
+					    {{if item.Freeze > 0 }}
+						<span class="text-orange">+{{item.freeze | toFixed}}</span>
+						{{else}}
+						<span class="text-primary">{{item.freeze | toFixed}}</span>
+					    {{/if}}
+					</td>
+					<td>
+						<span class="text-orange">￥{{item.balance | toFixed}}</span>
+					</td>
+					<td>
+						{{item.tradetype | getTradeTypeClass:"name"}}
+					</td>
+					<td>
+						{{item.tradeid}}
+					</td>
+					<td>
+						{{item.description}}
+					</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+		<!-- 引入分页 -->
+		{{include "paginationTpl"}}
+	</div>
+</div>
+</script>
