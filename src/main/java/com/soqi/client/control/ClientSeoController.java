@@ -129,7 +129,7 @@ public class ClientSeoController extends BaseController{
 		List<Seo> seos = SeoWrapper.singleUroToSeo(this.getOemuser().getUserid(), url, keyword, searchType);
 		int count = seoService.addSeoTask(seos);
 		if(count >0){
-			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>4</b>个。失败<b class='text-red'>0</b>个，忽略<b class='text-red'>0</b>个，成功<b class='text-red'>4</b>个！");
+			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
 		}
 		return ResultFontJS.error("添加关键词查询失败");
 	}

@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soqi.common.constants.Constant;
+import com.soqi.common.exception.BDException;
 import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.EncrypDES;
 import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ShiroUtils;
@@ -64,7 +66,13 @@ public class ClientUserInfoController extends BaseController {
 		if(StringUtils.isNotBlank(oem_user)){
 			CookieUtils.removeCookie(oem_user);
 		}
-		CookieUtils.addCookie("oem_user", this.getOemuser().getOemid() + "_" + this.getOemuser().getUserid());
+		try {
+			String encrypStr = EncrypDES.encryption(this.getOemuser().getOemid() + "_" + this.getOemuser().getUserid(), EncrypDES.DES_SECRETKEY);
+			CookieUtils.addCookie("oem_user", encrypStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+			new BDException("字符串加密失败");
+		}
 		Map<String,Object> jsonData = new HashMap<String,Object>();
 		jsonData.put("user", this.getOemuser());
 		model.addAttribute("jsonData",jsonData);

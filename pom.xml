@@ -124,6 +124,12 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.4</version>
         </dependency>
+        <!-- 验证码部分 -->
+        <dependency>
+		    <groupId>com.github.penggle</groupId>
+		    <artifactId>kaptcha</artifactId>
+		    <version>2.3.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

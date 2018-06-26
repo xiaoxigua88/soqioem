@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soqi.common.exception.BDException;
 import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.EncrypDES;
 import com.soqi.common.utils.MD5Utils;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ShiroUtils;
@@ -40,8 +42,14 @@ public class OemManagerController extends BaseController{
 	public String adminMainPage(Model model){
 		//添加cookie
 		String oem_manager = CookieUtils.getCookie("oem_manager");
-		if(StringUtils.isBlank(oem_manager)){
-			CookieUtils.addCookie("oem_manager", this.getCustomer().getDomain().trim()+"_"+this.getCustomer().getMobile().trim());
+		if(StringUtils.isNotBlank(oem_manager)){
+			CookieUtils.removeCookie(oem_manager);
+		}
+		try {
+			String encrypStr = EncrypDES.encryption(this.getCustomer().getDomain().trim()+"_"+this.getCustomer().getMobile().trim(), EncrypDES.DES_SECRETKEY);
+			CookieUtils.addCookie("oem_manager", encrypStr);
+		} catch (Exception e) {
+			new BDException("字符串加密失败");
 		}
 		return "/oemmanager/default";
     }

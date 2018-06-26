@@ -13,6 +13,8 @@ public class Seoprice implements Serializable {
     private BigDecimal priceori;
 
     private BigDecimal price;
+    
+    private BigDecimal priceoem;
 
     private static final long serialVersionUID = 1L;
 
@@ -56,7 +58,15 @@ public class Seoprice implements Serializable {
         this.price = price;
     }
 
-    @Override
+	public BigDecimal getPriceoem() {
+		return priceoem;
+	}
+
+	public void setPriceoem(BigDecimal priceoem) {
+		this.priceoem = priceoem;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

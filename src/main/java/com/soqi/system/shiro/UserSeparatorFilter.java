@@ -11,6 +11,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.EncrypDES;
 import com.soqi.common.utils.ShiroUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
@@ -45,7 +46,7 @@ public class UserSeparatorFilter extends AccessControlFilter{
             			user = us.selectOemuserByUseridAndOemid(customer.getOemid(), Integer.valueOf(userid));
             		}else{
             			//可能无密登录后、用户过段时间再操作此客户页面、保证用户正常操作
-            			String oem_user = CookieUtils.getCookie("oem_user");
+            			String oem_user = EncrypDES.decryption(CookieUtils.getCookie("oem_user"), EncrypDES.DES_SECRETKEY);
             			String[] oemid_userid = oem_user.split("_");
             			user = us.selectOemuserByUseridAndOemid(Integer.valueOf(oemid_userid[0]), Integer.valueOf(oemid_userid[1]));
             		}
@@ -59,7 +60,7 @@ public class UserSeparatorFilter extends AccessControlFilter{
             }
             if(subject.getPrincipal() instanceof Oemuser){
             	Oemuser oemuser = (Oemuser)subject.getPrincipal();
-            	String oem_manager = CookieUtils.getCookie("oem_manager");
+            	String oem_manager = EncrypDES.decryption(CookieUtils.getCookie("oem_manager"), EncrypDES.DES_SECRETKEY);
             	if(StringUtils.isNotBlank(oem_manager)){
             		if(StringUtils.contains(uri, "oemmanager")){
 	            		String[] domain_mobile = oem_manager.split("_");

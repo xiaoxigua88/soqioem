@@ -86,10 +86,27 @@ public class SeoService {
 		seoDoBusiness.KeywordPriceSearchAdd(seos);
 		return seoMapper.batchInsert(seos);
 	}
+	
 	@Transactional("primaryTransactionManager")
 	public int deleteSeoTasks(Integer[] taskIds){
 		//删除关键词价表数据
 		//删除关键词表数据
 		return seoMapper.batchDel(taskIds);
+	}
+	
+	@Transactional("primaryTransactionManager")
+	public int batchSameSeoInsert(List<Seo> seos){
+		//调用接口获取关键词任务id
+		seoDoBusiness.keywordRankSearchAdd(seos);
+		//批量操作过后、返回最后一条数据的自增主键值
+		int count = seoMapper.batchInsert(seos);
+		if(count == seos.size()){
+			Long taskid = seos.get(0).getTaskid();
+			for(int i = count-1 ; i >= 0; i--){
+				seos.get(i).setTaskid(taskid - (count - i -1));
+			}
+		}
+		int rankCount = piceMapper.batchInsertFormSeo(seos);
+		return rankCount > 0 ? count : 0;
 	}
 }

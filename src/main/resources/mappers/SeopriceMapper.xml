@@ -7,6 +7,7 @@
     <id column="ToRank" property="torank" jdbcType="INTEGER" />
     <result column="PriceOri" property="priceori" jdbcType="DECIMAL" />
     <result column="Price" property="price" jdbcType="DECIMAL" />
+    <result column="PriceOem" property="priceoem" jdbcType="DECIMAL" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="map" >
     delete from SeoPrice
@@ -19,6 +20,19 @@
       PriceOri, Price)
     values (#{taskid,jdbcType=BIGINT}, #{fromrank,jdbcType=INTEGER}, #{torank,jdbcType=INTEGER}, 
       #{priceori,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL})
+  </insert>
+  
+  <insert id="batchInsertFormSeo" parameterType="java.util.List">
+    insert into SeoPrice (TaskId, FromRank, ToRank, 
+      PriceOri, Price, PriceOem)
+    values 
+    <foreach item="item" index="index" collection="list" separator=",">
+    	<foreach item="spr" index="index" collection="item.listspr" separator=",">
+    		<trim prefix="(" suffix=")" suffixOverrides=",">
+    			#{item.taskid}, #{spr.fromrank}, #{spr.torank}, #{spr.priceori}, #{spr.price}, #{spr.priceoem}
+    		</trim>
+    	</foreach>
+    </foreach>
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seoprice" >
     update SeoPrice

@@ -97,9 +97,7 @@
 					<th style="width:240px">
 						关键词/网址
 					</th>
-					<th style="width:240px" data-order_name="seourl">
-						优化网址
-					</th>
+					
 					<th class="text-center" style="width:66px" data-order_name="searchtype">
 						搜索
 					</th>
@@ -150,9 +148,7 @@
 						<td style="line-height:16px">
 						    {{item.keyword}}<br /><span class="text-orange">{{item.url}}</span>
 						</td>
-						<td class="{{if item.seourl.length==0}}text-red{{/if}}">
-						    <a href="#a_null" class="task-seourl" data-taskid="{{item.taskid}}" data-seourl="{{item.seourl}}">{{item.seourl}}</a>
-						</td>
+						
 						<td class="text-center">
 						    <span class="{{item.SearchType | getSearchTypeClass:"className"}}">
 						    {{item.searchtype | getSearchTypeClass:"name"}}

@@ -3,6 +3,7 @@ package com.soqi.oem.gentry;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,6 +23,10 @@ public class Seo implements Serializable {
     private Integer rankfirst;
 
     private Integer ranklast;
+    
+    private Integer fromrank;
+    
+    private Integer torank;
 
     private Integer ranklastchange;
 
@@ -64,12 +69,10 @@ public class Seo implements Serializable {
     private String errormsg;
 
     private Integer status;
-
-    private BigDecimal priceoem;
-    
-    private BigDecimal priceori;
     
     private BigDecimal price;
+    
+    private List<Seoprice> listspr;
     
     private static final long serialVersionUID = 1L;
 
@@ -281,28 +284,37 @@ public class Seo implements Serializable {
         this.status = status;
     }
 
-	public BigDecimal getPriceoem() {
-		return priceoem;
-	}
-
-	public void setPriceoem(BigDecimal priceoem) {
-		this.priceoem = priceoem;
-	}
-
-	public BigDecimal getPriceori() {
-		return priceori;
-	}
-
-	public void setPriceori(BigDecimal priceori) {
-		this.priceori = priceori;
-	}
-
 	public BigDecimal getPrice() {
 		return price;
 	}
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public List<Seoprice> getListspr() {
+		return listspr;
+	}
+
+	public void setListspr(List<Seoprice> listspr) {
+		this.listspr = listspr;
+	}
+
+	
+	public Integer getFromrank() {
+		return fromrank;
+	}
+
+	public void setFromrank(Integer fromrank) {
+		this.fromrank = fromrank;
+	}
+
+	public Integer getTorank() {
+		return torank;
+	}
+
+	public void setTorank(Integer torank) {
+		this.torank = torank;
 	}
 
 	@Override

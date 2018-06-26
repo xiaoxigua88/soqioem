@@ -28,6 +28,9 @@
     <result column="ApiWatchTaskId" property="apiwatchtaskid" jdbcType="BIGINT" />
     <result column="ErrorMsg" property="errormsg" jdbcType="VARCHAR" />
     <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="Price" property="price" jdbcType="DECIMAL" />
+    <result column="FromRank" property="fromrank" jdbcType="INTEGER" />
+    <result column="ToRank" property="torank" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from Seo
@@ -126,15 +129,15 @@
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
-    m.ErrorMsg, m.Status
-    from Seo m  where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+    m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
+    from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1  where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
   </select>
   
   <select id="qryCountSeoManageListByOemId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(1) as total from Seo m where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER})
   </select>
   <!-- 批量增加操作 -->
-  <insert id="batchInsert" parameterType="java.util.List">
+  <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="taskid">
 	  insert into seo (UserId, Keyword, 
       Url, SeoUrl, SearchType, 
       RankFirst, RankLast, RankLastChange, 
@@ -187,6 +190,9 @@
 				#{item.status}
 			</trim>
 		</foreach> 
+		<!-- <selectKey resultType="java.lang.Integer" keyProperty="taskid" order="AFTER">
+    		select @@IDENTITY as taskid
+  	  	</selectKey> -->
   </insert>
   <!-- 批量删除操作 -->
   <delete id="batchDel" parameterType="java.lang.Integer">

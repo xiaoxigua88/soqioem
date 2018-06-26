@@ -2,12 +2,15 @@ package com.soqi.common.utils;
 
 import java.math.BigDecimal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**功能：科学计数工具类
  * @author 孙傲
  *
  */
 public class BigDecimalUtil {
-
+	private final static Logger logger = LoggerFactory.getLogger(BigDecimalUtil.class);
 	/** 
      * 由于Java的简单类型不能够精确的对浮点数进行运算，这个工具类提供精 确的浮点数运算，包括加减乘除和四舍五入。 
      */  
@@ -112,9 +115,35 @@ public class BigDecimalUtil {
         return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();  
     }  
 	
+    /**比较两数的大小若前者大于后者则返回true
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public static boolean compareSize(double v1, double v2){
+    	BigDecimal b1 = new BigDecimal(Double.toString(v1));  
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));  
+        if(b1.compareTo(b2)==1){
+        	return true;
+        }else{
+        	return false;
+        }
+    }
+    
+    public static boolean isBigDecimal(String v1){
+    	try{
+    		BigDecimal b1 = new BigDecimal(Double.valueOf(v1));
+    		if(b1 != null){
+    			return true;
+    		}
+    	}catch(NumberFormatException e){
+    		logger.debug("字符串转BigDecimal数字失败");
+    	}
+    	return false;
+    }
+    
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		System.out.println(isBigDecimal("1.0"));
 	}
 
 }
