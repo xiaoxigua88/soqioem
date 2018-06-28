@@ -24,6 +24,18 @@
       #{balance,jdbcType=DECIMAL}, #{tradetype,jdbcType=INTEGER}, #{tradeid,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
   </insert>
+  
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into UserAccountDetail (UserId, Change, Freeze, 
+      Balance, TradeType, TradeId, 
+      Description, AddTime) values 
+      <foreach item="item" index="index" collection="list" separator=",">
+      	<trim prefix="(" suffix=")" suffixOverrides=",">
+      		#{item.userid}, #{item.change}, #{item.freeze},#{item.balance}, #{item.tradetype}, #{item.tradeid},#{item.description}, #{item.addtime}
+      	</trim>
+      </foreach>
+  </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Useraccountdetail" >
     update UserAccountDetail
     set UserId = #{userid,jdbcType=INTEGER},

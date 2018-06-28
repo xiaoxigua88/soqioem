@@ -48,7 +48,7 @@ public class FinanceService {
 		Oemaccountdetail uadl = new Oemaccountdetail();
 		uadl.setOemid(charge.getOemid());
 		uadl.setAddtime(charge.getAddtime());
-		uadl.setDescription("系统充值");
+		uadl.setDescription("手工充值");
 		//业务单号
 		uadl.setTradeid(charge.getOrderid().toString());
 		//业务类型

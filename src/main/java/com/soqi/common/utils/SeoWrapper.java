@@ -2,6 +2,7 @@ package com.soqi.common.utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -299,5 +300,40 @@ public class SeoWrapper {
 			}
 		}
 		return seoList;
+	}
+	
+	/**功能：处理查询的seos结果集转换处理
+	 * @param seos
+	 * @return
+	 */
+	public static List<Seo> dealWithSeoResult(List<Seo> seos){
+		if(null == seos || seos.isEmpty()){
+			return new ArrayList<Seo>();
+		}
+		Date endDate = new Date();
+		for (Seo seo : seos) {
+			//结算时间点是否更新
+			int settle = DateUtil.getIntervalDay(seo.getSettletime(), endDate);
+			if(settle != 0){
+				//表示数据未结算、结算时间未更新
+				seo.setSettlestatus(Constant.SETTLE_STATUS_WAITING);
+			}else{
+				//day=0表示数据已经结算过、结算时间已更新到当天
+				//查看达标消费时间是否是当天的
+				int cost = DateUtil.getIntervalDay(seo.getCosttime(), endDate);
+				if(cost != 0){
+					//未产生扣费时间更新、所以未达标
+					seo.setSettlestatus(Constant.SETTLE_STATUS_FAILREACH);
+				}else{
+					seo.setSettlestatus(Constant.SETTLE_STATUS_HAVEREACH);
+				}
+			}
+			//连续不达标天数达到标准用户可手动停止该会务
+			int reach = DateUtil.getIntervalDay(seo.getCosttime(), seo.getSettletime());
+			if(reach >= Constant.SEOFAILEDDAY){
+				seo.setCanstop(true);
+			}
+		}
+		return seos;
 	}
 }

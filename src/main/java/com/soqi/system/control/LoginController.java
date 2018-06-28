@@ -1,9 +1,11 @@
 package com.soqi.system.control;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,10 +19,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soqi.common.constants.Constant;
+import com.soqi.common.utils.CookieUtils;
+import com.soqi.common.utils.EncrypDES;
 import com.soqi.common.utils.ResultDTO;
 import com.soqi.common.utils.WebAddrUtils;
+import com.soqi.system.service.IImageCodeService;
 import com.soqi.system.service.OemCountService;
 import com.soqi.system.service.UserService;
 import com.soqi.system.shiro.UsernamePasswordUserTypeToken;
@@ -29,6 +35,10 @@ import com.soqi.system.shiro.UsernamePasswordUserTypeToken;
 @Controller
 public class LoginController {
 	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	/*@Autowired
+    private Producer captchaProducer;*/
+	@Autowired
+	private IImageCodeService verifyCodeService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -71,8 +81,11 @@ public class LoginController {
     }*/
 	@RequestMapping("/loginForm")
 	@ResponseBody
-	public ResultDTO loginForm(String userName, String password, String userType, String verifyCode, HttpServletRequest req,  HttpServletResponse resp){
-		System.out.println(req.getServerName());
+	public ResultDTO loginForm(String userName, String password, String userType, String verifycode, HttpServletRequest req,  HttpServletResponse resp){
+		String captchaCode = CookieUtils.getCookie("captchaCode");
+		if(!verifyCodeService.checkVerifycode(verifycode, captchaCode)){
+			return ResultDTO.error("证码输入错误！");
+		}
 		logger.info("用户：" + userName + "密码：" + password + "domain:" + req.getRemoteAddr());
 		UsernamePasswordUserTypeToken token = new UsernamePasswordUserTypeToken(userName, password, false, WebAddrUtils.getIpAddr(req), WebAddrUtils.getDomain(req), userType, Constant.HAS_PASSWORD);
 		Subject subject = SecurityUtils.getSubject();
@@ -104,4 +117,47 @@ public class LoginController {
 	    // 此方法不处理登录成功,由shiro进行处理
 	    return res;*/
     }
+	
+	/*@RequestMapping(value = "/verifyimg")
+    public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {  
+        response.setDateHeader("Expires", 0);  
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");  
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");  
+        response.setHeader("Pragma", "no-cache");  
+        response.setContentType("image/jpeg");
+        String capText = captchaProducer.createText(); 
+        capText = EncrypDES.encryption(capText, EncrypDES.DES_SECRETKEY);
+        CookieUtils.addCookie("captchaCode", capText);
+        BufferedImage bi = captchaProducer.createImage(capText);  
+        ServletOutputStream out = response.getOutputStream();  
+        ImageIO.write(bi, "jpg", out);  
+        try {  
+            out.flush();  
+        } finally {  
+            out.close();  
+        }  
+        return null;  
+    }  */
+	
+	@RequestMapping(value = "/verifyimg")
+    public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setDateHeader("Expires", 0);  
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");  
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");  
+        response.setHeader("Pragma", "no-cache");  
+        response.setContentType("image/jpeg");
+        // 生成随机验证码内容
+        String verifyCode= verifyCodeService.getRandString();
+        String vcEncryp = EncrypDES.encryption(verifyCode, EncrypDES.DES_SECRETKEY);
+        CookieUtils.addCookie("captchaCode", vcEncryp);
+        BufferedImage bi = verifyCodeService.createVerifyCodeImage(verifyCode); 
+        ServletOutputStream out = response.getOutputStream();  
+        ImageIO.write(bi, "jpg", out);  
+        try {  
+            out.flush();  
+        } finally {  
+            out.close();  
+        }  
+        return null;
+	}
 }

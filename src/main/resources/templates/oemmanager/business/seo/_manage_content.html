@@ -196,6 +196,10 @@
 							<span class="text-muted operate-spacing">|</span>
 						    <a href="#a_null" class="task-stop" data-taskid="{{item.taskid}}">停止</a>
 						    {{/if}}
+							{{if item.status==1 || item.status==2 || item.status==3}}
+								<span class="text-muted operate-spacing">|</span>
+								<a href="#a_null" class="task-delete text-red" data-taskid="{{item.TaskId}}">删除</a>
+						    {{/if}}
 						</td>
 					</tr>
 				{{/each}}
@@ -205,15 +209,23 @@
 			        <td><input type="checkbox" id="checkAllBottom" /></td>
 			        <td colspan="15">
 			            <div class="pull-left">
-				            <button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
-					            <span class="operate-icon operate-icon-delete"></span>
-					            启动
-				            </button>
-				            <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
-					            <span class="operate-icon operate-icon-delete"></span>
-					            停止
-				            </button>
-			            </div>
+						     <button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+							       <span class="operate-icon operate-icon-start"></span>
+							            启动
+						     </button>
+						     <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+							       <span class="operate-icon operate-icon-delete"></span>
+							            停止
+						     </button>
+						     <button id="batchCanSeo" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate hide" disabled>
+							      <span class="operate-icon operate-icon-start"></span>
+							            可优化
+						     </button>						            						            
+							 <button id="batchDelete" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+							      <span class="operate-icon operate-icon-delete"></span>
+							            删除
+						     </button>					            
+						</div>
 		                <!-- 引入分页 -->
 		                {{include "paginationTpl"}}
 			        </td>

@@ -24,6 +24,24 @@
       SeoAmountNeed = #{seoamountneed,jdbcType=DECIMAL}
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
+  <update id="updateFreezeAmountByUserId" parameterType="map" >
+    update UserAccount
+    set
+    FreezeAmount = FreezeAmount + #{freezeamount,jdbcType=DECIMAL}
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="batchUpdateAccountByDiffUser" parameterType="java.util.List">
+    <foreach collection="list" separator=";" item="item">
+    update UserAccount
+    set 
+      TotalAmount = #{item.totalamount},
+      FreezeAmount = #{item.freezeamount},
+      SeoAmountNeed = #{item.seoamountneed}
+    where UserId = #{item.userid}
+    </foreach>
+  </update>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select UserId, TotalAmount, FreezeAmount, SeoAmountNeed
     from UserAccount

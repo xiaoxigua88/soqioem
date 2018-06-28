@@ -85,4 +85,17 @@ public class Constant {
 	public static final int SEO_STATUS_STOP = 5;
 	//已删除
 	public static final int SEO_STATUS_DELETE = -1;
+	
+	//云排名连续不达标停止天数
+	public static final int SEOFAILEDDAY = 60;
+	
+	//云排名冻结天数
+	public static final int SEOFREEZEDAY = 90;
+	
+	//结算状态-未结算
+	public static final int SETTLE_STATUS_WAITING = 1;
+	//结算状态-未达标
+	public static final int SETTLE_STATUS_FAILREACH = 2;
+	//结算状态-已达标
+	public static final int SETTLE_STATUS_HAVEREACH = 3;
 }

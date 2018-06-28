@@ -74,6 +74,16 @@ public class Seo implements Serializable {
     
     private List<Seoprice> listspr;
     
+    /**
+     * 结算状态
+     */
+    private Integer settlestatus;
+    
+    /**
+     * 任务是否可被客户手工停止
+     */
+    private Boolean canstop;
+    
     private static final long serialVersionUID = 1L;
 
     public Long getTaskid() {
@@ -299,8 +309,15 @@ public class Seo implements Serializable {
 	public void setListspr(List<Seoprice> listspr) {
 		this.listspr = listspr;
 	}
-
 	
+	public Integer getSettlestatus() {
+		return settlestatus;
+	}
+
+	public void setSettlestatus(Integer settlestatus) {
+		this.settlestatus = settlestatus;
+	}
+
 	public Integer getFromrank() {
 		return fromrank;
 	}
@@ -315,6 +332,14 @@ public class Seo implements Serializable {
 
 	public void setTorank(Integer torank) {
 		this.torank = torank;
+	}
+
+	public Boolean getCanstop() {
+		return canstop;
+	}
+
+	public void setCanstop(Boolean canstop) {
+		this.canstop = canstop;
 	}
 
 	@Override

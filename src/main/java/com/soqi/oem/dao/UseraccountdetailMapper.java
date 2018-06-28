@@ -24,4 +24,6 @@ public interface UseraccountdetailMapper {
     public List<Useraccountdetail> qryUserAcDtlsByUserid(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     
     public int qryCountUserAcDtlsByUserid(Integer oemid);
+    
+    public int batchInsert(List<Useraccountdetail> uadList);
 }

@@ -17,6 +17,8 @@ public interface SeopriceMapper {
     Seoprice selectByPrimaryKey(@Param("taskid") Long taskid, @Param("fromrank") Integer fromrank, @Param("torank") Integer torank);
 
     List<Seoprice> selectAll();
+    
+    List<Seoprice> selectByTaskids(Integer[] taskid);
 
     int updateByPrimaryKey(Seoprice record);
 }

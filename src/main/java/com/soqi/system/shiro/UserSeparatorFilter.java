@@ -5,7 +5,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -32,7 +31,6 @@ public class UserSeparatorFilter extends AccessControlFilter{
         	String userid = request.getParameter("userid");
         	String action = request.getParameter("action");
             Subject subject = getSubject(request, response);
-            PrincipalCollection pc = subject.getPrincipals();
             if(subject == null){
             	return false;
             }
@@ -60,8 +58,9 @@ public class UserSeparatorFilter extends AccessControlFilter{
             }
             if(subject.getPrincipal() instanceof Oemuser){
             	Oemuser oemuser = (Oemuser)subject.getPrincipal();
-            	String oem_manager = EncrypDES.decryption(CookieUtils.getCookie("oem_manager"), EncrypDES.DES_SECRETKEY);
-            	if(StringUtils.isNotBlank(oem_manager)){
+            	String oem_manaer_cookie = CookieUtils.getCookie("oem_manager");
+            	if(StringUtils.isNotBlank(oem_manaer_cookie)){
+            		String oem_manager = EncrypDES.decryption(oem_manaer_cookie, EncrypDES.DES_SECRETKEY);
             		if(StringUtils.contains(uri, "oemmanager")){
 	            		String[] domain_mobile = oem_manager.split("_");
 	            		if(StringUtils.isNotBlank(domain_mobile[0]) && StringUtils.isNotBlank(domain_mobile[1])){
@@ -91,6 +90,11 @@ public class UserSeparatorFilter extends AccessControlFilter{
                 				ShiroUtils.replacePrincipal(user, request, response);
                 			}
                 		}
+            		}
+            	}else{
+            		//没有登录cookie的非法身份访问
+            		if(StringUtils.contains(uri, "oemmanager")){
+            			return false;
             		}
             	}
             }

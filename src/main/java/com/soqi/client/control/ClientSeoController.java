@@ -1,5 +1,6 @@
 package com.soqi.client.control;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,12 @@ public class ClientSeoController extends BaseController{
 		return "/business/seo/manage";
     }
 	
+	/**云排名购买列表
+	 * @param model
+	 * @param pageNo
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping("/client/business/seo/apply")
 	public String apply(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
@@ -84,9 +91,12 @@ public class ClientSeoController extends BaseController{
 		jsonObj.put("filter", filter);
 		jsonObj.put("pager", pager);
 		jsonObj.put("lst", lst);
+		jsonObj.put("seofreezeday", "90");
+		jsonObj.put("SeoFailedDay", "60");
 		model.addAttribute("jsonData",jsonObj);
 		return "/business/seo/apply";
 	}
+	
 	/**功能:刷新状态
 	 * @param url
 	 * @param keyword
@@ -179,5 +189,54 @@ public class ClientSeoController extends BaseController{
 		return ResultFontJS.error("添加关键词查询失败");
 	}
 	
+	/**关键词批量购买
+	 * @param action
+	 * @param taskIds
+	 * @return
+	 */
+	@RequestMapping("/client/business/seo/batchapply")
+	@ResponseBody
+	public ResultFontJS batchApply(@RequestParam(value="action",required=true) String action, Integer[] taskIds){
+		if( taskIds == null || taskIds.length <= 0){
+			return ResultFontJS.error("需要购买的任务的ID号不能为空请检查");
+		}
+		//关键词购买校验
+		boolean check = seoService.checkAmountForSeoApply(taskIds, this.getOemuser().getUserid());
+		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds);
+		if(!check){
+			String msg = "您需要冻结<b class='text-red'>￥" + frozen.toString() + "</b>元！抱歉，由于可用金额不足，请充值后再购买！";
+			ResultFontJS rs = new ResultFontJS(msg);
+			rs.put("result", false);
+			rs.put("reload", true);
+			return rs;
+		}
+		//关键词购买
+		seoService.applySeoTasks(taskIds, this.getOemuser().getUserid(), frozen);
+		return ResultFontJS.ok("云排名关键词购买成功");
+	}
 	
+	/**客户端关键词（批量/单个）启动
+	 * @param action
+	 * @param taskIds
+	 * @return
+	 */
+	@RequestMapping("/client/business/seo/batchstart")
+	@ResponseBody
+	public ResultFontJS batchStart(@RequestParam(value="action",required=true) String action, Integer[] taskIds){
+		if( taskIds == null || taskIds.length <= 0){
+			return ResultFontJS.error("任务的ID号不能为空请检查");
+		}
+		//关键词购买校验
+		boolean check = seoService.checkAmountForSeoApply(taskIds, this.getOemuser().getUserid());
+		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds);
+		if(!check){
+			String msg = "您需要冻结<b class='text-red'>￥" + frozen.toString() + "</b>元！抱歉，由于可用金额不足，请充值后再购买！";
+			ResultFontJS rs = new ResultFontJS(msg);
+			rs.put("result", false);
+			rs.put("reload", true);
+			return rs;
+		}
+		seoService.startSeoTasks(taskIds);
+		return ResultFontJS.ok("关键词任务启动成功");
+	}
 }

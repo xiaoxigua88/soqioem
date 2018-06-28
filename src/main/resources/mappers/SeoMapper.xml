@@ -105,20 +105,20 @@
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
-    m.ErrorMsg, m.Status
-    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} and m.Status = 4 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+    m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
+    from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1 where m.UserId = #{userid,jdbcType=INTEGER} and (m.Status = 4 or m.Status=5) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
   </select>
   
   <select id="qryCountSeoManageListByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER} and m.Status = 4
+    select count(1) as total from Seo m  where m.UserId = #{userid,jdbcType=INTEGER} and (m.Status = 4 or m.Status=5)
   </select>
   
   <select id="qrySeoApplyListByUserId" resultMap="BaseResultMap" parameterType="map">
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
-    m.ErrorMsg, m.Status
-    from Seo m where m.UserId = #{userid,jdbcType=INTEGER} and m.Status &lt;= 3 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+    m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
+    from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1 where m.UserId = #{userid,jdbcType=INTEGER} and m.Status &lt;= 3 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
   </select>
   
   <select id="qryCountSeoApplyListByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -198,6 +198,17 @@
   <delete id="batchDel" parameterType="java.lang.Integer">
         delete from seo where TaskId in
         <foreach item="taskid" collection="array" open="(" separator="," close=")">
+            #{taskid}
+        </foreach>
+  </delete>
+  <!-- 批量更新关键词状态为优化中 -->
+  <delete id="updateStatusByTaskids" parameterType="map">
+  	update Seo
+    set
+    Status = #{status},
+    BuyTime = sysdatetime()
+    where TaskId in
+        <foreach item="taskid" collection="taskids" open="(" separator="," close=")">
             #{taskid}
         </foreach>
   </delete>

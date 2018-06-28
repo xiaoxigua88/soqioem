@@ -13,17 +13,29 @@ $(function() {
     var $_batchExport = $("#batchExport");
     var $_batchStart = $("#batchStart");
     var $_batchStop = $("#batchStop");
+    var $_batchCanSeo = $("#batchCanSeo");
+    var $_batchDelete = $("#batchDelete");
     var $_batchButtons = $(".batch-operate");
     var listCheckedSelector = ".list-checkbox:checked";
     $(".list-checkbox, #checkAll, #checkAllBottom").change(function() {
-        var canStart = 0;
+    	var canStart = 0;
         var canStop = 0;
+        var canSeo = 0;
+        var canDelete = 0;
         $_mainList.find(listCheckedSelector).each(function() {
-            if ($(this).data("status") == 5) {
+            var _status = $(this).data("status");
+            if (_status == 5) {
                 canStart++;
             }
-            else {
+            else if (_status == 4) {
                 canStop++;
+            }
+            else if (_status == 2) {
+                canSeo++;
+                canDelete++;
+            }
+            else if (_status == 3 || _status == 1) {
+                canDelete++;
             }
         });
         if (canStart <= 0) {
@@ -37,6 +49,18 @@ $(function() {
         }
         else {
             $_batchStop.attr("disabled", false);
+        }
+        if (canSeo <= 0) {
+            $_batchCanSeo.attr("disabled", true);
+        }
+        else {
+            $_batchCanSeo.attr("disabled", false);
+        }
+        if (canDelete <= 0) {
+            $_batchDelete.attr("disabled", true);
+        }
+        else {
+            $_batchDelete.attr("disabled", false);
         }
     });
 
@@ -73,7 +97,7 @@ $(function() {
         };
     };
     // 批量启动
-    $_batchStart.click(createBatchHandle("启动", "?action=Start", 1, function() {
+    $_batchStart.click(createBatchHandle("启动", "/oemmanager/business/seo/batchstart?action=Start", 1, function() {
         $_mainList.find(listCheckedSelector).each(function() {
             if ($(this).data("status") != 5) {
                 $(this).attr("checked", false);
@@ -81,9 +105,25 @@ $(function() {
         });
     }));
     // 批量停止
-    $_batchStop.click(createBatchHandle("停止", "?action=Stop", 1, function() {
+    $_batchStop.click(createBatchHandle("停止", "/oemmanager/business/seo/batchstop?action=Stop", 1, function() {
         $_mainList.find(listCheckedSelector).each(function() {
-            if ($(this).data("status") == 5) {
+            if ($(this).data("status") != 4) {
+                $(this).attr("checked", false);
+            }
+        });
+    }));
+    // 批量可优化
+    $_batchCanSeo.click(createBatchHandle("可优化", "?action=CanSeo", 1, function() {
+        $_mainList.find(listCheckedSelector).each(function() {
+            if ($(this).data("status") != 2) {
+                $(this).attr("checked", false);
+            }
+        });
+    }));
+    // 批量删除
+    $_batchDelete.click(createBatchHandle("删除", "?action=Delete", 1, function() {
+        $_mainList.find(listCheckedSelector).each(function() {
+            if ($(this).data("status") != 1 && $(this).data("status") != 2 && $(this).data("status") != 3) {
                 $(this).attr("checked", false);
             }
         });
@@ -125,7 +165,7 @@ $(function() {
             ok: function() {
                 SQ.post({
                     data: { action: "Start", taskIds: taskId },
-                    url: ""
+                    url: "/oemmanager/business/seo/batchstart"
                 });
             }
         });
@@ -140,7 +180,7 @@ $(function() {
             ok: function() {
                 SQ.post({
                     data: { action: "Stop", taskIds: taskId },
-                    url: ""
+                    url: "/oemmanager/business/seo/batchstop"
                 });
             }
         });

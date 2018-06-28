@@ -5,6 +5,9 @@
     <id column="TaskId" property="taskid" jdbcType="BIGINT" />
     <id column="FromRank" property="fromrank" jdbcType="INTEGER" />
     <id column="ToRank" property="torank" jdbcType="INTEGER" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <!-- 达标消费天数任务停止解冻金额使用 -->
+    <result column="CostCount" property="costcount" jdbcType="INTEGER" />
     <result column="PriceOri" property="priceori" jdbcType="DECIMAL" />
     <result column="Price" property="price" jdbcType="DECIMAL" />
     <result column="PriceOem" property="priceoem" jdbcType="DECIMAL" />
@@ -53,4 +56,13 @@
     select TaskId, FromRank, ToRank, PriceOri, Price
     from SeoPrice
   </select>
+  
+  <select id="selectByTaskids" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    select n.TaskId, n.FromRank, n.ToRank, n.PriceOri, n.Price,m.UserId,m.CostCount
+    from SeoPrice n left join Seo m on n.TaskId = m.TaskId where FromRank = 1 and n.TaskId in
+    <foreach item="taskid" collection="array" open="(" separator="," close=")">
+        #{taskid}
+    </foreach>
+  </select>
+  
 </mapper>

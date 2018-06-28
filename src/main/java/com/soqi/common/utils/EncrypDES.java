@@ -197,14 +197,14 @@ public class EncrypDES {
         }
     }
     public static void main(String args[]){
-    	/*try {
+    	try {
 			System.out.println(EncrypDES.encryption("h", "123456789"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-    	String a = "\r\n\r\nwww.baidu.com\r\n   \r\n";
-    	System.out.println(a.trim().split("\r\n")[0]);
+		}
+    	/*String a = "\r\n\r\nwww.baidu.com\r\n   \r\n";
+    	System.out.println(a.trim().split("\r\n")[0]);*/
     	/*System.out.println(a.split("\r\n")[1]);
     	System.out.println(a.split("\r\n")[2]);
     	System.out.println(a.split("\r\n")[3]);*/

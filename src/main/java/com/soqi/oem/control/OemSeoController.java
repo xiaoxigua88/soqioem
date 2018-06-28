@@ -211,4 +211,43 @@ public class OemSeoController extends BaseController{
 		}
 		return ResultFontJS.error("同价关键词导入失败");
 	}
+	
+	/**代理端关键词（批量/单个）停止
+	 * @param action
+	 * @param taskIds
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/business/seo/batchstop")
+	@ResponseBody
+	public ResultFontJS batchStop(@RequestParam(value="action",required=true) String action, Integer[] taskIds){
+		if( taskIds == null || taskIds.length <= 0){
+			return ResultFontJS.error("任务的ID号不能为空请检查");
+		}
+		seoService.stopSeoTasks(taskIds);
+		return ResultFontJS.ok("关键词任务停止成功");
+	}
+	
+	/**代理端关键词（批量/单个）启动
+	 * @param action
+	 * @param taskIds
+	 * @return
+	 */
+	@RequestMapping("/oemmanager/business/seo/batchstart")
+	@ResponseBody
+	public ResultFontJS batchStart(@RequestParam(value="action",required=true) String action, Integer[] taskIds){
+		if( taskIds == null || taskIds.length <= 0){
+			return ResultFontJS.error("任务的ID号不能为空请检查");
+		}
+		StringBuffer text = new StringBuffer();
+		//关键词购买校验
+		boolean check = seoService.checkUsersAllowForSeoApply(taskIds, text);
+		if(!check){
+			ResultFontJS rs = new ResultFontJS(text.toString());
+			rs.put("result", false);
+			rs.put("reload", true);
+			return rs;
+		}
+		seoService.startSeoTasks(taskIds);
+		return ResultFontJS.ok("关键词任务启动成功");
+	}
 }

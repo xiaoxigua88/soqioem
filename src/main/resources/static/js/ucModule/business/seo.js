@@ -73,7 +73,7 @@ $(function() {
         };
     };
     // 批量启动
-    $_batchStart.click(createBatchHandle("启动", "?action=Start", 1, function() {
+    $_batchStart.click(createBatchHandle("启动", "/client/business/seo/batchstart?action=Start", 1, function() {
         $_mainList.find(listCheckedSelector).each(function() {
             if ($(this).data("status") != 5) {
                 $(this).attr("checked", false);
@@ -125,7 +125,7 @@ $(function() {
             ok: function() {
                 SQ.post({
                     data: { action: "Start", taskIds: taskId },
-                    url: ""
+                    url: "/client/business/seo/batchstart"
                 });
             }
         });

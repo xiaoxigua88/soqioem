@@ -116,7 +116,7 @@ $(function() {
         });
         $("#keyword_count").text(c + "个");
         $("#amount_perday").text(amount.toFixed(2));
-        $("#amount_total").text((amount * jsData.seoFreezeDay).toFixed(2));
+        $("#amount_total").text((amount * jsData.seofreezeday).toFixed(2));
         if (amount <= 0) {
             $_payBtn.attr("disabled", true);
         }
@@ -163,7 +163,7 @@ $(function() {
     $_batchClear.click(createBatchHandle("清空", "/client/business/seo/batchdel?action=Clear", 3));
 
     //立即购买
-    $_payBtn.click(createBatchHandle("购买", "?action=Pay", 1, function() {
+    $_payBtn.click(createBatchHandle("购买", "/client/business/seo/batchapply?action=Pay", 1, function() {
         $_mainList.find(listCheckedSelector).each(function() {
             if ($(this).data("status") != 3) {
                 $(this).attr("checked", false);

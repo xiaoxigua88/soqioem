@@ -198,7 +198,7 @@
 						    {{if item.canstop}}
 							<span class="text-muted operate-spacing">|</span>
 						    <a href="#a_null" class="task-stop" data-taskid="{{item.taskid}}">停止</a>
-						    {{else if item.Status==5}}
+						    {{else if item.status==5}}
 							<span class="text-muted operate-spacing">|</span>
 						    <a href="#a_null" class="task-start text-red" data-taskid="{{item.taskid}}">启动</a>
 						    {{/if}}
@@ -211,10 +211,10 @@
 			        <td><input type="checkbox" id="checkAllBottom" /></td>
 			        <td colspan="13">
 			            <div class="pull-left">
-				            <!--<button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
+				            <button id="batchStart" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
 					            <span class="operate-icon operate-icon-start"></span>
 					            启动
-				            </button>-->
+				            </button>
 				            <button id="batchStop" href="#a_null" class="pull-left sq-btn btn-primary btn-operate margin-left-10 batch-operate" disabled>
 					            <span class="operate-icon operate-icon-delete"></span>
 					            停止

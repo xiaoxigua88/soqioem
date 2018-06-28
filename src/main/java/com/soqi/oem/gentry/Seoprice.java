@@ -5,10 +5,14 @@ import java.math.BigDecimal;
 
 public class Seoprice implements Serializable {
     private Long taskid;
-
+    
+    private Integer userid; 
+    
     private Integer fromrank;
 
     private Integer torank;
+    
+    private Integer costcount;
 
     private BigDecimal priceori;
 
@@ -64,6 +68,22 @@ public class Seoprice implements Serializable {
 
 	public void setPriceoem(BigDecimal priceoem) {
 		this.priceoem = priceoem;
+	}
+
+	public Integer getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Integer userid) {
+		this.userid = userid;
+	}
+
+	public Integer getCostcount() {
+		return costcount;
+	}
+
+	public void setCostcount(Integer costcount) {
+		this.costcount = costcount;
 	}
 
 	@Override

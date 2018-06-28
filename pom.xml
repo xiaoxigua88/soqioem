@@ -124,11 +124,22 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.4</version>
         </dependency>
-        <!-- 验证码部分 -->
-        <dependency>
+        <!-- 验证码部分 google验证码插件去除-->
+        <!-- <dependency>
 		    <groupId>com.github.penggle</groupId>
 		    <artifactId>kaptcha</artifactId>
 		    <version>2.3.2</version>
+		    <exclusions>  
+                <exclusion>  
+                    <artifactId>javax.servlet-api</artifactId>  
+                    <groupId>javax.servlet</groupId>  
+                </exclusion>  
+            </exclusions>
+		</dependency> -->
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>filters</artifactId>
+			<version>2.0.235</version>
 		</dependency>
 	</dependencies>
 	<build>

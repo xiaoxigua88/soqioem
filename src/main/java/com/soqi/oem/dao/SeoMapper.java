@@ -21,6 +21,8 @@ public interface SeoMapper {
 
     int updateByPrimaryKey(Seo record);
     
+    int updateStatusByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status);
+    
     public List<Seo> qrySeoManageListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     
     public List<Seo> qrySeoApplyListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
