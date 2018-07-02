@@ -201,16 +201,33 @@
             #{taskid}
         </foreach>
   </delete>
-  <!-- 批量更新关键词状态为优化中 -->
-  <delete id="updateStatusByTaskids" parameterType="map">
+  <!-- 批量更新相关字段-->
+  <update id="batchSeoFieldsByTaskids" parameterType="map">
   	update Seo
-    set
-    Status = #{status},
-    BuyTime = sysdatetime()
+    <trim prefix="set" suffixOverrides=",">
+    	<if test="status!=null">
+    		Status = #{status},
+    	</if>
+    	<if test="freezeamount!=null">
+    		FreezeAmount = #{freezeamount},
+    	</if>
+    	<if test="buytime!=null">
+    		BuyTime = #{buytime},
+    	</if>
+    </trim>
     where TaskId in
         <foreach item="taskid" collection="taskids" open="(" separator="," close=")">
             #{taskid}
         </foreach>
-  </delete>
+  </update>
+  
+  <update id="updateStatusByListSeo" parameterType="java.util.List">
+      <foreach collection="list" separator=";" item="item">
+	      update Seo
+	      set FreezeAmount = #{item.freezeamount,jdbcType=DECIMAL},
+	      Status = #{item.status,jdbcType=INTEGER}
+	      where TaskId = #{item.taskid,jdbcType=INTEGER}
+      </foreach>
+  </update>
   
 </mapper>

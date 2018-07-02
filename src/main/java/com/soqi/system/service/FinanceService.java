@@ -1,6 +1,7 @@
 package com.soqi.system.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,7 +163,8 @@ public class FinanceService {
 	}
 	
 	public List<Userrecharge> qryUserRechargesByOemid(Integer oemId, int start, int size){
-		return userCharge.qryUserRechargesByOemid(oemId, start, size);
+		List<Userrecharge> lst = userCharge.qryUserRechargesByOemid(oemId, start, size);
+		return lst == null ? new ArrayList<Userrecharge>() : lst;
 	}
 	
 	public int qryCountUserRechargesByOemid(Integer oemId){
@@ -170,15 +172,17 @@ public class FinanceService {
 	}
 	
 	public List<Userrecharge> qryUserRechargesByUserid(Integer userId, int start, int size){
-		return userCharge.qryUserRechargesByUserid(userId, start, size);
+		List<Userrecharge> lst = userCharge.qryUserRechargesByUserid(userId, start, size);
+		return lst == null ? new ArrayList<Userrecharge>() : lst;
 	}
 	
 	public int qryCountUserRechargesByUserid(Integer userId){
 		return userCharge.qryCountUserRechargesByUserid(userId);
 	}
 	
-	public List<Userrecharge> qryOemRechargesByOemid(Integer oemId, int start, int size){
-		return oemCharge.qryOemRechargesByOemid(oemId, start, size);
+	public List<Oemrecharge> qryOemRechargesByOemid(Integer oemId, int start, int size){
+		List<Oemrecharge> lst = oemCharge.qryOemRechargesByOemid(oemId, start, size);
+		return lst == null ? new ArrayList<Oemrecharge>() : lst;
 	}
 	
 	public int qryCountOemRechargesByOemid(Integer oemId){

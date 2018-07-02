@@ -2,6 +2,8 @@ package com.soqi.oem.dao;
 
 import com.soqi.oem.gentry.Seo;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +23,9 @@ public interface SeoMapper {
 
     int updateByPrimaryKey(Seo record);
     
-    int updateStatusByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status);
+    int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount, @Param("buytime") Date buytime);
+    
+    int updateStatusByListSeo(List<Seo> seos);
     
     public List<Seo> qrySeoManageListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     

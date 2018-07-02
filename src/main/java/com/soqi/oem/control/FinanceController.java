@@ -145,7 +145,7 @@ public class FinanceController extends BaseController {
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
-		List<Userrecharge> lst = financeService.qryOemRechargesByOemid(ct.getOemid(), start, size);
+		List<Oemrecharge> lst = financeService.qryOemRechargesByOemid(ct.getOemid(), start, size);
 		int total = financeService.qryCountOemRechargesByOemid(ct.getOemid());
 		Page pager = new Page(pageNo, size, total);
 		pager.setCookieName("oem_ui_ul");

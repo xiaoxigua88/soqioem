@@ -62,6 +62,11 @@ public class ClientFinanceController extends BaseController{
 	@RequestMapping("/client/finance/rechargelist")
 	public String rechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		Oemuser  user = userService.qryOemuser(this.getOemuser().getUserid());
+		if(user.getTotalamount() == null){
+			user.setTotalamount(BigDecimal.ZERO);
+			user.setFreezeamount(BigDecimal.ZERO);
+			user.setAvailableamount(BigDecimal.ZERO);
+		}
 		user.setAvailableamount(user.getTotalamount().subtract(user.getFreezeamount()));
 		user.setPaymin(BigDecimal.valueOf(100.00));
 		//添加cookie
@@ -89,6 +94,11 @@ public class ClientFinanceController extends BaseController{
 	@RequestMapping("/client/finance/recharge")
 	public String recharge(Model model){
 		Oemuser  user = userService.qryOemuser(this.getOemuser().getUserid());
+		if(user.getTotalamount() == null){
+			user.setTotalamount(BigDecimal.ZERO);
+			user.setFreezeamount(BigDecimal.ZERO);
+			user.setAvailableamount(BigDecimal.ZERO);
+		}
 		user.setAvailableamount(user.getTotalamount().subtract(user.getFreezeamount()));
 		user.setPaymin(BigDecimal.valueOf(100.00));
 		Map<String, Object> jsonObj = new HashMap<String, Object>();

@@ -23,6 +23,8 @@ public interface OemuserMapper {
     
     Oemuser selectOemuserByUseridAndOemid(@Param("oemid") Integer oemid, @Param("userid") Integer userid);
     
+    Oemuser qryOemuserByOemidAndField(@Param("oemid") Integer oemid, @Param("field") String field);
+    
     List<Oemuser> selectAll();
 
     int updateByPrimaryKey(Oemuser record);

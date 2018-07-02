@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soqi.common.utils.MD5Utils;
-import com.soqi.common.utils.RandomUtil;
 import com.soqi.oem.dao.OemuserMapper;
-import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oemuser;
 @Service
 public class UserService {
@@ -55,6 +53,10 @@ public class UserService {
 	
 	public Oemuser selectOemuserByUseridAndOemid(Integer oemid, Integer userid){
 		return ou.selectOemuserByUseridAndOemid(oemid, userid);
+	}
+	
+	public Oemuser qryOemuserByOemidAndField(Integer oemid, String field){
+		return ou.qryOemuserByOemidAndField(oemid, field);
 	}
 	
 	public Oemuser qryOemuserByDomainAndMobile(String domain, String mobile){

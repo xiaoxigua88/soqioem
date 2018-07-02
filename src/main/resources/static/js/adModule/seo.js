@@ -121,7 +121,7 @@ $(function() {
         });
     }));
     // 批量删除
-    $_batchDelete.click(createBatchHandle("删除", "?action=Delete", 1, function() {
+    $_batchDelete.click(createBatchHandle("删除", "/oemmanager/business/seo/batchdel?action=Delete", 1, function() {
         $_mainList.find(listCheckedSelector).each(function() {
             if ($(this).data("status") != 1 && $(this).data("status") != 2 && $(this).data("status") != 3) {
                 $(this).attr("checked", false);
@@ -181,6 +181,21 @@ $(function() {
                 SQ.post({
                     data: { action: "Stop", taskIds: taskId },
                     url: "/oemmanager/business/seo/batchstop"
+                });
+            }
+        });
+    });
+    
+    //任务单个删除
+    $(".task-delete").click(function() {
+        var taskId = $(this).data("taskid");
+        SQ.tips.ask({
+            title: "关键词排名删除确认",
+            content: "确认删除该关键词排名优化吗？",
+            ok: function() {
+                SQ.post({
+                    data: { action: "Delete", taskIds: taskId },
+                    url: ""
                 });
             }
         });

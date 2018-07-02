@@ -32,7 +32,7 @@ public class SeoDoBusiness {
 	@Autowired
 	private SeoApiProperty sap;
 	
-	//关键词价格任务添加
+	//关键词价格实时查任务添加
 	public boolean KeywordPriceSearchAdd(List<Seo> seos){
 		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
 		int businessType = 1008;
@@ -53,7 +53,7 @@ public class SeoDoBusiness {
 		}
 	}
 	
-	/**关键词排名任务添加
+	/**关键词排名任务实时查任务添加
 	 * @return
 	 */
 	public boolean keywordRankSearchAdd(List<Seo> seos){
@@ -78,6 +78,31 @@ public class SeoDoBusiness {
 			logger.error(result.getString("xMessage"));
 			return false;
 		}
+	}
+	
+	/**
+	 * @param seos
+	 * @return
+	 */
+	public String keywordRankWatchAdd(List<Seo> seos){
+		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
+		int businessType = 2006;
+		String[] keyword = { "58同城", "赶集网" };
+		String[] url = { "58.com", "ganji.com" };
+		int[] timeSet = { 10, 16 };
+		boolean searchOnce = true;
+		int searchType = 1010;
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("apiExtend", apiExtend);
+		dataMap.put("businessType", businessType);
+		dataMap.put("keyword", keyword);
+		dataMap.put("url", url);
+		dataMap.put("timeSet", timeSet);
+		dataMap.put("searchOnce", searchOnce);
+		dataMap.put("searchType", searchType);
+		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
+		String data = JSONObject.toJSONString(dataMap);
+		return /*apiDo("AddSearchTask", data)*/null;
 	}
 	
 	public JSONObject apiDo(List<Seo> seos, String action, String data){

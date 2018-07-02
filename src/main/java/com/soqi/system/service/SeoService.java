@@ -106,10 +106,11 @@ public class SeoService {
 	}
 	
 	@Transactional("primaryTransactionManager")
-	public int deleteSeoTasks(Integer[] taskIds){
+	public void deleteSeoTasks(Integer[] taskIds){
 		//删除关键词价表数据
+		 piceMapper.batchDeleteByTaskIds(taskIds);
 		//删除关键词表数据
-		return seoMapper.batchDel(taskIds);
+		seoMapper.batchDel(taskIds);
 		
 	}
 	/**功能：关键词任务停止、不仅把任务从优化中调整为停止
@@ -162,7 +163,7 @@ public class SeoService {
 		userAcDetail.batchInsert(uadList);
 		useraccountMapper.batchUpdateAccountByDiffUser(actList);
 		//更新关键词任务的状态停止
-		seoMapper.updateStatusByTaskids(taskIds, Constant.SEO_STATUS_STOP);
+		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_STOP, BigDecimal.ZERO, null);
 	}
 	
 	
@@ -179,6 +180,7 @@ public class SeoService {
 		List<Seoprice> splist = piceMapper.selectByTaskids(taskIds);
 		BigDecimal day = BigDecimal.valueOf(Constant.SEOFREEZEDAY);
 		List<Useraccountdetail> uadList = new ArrayList<Useraccountdetail>();
+		List<Seo> seoList = new ArrayList<Seo>();
 		for (Seoprice seoprice : splist) {
 			//添加交易明细
 			Useraccountdetail uad = new Useraccountdetail();
@@ -192,13 +194,19 @@ public class SeoService {
 			uad.setFreeze(seoprice.getPrice().multiply(day));
 			uad.setBalance(account.getTotalamount());
 			uadList.add(uad);
+			Seo seo = new Seo();
+			//seo组装部分
+			seo.setTaskid(seoprice.getTaskid());
+			seo.setStatus(Constant.SEO_STATUS_DOING);
+			seo.setFreezeamount(seoprice.getPrice().multiply(day));
+			seoList.add(seo);
 		}
 		//冻结用户资产
 		useraccountMapper.updateFreezeAmountByUserId(userid, freezeamount);
 		//资金变动明细
 		userAcDetail.batchInsert(uadList);
 		//更新关键词任务的状态已购买
-		seoMapper.updateStatusByTaskids(taskIds, Constant.SEO_STATUS_DOING);
+		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_DOING, freezeamount,new Date());
 	}
 	
 	/**计算冻结支付金额
@@ -227,6 +235,7 @@ public class SeoService {
 		Map<String, List<Seoprice>> spuMap = SeopriceWrapper.getListbyUserid(sps);
 		List<Useraccountdetail> uadList = new ArrayList<Useraccountdetail>();
 		List<Useraccount> actList = new ArrayList<Useraccount>();
+		List<Seo> seoList = new ArrayList<Seo>();
 		for (Map.Entry<String, List<Seoprice>> entry : spuMap.entrySet()) {
 			String userid = entry.getKey();
 			List<Seoprice> splist = entry.getValue();
@@ -234,6 +243,8 @@ public class SeoService {
 			BigDecimal frozen = BigDecimal.ZERO;
 			for (Seoprice seoprice : splist) {
 				Useraccountdetail uad = new Useraccountdetail();
+				Seo seo = new Seo();
+				//资金明细组装部分
 				uad.setUserid(seoprice.getUserid());
 				uad.setAddtime(new Date());
 				uad.setDescription("云排名启动");
@@ -248,14 +259,19 @@ public class SeoService {
 				uad.setBalance(account.getTotalamount());
 				uadList.add(uad);
 				frozen = frozen.add(seoprice.getPrice().multiply(day));
+				//seo组装部分
+				seo.setTaskid(seoprice.getTaskid());
+				seo.setStatus(Constant.SEO_STATUS_DOING);
+				seo.setFreezeamount(seoprice.getPrice().multiply(day));
+				seoList.add(seo);
 			}
 			account.setFreezeamount(account.getFreezeamount().add(frozen));
 			actList.add(account);
 		}
 		userAcDetail.batchInsert(uadList);
 		useraccountMapper.batchUpdateAccountByDiffUser(actList);
-		//更新关键词任务的状态停止
-		seoMapper.updateStatusByTaskids(taskIds, Constant.SEO_STATUS_DOING);
+		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
+		seoMapper.updateStatusByListSeo(seoList);
 	}
 	/**功能：用户购买关键启时，需要对自身充值金额进地检查、资金不够要提示
 	 * @param taskIds
@@ -264,6 +280,9 @@ public class SeoService {
 	 */
 	public boolean checkAmountForSeoApply(Integer[] taskIds, Integer userid){
 		Useraccount account = useraccountMapper.selectByPrimaryKey(userid);
+		if(account == null){
+			return false;
+		}
 		//购买优化任务需要冻结资金
 		BigDecimal frozen = frozenAmountOfPayment(taskIds);
 		//可用金额
@@ -296,7 +315,7 @@ public class SeoService {
 			BigDecimal availableamount = account.getTotalamount().subtract(account.getFreezeamount());
 			//冻结金额如果大于可用金额直接退出并返回false
 			if(frozen.compareTo(availableamount)==1){
-				text.append("编号为<b class='text-red'>" + userid + "</b>用户！可用金额不足需再充值：￥"+frozen.subtract(availableamount)+"元才能启所选任务！");
+				text.append("编号为<b class='text-red'>" + userid + "</b>用户！可用金额不足需再充值：<b class='text-red'>￥"+frozen.subtract(availableamount)+"</b>元才能启所选任务！");
 	        	return false;
 	        }
 		}

@@ -525,7 +525,7 @@ $(function() {
     if ($_showCaptcha.length) {
         var refreshCaptchaImg = (function() {
             var createCaptchaSrc = function() {
-                return "/VerifyImg.aspx?" + "rnd=" + Math.random();
+                return "/verifyimg?" + "rnd=" + Math.random();
             };
 
             return function(captchaImg) {

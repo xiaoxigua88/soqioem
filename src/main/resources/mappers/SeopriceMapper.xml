@@ -65,4 +65,11 @@
     </foreach>
   </select>
   
+  <delete id="batchDeleteByTaskIds" parameterType="java.lang.Integer" >
+    delete from SeoPrice where TaskId in
+    <foreach item="taskid" collection="array" open="(" separator="," close=")">
+        #{taskid}
+    </foreach>
+  </delete>
+  
 </mapper>

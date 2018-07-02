@@ -123,7 +123,7 @@
     m.LoginCount, m.RegisterStamp, m.Status, m.VerifyStatus, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
     from OemUser m left join UserAccount n
     on m.UserId = n.UserId
-    where m.OemId = #{oemid,jdbcType=INTEGER} Order by m.UserId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+    where m.OemId = #{oemid,jdbcType=INTEGER} Order by m.RegisterTime desc Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
   </select>
   
   <select id="selectCountByOemId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -155,6 +155,22 @@
     LoginCount, RegisterStamp, Status
     from OemUser
     where  OemId = #{oemid,jdbcType=INTEGER} and UserId = #{userid,jdbcType=INTEGER}  
+  </select>
+  
+  <select id="qryOemuserByOemidAndField" parameterType="map" resultMap="BaseResultMap">
+  	select UserId, OemId, Pwd, Question, Answer, Mobile, Email, EmailVerify, CallName, 
+    QQ, RegisterTime, RegisterIp, LastLoginTime, LastLoginIp, CurrentLoginTime, CurrentLoginIp, 
+    LoginCount, RegisterStamp, Status
+    from OemUser
+    where  OemId = #{oemid,jdbcType=INTEGER}
+      <choose> 
+	    <when test="field.length()==11">
+	    and Mobile = #{field}
+	    </when>
+	    <otherwise>
+	    and UserId = #{field}
+	    </otherwise>
+	  </choose>
   </select>
   
 </mapper>

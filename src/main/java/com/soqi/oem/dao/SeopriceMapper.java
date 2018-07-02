@@ -12,6 +12,8 @@ public interface SeopriceMapper {
 
     int insert(Seoprice record);
     
+    int batchDeleteByTaskIds(Integer[] taskid);
+    
     int batchInsertFormSeo(List<Seo> seos);
 
     Seoprice selectByPrimaryKey(@Param("taskid") Long taskid, @Param("fromrank") Integer fromrank, @Param("torank") Integer torank);

@@ -18,7 +18,7 @@ public interface OemrechargeMapper {
 
     int updateByPrimaryKey(Oemrecharge record);
     
-    public List<Userrecharge> qryOemRechargesByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
+    public List<Oemrecharge> qryOemRechargesByOemid(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
     
     public int qryCountOemRechargesByOemid(Integer oemId);
 }

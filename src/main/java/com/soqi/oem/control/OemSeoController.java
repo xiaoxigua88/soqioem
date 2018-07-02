@@ -22,17 +22,23 @@ import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.SeoWrapper;
+import com.soqi.oem.gentry.Oemuser;
 import com.soqi.oem.gentry.Seo;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.SeoService;
+import com.soqi.system.service.UserService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
 
 @Controller
 public class OemSeoController extends BaseController{
 	private final Logger logger = LoggerFactory.getLogger(OemSeoController.class);
+	
 	@Autowired
 	private SeoService seoService;
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping("/oemmanager/business/seo/manage")
 	public String oemSeoManage(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
@@ -77,8 +83,12 @@ public class OemSeoController extends BaseController{
 		username = username.trim();
 		keyword = keyword.trim();
 		url = url.trim();
+		Oemuser user = userService.qryOemuserByOemidAndField(this.getCustomer().getOemid(), username);
 		if(StringUtils.isBlank(username)){
 			return ResultFontJS.error("用户ID、手机号、邮箱不能为空");
+		}
+		if(user == null){
+			return ResultFontJS.error("系统查询不到该用户无法为该用户导入关键词");
 		}
 		if(StringUtils.isBlank(keyword)){
 			return ResultFontJS.error("关键词不能为空");
@@ -111,7 +121,7 @@ public class OemSeoController extends BaseController{
 			return rs;
 		}
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.bathConvertDiffSeo(req, 1001, url, keyword, searchType);
+		List<Seo> seos = SeoWrapper.bathConvertDiffSeo(req, user.getUserid(), url, keyword, searchType);
 		int count = seoService.batchSameSeoInsert(seos);
 		if(count >0){
 			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
@@ -132,8 +142,12 @@ public class OemSeoController extends BaseController{
 		username = username.trim();
 		keyword = keyword.trim();
 		url = url.trim();
+		Oemuser user = userService.qryOemuserByOemidAndField(this.getCustomer().getOemid(), username);
 		if(StringUtils.isBlank(username)){
 			return ResultFontJS.error("用户ID、手机号、邮箱不能为空");
+		}
+		if(user == null){
+			return ResultFontJS.error("系统查询不到该用户无法为该用户导入关键词");
 		}
 		if(StringUtils.isBlank(keyword)){
 			return ResultFontJS.error("关键词不能为空");
@@ -204,7 +218,7 @@ public class OemSeoController extends BaseController{
 			return rs;
 		}
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.bathConvertSameSeo(req, 1001, url, keyword, searchType);
+		List<Seo> seos = SeoWrapper.bathConvertSameSeo(req, user.getUserid(), url, keyword, searchType);
 		int count = seoService.batchSameSeoInsert(seos);
 		if(count >0){
 			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
@@ -249,5 +263,16 @@ public class OemSeoController extends BaseController{
 		}
 		seoService.startSeoTasks(taskIds);
 		return ResultFontJS.ok("关键词任务启动成功");
+	}
+	
+	@RequestMapping("/oemmanager/business/seo/batchdel")
+	@ResponseBody
+	public ResultFontJS batchDel(@RequestParam(value="action",required=true) String action, Integer[] taskIds){
+		if( taskIds == null || taskIds.length <= 0){
+			return ResultFontJS.error("删除任务的ID号不能为空请检查");
+		}
+		seoService.deleteSeoTasks(taskIds);
+		return ResultFontJS.ok("关键词删除成功");
+		
 	}
 }

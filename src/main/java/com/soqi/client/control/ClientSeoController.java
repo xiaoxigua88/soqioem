@@ -182,11 +182,8 @@ public class ClientSeoController extends BaseController{
 		if( taskIds == null || taskIds.length <= 0){
 			return ResultFontJS.error("删除任务的ID号不能为空请检查");
 		}
-		int count = seoService.deleteSeoTasks(taskIds);
-		if(count >0){
-			return ResultFontJS.ok("删除成功");
-		}
-		return ResultFontJS.error("添加关键词查询失败");
+		seoService.deleteSeoTasks(taskIds);
+		return ResultFontJS.ok("关键词删除成功");
 	}
 	
 	/**关键词批量购买
