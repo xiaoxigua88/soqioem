@@ -96,13 +96,22 @@ public class SeoService {
 	}
 	
 	@Transactional("primaryTransactionManager")
-	public int addSeoTask(List<Seo> seos){
-		//TODO
-		//调用接口获取关键词任务id
-		seoDoBusiness.keywordRankSearchAdd(seos);
-		//调用接口对接关键词价格id
-		seoDoBusiness.KeywordPriceSearchAdd(seos);
-		return seoMapper.batchInsert(seos);
+	public int addSeoTask(Map<String, List<Seo>> listMap){
+		List<Seo> seos = new ArrayList<Seo>();
+		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
+			seos.addAll(entry.getValue());
+		}
+		int count = seoMapper.batchInsert(seos);
+		if(count == seos.size()){
+			Long taskid = seos.get(0).getTaskid();
+			for(int i = count-1 ; i >= 0; i--){
+				seos.get(i).setTaskid(taskid - (count - i -1));
+			}
+		}
+		//异步调用生成服务ID
+		seoDoBusiness.createServiceIdOfRP(listMap, true);
+		return count;
+		
 	}
 	
 	@Transactional("primaryTransactionManager")
@@ -207,6 +216,8 @@ public class SeoService {
 		userAcDetail.batchInsert(uadList);
 		//更新关键词任务的状态已购买
 		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_DOING, freezeamount,new Date());
+		//调用异步服务获取云排名监控服务ID
+		seoDoBusiness.createServiceIdOfW(taskIds);
 	}
 	
 	/**计算冻结支付金额
@@ -322,10 +333,12 @@ public class SeoService {
 		return true;
 	}
 	@Transactional("primaryTransactionManager")
-	public int batchSameSeoInsert(List<Seo> seos){
-		//调用接口获取关键词任务id
-		seoDoBusiness.keywordRankSearchAdd(seos);
-		//批量操作过后、返回最后一条数据的自增主键值
+	public int batchSameSeoInsert(Map<String, List<Seo>> listMap){
+		//注意此处listMap和seos中的每个seo对象是同一个对像。。所以设置taskid后,这两个集合中的对像也会同步更改，这应该就是地址引用传递、对像共享
+		List<Seo> seos = new ArrayList<Seo>();
+		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
+			seos.addAll(entry.getValue());
+		}
 		int count = seoMapper.batchInsert(seos);
 		if(count == seos.size()){
 			Long taskid = seos.get(0).getTaskid();
@@ -334,6 +347,8 @@ public class SeoService {
 			}
 		}
 		int rankCount = piceMapper.batchInsertFormSeo(seos);
+		//异步调用生成服务ID
+		//seoDoBusiness.createServiceIdOfRP(listMap, false);
 		return rankCount > 0 ? count : 0;
 	}
 }

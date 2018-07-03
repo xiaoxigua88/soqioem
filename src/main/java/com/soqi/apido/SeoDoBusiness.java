@@ -1,6 +1,7 @@
 package com.soqi.apido;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +11,18 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.soqi.common.utils.BusinessUtil;
 import com.soqi.common.utils.DateUtil;
 import com.soqi.common.utils.EncodeUtils;
 import com.soqi.common.utils.HttpClientUtil;
+import com.soqi.common.utils.SeoWrapper;
+import com.soqi.oem.dao.SeoMapper;
 import com.soqi.oem.gentry.Seo;
 import com.soqi.system.config.SeoApiProperty;
 
@@ -31,7 +37,8 @@ public class SeoDoBusiness {
 	private final Logger logger = LoggerFactory.getLogger(SeoDoBusiness.class);
 	@Autowired
 	private SeoApiProperty sap;
-	
+	@Autowired
+	private SeoMapper sm;
 	//关键词价格实时查任务添加
 	public boolean KeywordPriceSearchAdd(List<Seo> seos){
 		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
@@ -43,7 +50,7 @@ public class SeoDoBusiness {
 		dataMap.put("keyword", keyword);
 		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
 		String data = JSONObject.toJSONString(dataMap);
-		JSONObject result = apiDo(seos, "AddSearchTask", data);
+		JSONObject result = apiDo("AddSearchTask", data);
 		if(result.getInteger("xCode") == 0){
 			BusinessUtil.getSeoListFormKeywords(seos, result.getJSONArray("xValue"), businessType);
 			return true;
@@ -56,12 +63,12 @@ public class SeoDoBusiness {
 	/**关键词排名任务实时查任务添加
 	 * @return
 	 */
-	public boolean keywordRankSearchAdd(List<Seo> seos){
+	public boolean keywordRankSearchAdd(List<Seo> seos, int searchType){
 		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
 		int businessType = 1006;
 		String[] keyword = BusinessUtil.couvertToKeyAndUrl(seos).get("keywords");
         String[] url = BusinessUtil.couvertToKeyAndUrl(seos).get("urls");
-        int searchType = 1010;
+        //int searchType = 1010;
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("apiExtend", apiExtend);
 		dataMap.put("businessType", businessType);
@@ -70,7 +77,7 @@ public class SeoDoBusiness {
 		dataMap.put("searchType", searchType);
 		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
 		String data = JSONObject.toJSONString(dataMap);
-		JSONObject result = apiDo(seos, "AddSearchTask", data);
+		JSONObject result = apiDo("AddSearchTask", data);
 		if(result.getInteger("xCode") == 0){
 			BusinessUtil.getSeoListFormKeywords(seos, result.getJSONArray("xValue"), businessType);
 			return true;
@@ -80,18 +87,17 @@ public class SeoDoBusiness {
 		}
 	}
 	
-	/**
+	/**云排名监控添加
 	 * @param seos
 	 * @return
 	 */
-	public String keywordRankWatchAdd(List<Seo> seos){
+	public boolean keywordRankWatchAdd(List<Seo> seos, int searchType){
 		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
 		int businessType = 2006;
-		String[] keyword = { "58同城", "赶集网" };
-		String[] url = { "58.com", "ganji.com" };
+		String[] keyword = BusinessUtil.couvertToKeyAndUrl(seos).get("keywords");
+		String[] url = BusinessUtil.couvertToKeyAndUrl(seos).get("urls");
 		int[] timeSet = { 10, 16 };
 		boolean searchOnce = true;
-		int searchType = 1010;
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("apiExtend", apiExtend);
 		dataMap.put("businessType", businessType);
@@ -102,10 +108,37 @@ public class SeoDoBusiness {
 		dataMap.put("searchType", searchType);
 		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
 		String data = JSONObject.toJSONString(dataMap);
-		return /*apiDo("AddSearchTask", data)*/null;
+		JSONObject result = apiDo("AddSearchTask", data);
+		if(result.getInteger("xCode") == 0){
+			BusinessUtil.getSeoListFormKeywords(seos, result.getJSONArray("xValue"), businessType);
+			return true;
+		}else{
+			logger.info(result.getString("xMessage"));
+			return false;
+		}
 	}
 	
-	public JSONObject apiDo(List<Seo> seos, String action, String data){
+	/** 功能：查询关键词排名云监控的所有任务
+	 * @return
+	 */
+	public JSONArray qrySeoRankWatchTask(){
+		int apiExtend = 1; //这个值自己定义，用于自己的扩展标志，正整数，缺省值为1，接口回调时会原样返回
+		int businessType = 2006;
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("apiExtend", apiExtend);
+		dataMap.put("businessType", businessType);
+		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
+		String data = JSONObject.toJSONString(dataMap);
+		JSONObject result = apiDo("GetAllTask", data);
+		if(result.getInteger("xCode") == 0){
+			return result.getJSONArray("xValue");
+		}else{
+			logger.info(result.getString("xMessage"));
+			return null;
+		}
+	}
+	
+	public JSONObject apiDo(String action, String data){
 		JSONObject jsonObj = JSONObject.parseObject(data);
 		jsonObj.put("userId", sap.getUserId());
 		data = jsonObj.toString();
@@ -135,4 +168,43 @@ public class SeoDoBusiness {
 			return null;
 		}
 	}
+	
+	/**异步关键词排名实时查、价格实时查服务ID生成调用
+	 * @param listMap
+	 * @param isClient 客户端自助添加关键启涉及关键词查询、排名、购买时的排名监控的服务ID生成、代理端只有用于购买的服务ID生成
+	 */
+	@Async("myTaskAsyncPool")
+	@Transactional("primaryTransactionManager")
+    public void createServiceIdOfRP(Map<String, List<Seo>> listMap, boolean isClient){
+		List<Seo> seos = new ArrayList<Seo>();
+		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
+			if(isClient){
+				//云排名任务ID添加
+				this.keywordRankSearchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
+				//云排名价格添加
+				this.KeywordPriceSearchAdd(entry.getValue());
+			}
+			//云排名监控任务添加
+			//this.keywordRankWatchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
+			seos.addAll(entry.getValue());
+		}
+		sm.updateServiceIdByListSeo(seos);
+    }
+	
+	/**异步关键词排名监控服务ID生成调用
+	 * @param listMap
+	 * @param isClient 客户端自助添加关键启涉及关键词购买时的排名监控的服务ID生成、代理端由于手工设置价格、排名所以无须调用此方法
+	 */
+	@Async("myTaskAsyncPool")
+	@Transactional("primaryTransactionManager")
+    public void createServiceIdOfW(Integer[] taskIds){
+		List<Seo> seos = sm.selectByTaskids(taskIds);
+		Map<String, List<Seo>> listMap = SeoWrapper.convertListToMapBySearchType(seos);
+		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
+			//云排名监控任务添加
+			this.keywordRankWatchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
+			seos.addAll(entry.getValue());
+		}
+		sm.updateServiceIdByListSeo(seos);
+    }
 }

@@ -20,12 +20,20 @@ public interface SeoMapper {
     Seo selectByPrimaryKey(Long taskid);
 
     List<Seo> selectAll();
+    
+    List<Seo> selectByTaskids(Integer[] taskid);
 
     int updateByPrimaryKey(Seo record);
     
     int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount, @Param("buytime") Date buytime);
     
     int updateStatusByListSeo(List<Seo> seos);
+    
+    /**更新从第三方区取的服务ID
+     * @param seos
+     * @return
+     */
+    int updateServiceIdByListSeo(List<Seo> seos);
     
     public List<Seo> qrySeoManageListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     

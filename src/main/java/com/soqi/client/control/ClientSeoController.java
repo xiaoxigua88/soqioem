@@ -131,15 +131,18 @@ public class ClientSeoController extends BaseController{
 		if(StringUtils.isBlank(keyword)){
 			return ResultFontJS.error("关键词不能为空");
 		}
+		if(null == searchType || searchType.length == 0){
+			return ResultFontJS.error("搜索引擎不能为空");
+		}
 		if(StringUtils.isBlank(verifycode)){
 			return ResultFontJS.error("验证码不能为空");
 		}
 		//TODO 验证码后台校验值对比
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.singleUroToSeo(this.getOemuser().getUserid(), url, keyword, searchType);
-		int count = seoService.addSeoTask(seos);
+		Map<String, List<Seo>> listMap = SeoWrapper.singleUroToSeo(this.getOemuser().getUserid(), url, keyword.trim().split("\r\n"), searchType);
+		int count = seoService.addSeoTask(listMap);
 		if(count >0){
-			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
+			return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
 		return ResultFontJS.error("添加关键词查询失败");
 	}
@@ -167,10 +170,10 @@ public class ClientSeoController extends BaseController{
 		}
 		//TODO 验证码后台校验值对比
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.multipleUroToSeo(this.getOemuser().getUserid(), url, keyword, searchType);
-		int count = seoService.addSeoTask(seos);
+		Map<String, List<Seo>> listMap = SeoWrapper.multipleUroToSeo(this.getOemuser().getUserid(), url.trim().split("\r\n"), keyword.trim().split("\r\n"), searchType);
+		int count = seoService.addSeoTask(listMap);
 		if(count >0){
-			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
+			return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
 		return ResultFontJS.error("添加关键词查询失败");
 	}

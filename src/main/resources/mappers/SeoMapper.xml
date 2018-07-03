@@ -101,6 +101,16 @@
     from Seo
   </select>
   
+  <select id="selectByTaskids" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select TaskId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status
+    from Seo
+    where TaskId in
+    <foreach item="taskid" collection="taskids" open="(" separator="," close=")">
+            #{taskid}
+    </foreach>
+    order by SearchType desc
+  </select>
+  
   <select id="qrySeoManageListByUserId" resultMap="BaseResultMap" parameterType="map">
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
@@ -158,7 +168,7 @@
 						'',
 					</otherwise>
 				</choose>
-				#{item.searchtype},0,0,0,sysdatetime(),#{item.addtime},1,
+				#{item.searchtype},#{item.rankfirst},#{item.ranklast},0,sysdatetime(),#{item.addtime},1,
 				0,#{item.buytime},0,
 				0,0,#{item.costtime},
 				#{item.settlehour},#{item.settletime},#{item.settlestart},
@@ -227,6 +237,24 @@
 	      set FreezeAmount = #{item.freezeamount,jdbcType=DECIMAL},
 	      Status = #{item.status,jdbcType=INTEGER}
 	      where TaskId = #{item.taskid,jdbcType=INTEGER}
+      </foreach>
+  </update>
+  
+  <update id="updateServiceIdByListSeo" parameterType="java.util.List">
+      <foreach collection="list" separator=";" item="item">
+	      update Seo
+	      <trim prefix="set" suffixOverrides=",">
+	      <if test="item.apipricetaskid!=null">
+	      	ApiPriceTaskId = #{item.apipricetaskid,jdbcType=BIGINT},
+	      </if>
+	      <if test="item.apiranktaskid!=null">
+	      ApiRankTaskId = #{item.apiranktaskid,jdbcType=BIGINT},
+	      </if>
+	      <if test="item.apiwatchtaskid!=null">
+	      	ApiWatchTaskId = #{item.apiwatchtaskid,jdbcType=BIGINT}
+	      </if>
+	      where TaskId = #{item.taskid,jdbcType=INTEGER}
+	      </trim>
       </foreach>
   </update>
   

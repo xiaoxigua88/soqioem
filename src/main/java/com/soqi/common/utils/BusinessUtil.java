@@ -57,6 +57,8 @@ public class BusinessUtil {
 			}else if(businessType == 1006){
 				//关键词排名
 				seos.get(i).setApiranktaskid(apiTaskid.longValue());
+			}else if(businessType == 2006){
+				seos.get(i).setApiwatchtaskid(apiTaskid.longValue());
 			}
 		}
 	}

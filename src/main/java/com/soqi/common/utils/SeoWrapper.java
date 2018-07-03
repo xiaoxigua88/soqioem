@@ -2,9 +2,10 @@ package com.soqi.common.utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -25,126 +26,23 @@ public class SeoWrapper {
 	 * @param searchType
 	 * @return
 	 */
-	public static List<Seo> singleUroToSeo(Integer userId, String url, String keyword, String[] searchType){
-		List<Seo> seoList = new ArrayList<Seo>();
-		if(keyword.contains("\r\n")){
-			for(String kw : keyword.split("\r\n")){
-				for(String st : searchType){
-					Seo seo = new Seo();
-					seo.setUrl(url);
-					seo.setKeyword(kw);
-					seo.setSearchtype(Integer.valueOf(st));
-					seo.setUserid(userId);
-					//模拟冻结资产
-					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.ZERO);
-					seo.setAddtime(new Date());
-					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//消费时间
-					seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//结算时间点、取配置
-					seo.setSettlehour(10);
-					//结算完成时间、结算开始时间
-					seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//检测中
-					seo.setStatus(Constant.SEO_STATUS_CHECKING);
-					seoList.add(seo);
-				}
-			}
-		}
-		return seoList;
-	}
-	/**一对一关键词关键词封装成seo对像
-	 * @param url
-	 * @param keyword
-	 * @param searchType
-	 * @return
-	 */
-	public static List<Seo> multipleUroToSeo(Integer userId, String url, String keyword, String searchType){
-		List<Seo> seoList = new ArrayList<Seo>();
-		if(keyword.contains("\r\n")){
-			for(String kw : keyword.split("\r\n")){
-				if(url.contains("\r\n")){
-					for(String u : url.split("\r\n")){
-						Seo seo = new Seo();
-						seo.setUrl(u);
-						seo.setKeyword(kw);
-						seo.setSearchtype(Integer.valueOf(searchType));
-						seo.setUserid(userId);
-						//模拟冻结资产
-						seo.setFreezeamount(BigDecimal.ZERO);
-						seo.setPrice(BigDecimal.ZERO);
-						seo.setAddtime(new Date());
-						seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-						//消费时间
-						seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-						//结算时间点、取配置
-						seo.setSettlehour(10);
-						//结算完成时间、结算开始时间
-						seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-						seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-						//检测中
-						seo.setStatus(Constant.SEO_STATUS_CHECKING);
-						seoList.add(seo);
-					}
-				}else{
-					Seo seo = new Seo();
-					seo.setUrl(url);
-					seo.setKeyword(kw);
-					seo.setSearchtype(Integer.valueOf(searchType));
-					seo.setUserid(userId);
-					//模拟冻结资产
-					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.ZERO);
-					seo.setAddtime(new Date());
-					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//消费时间
-					seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//结算时间点、取配置
-					seo.setSettlehour(10);
-					//结算完成时间、结算开始时间
-					seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//检测中
-					seo.setStatus(Constant.SEO_STATUS_CHECKING);
-					seoList.add(seo);
-				}
-			}
-		}else{
-			if(url.contains("\r\n")){
-				for(String u : url.split("\r\n")){
-					Seo seo = new Seo();
-					seo.setUrl(u);
-					seo.setKeyword(keyword);
-					seo.setSearchtype(Integer.valueOf(searchType));
-					seo.setUserid(userId);
-					//模拟冻结资产
-					seo.setFreezeamount(BigDecimal.ZERO);
-					seo.setPrice(BigDecimal.ZERO);
-					seo.setAddtime(new Date());
-					seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//消费时间
-					seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//结算时间点、取配置
-					seo.setSettlehour(10);
-					//结算完成时间、结算开始时间
-					seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
-					//检测中
-					seo.setStatus(Constant.SEO_STATUS_CHECKING);
-					seoList.add(seo);
-				}
-			}else{
+	public static Map<String, List<Seo>> singleUroToSeo(Integer userId, String url, String[] keyword, String[] searchType){
+		Map<String, List<Seo>> listMap = new HashMap<String, List<Seo>>();
+		for(String st : searchType){
+			List<Seo> seoList = new ArrayList<Seo>();
+			for(String kw : keyword){
 				Seo seo = new Seo();
 				seo.setUrl(url);
-				seo.setKeyword(keyword);
-				seo.setSearchtype(Integer.valueOf(searchType));
+				seo.setKeyword(kw);
+				seo.setSearchtype(Integer.valueOf(st));
 				seo.setUserid(userId);
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
 				seo.setPrice(BigDecimal.ZERO);
 				seo.setAddtime(new Date());
+				//设置初始排名和最新排名初始化、客户端给默认值
+				seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
+				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
@@ -157,8 +55,49 @@ public class SeoWrapper {
 				seo.setStatus(Constant.SEO_STATUS_CHECKING);
 				seoList.add(seo);
 			}
+			listMap.put(st, seoList);
 		}
-		return seoList;
+		
+		return listMap;
+	}
+	/**一对一关键词关键词封装成seo对像
+	 * @param url
+	 * @param keyword
+	 * @param searchType
+	 * @return
+	 */
+	public static Map<String, List<Seo>> multipleUroToSeo(Integer userId, String[] url, String[] keyword, String searchType){
+		Map<String, List<Seo>> listMap = new HashMap<String, List<Seo>>();
+		List<Seo> seoList = new ArrayList<Seo>();
+		for(int i = 0 ; i < keyword.length; i++){
+			Seo seo = new Seo();
+			if(url.length == 1){
+				seo.setUrl(url[0]);
+			}
+			seo.setKeyword(keyword[i]);
+			seo.setSearchtype(Integer.valueOf(searchType));
+			seo.setUserid(userId);
+			//模拟冻结资产
+			seo.setFreezeamount(BigDecimal.ZERO);
+			seo.setPrice(BigDecimal.ZERO);
+			seo.setAddtime(new Date());
+			//设置初始排名和最新排名初始化、客户端给默认值
+			seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
+			seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
+			seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+			//消费时间
+			seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+			//结算时间点、取配置
+			seo.setSettlehour(10);
+			//结算完成时间、结算开始时间
+			seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+			seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+			//检测中
+			seo.setStatus(Constant.SEO_STATUS_CHECKING);
+			seoList.add(seo);
+		}
+		listMap.put(searchType, seoList);
+		return listMap;
 	}
 	
 	/**相同价导入关键词转换
@@ -169,12 +108,13 @@ public class SeoWrapper {
 	 * @param searchType
 	 * @return
 	 */
-	public static List<Seo> bathConvertSameSeo(HttpServletRequest req, Integer userId, String url, String keyword, String[] searchType){
-		List<Seo> seoList = new ArrayList<Seo>();
-		String[] kws = keyword.split("\r\n");
-		String[] urls = url.split("\r\n");
-		for(int i = 0; i<kws.length; i++){
-			for (String st : searchType) {
+	public static Map<String, List<Seo>> bathConvertSameSeo(HttpServletRequest req, Integer userId, String[] url, String[] keyword, String[] searchType){
+		Map<String, List<Seo>> listMap = new HashMap<String, List<Seo>>();
+		/*String[] kws = keyword.split("\r\n");
+		String[] urls = url.split("\r\n");*/
+		for (String st : searchType) {
+			List<Seo> seoList = new ArrayList<Seo>();
+			for(int i = 0; i<keyword.length; i++){
 				String torank1_ = req.getParameter("torank1_"+st);
 				String price1_ = req.getParameter("price1_"+st);
 				String torank2_ = req.getParameter("torank2_"+st);
@@ -183,11 +123,14 @@ public class SeoWrapper {
 					continue;
 				}
 				Seo seo = new Seo();
-				seo.setUrl(urls[i]);
-				seo.setKeyword(kws[i]);
+				seo.setUrl(url[i]);
+				seo.setKeyword(keyword[i]);
 				seo.setSearchtype(Integer.valueOf(st));
 				seo.setUserid(userId);
 				seo.setAddtime(new Date());
+				//设置初始排名和最新排名初始化、代理端给默认值
+				seo.setRankfirst(Constant.SEO_OEM_RANK_OUTFIVE);
+				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
@@ -236,8 +179,11 @@ public class SeoWrapper {
 				seo.setStatus(Constant.SEO_STATUS_NEEDPAY);
 				seoList.add(seo);
 			}
+			if(!seoList.isEmpty()){
+				listMap.put(st, seoList);
+			}
 		}
-		return seoList;
+		return listMap;
 	}
 	
 	/**不同价导入关键词转换
@@ -248,12 +194,11 @@ public class SeoWrapper {
 	 * @param searchType
 	 * @return
 	 */
-	public static List<Seo> bathConvertDiffSeo(HttpServletRequest req, Integer userId, String url, String keyword, String[] searchType){
-		List<Seo> seoList = new ArrayList<Seo>();
-		String[] kws = keyword.split("\r\n");
-		String[] urls = url.split("\r\n");
-		for(int i = 0; i<kws.length; i++){
-			for (String st : searchType) {
+	public static Map<String, List<Seo>> bathConvertDiffSeo(HttpServletRequest req, Integer userId, String[] url, String[] keyword, String[] searchType){
+		Map<String, List<Seo>> listMap = new HashMap<String, List<Seo>>();
+		for (String st : searchType) {
+			List<Seo> seoList = new ArrayList<Seo>();
+			for(int i = 0; i<keyword.length; i++){
 				String torank_ = req.getParameter("torank_"+st);
 				String price_ = req.getParameter("price_"+st);
 				if(torank_ == null && price_ == null) {
@@ -261,16 +206,19 @@ public class SeoWrapper {
 				}
 				String[] price = price_.split("\r\n");
 				Seo seo = new Seo();
-				if(urls.length == 1){
-					seo.setUrl(urls[0]);
+				if(url.length == 1){
+					seo.setUrl(url[0]);
 				}else{
-					seo.setUrl(urls[i]);
+					seo.setUrl(url[i]);
 				}
-				seo.setKeyword(kws[i]);
+				seo.setKeyword(keyword[i]);
 				seo.setSearchtype(Integer.valueOf(st));
 				seo.setUserid(userId);
 				seo.setAddtime(new Date());
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+				//设置初始排名和最新排名初始化、代理端给默认值
+				seo.setRankfirst(Constant.SEO_OEM_RANK_OUTFIVE);
+				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//结算时间点、取配置
@@ -298,8 +246,11 @@ public class SeoWrapper {
 				seo.setStatus(Constant.SEO_STATUS_NEEDPAY);
 				seoList.add(seo);
 			}
+			if(!seoList.isEmpty()){
+				listMap.put(st, seoList);
+			}
 		}
-		return seoList;
+		return listMap;
 	}
 	
 	/**功能：处理查询的seos结果集转换处理
@@ -335,5 +286,24 @@ public class SeoWrapper {
 			}
 		}
 		return seos;
+	}
+	
+	/**把关键词对像集按照搜索引擎归类
+	 * @param seos
+	 * @return
+	 */
+	public static Map<String, List<Seo>> convertListToMapBySearchType(List<Seo> seos){
+		Map<String, List<Seo>> listMap = new HashMap<String, List<Seo>>();
+		for(Seo s : seos){
+			String searchType = s.getSearchtype().toString();
+			if(!listMap.containsKey(searchType)){
+				List<Seo> list = new ArrayList<Seo>();
+				list.add(s);
+				listMap.put(searchType, list);
+			}else{
+				listMap.get(searchType).add(s);
+			}
+		}
+		return listMap;
 	}
 }

@@ -92,6 +92,10 @@ public class Constant {
 	//云排名冻结天数
 	public static final int SEOFREEZEDAY = 90;
 	
+	//云排名五页外、代理端给用户添加关键词时使有
+	public static final int SEO_OEM_RANK_OUTFIVE = 60;
+	//云排名客户端
+	public static final int SEO_CLIENT_RANK_DEFAULT = 0;
 	//结算状态-未结算
 	public static final int SETTLE_STATUS_WAITING = 1;
 	//结算状态-未达标

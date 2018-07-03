@@ -1,27 +1,21 @@
 package com.soqi.soqioem;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import com.soqi.SoqioemApplication;
 import com.soqi.oem.gentry.Student;
-import com.soqi.system.service.OemCountService;
-import com.soqi.system.service.StudentTService2;
-import com.soqi.system.service.UserService;
+import com.soqi.system.service.StudentTService;
 
-@RunWith(SpringRunner.class)
-@ActiveProfiles(value="dev")
-@SpringBootTest
-@EnableTransactionManagement
+//@RunWith(SpringRunner.class)
+//@ActiveProfiles(value="dev")
+//@SpringBootTest
+//@EnableTransactionManagement
 //@Transactional
 public class SoqioemApplicationTests {
+	//@Autowired
+    //private StudentTService2 ss;
 	/*@Autowired
-    private StudentTService2 ss;
-	@Autowired
     private STService sf;
 	@Autowired
     private UserService us;*/
@@ -49,5 +43,47 @@ public class SoqioemApplicationTests {
 		us.insert2(st);
 		System.out.println(st.toString());
 	}*/
-
+	/*@Test
+	public void contextLoads() {
+		for (int i=0;i<10;i++){
+			ss.produceTask();
+			ss.comsumerTask();
+		}
+	}*/
+	public static void main(String args[]){
+		ConfigurableApplicationContext context=SpringApplication.run(SoqioemApplication.class, args);
+		StudentTService ss =context.getBean(StudentTService.class);
+		/*for (int i=0;i<200;i++){
+			Student st  = new Student();
+			st.setId(1);
+			st.setUsername("你好");
+			ss.insert1(st, i);
+			//ss.produceTask(i);
+			//ss.comsumerTask(st, i);
+		}*/
+		Student st  = new Student();
+		st.setId(1);
+		st.setUsername("你好");
+		ss.insert1(st, 0);
+		/*Student st  = new Student();
+		st.setId(1);
+		st.setUsername("你好");
+		Student st2  = new Student();
+		st2.setId(1);
+		st2.setUsername("你好");
+		Student st3  = new Student();
+		st3.setId(1);
+		st3.setUsername("你好");
+		List list = new ArrayList();
+		List list2 = new ArrayList();
+		list2.add(st);
+		list2.add(st2);
+		List list3 = new ArrayList();
+		list3.add(st3);
+		list.addAll(list3);
+		list.addAll(list2);
+		st3.setId(3);
+		System.out.println(list);
+		System.out.println(list3);*/
+	}
 }

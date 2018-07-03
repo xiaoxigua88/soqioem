@@ -121,12 +121,15 @@ public class OemSeoController extends BaseController{
 			return rs;
 		}
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.bathConvertDiffSeo(req, user.getUserid(), url, keyword, searchType);
-		int count = seoService.batchSameSeoInsert(seos);
-		if(count >0){
-			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
+		Map<String, List<Seo>> listMap = SeoWrapper.bathConvertDiffSeo(req, user.getUserid(), url.trim().split("\r\n"), keyword.trim().split("\r\n"), searchType);
+		if(listMap.isEmpty()){
+			return ResultFontJS.error("搜索引擎不能为空");
 		}
-		return ResultFontJS.error("不同价关键词导入失败");
+		seoService.batchSameSeoInsert(listMap);
+		
+		//return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
+		
+		return ResultFontJS.ok("批量添加关键词成功");
 	}
 	
 	/**功能:相同价导入
@@ -218,12 +221,13 @@ public class OemSeoController extends BaseController{
 			return rs;
 		}
 		//封装seo对像
-		List<Seo> seos = SeoWrapper.bathConvertSameSeo(req, user.getUserid(), url, keyword, searchType);
-		int count = seoService.batchSameSeoInsert(seos);
-		if(count >0){
-			return ResultFontJS.ok("提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！");
+		Map<String, List<Seo>> listMap = SeoWrapper.bathConvertSameSeo(req, user.getUserid(), url.trim().split("\r\n"), keyword.trim().split("\r\n"), searchType);
+		if(listMap.isEmpty()){
+			return ResultFontJS.error("搜索引擎不能为空");
 		}
-		return ResultFontJS.error("同价关键词导入失败");
+		seoService.batchSameSeoInsert(listMap);
+		//return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
+		return ResultFontJS.ok("批量添加关键词成功");
 	}
 	
 	/**代理端关键词（批量/单个）停止
