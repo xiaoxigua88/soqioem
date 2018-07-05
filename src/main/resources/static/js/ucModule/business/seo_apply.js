@@ -186,18 +186,18 @@ $(function() {
                     $("#td_status_" + taskId).html("<span class=\"sq-state-icon state-icon-fail\"></span>");
                 }
                 else if (json.status == 3) {
-                    $("#td_costby_" + taskId).html("前" + json.toRank + "名按天");
+                    $("#td_costby_" + taskId).html("前" + json.torank + "名按天");
                     $("#td_price_" + taskId).html("￥" + json.price);
                     $("#td_status_" + taskId).html("<span class=\"sq-state-icon sq-state-text state-icon-waiting\">待付款</span>");
                 }
                 else {
                     $("#tr_" + taskId).remove();
                 }
-                if (json.rankLast > 50) {
+                if (json.ranklast > 50) {
                     $("#td_rank_" + taskId).html("<span class=\"text-muted\">五页外</span>");
                 }
-                else if (json.rankLast > 0) {
-                    $("#td_rank_" + taskId).html(json.rankLast);
+                else if (json.ranklast > 0) {
+                    $("#td_rank_" + taskId).html(json.ranklast);
                 }
                 $("#chk_" + taskId).data("status", json.status);
                 $("#chk_" + taskId).data("price", json.price);

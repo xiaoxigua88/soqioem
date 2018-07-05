@@ -85,11 +85,30 @@
       "Status" = #{status,jdbcType=INTEGER}
     where TaskId = #{taskid,jdbcType=BIGINT}
   </update>
+  <update id="seoRankUpdateByPlatformId" parameterType="com.soqi.oem.gentry.Seo" >
+    update Seo
+    set
+      RankFirst = #{rankfirst,jdbcType=INTEGER},
+      RankLast = #{ranklast,jdbcType=INTEGER},
+      RankLastChange = #{ranklastchange,jdbcType=INTEGER},
+      RankUpdateTime = #{rankupdatetime,jdbcType=TIMESTAMP}
+    where 1 =1 
+    <choose> 
+	    <when test="apiranktaskid != null">
+	    and ApiRankTaskId = #{apiranktaskid}
+	    </when>
+	    <when test="apiwatchtaskid != null">
+	    and ApiWatchTaskId = #{apiwatchtaskid}
+	    </when>
+	    <otherwise>
+	    </otherwise>
+	 </choose>
+  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
     RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
     CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
-    ErrorMsg, "Status"
+    ErrorMsg, Status
     from Seo
     where TaskId = #{taskid,jdbcType=BIGINT}
   </select>
@@ -102,13 +121,33 @@
   </select>
   
   <select id="selectByTaskids" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select TaskId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status
+    select TaskId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status, Keyword, Url
     from Seo
     where TaskId in
-    <foreach item="taskid" collection="taskids" open="(" separator="," close=")">
+    <foreach item="taskid" collection="array" open="(" separator="," close=")">
             #{taskid}
     </foreach>
     order by SearchType desc
+  </select>
+  
+  <select id="selectByApiTaskId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select TaskId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status, RankUpdateTime,
+    RankLast, RankFirst, RankLastChange
+    from Seo
+    where 1=1
+    <choose> 
+	    <when test="apiranktaskid != null">
+	    and ApiRankTaskId = #{apiranktaskid}
+	    </when>
+	    <when test="apipricetaskid != null">
+	    and ApiPriceTaskId = #{apipricetaskid}
+	    </when>
+	    <when test="apiwatchtaskid != null">
+	    and ApiWatchTaskId = #{apiwatchtaskid}
+	    </when>
+	    <otherwise>
+	    </otherwise>
+	</choose>
   </select>
   
   <select id="qrySeoManageListByUserId" resultMap="BaseResultMap" parameterType="map">
@@ -168,7 +207,7 @@
 						'',
 					</otherwise>
 				</choose>
-				#{item.searchtype},#{item.rankfirst},#{item.ranklast},0,sysdatetime(),#{item.addtime},1,
+				#{item.searchtype},#{item.rankfirst},#{item.ranklast},0,#{item.rankupdatetime},#{item.addtime},1,
 				0,#{item.buytime},0,
 				0,0,#{item.costtime},
 				#{item.settlehour},#{item.settletime},#{item.settlestart},
@@ -253,8 +292,8 @@
 	      <if test="item.apiwatchtaskid!=null">
 	      	ApiWatchTaskId = #{item.apiwatchtaskid,jdbcType=BIGINT}
 	      </if>
-	      where TaskId = #{item.taskid,jdbcType=INTEGER}
 	      </trim>
+	      where TaskId = #{item.taskid,jdbcType=INTEGER}
       </foreach>
   </update>
   

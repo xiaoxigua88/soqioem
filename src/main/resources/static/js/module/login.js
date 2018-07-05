@@ -1,39 +1,5 @@
 $(function() {
-    //创建随机数，实现背景墙随机轮换
-    var createStartIndex = function() {
-        var indexCeiling = $(".pattern-area").children().length;
-        return Math.floor(Math.random() * indexCeiling);
-    };
-
-    var fadeInDuration = 800;
-    var bgContainer = $(".bg-back");
-    var $bgSwitchItem = bgContainer.children();
-    patternSwitch($(".pattern-area"), {
-        indexContainer: $(".bg-change"),
-        switchItemCurrentClass: "switch--current",
-        indexPointerCurrentClass: "bg-change--current",
-        indexUlClass: "",
-        indexPointClass: "",
-        switchInterval: 7000,
-        fadeInDuration: fadeInDuration,
-        startIndex: createStartIndex(),
-        beforeSwitchHandle: function(index) {
-
-            $bgSwitchItem.fadeOut(fadeInDuration);
-
-            if (index == 0) {
-                fadeInDuration = 200;
-            } else {
-                fadeInDuration *= 0.6;
-            }
-            $bgSwitchItem.eq(index).fadeIn(fadeInDuration);
-
-        },
-        initSwitchHandle: function(index) {
-            $bgSwitchItem.hide();
-            $bgSwitchItem.eq(index).show();
-        }
-    });
+    
     $(".show-captcha")[0].click();
 
     //表单验证

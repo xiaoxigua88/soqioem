@@ -23,4 +23,6 @@ public interface SeopriceMapper {
     List<Seoprice> selectByTaskids(Integer[] taskid);
 
     int updateByPrimaryKey(Seoprice record);
+    
+    int batchUpdateFormSeoPrice(List<Seoprice> seoPrices);
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,8 +111,12 @@ public class ClientSeoController extends BaseController{
 		if(StringUtils.isBlank(taskId)){
 			return ResultFontJS.error("刷新任务的ID号不能为空");
 		}
+		Seo seo = seoService.qrySeoByTaskid(Long.valueOf(taskId));
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("status", 1);
+		map.put("status", seo.getStatus());
+		map.put("torank", seo.getTorank());
+		map.put("ranklast", seo.getRanklast());
+		map.put("price", seo.getPrice());
 		return ResultFontJS.ok(map);
 	}
 	
@@ -142,7 +147,7 @@ public class ClientSeoController extends BaseController{
 		Map<String, List<Seo>> listMap = SeoWrapper.singleUroToSeo(this.getOemuser().getUserid(), url, keyword.trim().split("\r\n"), searchType);
 		int count = seoService.addSeoTask(listMap);
 		if(count >0){
-			return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
+			return ResultFontJS.ok("添加关键词成功"/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
 		return ResultFontJS.error("添加关键词查询失败");
 	}
@@ -173,7 +178,7 @@ public class ClientSeoController extends BaseController{
 		Map<String, List<Seo>> listMap = SeoWrapper.multipleUroToSeo(this.getOemuser().getUserid(), url.trim().split("\r\n"), keyword.trim().split("\r\n"), searchType);
 		int count = seoService.addSeoTask(listMap);
 		if(count >0){
-			return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
+			return ResultFontJS.ok("添加关键词成功"/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
 		return ResultFontJS.error("添加关键词查询失败");
 	}

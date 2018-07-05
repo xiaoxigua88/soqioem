@@ -50,6 +50,16 @@ public class SeoService {
 		return SeoWrapper.dealWithSeoResult(seoResult);
 	}
 	
+	/**客户端查询关键词
+	 * @param userid
+	 * @param start
+	 * @param size
+	 * @return
+	 */
+	public Seo qrySeoByTaskid(Long taskid){
+		return seoMapper.selectByPrimaryKey(taskid);
+	}
+	
 	/**客户查询云排名任务管理数目
 	 * @param userid
 	 * @return
@@ -108,6 +118,8 @@ public class SeoService {
 				seos.get(i).setTaskid(taskid - (count - i -1));
 			}
 		}
+		//生成关键词价格数据
+		piceMapper.batchInsertFormSeo(seos);
 		//异步调用生成服务ID
 		seoDoBusiness.createServiceIdOfRP(listMap, true);
 		return count;
@@ -117,7 +129,7 @@ public class SeoService {
 	@Transactional("primaryTransactionManager")
 	public void deleteSeoTasks(Integer[] taskIds){
 		//删除关键词价表数据
-		 piceMapper.batchDeleteByTaskIds(taskIds);
+		piceMapper.batchDeleteByTaskIds(taskIds);
 		//删除关键词表数据
 		seoMapper.batchDel(taskIds);
 		
@@ -173,6 +185,8 @@ public class SeoService {
 		useraccountMapper.batchUpdateAccountByDiffUser(actList);
 		//更新关键词任务的状态停止
 		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_STOP, BigDecimal.ZERO, null);
+		//云服务上的任务也要做相应的删除操作
+		seoDoBusiness.keywordRankDel(taskIds);
 	}
 	
 	
@@ -283,6 +297,8 @@ public class SeoService {
 		useraccountMapper.batchUpdateAccountByDiffUser(actList);
 		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
 		seoMapper.updateStatusByListSeo(seoList);
+		//调用异步服务获取云排名监控服务ID
+		seoDoBusiness.createServiceIdOfW(taskIds);
 	}
 	/**功能：用户购买关键启时，需要对自身充值金额进地检查、资金不够要提示
 	 * @param taskIds

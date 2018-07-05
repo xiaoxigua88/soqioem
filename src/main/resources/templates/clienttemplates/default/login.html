@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/common/common.css}"/>
     <link rel="stylesheet" th:href="@{/lib/framework/jquery-ui-custom/jquery-ui-1.11.4.custom.min.css}" />
     <link rel="stylesheet" th:href="@{/lib/plugin/jQuery/dialog/skins/homeDialog.css}">
-    <link rel="stylesheet" th:href="@{/css/module/login.css}"/>
+	<link rel="stylesheet" th:href="@{/css/module/admin.css}"/>
     <link rel="stylesheet" th:href="@{/lib/plugin/jQuery/formValidator/themes/ArrowSolidBox/style/style.css}">
     <script type="text/javascript" charset="utf-8" th:src="@{/lib/framework/jquery/jquery-1.12.2.min.js}"></script>
     <script type="text/javascript" charset="utf-8" th:src="@{/js/public.js}"></script>
@@ -21,252 +21,65 @@
     <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/formValidator/jquery.formValidator.Regex.js}"></script>
     <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/dialog/jquery.dialog.js}"></script>
     <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/jQuery/dialog/plugins/iframeTools.js}"></script>
-    <script type="text/javascript" charset="utf-8" th:src="@{/lib/plugin/patternSwitch.js}"></script>
     <script type="text/javascript" charset="utf-8" th:src="@{/js/Module/login.js}"></script>
-    
 </head>
 <body>
-	<!-- header -->
-	<div class="header-container">
-	    <div class="banner-box">
-	        <div class="top-nav header-main">
-	            <div class="global-topbar default-transition-fast">
-	                <div class="auto">
-	                    <div class="welcome-container" id="userinfoContainer">
-	                        <div class="logout-container">
-	                            <p class="slogan">欢迎访问优帮云，</p>
-	                            <a href="" class="login-button">请登录</a>
-	                            <a href="" class="register-button">免费注册</a>
-	                        </div>
-	                        <div class="userinfo-container" id="">
-	                            <div class="username-container" id="usernameContainer">
-	                                <a href="" class="username-text" id="usernameText"
-	                                   target="_blank">
-	                                    <span class="username-text-show text-overflow" id="usernameShow"></span>
-	                                    <span id="userId"></span>
-	                                </a>
-	                                <span class="dropdown-triangle"></span>
-	                            </div>
-	                            <div class="user-panel hide" id="userPanel">
-	                                <div class="user-panel-header">
-	                                    <div class="user-money">金额：￥<span id="userMoney">0.00</span></div>
-	                                    <div class="user-gold">优币：<span id="userGold">0</span>个</div>
-	                                </div>
-	                                <div class="user-panel-body">
-	                                    <ul class="shortcut-menu-list">
-	                                        <li class="shortcut-menu-item">
-	                                            <a href="" target="_blank">资金充值</a>
-	                                            <a class="pull-right" href="" target="_blank">优币购买</a>
-	                                        </li>
-	                                        <li class="shortcut-menu-item">
-	                                            <a href="" target="_blank">消息中心</a>
-	                                            <span class="user-record-count" id="msgCount">-</span>
-	                                        </li>
-	                                        <li class="shortcut-menu-item">
-	                                            <a href="#a_null" target="_blank">我的工单</a>
-	                                            <a class="pull-right" href="">安全退出</a>
-	                                        </li>
-	                                    </ul>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	
-	                    <div class="topbar-right">
-	                        <a href="" class="link-items">控制台</a>
-	                        <span class="link-spacing"></span>
-	                        <a href="" class="link-items">优帮学院</a>
-	                        <span class="link-spacing"></span>
-	                        <a href="#a_null" class="link-items mobile-version">
-	                            微信公众号
-	                            <span class="mobile-qrcode"></span>
-	                        </a>
-	                        <span class="link-spacing"></span>
-	                        <a href="#a_null" class="link-items">投诉建议</a>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="header default-transition-fast">
-	                <div class="auto">
-	                    <div class="header-logo">
-	                        <a href="" class="logo hide-text">优帮云</a>
-	                        <a href=""
-	                           class="slogan-gif hide-text">企业级云服务器、云主机、云虚拟主机，云服务器租用、服务器托管等云计算相关产品供应商</a>
-	                    </div>
-	                    <div class="header-nav">
-	                        <ul class="">
-	                            <li class="nav-1 header-nav-li">
-	                                <a href="">首页</a>
-	                            </li>
-	                            <li class="nav-2 header-nav-li">
-	                                <a>云产品</a>
-	                                <i class="pop-arrow" id="prodArrow"></i>
-	                                <ul class="pop-list prod-list">
-	                                    <li><a href="">优帮云排名</a></li>
-	                                    <li><a href="">优帮云建站</a></li>
-	                                    <li><a href="">优帮云站通</a></li>
-	                                </ul>
-	                            </li>
-	                            <li class="nav-3 header-nav-li header-act-nav">
-	                                <a>数据云查询</a>
-	                                <i class="pop-arrow"></i>
-	                                <ul class="pop-list">
-	                                    <li><a href="">关键词价格估算</a></li>
-	                                    <li><a href="">关键词指数查询</a></li>
-	                                    <li><a href="">网站索引挖掘</a></li>
-	                                    <li><a href="">网站排名挖掘</a></li>
-	                                </ul>
-	                            </li>
-	                            <li class="nav-4 header-nav-li">
-	                                <a>数据云监控</a>
-	                                <i class="pop-arrow"></i>
-	                                <ul class="pop-list">
-	                                    <li><a href="">关键词排名查询</a></li>
-	                                    <li><a href="">网址收录查询</a></li>
-	                                    <li><a href="">域名SEO查询</a></li>
-	                                    <li><a href="">域名备案查询</a></li>
-	                                </ul>
-	                            </li>
-	                            <li class="nav-5 header-nav-li">
-	                                <a>应用场景</a>
-	                                <i class="pop-arrow" id="solutionArrow"></i>
-	                                <ul class="pop-list">
-	                                    <li><a href="">按效果SEO系统</a></li>
-	                                    <li><a href="">网站优化监测</a></li>
-	                                    <li><a href="">企业官网营销</a></li>
-	                                    <li><a href="">模板网站建设</a></li>
-	                                    <li><a href="">域名SEO评估</a></li>
-	                                </ul>
-	                            </li>
-	                            <li class="nav-6 header-nav-li">
-	                                <a href="">优帮资讯</a>
-	                                <i class="pop-arrow" id="helpArrow"></i>
-	                                <ul class="pop-list">
-	                                    <li><a href="">新闻公告</a></li>
-	                                    <li><a href="">最新活动</a></li>
-	                                    <li><a href="">行业资讯</a></li>
-	                                    <li><a href="">优帮学院</a></li>
-	                                </ul>
-	                            </li>
-	                            <li class="nav-7 header-nav-li">
-	                                <a href="">关于我们</a>
-	                                <i class="pop-arrow" id="aboutArrow"></i>
-	                                <ul class="pop-list">
-	                                    <li><a href="">关于我们</a></li>
-	                                    <li><a href="">招贤纳士</a></li>
-	                                    <li><a href="">联系我们</a></li>
-	                                </ul>
-	                            </li>
-	                        </ul>
-	                        <div class="mask-white">
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
+	<div class="new-login-wrap">
+	    <div class="login-head">
+		    <div class="auto login-head-wrap clearfix">
+			    <div class="head-logo pull-left">
+				    <img  class="head-logo-img" src="/img/adModule/header_logo_green.png" th:attr="src=@{/img/adModule/header_logo_green.png},title=#{logo},alt=#{logo}" width="197" height="44" />
+				    <span class="head-logo-title">用户中心</span>
+			    </div>
+			    <div class="head-friend-link pull-right">
+				    <a class="head-link border-none" th:href="${domain_main}">优帮云官网</a>
+				    <a class="head-link" th:href="${domain_uc}">用户中心</a>
+			    </div>
+		    </div>
 	    </div>
-	</div>
-	<!-- header end-->
-	
-	<div class="login-main-area">
-	    <div class="bg-back">
-	        <div class="bg-back-banner bg-back-1 bg-back-default"></div>
-	        <div class="bg-back-banner bg-back-2"></div>
-	        <div class="bg-back-banner bg-back-3"></div>
-	    </div>
-	    <div class="auto login-inner">
-	        <div class="clearfix">
-	            <div class="pattern-area">
-	                <div class="login-pattern pattern-1"></div>
-	                <div class="login-pattern pattern-2"></div>
-	                <div class="login-pattern pattern-3"></div>
-	
-	            </div>
-	            <div class="login-main pie-for-element">
-	                <div class="login-title">
-	                    用户登录
-	                </div>
-	                <form id="loginForm" method="post" action="/loginForm" onsubmit="return false">
-	                    <div class="login-form-item form-item-bg form-item-bg-user">
-	                        <input type="text" name="userName" placeholder="手机号 / 已认证邮箱" id="userName" class="input-focus-handle" value="15712345678"/>
-	                        <div id="emailAutoComplete" class="email-complete-list"></div>
-	                    </div>
-	                    <div class="login-form-item form-item-bg form-item-bg-lock">
-	                        <input type="password" name="password" placeholder="登录密码" id="password" class="input-focus-handle" value="12345678"/>
-	                    </div>
-	                    <div class="captcha-deck clearfix">
-	                        <div class="login-form-item form-item-bg form-item-bg-captcha captcha-item">
-	                            <input type="text" name="verifycode" placeholder="验证码" maxlength="5" id="verifyCode" class="input-focus-handle"/>
-	                        </div>
-	                        <div class="captcha-box">
-	                            <img class="show-captcha" src="" alt=""/>
-	                            <span class="refresh-captcha"></span>
-	                        </div>
-	                    </div>
-	                    <div><input type="hidden" name="userType" value="1"/></div>
-	                    <input type="submit" value="登 录" id="loginSubmit"
-	                           class="login-submit default-transition default-font"/>
-	                </form>
-	                <div class="go-reg">
-	                    <a href="${domain_uc}/getpwd.aspx">忘记密码？</a>&nbsp;&nbsp;&nbsp;&nbsp;还没有账号？立即<a
-	                        href="${domain_uc}/register.aspx">免费注册</a>
-	                </div>
-	            </div>
+        <div class="login-main-area">
+	        <div class="bg-back"></div>
+	        <div class="auto login-inner">
+		        <div class="clearfix">
+			        <div class="pattern-area">
+				        <div class="login-pattern"></div>
+			        </div>
+			        <div class="login-main pie-for-element">
+				        <div class="login-title">
+	                   		 用户登录
+	                	</div>
+		                <form id="loginForm" method="post" action="/loginForm" onsubmit="return false">
+		                    <div class="login-form-item form-item-bg form-item-bg-user">
+		                        <input type="text" name="userName" placeholder="手机号 / 已认证邮箱" id="userName" class="input-focus-handle" value="15712345678"/>
+		                        <div id="emailAutoComplete" class="email-complete-list"></div>
+		                    </div>
+		                    <div class="login-form-item form-item-bg form-item-bg-lock">
+		                        <input type="password" name="password" placeholder="登录密码" id="password" class="input-focus-handle" value="12345678"/>
+		                    </div>
+		                    <div class="captcha-deck clearfix">
+		                        <div class="login-form-item form-item-bg form-item-bg-captcha captcha-item">
+		                            <input type="text" name="verifycode" placeholder="验证码" maxlength="5" id="verifyCode" class="input-focus-handle"/>
+		                        </div>
+		                        <div class="captcha-box">
+		                            <img class="show-captcha" src="" alt=""/>
+		                            <span class="refresh-captcha"></span>
+		                        </div>
+		                    </div>
+		                    <div><input type="hidden" name="userType" value="1"/></div>
+		                    <input type="submit" value="登 录" id="loginSubmit"
+		                           class="login-submit default-transition default-font"/>
+		                </form>
+		                <div class="go-reg">
+		                    <a href="${domain_uc}/getpwd.aspx">忘记密码？</a>&nbsp;&nbsp;&nbsp;&nbsp;还没有账号？立即<a
+		                        href="${domain_uc}/register.aspx">免费注册</a>
+		                </div>
+			        </div>
+		        </div>
 	        </div>
-	        <div class="bg-change">
-	        </div>
-	    </div>
-	</div>
-	<div id="captchaCheck" class="captcha-box hide">
-    <table>
-        <tr>
-            <th>验证码：</th>
-            <td>
-                <div><input type="text" name="captcha" id="captcha" class="input" style="width:120px"/>&nbsp;&nbsp;<img
-                        class="show-captcha" src=""/></div>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>
-                <div class="tip">
-                    <div id="captchaTip"></div>
-                </div>
-            </td>
-        </tr>
-    </table>
-	</div>
-	<!-- buyFooter -->
-<div class="buyfooter">
-    <div class="auto clearfix">
-        <div class="buyfooter-nav">
-            <a class="first" href="${domain_main}/about.html">关于我们</a>
-            <a href="${domain_main}/notice.html">新闻动态</a>
-            <a href="${domain_main}/school.html">优帮学院</a>
-            <a href="${domain_main}/industry.html">行业资讯</a>
-            <a href="${domain_main}/action.html">最新活动</a>
-            <a href="${domain_main}/contact.html">联系我们</a>
-            <a href="${domain_main}/join.html">招贤纳士</a>
-            <a href="${domain_main}/law.html">法律声明</a>
-            <a href="${domain_main}/agreement.html">服务协议</a>
         </div>
-        <div class="footer-buyfooter">
-            <p>Copyright &copy; 2012-2017 youbangyun.com All Rights Reserved. 优帮云 版权所有</p>
-            <p>杭州搜骐网络科技有限公司 地址：浙江省杭州市余杭区联胜路10号</p>
-            <p>ICP备案：浙ICP备15036601号&nbsp;&nbsp;&nbsp;&nbsp;浙公网安备 33011002012960号</p>
-        </div>
-    </div>
-</div>
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?f9577846c648a6e8ace53d64ddc559bf";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-<!-- footer end -->
+	    <div class="login-bottom">
+		    <p class="bottom-copyright">©2012-2017 杭州搜骐网络科技有限公司 版权所有 浙ICP备15036601号-2</p>
+	    </div>
+	</div>
 </body>
 </html>

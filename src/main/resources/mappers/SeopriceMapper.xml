@@ -41,10 +41,26 @@
     update SeoPrice
     set PriceOri = #{priceori,jdbcType=DECIMAL},
       Price = #{price,jdbcType=DECIMAL}
+      PriceOem = #{priceoem,jdbcType=DECIMAL}
     where TaskId = #{taskid,jdbcType=BIGINT}
       and FromRank = #{fromrank,jdbcType=INTEGER}
       and ToRank = #{torank,jdbcType=INTEGER}
   </update>
+  
+  <update id="batchUpdateFormSeoPrice" parameterType="java.util.List" >
+  	<foreach collection="list" separator=";" item="item">
+  	  update SeoPrice
+      set 
+	      PriceOri = #{item.priceori,jdbcType=DECIMAL},
+	      Price = #{item.price,jdbcType=DECIMAL},
+	      PriceOem = #{item.priceoem,jdbcType=DECIMAL}
+      where 
+	      TaskId = #{item.taskid,jdbcType=BIGINT}
+	      and FromRank = #{item.fromrank,jdbcType=INTEGER}
+	      and ToRank = #{item.torank,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select TaskId, FromRank, ToRank, PriceOri, Price
     from SeoPrice

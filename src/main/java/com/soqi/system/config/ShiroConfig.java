@@ -85,7 +85,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/oemManagerLogin", "anon");
 		filterChainDefinitionMap.put("/loginForm", "anon");
 		filterChainDefinitionMap.put("/verifyimg", "anon");
-		filterChainDefinitionMap.put("/oemApi", "anon");
+		filterChainDefinitionMap.put("/oemapi", "anon");
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/js/**", "anon");
 		filterChainDefinitionMap.put("/lib/**", "anon");

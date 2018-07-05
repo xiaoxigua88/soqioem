@@ -43,6 +43,10 @@ public class SeoWrapper {
 				//设置初始排名和最新排名初始化、客户端给默认值
 				seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
 				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
+				//设置计费标准排名
+				seo.setFromrank(Constant.SEO_CLIENT_RANK_FROM);
+				seo.setTorank(Constant.SEO_CLIENT_RANK_TO);
+				
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
@@ -51,8 +55,21 @@ public class SeoWrapper {
 				//结算完成时间、结算开始时间
 				seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+				//排名更新时间
+				seo.setRankupdatetime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//检测中
 				seo.setStatus(Constant.SEO_STATUS_CHECKING);
+				//价格部分对像生成
+				List<Seoprice> listspr = new ArrayList<Seoprice>();
+				Seoprice spr1 = new Seoprice();
+				spr1.setFromrank(Constant.SEO_CLIENT_RANK_FROM);
+				spr1.setTorank(Constant.SEO_CLIENT_RANK_TO);
+				spr1.setPrice(BigDecimal.ZERO);
+				spr1.setPriceoem(BigDecimal.ZERO);
+				spr1.setPriceori(BigDecimal.ZERO);
+				listspr.add(spr1);
+				seo.setListspr(listspr);
+				
 				seoList.add(seo);
 			}
 			listMap.put(st, seoList);
@@ -84,6 +101,9 @@ public class SeoWrapper {
 			//设置初始排名和最新排名初始化、客户端给默认值
 			seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
 			seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
+			//设置计费标准排名
+			seo.setFromrank(Constant.SEO_CLIENT_RANK_FROM);
+			seo.setTorank(Constant.SEO_CLIENT_RANK_TO);
 			seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 			//消费时间
 			seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
@@ -92,8 +112,20 @@ public class SeoWrapper {
 			//结算完成时间、结算开始时间
 			seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 			seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+			//排名更新时间
+			seo.setRankupdatetime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 			//检测中
 			seo.setStatus(Constant.SEO_STATUS_CHECKING);
+			//价格部分对像生成
+			List<Seoprice> listspr = new ArrayList<Seoprice>();
+			Seoprice spr1 = new Seoprice();
+			spr1.setFromrank(Constant.SEO_CLIENT_RANK_FROM);
+			spr1.setTorank(Constant.SEO_CLIENT_RANK_TO);
+			spr1.setPrice(BigDecimal.ZERO);
+			spr1.setPriceoem(BigDecimal.ZERO);
+			spr1.setPriceori(BigDecimal.ZERO);
+			listspr.add(spr1);
+			seo.setListspr(listspr);
 			seoList.add(seo);
 		}
 		listMap.put(searchType, seoList);
@@ -129,8 +161,8 @@ public class SeoWrapper {
 				seo.setUserid(userId);
 				seo.setAddtime(new Date());
 				//设置初始排名和最新排名初始化、代理端给默认值
-				seo.setRankfirst(Constant.SEO_OEM_RANK_OUTFIVE);
-				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
+				seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
+				seo.setRanklast(Constant.SEO_OEM_RANK_OUTFIVE);
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
@@ -139,6 +171,8 @@ public class SeoWrapper {
 				//结算完成时间、结算开始时间
 				seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+				//排名更新时间
+				seo.setRankupdatetime(new Date());
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
 				//关键词价格
@@ -217,8 +251,8 @@ public class SeoWrapper {
 				seo.setAddtime(new Date());
 				seo.setBuytime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//设置初始排名和最新排名初始化、代理端给默认值
-				seo.setRankfirst(Constant.SEO_OEM_RANK_OUTFIVE);
-				seo.setRanklast(Constant.SEO_CLIENT_RANK_DEFAULT);
+				seo.setRankfirst(Constant.SEO_CLIENT_RANK_DEFAULT);
+				seo.setRanklast(Constant.SEO_OEM_RANK_OUTFIVE);
 				//消费时间
 				seo.setCosttime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				//结算时间点、取配置
@@ -226,6 +260,8 @@ public class SeoWrapper {
 				//结算完成时间、结算开始时间
 				seo.setSettletime(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
 				seo.setSettlestart(DateUtil.parse("3000-01-01 00:00:00", DateUtil.DATE_TIME_FORMAT));
+				//排名更新时间
+				seo.setRankupdatetime(new Date());
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
 				//关键词价格

@@ -22,8 +22,12 @@ public interface SeoMapper {
     List<Seo> selectAll();
     
     List<Seo> selectByTaskids(Integer[] taskid);
+    
+    List<Seo> selectByApiTaskId(@Param("apiranktaskid") Long apiranktaskid, @Param("apipricetaskid") Long apipricetaskid, @Param("apiwatchtaskid") Long apiwatchtaskid);
 
     int updateByPrimaryKey(Seo record);
+    
+    int seoRankUpdateByPlatformId(Seo record);
     
     int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount, @Param("buytime") Date buytime);
     

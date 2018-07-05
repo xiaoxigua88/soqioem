@@ -195,7 +195,7 @@ $(function() {
             ok: function() {
                 SQ.post({
                     data: { action: "Delete", taskIds: taskId },
-                    url: ""
+                    url: "/oemmanager/business/seo/batchdel?action=Delete"
                 });
             }
         });

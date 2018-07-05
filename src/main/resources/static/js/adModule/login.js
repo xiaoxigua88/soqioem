@@ -20,8 +20,8 @@
                     } else {
                         SQ.warn(data.msg);
                         if (data.msg) {
-                            $("#" + json.name).val("");
-                            $("#" + json.name).focus();
+                            $("#" + data.name).val("");
+                            $("#" + data.name).focus();
                         }
                         $(".show-captcha")[0].click();
                         $("#verifyCode").val("");

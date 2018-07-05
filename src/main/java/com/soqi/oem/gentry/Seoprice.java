@@ -19,7 +19,7 @@ public class Seoprice implements Serializable {
     private BigDecimal price;
     
     private BigDecimal priceoem;
-
+    
     private static final long serialVersionUID = 1L;
 
     public Long getTaskid() {

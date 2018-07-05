@@ -1,10 +1,14 @@
 package com.soqi.common.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.soqi.oem.gentry.Role;
 import com.soqi.oem.gentry.Seo;
 
@@ -40,6 +44,20 @@ public class BusinessUtil {
 		return map;
 	}
 	
+	/**从seo对象中转化平台接口需要taskid
+	 * @param seos
+	 * @return
+	 */
+	public static Map<String,Integer[]> convertToPlateTaskids(List<Seo> seos){
+		Map<String,Integer[]> map = new HashMap<String,Integer[]>();
+		Integer[] taskids = new Integer[seos.size()];
+		for (int i = 0; i<seos.size(); i++) {
+			taskids[i] = seos.get(i).getApiwatchtaskid().intValue();
+		}
+		map.put("platformTaskids", taskids);
+		return map;
+	}
+	
 	/**Api接口任务id转化
 	 * @param seos
 	 * @param cloudTaskids
@@ -62,4 +80,21 @@ public class BusinessUtil {
 			}
 		}
 	}
+	
+	/**对返回的taskId结果集进行包装
+	 * @param taskIds
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public static List<Integer> parseTaskIdResult(JSONArray cloudTaskids){
+		List<Integer> task = new ArrayList<Integer>();
+		List<List> cloudTaskList = cloudTaskids.toJavaList(List.class);
+		for(List l : cloudTaskList){
+			if(!StringUtils.equals(l.get(1).toString(), "true")){
+				task.add((Integer) l.get(0));
+			}
+		}
+		return task;
+	}
+	
 }

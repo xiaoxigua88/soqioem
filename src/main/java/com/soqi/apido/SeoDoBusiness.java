@@ -118,6 +118,34 @@ public class SeoDoBusiness {
 		}
 	}
 	
+	/**删除数据平台任务
+	 * @param taskIds
+	 * @return
+	 */
+	@Async("myTaskAsyncPool")
+	public List<Integer> keywordRankDel(Integer[] taskIds){
+		List<Seo> seos = sm.selectByTaskids(taskIds);
+		Integer[] platformTaskids = BusinessUtil.convertToPlateTaskids(seos).get("platformTaskids");
+		int businessType = 2006;
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("businessType", businessType);
+		dataMap.put("time", DateUtil.getSecondTimestampTwo(new Date()));
+		dataMap.put("taskId", platformTaskids);
+		String data = JSONObject.toJSONString(dataMap);
+		JSONObject result = apiDo("DelSearchTask", data);
+		if(result.getInteger("xCode") == 0){
+			List<Integer> fail = BusinessUtil.parseTaskIdResult(result.getJSONArray("xValue"));
+			if(!fail.isEmpty()){
+				logger.info("删除数据平台任务失败，失败任务ID为" + fail.toString() + "请检查任务ID的一致性");
+				return fail;
+			}
+			return new ArrayList<Integer>();
+		}else{
+			return new ArrayList<Integer>();
+		}
+	}
+	
+	
 	/** 功能：查询关键词排名云监控的所有任务
 	 * @return
 	 */

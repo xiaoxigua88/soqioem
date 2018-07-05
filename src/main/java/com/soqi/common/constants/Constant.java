@@ -96,10 +96,28 @@ public class Constant {
 	public static final int SEO_OEM_RANK_OUTFIVE = 60;
 	//云排名客户端
 	public static final int SEO_CLIENT_RANK_DEFAULT = 0;
+	//云排名首页排名起始
+	public static final int SEO_CLIENT_RANK_FROM = 1;
+	//云排名首页终止
+	public static final int SEO_CLIENT_RANK_TO = 10;
 	//结算状态-未结算
 	public static final int SETTLE_STATUS_WAITING = 1;
 	//结算状态-未达标
 	public static final int SETTLE_STATUS_FAILREACH = 2;
 	//结算状态-已达标
 	public static final int SETTLE_STATUS_HAVEREACH = 3;
+	//百度PC
+	public static final int SEARCH_TYPE_BAIDU_PC = 1010;
+	//360PC
+	public static final int SEARCH_TYPE_360_PC = 1015;
+	//搜狗PC
+	public static final int SEARCH_TYPE_SOGOU_PC = 1030;
+	//百度手机
+	public static final int SEARCH_TYPE_BAIDU_WAP = 7010;
+	//360手机
+	public static final int SEARCH_TYPE_360_WAP = 7015;
+	//搜狗手机
+	public static final int SEARCH_TYPE_SOGOU_WAP = 7030;
+	//神马
+	public static final int SEARCH_TYPE_SM_WAP = 7070;
 }

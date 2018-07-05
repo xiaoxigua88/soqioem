@@ -1,4 +1,4 @@
-ï»¿.new-login-wrap .login-head {
+.new-login-wrap .login-head {
 	line-height: 90px;
 	background: #fff;
 }
@@ -45,7 +45,7 @@
 	position: relative;
 	height: 630px;
 }
-/*å¤§èƒŒæ™¯*/
+/*´ó±³¾°*/
 .bg-back {
 	display: block;
 	position: absolute;
@@ -59,7 +59,7 @@
 	position: relative;
 	z-index: 20;
 }
-/*å›¾æ¡ˆ*/
+/*Í¼°¸*/
 .pattern-area {
 	position: relative;
 	float: left;
@@ -137,7 +137,20 @@
 	outline: none;
 	font-family: "Microsoft Yahei", Tahoma, Arial;
 }
-/* æ§åˆ¶ é‚®ç®±æç¤ºåˆ—è¡¨ çš„æ ·å¼ */
+.go-reg {
+	font-size: 14px;
+	color: #555;
+	margin-top: 20px;
+}
+.go-reg a {
+	color: #009FD9;
+	text-decoration: none;
+	margin-left: 3px;
+}
+.go-reg a:hover {
+	text-decoration: underline;
+}
+/* ¿ØÖÆ ÓÊÏäÌáÊ¾ÁĞ±í µÄÑùÊ½ */
 .email-complete-list {
 	position: absolute;
 	left: -1px;
