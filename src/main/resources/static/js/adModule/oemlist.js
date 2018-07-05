@@ -99,10 +99,70 @@ $(function() {
             cancelVal: "关闭",
             content: template("addInformation", {oemid}),
             init: function() {
+            	SQ.component.initTabs();
+            	$("#discountTypeBtn input").click(function() {
+                    $("#discountType").val($(this).data("discounttype"));
+                    if($(this).data("discounttype")=='1'){
+                    	$("#discountPrice").attr('placeholder',"大于0的有效数字比如：2.5");
+                    }else if($(this).data("discounttype")=='2'){
+                    	$("#discountPrice").attr('placeholder',"大于0小于1的小数比如：0.85");
+                    }
+                    $("#discountPrice").val('');
+                    $("#discountPrice").focus();
+                });
             },
             ok: function() {
                 var $_addForm = $("#addForm");
                 if (fieldEmptyValidate($_addForm)) {
+                	//公司名称
+                	var reg = new RegExp(regexEnum.chinese);
+                	var $_companynameInput = $("#companynameInput");
+                	if (!reg.test($_companynameInput.val())) {
+                        validateShowError($_companynameInput, "公司名称必须为中文", $_addForm);
+                        SQ.warn("公司名称必须为中文");
+                        return false;
+                    }
+                	//公司域名
+                	var reg = new RegExp(regexEnum.domain);
+                	var $_domainInput = $("#domainInput");
+                	if (!reg.test($_domainInput.val())) {
+                		validateShowError($_domainInput, "域名不再http或https", $_addForm);
+                		SQ.warn("域名不带http或https如：www.baidu.com");
+                		return false;
+                	}
+                	//管理员姓名
+                	var reg = new RegExp(regexEnum.chinese);
+                	var $_realnameInput = $("#realnameInput");
+                	if (!reg.test($_realnameInput.val())) {
+                		validateShowError($_realnameInput, "管理员姓名必须为中文", $_addForm);
+                		SQ.warn("管理员姓名必须为中文");
+                		return false;
+                	}
+                	//管理员称呼
+                	var reg = new RegExp(regexEnum.ps_username);
+                	var $_callnameInput = $("#callnameInput");
+                	if (!reg.test($_callnameInput.val())) {
+                		validateShowError($_callnameInput, "管理员称呼必须为中文、字母、数字 _", $_addForm);
+                		SQ.warn("管理员称呼必须为中文、字母、数字 _");
+                		return false;
+                	}
+                	//手机号
+                	var reg = new RegExp(regexEnum.mobile);
+                	var $_mobileInput = $("#mobileInput");
+                	if (!reg.test($_mobileInput.val())) {
+                		validateShowError($_mobileInput, "手机号格式错误", $_addForm);
+                		SQ.warn("手机号格式错误");
+                		return false;
+                	}
+                	//QQ
+                	var reg = new RegExp(regexEnum.qq);
+                	var $_qqInput = $("#qqInput");
+                	if (!reg.test($_qqInput.val())) {
+                		validateShowError($_qqInput, "QQ号码格式错误", $_addForm);
+                		SQ.warn("QQ号码格式错误");
+                		return false;
+                	}
+                	
 	                SQ.post({
 	                    url: $_addForm.attr("action"),
 	                    data: $_addForm.serialize()

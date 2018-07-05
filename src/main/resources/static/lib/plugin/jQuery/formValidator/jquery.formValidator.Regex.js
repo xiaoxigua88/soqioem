@@ -15,6 +15,7 @@ var regexEnum = {
 
     color: "^[a-fA-F0-9]{6}$", 			//颜色
     url: "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$", //url
+    domain: "^([^\.+])[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$", //不包含http和https
     chinese: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$", 				//仅中文
     ascii: "^[\\x00-\\xFF]+$", 			//仅ACSII字符
     ps_username: "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$", //中文、字母、数字 _

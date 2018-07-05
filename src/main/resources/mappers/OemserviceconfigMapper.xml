@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.OemserviceconfigMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Oemserviceconfig" >
+    <id column="OemId" property="oemid" jdbcType="INTEGER" />
+    <id column="ServiceId" property="serviceid" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from OemServiceConfig
+    where OemId = #{oemid,jdbcType=INTEGER}
+      and ServiceId = #{serviceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Oemserviceconfig" >
+    insert into OemServiceConfig (OemId, ServiceId, "Status"
+      )
+    values (#{oemid,jdbcType=INTEGER}, #{serviceid,jdbcType=INTEGER}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Oemserviceconfig" >
+    update OemServiceConfig
+    set "Status" = #{status,jdbcType=BIT}
+    where OemId = #{oemid,jdbcType=INTEGER}
+      and ServiceId = #{serviceid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select OemId, ServiceId, "Status"
+    from OemServiceConfig
+    where OemId = #{oemid,jdbcType=INTEGER}
+      and ServiceId = #{serviceid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select OemId, ServiceId, "Status"
+    from OemServiceConfig
+  </select>
+</mapper>

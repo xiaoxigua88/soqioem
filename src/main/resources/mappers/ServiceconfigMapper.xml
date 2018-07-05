@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.ServiceconfigMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Serviceconfig" >
+    <id column="ServiceId" property="serviceid" jdbcType="INTEGER" />
+    <result column="ServiceName" property="servicename" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ServiceConfig
+    where ServiceId = #{serviceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Serviceconfig" >
+    insert into ServiceConfig (ServiceId, ServiceName, "Status"
+      )
+    values (#{serviceid,jdbcType=INTEGER}, #{servicename,jdbcType=INTEGER}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Serviceconfig" >
+    update ServiceConfig
+    set ServiceName = #{servicename,jdbcType=INTEGER},
+      "Status" = #{status,jdbcType=BIT}
+    where ServiceId = #{serviceid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select ServiceId, ServiceName, "Status"
+    from ServiceConfig
+    where ServiceId = #{serviceid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ServiceId, ServiceName, "Status"
+    from ServiceConfig
+  </select>
+</mapper>

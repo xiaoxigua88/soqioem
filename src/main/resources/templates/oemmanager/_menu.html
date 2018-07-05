@@ -102,6 +102,10 @@
 								<shiro shiro:hasPermission="1202:63"><li><a href="/oemmanager/customer/role" th:href="@{/oemmanager/customer/role}" data-named="customer_role">角色列表</a></li></shiro>
 								<shiro shiro:hasPermission="1203:63"><li><a href="/oemmanager/customer/customerlist" th:href="@{/oemmanager/customer/customerlist}" data-named="customer_list">员工列表</a></li></shiro>
 								<li><a href="/oemmanager/customer/operatelog" th:href="@{/oemmanager/customer/operatelog}" data-named="customer_operatelog">操作日志</a></li>
+								<li><a href="#" data-named="service_config">服务配置</a></li>
+								<li class="panel" th:if="${#PeUtils.hasParentOem()==false}">
+									<!-- <a href="#" data-named="meal_detail">套餐明细</a> -->
+								</li>
 							</ul>
 						</div>
 					</div>

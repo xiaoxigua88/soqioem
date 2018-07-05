@@ -68,24 +68,27 @@
 			初始密码：
 		</div>
 		<div class="col-xs-3">
-			<input id="pwdInput" type="text" name="pwd" class="sq-input-reset" autocomplete="off" />
+			<input id="pwdInput" type="text" name="pwd" class="sq-input-reset necessary" autocomplete="off" />
 		</div>
 	</div>
+	<div class="form-group">
+		<div class="sq-control-label">
+			<span class="necessary-mark">*</span>
+					代理关键词折扣：
+		</div>
+		<div class="col-xs-3 sq-form-control">
+			<div class="sq-btn-group" id="discountTypeBtn">
+				<input class="sq-btn btn-primary btn-reverse sq-tab-selected" type="button" value="一口价" data-tab_group="1" data-discounttype="1">
+				<input class="sq-btn btn-primary btn-reverse" type="button" value="折扣价" data-tab_group="2" data-discounttype="2">
+			    <input name="discounttype" id="discountType" type="hidden" value="1">
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<input id="discountPrice" type="text" name="discountprice" class="sq-input-reset sq-label-long necessary" placeholder="大于0的有效数字比如：2.5" autocomplete="off" />
+		</div>
+	</div>
+	
 	<input type="hidden" name="oemid" value="{{oemid}}" />
 </form>
-<style type="text/css">
-         .sq-form-control .btn-reverse {
-          width: 256px;
-          height:50px;
-          line-height:49px;
-          font-size:18px;
-          font-weight:bold;
-          margin:10px;
-          margin-left:0px;
-          float:left;
-         }
-         .sq-btn-group .sq-tab-selected, .sq-btn-group .sq-tab-selected:hover {
-             background-position: 227px 21px;
-         }
-</style>
+
 </script>

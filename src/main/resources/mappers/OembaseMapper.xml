@@ -16,6 +16,8 @@
     <result column="ParentOemId" property="parentoemid" jdbcType="INTEGER" />
     <result column="Status" property="status" jdbcType="INTEGER" />
     <result column="MealStatus" property="mealstatus" jdbcType="INTEGER" />
+    <result column="DiscountType" property="discounttype" jdbcType="INTEGER" />
+    <result column="DiscountPrice" property="discountprice" jdbcType="DECIMAL" />
     <result column="HasNextOem" property="hasnextoem" jdbcType="INTEGER" />
     <result column="TotalAmount" property="totalamount" jdbcType="DECIMAL" />
     <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
@@ -30,12 +32,12 @@
       Domain, CompanyName, Phone, 
       ExpiryTime, TotalUsersCount, TotalTaskCount, 
       OemLevel, ParentOemId, Status, AddTime, HasNextOem,
-      MealStatus)
+      MealStatus, DiscountType, DiscountPrice)
     values (#{mealid,jdbcType=INTEGER}, #{tempid,jdbcType=INTEGER}, 
       #{domain,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{expirytime,jdbcType=TIMESTAMP}, #{totaluserscount,jdbcType=INTEGER}, #{totaltaskcount,jdbcType=INTEGER}, 
       #{oemlevel,jdbcType=INTEGER}, #{parentoemid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, sysdatetime(), #{hasnextoem,jdbcType=INTEGER},
-      #{mealstatus,jdbcType=INTEGER})
+      #{mealstatus,jdbcType=INTEGER}, #{discounttype,jdbcType=INTEGER}, #{discountprice,jdbcType=DECIMAL})
       <selectKey resultType="java.lang.Integer" keyProperty="oemid" order="AFTER">
     	select @@IDENTITY as oemid
   	  </selectKey>
@@ -84,7 +86,7 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select OemId, MealId, TempId, Domain, CompanyName, Phone, ExpiryTime, TotalUsersCount, 
-    TotalTaskCount, OemLevel, ParentOemId, Status, MealStatus,HasNextOem
+    TotalTaskCount, OemLevel, ParentOemId, Status, MealStatus,HasNextOem,DiscountType, DiscountPrice
     from OemBase
     where OemId = #{oemid,jdbcType=INTEGER}
   </select>
@@ -96,7 +98,7 @@
   
   <select id="qryChildOemsByOemId" resultMap="BaseResultMap" parameterType="map" >
     select m.OemId, m.MealId, m.TempId, m.Domain, m.CompanyName, m.Phone, m.ExpiryTime, m.TotalUsersCount, 
-    m.TotalTaskCount, m.OemLevel, m.ParentOemId, m.Status, m.MealStatus, m.HasNextOem, m.AddTime, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
+    m.TotalTaskCount, m.OemLevel, m.ParentOemId, m.Status, m.MealStatus, m.HasNextOem, m.AddTime, m.DiscountType, m.DiscountPrice, n.TotalAmount, n.FreezeAmount, n.SeoAmountNeed
     from OemBase m left join OemAccount n on m.OemId = n.OemId where m.ParentOemId = #{parentoemid,jdbcType=INTEGER} Order by m.OemId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
   </select>
   

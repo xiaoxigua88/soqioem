@@ -3,6 +3,7 @@ package com.soqi.system.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +76,9 @@ public class OemBaseService {
 		Oembase currentBase = oembaseMapper.selectByPrimaryKey(oembase.getOemid());
 		boundData(currentBase, oembase);
 		//保存Oembase数据、数据表中主键自增此处数据插入成功会返回自增主键到oembase中
+		if(StringUtils.isBlank(oembase.getPhone())){
+			oembase.setPhone(customer.getMobile());
+		}
 		oembaseMapper.insert(oembase);
 		//保存customer代理员工数据
 		customer.setOemid(oembase.getOemid());
