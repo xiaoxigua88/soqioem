@@ -3,6 +3,7 @@ package com.soqi.system.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -222,6 +223,7 @@ public class SeoService {
 			seo.setTaskid(seoprice.getTaskid());
 			seo.setStatus(Constant.SEO_STATUS_DOING);
 			seo.setFreezeamount(seoprice.getPrice().multiply(day));
+			seo.setBuytime(new Date());
 			seoList.add(seo);
 		}
 		//冻结用户资产
@@ -229,7 +231,9 @@ public class SeoService {
 		//资金变动明细
 		userAcDetail.batchInsert(uadList);
 		//更新关键词任务的状态已购买
-		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_DOING, freezeamount,new Date());
+		//seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_DOING, freezeamount,new Date());
+		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
+		seoMapper.updateStatusByListSeo(seoList);
 		//调用异步服务获取云排名监控服务ID
 		seoDoBusiness.createServiceIdOfW(taskIds);
 	}

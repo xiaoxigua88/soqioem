@@ -5,6 +5,7 @@ import com.soqi.oem.gentry.Seo;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +31,7 @@ public interface SeoMapper {
     int seoRankUpdateByPlatformId(Seo record);
     
     int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount, @Param("buytime") Date buytime);
-    
+        
     int updateStatusByListSeo(List<Seo> seos);
     
     /**更新从第三方区取的服务ID

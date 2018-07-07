@@ -90,6 +90,8 @@ public class SeoWrapper {
 			Seo seo = new Seo();
 			if(url.length == 1){
 				seo.setUrl(url[0]);
+			}else{
+				seo.setUrl(url[i]);
 			}
 			seo.setKeyword(keyword[i]);
 			seo.setSearchtype(Integer.valueOf(searchType));

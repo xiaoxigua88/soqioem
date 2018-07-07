@@ -96,7 +96,7 @@ public class SeoDoBusiness {
 		int businessType = 2006;
 		String[] keyword = BusinessUtil.couvertToKeyAndUrl(seos).get("keywords");
 		String[] url = BusinessUtil.couvertToKeyAndUrl(seos).get("urls");
-		int[] timeSet = { 10, 16 };
+		int[] timeSet = { 10, 17};
 		boolean searchOnce = true;
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("apiExtend", apiExtend);

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +24,7 @@ import com.soqi.common.utils.SeoWrapper;
 import com.soqi.oem.gentry.Seo;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.SeoService;
+import com.soqi.system.service.UserService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
 
@@ -33,6 +33,9 @@ public class ClientSeoController extends BaseController{
 	private final Logger logger = LoggerFactory.getLogger(ClientSeoController.class);
 	@Autowired
 	private SeoService seoService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("/client/business/seo/manage")
 	public String userSeoManage(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
@@ -205,7 +208,7 @@ public class ClientSeoController extends BaseController{
 		if( taskIds == null || taskIds.length <= 0){
 			return ResultFontJS.error("需要购买的任务的ID号不能为空请检查");
 		}
-		//关键词购买校验
+		//客户关键词购买金额校验
 		boolean check = seoService.checkAmountForSeoApply(taskIds, this.getOemuser().getUserid());
 		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds);
 		if(!check){
@@ -215,6 +218,15 @@ public class ClientSeoController extends BaseController{
 			rs.put("reload", true);
 			return rs;
 		}
+		//顶代关键词购买数量校验(主要是顶级代理可发展数量校验)
+		//boolean is = userService.isSecondOemUser(this.getOemuser().getOemid());
+		//if(is){
+			//二代理资产较验
+			
+		//}
+		//顶代校验关键词数量
+		
+		
 		//关键词购买
 		seoService.applySeoTasks(taskIds, this.getOemuser().getUserid(), frozen);
 		return ResultFontJS.ok("云排名关键词购买成功");
