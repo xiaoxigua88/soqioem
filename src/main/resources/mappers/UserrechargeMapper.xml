@@ -49,7 +49,7 @@
   </select>
   <select id="qryUserRechargesByOemid" resultMap="BaseResultMap" parameterType="map" >
    select OrderId, UserId, Amount, PayType, Bank, Status, AddTime, FinishTime, Memo
-    from UserRecharge d where exists (select * from OemUser u where u.OemId = #{oemid,jdbcType=INTEGER} and u.UserId = d.UserId) Order by AddTime Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
+    from UserRecharge d where exists (select * from OemUser u where u.OemId = #{oemid,jdbcType=INTEGER} and u.UserId = d.UserId) Order by AddTime desc Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only
   </select>
   <select id="qryCountUserRechargesByOemid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     select count(1) as total from UserRecharge d where exists (select * from OemUser u where u.OemId = #{oemid,jdbcType=INTEGER} and u.UserId = d.UserId)

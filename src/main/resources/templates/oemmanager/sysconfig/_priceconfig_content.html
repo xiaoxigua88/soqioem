@@ -1,0 +1,72 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-body">
+		<form class="form-horizontal sq-form sq-tab-container" action="/oemmanager/sysconfig/savepricetempl" id="savepriceform">
+		    <div class="pull-left" style="width:850px;">
+				{{if lst}}
+					{{each lst as item i}}
+						{{if item.searchtype >0}}
+							<div class="form-group">
+								<div class="sq-control-label">
+									<span class="necessary-mark">*</span>
+										{{item.searchname}}：
+									<input type="hidden" name="searchtype" value="{{item.searchtype}}" />
+									<input type="hidden" name="pricetemplid" value="{{item.pricetemplid}}" />
+								</div>
+								<div class="col-xs-3 sq-form-control">
+									<div class="sq-btn-group searchtypes" data-searchtype="{{item.searchtype}}">
+										<input class="sq-btn btn-primary btn-reverse {{if item.discounttype == 1}}sq-tab-selected{{/if}}" type="button" value="一口价" data-tab_group="1" data-discounttype_{{item.searchtype}}="1">
+										<input class="sq-btn btn-primary btn-reverse {{if item.discounttype == 2}}sq-tab-selected{{/if}}" type="button" value="折扣价" data-tab_group="2" data-discounttype_{{item.searchtype}}="2">
+						    			<input id="discounttype_{{item.searchtype}}" name="discounttype_{{item.searchtype}}" type="hidden" value="{{item.discounttype}}">
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<input id="fixprice_{{item.searchtype}}" type="text" name="fixprice_{{item.searchtype}}" class="sq-input-reset sq-label-long necessary{{if item.discounttype == 2}} hide{{/if}}" placeholder="大于0的有效数字比如：2.5" autocomplete="off" {{if item.discounttype == 1}} value="{{item.fixprice}}" {{/if}}/>
+									<span id="minprice_{{item.searchtype}}" class="{{if item.discounttype == 1}}hide{{/if}}">最低：<input type="text" name="minprice_{{item.searchtype}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于0比如：2.5" autocomplete="off" {{if item.discounttype == 2}} value="{{item.minprice}}" {{/if}} /></span>
+									<span id="maxprice_{{item.searchtype}}" class="{{if item.discounttype == 1}}hide{{/if}}">最高：<input type="text" name="maxprice_{{item.searchtype}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于最低值：2.6" autocomplete="off" {{if item.discounttype == 2}} value="{{item.maxprice}}" {{/if}} /></span>
+									<span id="ratio_{{item.searchtype}}" class="{{if item.discounttype == 1}}hide{{/if}}">折扣：<input type="text" name="ratio_{{item.searchtype}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于0小于1的数字：0.25" autocomplete="off" {{if item.discounttype == 2}} value="{{item.ratio}}" {{/if}} /></span>
+								</div>
+							</div>
+						{{/if}}
+					{{/each}}
+				{{else}}
+					{{each searchTypeList as item i}}
+                		{{if item.TypeId >0}}
+							<div class="form-group">
+								<div class="sq-control-label">
+									<span class="necessary-mark">*</span>
+										{{item.Name}}：
+									<input type="hidden" name="searchtype" value="{{item.TypeId}}" />
+								</div>
+								<div class="col-xs-3 sq-form-control">
+									<div class="sq-btn-group searchtypes" data-searchtype="{{item.TypeId}}">
+										<input class="sq-btn btn-primary btn-reverse sq-tab-selected" type="button" value="一口价" data-tab_group="1" data-discounttype_{{item.TypeId}}="1">
+										<input class="sq-btn btn-primary btn-reverse" type="button" value="折扣价" data-tab_group="2" data-discounttype_{{item.TypeId}}="2">
+						    			<input id="discounttype_{{item.TypeId}}" name="discounttype_{{item.TypeId}}" type="hidden" value="1">
+									</div>
+								</div>
+								<div class="col-xs-7">
+									<input id="fixprice_{{item.TypeId}}" type="text" name="fixprice_{{item.TypeId}}" class="sq-input-reset sq-label-long necessary" placeholder="大于0的有效数字比如：2.5" autocomplete="off" />
+									<span id="minprice_{{item.TypeId}}" class="hide">最低：<input type="text" name="minprice_{{item.TypeId}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于0比如：2.5" autocomplete="off" /></span>
+									<span id="maxprice_{{item.TypeId}}" class="hide">最高：<input type="text" name="maxprice_{{item.TypeId}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于最低值：2.6" autocomplete="off" /></span>
+									<span id="ratio_{{item.TypeId}}" class="hide">折扣：<input type="text" name="ratio_{{item.TypeId}}" class="sq-input-reset sq-label-mini necessary" placeholder="大于0小于1的数字：0.25" autocomplete="off" /></span>
+								</div>
+							</div>
+                		{{/if}}
+                	{{/each}}
+				{{/if}}
+                
+				<div class="form-group">
+					<div class="sq-control-label">
+						&nbsp;
+					</div>
+					<div class="col-xs-10 sq-form-control">
+						<a href="#a_null" class="sq-btn btn-strong" id="savepricetempl">保 存</a>
+					</div>
+				</div>
+		    </div>
+			
+		</form>
+	</div>
+</div>
+</script>

@@ -102,14 +102,27 @@
 								<shiro shiro:hasPermission="1202:63"><li><a href="/oemmanager/customer/role" th:href="@{/oemmanager/customer/role}" data-named="customer_role">角色列表</a></li></shiro>
 								<shiro shiro:hasPermission="1203:63"><li><a href="/oemmanager/customer/customerlist" th:href="@{/oemmanager/customer/customerlist}" data-named="customer_list">员工列表</a></li></shiro>
 								<li><a href="/oemmanager/customer/operatelog" th:href="@{/oemmanager/customer/operatelog}" data-named="customer_operatelog">操作日志</a></li>
-								<li><a href="#" data-named="service_config">服务配置</a></li>
-								<li class="panel" th:if="${#PeUtils.hasParentOem()==false}">
-									<!-- <a href="#" data-named="meal_detail">套餐明细</a> -->
-								</li>
+								<!-- <li><a href="#" data-named="service_config">服务配置</a></li> -->
+								<!-- <li class="panel" th:if="${#PeUtils.hasParentOem()==false}">
+									<a href="#" data-named="meal_detail">套餐明细</a>
+								</li> -->
 							</ul>
 						</div>
 					</div>
 					</shiro>
+					<div class="panel">
+						<div class="upper-menu-wrap" role="tab" id="systemHeading">
+							<a class="collapsed upper-menu menu-icon-account" role="button" data-toggle="collapse" data-parent="#accordion" href="#systemCollapse" aria-expanded="false" aria-controls="systemCollapse">
+								系统信息
+							</a>
+						</div>
+						<div id="systemCollapse" class="collapse" role="tabpanel" aria-labelledby="systemHeading" aria-expanded="true">
+							<ul class="sub-menu">
+								<li><a href="/oemmanager/sysconfig/priceconfig" data-named="config_priceconfig">价格配置</a></li>
+								<li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/serviceconfig" data-named="config_serviceconfig">服务配置</a></li>
+							</ul>
+						</div>
+					</div>
 					<div class="panel" th:if="${#PeUtils.hasParentOem()==true}">
 						<div class="upper-menu-wrap" role="tab" id="financeHeading">
 							<a class="collapsed upper-menu menu-icon-finance" role="button" data-toggle="collapse" data-parent="#accordion" href="#financeCollapse" aria-expanded="false" aria-controls="financeCollapse">

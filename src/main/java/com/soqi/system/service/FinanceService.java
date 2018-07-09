@@ -107,11 +107,12 @@ public class FinanceService {
 			userAccount.insert(ua);
 			//账户余额
 			uadl.setBalance(charge.getAmount());
+		}else{
+			//总额加上充值金额
+			ua.setTotalamount(ua.getTotalamount().add(charge.getAmount()));
+			//更新资金表
+			userAccount.updateByPrimaryKey(ua);
 		}
-		//总额加上充值金额
-		ua.setTotalamount(ua.getTotalamount().add(charge.getAmount()));
-		//更新资金表
-		userAccount.updateByPrimaryKey(ua);
 		
 		//明细表
 		uadl.setBalance(ua.getTotalamount());

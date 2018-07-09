@@ -130,6 +130,21 @@ public class BigDecimalUtil {
         }
     }
     
+    /**比较两数的大小若前者大于后者则返回true
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public static boolean compareSize(String v1, String v2){
+    	BigDecimal b1 = new BigDecimal(v1);  
+    	BigDecimal b2 = new BigDecimal(v2);  
+    	if(b1.compareTo(b2)==1){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
+    
     public static boolean isBigDecimal(String v1){
     	try{
     		BigDecimal b1 = new BigDecimal(Double.valueOf(v1));

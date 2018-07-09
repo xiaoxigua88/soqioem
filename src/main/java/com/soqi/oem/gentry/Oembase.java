@@ -41,9 +41,7 @@ public class Oembase implements Serializable {
     
     private BigDecimal totalamount;
     
-    private BigDecimal discountprice;
-    
-    private Integer discounttype;
+    private Integer pricetemplid;
 
     private BigDecimal freezeamount;
 
@@ -200,22 +198,12 @@ public class Oembase implements Serializable {
 		this.seoamountneed = seoamountneed;
 	}
 
-	
-	public BigDecimal getDiscountprice() {
-		return discountprice;
+	public Integer getPricetemplid() {
+		return pricetemplid;
 	}
 
-	public void setDiscountprice(BigDecimal discountprice) {
-		this.discountprice = discountprice;
-	}
-	
-
-	public Integer getDiscounttype() {
-		return discounttype;
-	}
-
-	public void setDiscounttype(Integer discounttype) {
-		this.discounttype = discounttype;
+	public void setPricetemplid(Integer pricetemplid) {
+		this.pricetemplid = pricetemplid;
 	}
 
 	@Override

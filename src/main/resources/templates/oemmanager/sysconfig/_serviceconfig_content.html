@@ -1,0 +1,119 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">操作日志</div>
+	    <div class="pull-right">
+		    <form action="" class="pull-left" id="searchForm">
+		        <label class="pull-left search-group-label">IP：</label>
+			    <input type="text" name="ip" class="pull-left sq-input-reset search-group-input" placeholder="输入IP搜索" value="{{filter.ip}}" />
+		        <label class="pull-left search-group-label">业务：</label>
+		        <div data-field_name="business" class="pull-left sq-dropdown-container btn-group">
+			        <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				        <span class="selected-content"></span>
+				        <span class="sq-caret"></span>
+			        </a>
+			        <ul class="dropdown-menu sq-search-dropdown">
+		                {{each businessList as item i}}
+			            <li><a href="#a_null" class="{{if filter.business == item}}sq-default-option{{/if}}" data-drop="{{item}}">{{item}}</a></li>
+			            {{/each}}
+			        </ul>
+		        </div>
+		        <label class="pull-left search-group-label">模块：</label>
+		        <div data-field_name="module" class="pull-left sq-dropdown-container btn-group log-module-drop">
+			        <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				        <span class="selected-content"></span>
+				        <span class="sq-caret"></span>
+			        </a>
+			        <ul class="dropdown-menu sq-search-dropdown" id="moduleList">
+			        </ul>
+		        </div>
+		        <label class="pull-left search-group-label">操作内容：</label>
+			    <input type="text" name="operateInfo" class="pull-left sq-input-reset search-group-input" placeholder="" value="{{filter.operateInfo}}" />
+	            <label class="pull-left search-group-label">操作时间：</label>
+		        <input type="text" name="minOperateTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minOperateTime}}" />
+	            <label class="pull-left search-group-label">至</label>
+		        <input type="text" name="maxOperateTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxOperateTime}}" />
+			    <input class="hide" type="text" name="business" id="txtBusiness" value="{{filter.business}}" />
+			    <input class="hide" type="text" name="module" value="{{filter.module}}" />
+		        <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
+		    </form>
+	    </div>
+	</div>
+	<div class="sq-panel-body">
+		<table class="sq-table margin-bottom-20" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:100px">
+					业务
+				</th>
+				<th style="width:100px">
+					模块
+				</th>
+				<th style="width:180px">
+					操作内容
+				</th>
+				<th class="text-center" style="width:135px" data-order_name="logintime">
+					操作时间
+				</th>
+				<th style="width:105px">
+					操作IP
+				</th>
+				<th style="width:105px">
+					所在区域
+				</th>
+				<th style="width:105px">
+					浏览器
+				</th>
+				<th style="width:105px">
+					操作系统
+				</th>
+				<th>
+					终端标识
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each lst as item i}}
+				<tr>
+					<td>
+					    {{item.Business}}
+					</td>
+					<td>
+					    {{item.Module}}
+					</td>
+					<td>
+					    {{item.OperateInfo}}
+					</td>
+					<td class="text-center">
+					    {{item.OperateTime}}
+					</td>
+					<td class="text-center">
+					    {{item.Ip}}
+					</td>
+					<td class="text-center">
+					    {{item.Area}}
+					</td>
+					<td class="text-center">
+					    {{item.Brower}}
+					</td>
+					<td>
+					    {{item.OS}}
+					</td>
+					<td>
+					    {{item.Stamp}}
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+		<tfoot>
+		    <tr>
+		        <td colspan="9">
+	                <!-- 引入分页 -->
+		                {{include "paginationTpl"}}
+			        </td>
+			    </tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+</script>

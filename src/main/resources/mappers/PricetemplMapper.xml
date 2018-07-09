@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.PricetemplMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Pricetempl" >
+    <id column="PriceTemplId" property="pricetemplid" jdbcType="INTEGER" />
+    <result column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="templName" property="templname" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PriceTempl
+    where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Pricetempl" >
+    insert into PriceTempl (OemId, templName)
+    values (#{oemid,jdbcType=INTEGER}, #{templname,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Integer" keyProperty="pricetemplid" order="AFTER">
+    	select @@IDENTITY as pricetemplid
+  	</selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Pricetempl" >
+    update PriceTempl
+    set OemId = #{oemid,jdbcType=INTEGER},
+      templName = #{templname,jdbcType=VARCHAR}
+    where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select PriceTemplId, OemId, templName
+    from PriceTempl
+    where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PriceTemplId, OemId, templName
+    from PriceTempl
+  </select>
+</mapper>
