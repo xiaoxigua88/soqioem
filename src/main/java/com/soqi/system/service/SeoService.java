@@ -348,10 +348,18 @@ public class SeoService {
 	 * @return
 	 */
 	@Transactional("primaryTransactionManager")
-	public void startSeoTasks(Integer[] taskIds){
+	public void startSeoTasks(Integer[] taskIds, Integer oemid){
+		//查看代理是不是要参与结算
+		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
+		Oemaccount oemact = null;
+		BigDecimal oemFreezeamount = BigDecimal.ZERO;
+		if(currentOem.getParentoemid().intValue() != 0){
+			oemact = oemaccountMapper.selectByPrimaryKey(oemid);
+		}
 		List<Seoprice> sps = piceMapper.selectByTaskids(taskIds);
 		Map<String, List<Seoprice>> spuMap = SeopriceWrapper.getListbyUserid(sps);
 		List<Useraccountdetail> uadList = new ArrayList<Useraccountdetail>();
+		List<Oemaccountdetail> oadList = new ArrayList<Oemaccountdetail>();
 		List<Useraccount> actList = new ArrayList<Useraccount>();
 		List<Seo> seoList = new ArrayList<Seo>();
 		for (Map.Entry<String, List<Seoprice>> entry : spuMap.entrySet()) {
@@ -362,7 +370,7 @@ public class SeoService {
 			for (Seoprice seoprice : splist) {
 				Useraccountdetail uad = new Useraccountdetail();
 				Seo seo = new Seo();
-				//资金明细组装部分
+				//客户资金明细组装部分
 				uad.setUserid(seoprice.getUserid());
 				uad.setAddtime(new Date());
 				uad.setDescription("云排名启动");
@@ -377,6 +385,22 @@ public class SeoService {
 				uad.setBalance(account.getTotalamount());
 				uadList.add(uad);
 				frozen = frozen.add(seoprice.getPrice().multiply(day));
+				
+				//代理添加交易明细
+				if(null != oemact){
+					Oemaccountdetail oad = new Oemaccountdetail();
+					oad.setOemid(oemid);
+					oad.setAddtime(new Date());
+					oad.setDescription("云排名购买");
+					oad.setTradeid(seoprice.getTaskid().toString());
+					oad.setTradetype(Constant.TRADE_TYPE_SEOBUY);
+					oad.setChange(BigDecimal.ZERO);
+					oemFreezeamount = oemFreezeamount.add(seoprice.getPriceoemchild().multiply(day));
+					oad.setFreeze(seoprice.getPriceoemchild().multiply(day));
+					oad.setBalance(oemact.getTotalamount());
+					oadList.add(oad);
+				}
+				
 				//seo组装部分
 				seo.setTaskid(seoprice.getTaskid());
 				seo.setStatus(Constant.SEO_STATUS_DOING);
@@ -386,8 +410,16 @@ public class SeoService {
 			account.setFreezeamount(account.getFreezeamount().add(frozen));
 			actList.add(account);
 		}
+		//添加客户购买关键词记录
 		userAcDetail.batchInsert(uadList);
 		useraccountMapper.batchUpdateAccountByDiffUser(actList);
+		//更新代理账户信息
+		if(null != oemact){
+			oemact.setFreezeamount(oemact.getFreezeamount().add(oemFreezeamount));
+			oemaccountMapper.updateByPrimaryKey(oemact);
+			//代理账户详细变动添加
+			oemAcDetail.batchInsert(oadList);
+		}
 		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
 		seoMapper.updateStatusByListSeo(seoList);
 		//调用异步服务获取云排名监控服务ID

@@ -262,7 +262,7 @@ public class ClientSeoController extends BaseController{
 			rs.put("reload", true);
 			return rs;
 		}
-		seoService.startSeoTasks(taskIds);
+		seoService.startSeoTasks(taskIds, this.getOemuser().getOemid());
 		return ResultFontJS.ok("关键词任务启动成功");
 	}
 }

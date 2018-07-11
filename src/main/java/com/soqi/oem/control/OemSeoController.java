@@ -265,7 +265,7 @@ public class OemSeoController extends BaseController{
 			rs.put("reload", true);
 			return rs;
 		}
-		seoService.startSeoTasks(taskIds);
+		seoService.startSeoTasks(taskIds, this.getCustomer().getOemid());
 		return ResultFontJS.ok("关键词任务启动成功");
 	}
 	
