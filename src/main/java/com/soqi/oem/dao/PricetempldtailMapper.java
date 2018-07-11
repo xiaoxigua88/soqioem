@@ -1,7 +1,10 @@
 package com.soqi.oem.dao;
 
 import com.soqi.oem.gentry.Pricetempldtail;
+
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface PricetempldtailMapper {
     int deleteByPrimaryKey(Integer pricetemplid);
@@ -16,7 +19,7 @@ public interface PricetempldtailMapper {
 
     List<Pricetempldtail> selectAll();
 
-    List<Pricetempldtail> selectListByOemid(Integer oemid);
+    List<Pricetempldtail> selectListByConditions(@Param("oemid") Integer oemid, @Param("templtype") Byte templtype, @Param("searchtype") Integer searchtype);
     
     int updateByPrimaryKey(Pricetempldtail record);
 }

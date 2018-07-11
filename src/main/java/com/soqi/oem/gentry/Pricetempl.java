@@ -9,6 +9,8 @@ public class Pricetempl implements Serializable {
     private Integer oemid;
 
     private String templname;
+    
+    private Byte templtype;
 
     private List<Pricetempldtail> ptdsList;
     
@@ -45,6 +47,14 @@ public class Pricetempl implements Serializable {
 
 	public void setPtdsList(List<Pricetempldtail> ptdsList) {
 		this.ptdsList = ptdsList;
+	}
+	
+	public Byte getTempltype() {
+		return templtype;
+	}
+
+	public void setTempltype(Byte templtype) {
+		this.templtype = templtype;
 	}
 
 	@Override

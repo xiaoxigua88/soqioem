@@ -1,6 +1,7 @@
 package com.soqi.oem.dao;
 
 import com.soqi.oem.gentry.Oemaccountdetail;
+import com.soqi.oem.gentry.Useraccountdetail;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface OemaccountdetailMapper {
     public int qryCountSecondOemPersonBill(Integer oemid);
     
     public int qryCountOemAcDtlsByOemid(Integer oemid);
+    
+    public int batchInsert(List<Oemaccountdetail> oadList);
 }

@@ -118,7 +118,8 @@
 						</div>
 						<div id="systemCollapse" class="collapse" role="tabpanel" aria-labelledby="systemHeading" aria-expanded="true">
 							<ul class="sub-menu">
-								<li><a href="/oemmanager/sysconfig/priceconfig" data-named="config_priceconfig">价格配置</a></li>
+								<li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/priceconfig?templtype=2" data-named="config_priceconfig">代理价格配置</a></li>
+								<li><a href="/oemmanager/sysconfig/priceconfig?templtype=1" data-named="config_priceconfiguser">客户价格配置</a></li>
 								<li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/serviceconfig" data-named="config_serviceconfig">服务配置</a></li>
 							</ul>
 						</div>

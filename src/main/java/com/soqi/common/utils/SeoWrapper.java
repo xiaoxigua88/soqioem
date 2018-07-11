@@ -67,6 +67,7 @@ public class SeoWrapper {
 				spr1.setPrice(BigDecimal.ZERO);
 				spr1.setPriceoem(BigDecimal.ZERO);
 				spr1.setPriceori(BigDecimal.ZERO);
+				spr1.setPriceoemchild(BigDecimal.ZERO);
 				listspr.add(spr1);
 				seo.setListspr(listspr);
 				
@@ -126,6 +127,7 @@ public class SeoWrapper {
 			spr1.setPrice(BigDecimal.ZERO);
 			spr1.setPriceoem(BigDecimal.ZERO);
 			spr1.setPriceori(BigDecimal.ZERO);
+			spr1.setPriceoemchild(BigDecimal.ZERO);
 			listspr.add(spr1);
 			seo.setListspr(listspr);
 			seoList.add(seo);
@@ -186,8 +188,9 @@ public class SeoWrapper {
 					spr1.setFromrank(1);
 					spr1.setTorank(Integer.valueOf(torank1_));
 					spr1.setPrice(price1);
-					spr1.setPriceoem(price1);
-					spr1.setPriceori(price1);
+					spr1.setPriceoem(BigDecimal.ZERO);
+					spr1.setPriceori(BigDecimal.ZERO);
+					spr1.setPriceoemchild(BigDecimal.ZERO);
 					listspr.add(spr1);
 				}else{
 					spr1.setTorank(Integer.valueOf(torank1_));
@@ -202,11 +205,13 @@ public class SeoWrapper {
 					BigDecimal price1 = new BigDecimal(price1_);
 					BigDecimal price2 = new BigDecimal(price2_);
 					spr1.setPrice(price1);
-					spr1.setPriceoem(price1);
-					spr1.setPriceori(price1);
+					spr1.setPriceoem(BigDecimal.ZERO);
+					spr1.setPriceori(BigDecimal.ZERO);
+					spr1.setPriceoemchild(BigDecimal.ZERO);
 					spr2.setPrice(price2);
-					spr2.setPriceoem(price2);
-					spr2.setPriceori(price2);
+					spr2.setPriceoem(BigDecimal.ZERO);
+					spr2.setPriceori(BigDecimal.ZERO);
+					spr2.setPriceoemchild(BigDecimal.ZERO);
 					listspr.add(spr1);
 					listspr.add(spr2);
 				}
@@ -273,8 +278,9 @@ public class SeoWrapper {
 				Seoprice spr = new Seoprice();
 				BigDecimal b = new BigDecimal(price[i]);
 				spr.setPrice(b);
-				spr.setPriceoem(b);
-				spr.setPriceori(b);
+				spr.setPriceoem(BigDecimal.ZERO);
+				spr.setPriceori(BigDecimal.ZERO);
+				spr.setPriceoemchild(BigDecimal.ZERO);
 				spr.setFromrank(1);
 				spr.setTorank(Integer.valueOf(torank_));
 				listspr.add(spr);

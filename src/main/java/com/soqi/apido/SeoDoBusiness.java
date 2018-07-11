@@ -199,19 +199,19 @@ public class SeoDoBusiness {
 	
 	/**异步关键词排名实时查、价格实时查服务ID生成调用
 	 * @param listMap
-	 * @param isClient 客户端自助添加关键启涉及关键词查询、排名、购买时的排名监控的服务ID生成、代理端只有用于购买的服务ID生成
+	 * @param isClient 客户端自助添加关键启涉及关键词查询、排名
 	 */
 	@Async("myTaskAsyncPool")
 	@Transactional("primaryTransactionManager")
-    public void createServiceIdOfRP(Map<String, List<Seo>> listMap, boolean isClient){
+    public void createServiceIdOfRP(Map<String, List<Seo>> listMap){
 		List<Seo> seos = new ArrayList<Seo>();
 		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
-			if(isClient){
-				//云排名任务ID添加
-				this.keywordRankSearchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
-				//云排名价格添加
-				this.KeywordPriceSearchAdd(entry.getValue());
-			}
+			
+			//云排名任务ID添加
+			this.keywordRankSearchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
+			//云排名价格添加
+			this.KeywordPriceSearchAdd(entry.getValue());
+			
 			//云排名监控任务添加
 			//this.keywordRankWatchAdd(entry.getValue(), Integer.valueOf(entry.getKey()));
 			seos.addAll(entry.getValue());

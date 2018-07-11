@@ -14,6 +14,15 @@ public class Constant {
 	 * 代理用户
 	 */
 	public static final String USERTYPE_OEM = "2";
+	
+	/**
+	 * 直客用户价格模板
+	 */
+	public static final Byte PRICETEMPL_USER = 1;
+	/**
+	 * 代理价格模板
+	 */
+	public static final Byte PRICETEMPL_OEM = 2;
 
 	public static final int NO_PASSWORD = 2;
 
@@ -120,4 +129,9 @@ public class Constant {
 	public static final int SEARCH_TYPE_SOGOU_WAP = 7030;
 	//神马
 	public static final int SEARCH_TYPE_SM_WAP = 7070;
+	
+	//一口价
+	public static final int DISCOUNT_FIX_PRICE = 1;
+	//折扣价
+	public static final int DISCOUNT_RATIO_PRICE = 2;
 }

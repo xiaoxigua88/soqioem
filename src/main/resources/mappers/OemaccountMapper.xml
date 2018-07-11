@@ -24,6 +24,12 @@
       SeoAmountNeed = #{seoamountneed,jdbcType=DECIMAL}
     where OemId = #{oemid,jdbcType=INTEGER}
   </update>
+  <update id="updateFreezeAmountByOemId" parameterType="map" >
+    update OemAccount
+    set
+    FreezeAmount = FreezeAmount + #{freezeamount,jdbcType=DECIMAL}
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select OemId, TotalAmount, FreezeAmount, SeoAmountNeed
     from OemAccount

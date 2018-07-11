@@ -241,7 +241,7 @@ public class OemSeoController extends BaseController{
 		if( taskIds == null || taskIds.length <= 0){
 			return ResultFontJS.error("任务的ID号不能为空请检查");
 		}
-		seoService.stopSeoTasks(taskIds);
+		seoService.stopSeoTasks(taskIds, this.getCustomer().getOemid());
 		return ResultFontJS.ok("关键词任务停止成功");
 	}
 	

@@ -8,15 +8,21 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.soqi.common.constants.Constant;
 import com.soqi.oem.gentry.Pricetempl;
 import com.soqi.oem.gentry.Pricetempldtail;
 
 public class PriceTemplWrapper {
 	
-	public static Pricetempl converParamToPricetempl(String[] searchType,HttpServletRequest req, Integer oemid, String[] pricetemplid){
+	public static Pricetempl converParamToPricetempl(Byte templtype, String[] searchType,HttpServletRequest req, Integer oemid, String[] pricetemplid){
 		Pricetempl pt = new Pricetempl();
 		pt.setOemid(oemid);
-		pt.setTemplname("顶级代理"+oemid+"手动配置下级代理模板");
+		if(Constant.PRICETEMPL_OEM.intValue() == templtype.intValue()){
+			pt.setTemplname("顶级代理"+oemid+"手动配置下级代理价格模板");
+		}else if(Constant.PRICETEMPL_USER.intValue() == templtype.intValue()){
+			pt.setTemplname("顶级代理"+oemid+"手动配置直客价格模板");
+		}
+		pt.setTempltype(templtype);
 		List<Pricetempldtail> ptdlst = new ArrayList<Pricetempldtail>();
 		for (String st : searchType) {
 			Pricetempldtail pdt = new Pricetempldtail();

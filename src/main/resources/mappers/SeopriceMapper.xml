@@ -11,6 +11,7 @@
     <result column="PriceOri" property="priceori" jdbcType="DECIMAL" />
     <result column="Price" property="price" jdbcType="DECIMAL" />
     <result column="PriceOem" property="priceoem" jdbcType="DECIMAL" />
+    <result column="PriceOemChild" property="priceoemchild" jdbcType="DECIMAL" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="map" >
     delete from SeoPrice
@@ -20,9 +21,9 @@
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Seoprice" >
     insert into SeoPrice (TaskId, FromRank, ToRank, 
-      PriceOri, Price)
+      PriceOri, Price, PriceOem, PriceOemChild)
     values (#{taskid,jdbcType=BIGINT}, #{fromrank,jdbcType=INTEGER}, #{torank,jdbcType=INTEGER}, 
-      #{priceori,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL})
+      #{priceori,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{priceoem,jdbcType=DECIMAL}, #{priceoemchild,jdbcType=DECIMAL})
   </insert>
   
   <insert id="batchInsertFormSeo" parameterType="java.util.List">
@@ -40,8 +41,9 @@
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seoprice" >
     update SeoPrice
     set PriceOri = #{priceori,jdbcType=DECIMAL},
-      Price = #{price,jdbcType=DECIMAL}
-      PriceOem = #{priceoem,jdbcType=DECIMAL}
+      Price = #{price,jdbcType=DECIMAL},
+      PriceOem = #{priceoem,jdbcType=DECIMAL},
+      PriceOemChild = #{priceoemchild,jdbcType=DECIMAL}
     where TaskId = #{taskid,jdbcType=BIGINT}
       and FromRank = #{fromrank,jdbcType=INTEGER}
       and ToRank = #{torank,jdbcType=INTEGER}
@@ -51,31 +53,45 @@
   	<foreach collection="list" separator=";" item="item">
   	  update SeoPrice
       set 
-	      PriceOri = #{item.priceori,jdbcType=DECIMAL},
-	      Price = #{item.price,jdbcType=DECIMAL},
-	      PriceOem = #{item.priceoem,jdbcType=DECIMAL}
+      	  PriceOri = case when PriceOri = 0 or PriceOri is null  then #{item.priceori,jdbcType=DECIMAL} else PriceOri end,
+	      Price = case when Price = 0 or Price is null  then #{item.price,jdbcType=DECIMAL} else Price end,
+	      PriceOem = case when PriceOem = 0 or PriceOem is null  then #{item.priceoem,jdbcType=DECIMAL} else PriceOem end,
+	      PriceOemChild = case when PriceOemChild = 0 or PriceOemChild is null  then #{item.priceoemchild,jdbcType=DECIMAL} else PriceOemChild end
       where 
 	      TaskId = #{item.taskid,jdbcType=BIGINT}
 	      and FromRank = #{item.fromrank,jdbcType=INTEGER}
 	      and ToRank = #{item.torank,jdbcType=INTEGER}
     </foreach>
+<!--   	<foreach collection="list" separator=";" item="item">
+  	  update SeoPrice
+      set 
+      	  PriceOri = case when PriceOemChild =0 or PriceOemChild is null  then #{item.priceori,jdbcType=DECIMAL} end,
+	      PriceOri = #{item.priceori,jdbcType=DECIMAL},
+	      Price = #{item.price,jdbcType=DECIMAL},
+	      PriceOem = #{item.priceoem,jdbcType=DECIMAL},
+	      PriceOemChild = #{priceoemchild,jdbcType=DECIMAL}
+      where 
+	      TaskId = #{item.taskid,jdbcType=BIGINT}
+	      and FromRank = #{item.fromrank,jdbcType=INTEGER}
+	      and ToRank = #{item.torank,jdbcType=INTEGER}
+    </foreach> -->
   </update>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
-    select TaskId, FromRank, ToRank, PriceOri, Price
+    select TaskId, FromRank, ToRank, PriceOri, Price, PriceOemChild, PriceOem
     from SeoPrice
     where TaskId = #{taskid,jdbcType=BIGINT}
       and FromRank = #{fromrank,jdbcType=INTEGER}
       and ToRank = #{torank,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select TaskId, FromRank, ToRank, PriceOri, Price
+    select TaskId, FromRank, ToRank, PriceOri, Price, PriceOemChild
     from SeoPrice
   </select>
   
   <select id="selectByTaskids" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
-    select n.TaskId, n.FromRank, n.ToRank, n.PriceOri, n.Price,m.UserId,m.CostCount
-    from SeoPrice n left join Seo m on n.TaskId = m.TaskId where FromRank = 1 and n.TaskId in
+    select n.TaskId, n.FromRank, n.ToRank, n.PriceOri, n.Price, n.PriceOemChild, n.PriceOem, m.UserId,m.CostCount
+    from SeoPrice n left join Seo m on n.TaskId = m.TaskId where n.FromRank = 1 and n.TaskId in
     <foreach item="taskid" collection="array" open="(" separator="," close=")">
         #{taskid}
     </foreach>

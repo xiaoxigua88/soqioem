@@ -15,7 +15,10 @@
 	<!-- 菜单部分 -->
 	<div th:replace="/oemmanager/_menu::menu"/>
 	<div class="sq-main">
-	    <div class="crumb-container" data-nav="config_priceconfig" id="crumbNavContainer">
+	    <div th:if="${templtype=='2'}" class="crumb-container" data-nav="config_priceconfig" id="crumbNavContainer">
+		    <!-- JS填充 -->
+	    </div>
+	    <div th:if="${templtype=='1'}" class="crumb-container" data-nav="config_priceconfiguser" id="crumbNavContainer">
 		    <!-- JS填充 -->
 	    </div>
 	    <div id="contentBox"></div>

@@ -37,21 +37,23 @@ public class OemSysConfController extends BaseController {
 	 *价格策略配置
 	 */
 	@RequestMapping("/oemmanager/sysconfig/priceconfig")
-	public String priceConfig(Model model,HttpServletRequest req, HttpServletResponse res){
+	public String priceConfig(Model model,@RequestParam(value="templtype",required=true) Byte templtype){
 		Map<String, Object> jsonObj = new HashMap<String, Object>();
 		String searchTypeList = "[{\"TypeId\":0,\"Sort\":0,\"Name\":\"全部搜索\",\"MaxPage\":5,\"Enabled\":false},{\"TypeId\":1010,\"Sort\":1,\"Name\":\"百度PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1015,\"Sort\":2,\"Name\":\"360PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1030,\"Sort\":3,\"Name\":\"搜狗PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7010,\"Sort\":4,\"Name\":\"百度手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7015,\"Sort\":5,\"Name\":\"360手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7030,\"Sort\":6,\"Name\":\"搜狗手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7070,\"Sort\":7,\"Name\":\"神马\",\"MaxPage\":5,\"Enabled\":true}]";
 		jsonObj.put("searchTypeList", FastJsonUtil.parseObject(searchTypeList, List.class));
-		List<Pricetempldtail> lst = ptService.qryPriceTemplToChildOemByOem(this.getCustomer().getOemid());
+		List<Pricetempldtail> lst = ptService.qryPriceTempl(this.getCustomer().getOemid(), templtype);
 		if(null != lst && !lst.isEmpty()){
 			jsonObj.put("lst", lst);
 		}
+		jsonObj.put("templtype", templtype);
+		model.addAttribute("templtype",templtype.toString());
 		model.addAttribute("jsonData",jsonObj);
 		return "/oemmanager/sysconfig/priceconfig";
 	}
 	
 	@RequestMapping("/oemmanager/sysconfig/savepricetempl")
 	@ResponseBody
-	public ResultFontJS savePriceTempl(@RequestParam(value="searchtype",required=true) String[] searchtype, String[] pricetemplid, HttpServletRequest req){
+	public ResultFontJS savePriceTempl(@RequestParam(value="templtype",required=true) Byte templtype, @RequestParam(value="searchtype",required=true) String[] searchtype, String[] pricetemplid, HttpServletRequest req){
 		String errText = null;
 		String name = null;
 		for (String st : searchtype) {
@@ -122,9 +124,9 @@ public class OemSysConfController extends BaseController {
 				return rs;
 			}
 		}
-		Pricetempl pricetempl = PriceTemplWrapper.converParamToPricetempl(searchtype, req, this.getCustomer().getOemid(), pricetemplid);
+		Pricetempl pricetempl = PriceTemplWrapper.converParamToPricetempl(templtype, searchtype, req, this.getCustomer().getOemid(), pricetemplid);
 		//选查询当前代理账户有没有设置价格策略模板
-		List<Pricetempldtail> lst = ptService.qryPriceTemplToChildOemByOem(this.getCustomer().getOemid());
+		List<Pricetempldtail> lst = ptService.qryPriceTempl(this.getCustomer().getOemid(), templtype);
 		if(null == lst || lst.isEmpty()){
 			ptService.addPriceTemplToChildOemByOem(pricetempl, pricetempl.getPtdsList());
 		}else{

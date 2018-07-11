@@ -131,7 +131,7 @@
   </select>
   
   <select id="selectByApiTaskId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select TaskId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status, RankUpdateTime,
+    select TaskId, UserId, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, SearchType, Status, RankUpdateTime,
     RankLast, RankFirst, RankLastChange
     from Seo
     where 1=1

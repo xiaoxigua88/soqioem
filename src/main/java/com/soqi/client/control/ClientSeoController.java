@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.soqi.common.constants.Constant;
 import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
 import com.soqi.common.utils.ResultFontJS;
@@ -210,10 +211,18 @@ public class ClientSeoController extends BaseController{
 		}
 		//客户关键词购买金额校验
 		boolean check = seoService.checkAmountForSeoApply(taskIds, this.getOemuser().getUserid());
-		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds);
+		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds, Constant.USERTYPE_USER);
 		if(!check){
 			String msg = "您需要冻结<b class='text-red'>￥" + frozen.toString() + "</b>元！抱歉，由于可用金额不足，请充值后再购买！";
 			ResultFontJS rs = new ResultFontJS(msg);
+			rs.put("result", false);
+			rs.put("reload", true);
+			return rs;
+		}
+		//代理购买关键词校验
+		boolean oemcheck = seoService.checkOemAmountBySeoApply(taskIds, this.getOemuser().getOemid());
+		if(!oemcheck){
+			ResultFontJS rs = new ResultFontJS("抱歉、您无法购买该关键词、请联系您上家进行总账户充值！");
 			rs.put("result", false);
 			rs.put("reload", true);
 			return rs;
@@ -228,7 +237,7 @@ public class ClientSeoController extends BaseController{
 		
 		
 		//关键词购买
-		seoService.applySeoTasks(taskIds, this.getOemuser().getUserid(), frozen);
+		seoService.applySeoTasks(taskIds, this.getOemuser().getUserid(), this.getOemuser().getOemid(), frozen);
 		return ResultFontJS.ok("云排名关键词购买成功");
 	}
 	
@@ -245,7 +254,7 @@ public class ClientSeoController extends BaseController{
 		}
 		//关键词购买校验
 		boolean check = seoService.checkAmountForSeoApply(taskIds, this.getOemuser().getUserid());
-		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds);
+		BigDecimal frozen = seoService.frozenAmountOfPayment(taskIds, Constant.USERTYPE_USER);
 		if(!check){
 			String msg = "您需要冻结<b class='text-red'>￥" + frozen.toString() + "</b>元！抱歉，由于可用金额不足，请充值后再购买！";
 			ResultFontJS rs = new ResultFontJS(msg);

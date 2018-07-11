@@ -20,6 +20,8 @@ public class Seoprice implements Serializable {
     
     private BigDecimal priceoem;
     
+    private BigDecimal priceoemchild;
+    
     private static final long serialVersionUID = 1L;
 
     public Long getTaskid() {
@@ -84,6 +86,14 @@ public class Seoprice implements Serializable {
 
 	public void setCostcount(Integer costcount) {
 		this.costcount = costcount;
+	}
+
+	public BigDecimal getPriceoemchild() {
+		return priceoemchild;
+	}
+
+	public void setPriceoemchild(BigDecimal priceoemchild) {
+		this.priceoemchild = priceoemchild;
 	}
 
 	@Override

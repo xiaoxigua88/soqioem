@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Pricetempl" >
     <id column="PriceTemplId" property="pricetemplid" jdbcType="INTEGER" />
     <result column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="TemplType" property="templtype" jdbcType="TINYINT" />
     <result column="templName" property="templname" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -11,8 +12,8 @@
     where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Pricetempl" >
-    insert into PriceTempl (OemId, templName)
-    values (#{oemid,jdbcType=INTEGER}, #{templname,jdbcType=VARCHAR})
+    insert into PriceTempl (OemId, templName, TemplType)
+    values (#{oemid,jdbcType=INTEGER}, #{templname,jdbcType=VARCHAR}, #{templtype,jdbcType=VARCHAR})
     <selectKey resultType="java.lang.Integer" keyProperty="pricetemplid" order="AFTER">
     	select @@IDENTITY as pricetemplid
   	</selectKey>
@@ -24,12 +25,12 @@
     where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select PriceTemplId, OemId, templName
+    select PriceTemplId, OemId, templName, TemplType
     from PriceTempl
     where PriceTemplId = #{pricetemplid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select PriceTemplId, OemId, templName
+    select PriceTemplId, OemId, templName, TemplType
     from PriceTempl
   </select>
 </mapper>

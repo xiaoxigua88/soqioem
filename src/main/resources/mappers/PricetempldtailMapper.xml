@@ -129,9 +129,12 @@
     from PriceTemplDtail
   </select>
   
-  <select id="selectListByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="selectListByConditions" resultMap="BaseResultMap" parameterType="map">
     select n.PriceTemplId, n.DiscountType, d.Name as SearchName, n.SearchType, n.FixPrice, n.MinPrice, n.MaxPrice, n.Ratio
-    from PriceTemplDtail n left join PriceTempl m on n.PriceTemplId = m.PriceTemplId left join SearchType d on n.SearchType = d.TypeId where m.OemId = #{oemid,jdbcType=INTEGER}
+    from PriceTemplDtail n left join PriceTempl m on n.PriceTemplId = m.PriceTemplId left join SearchType d on n.SearchType = d.TypeId where m.OemId = #{oemid,jdbcType=INTEGER} and m.TemplType = #{templtype,jdbcType=TINYINT}
+    <if test="searchtype != null">
+      and n.SearchType = #{searchtype}
+    </if>
   </select>
   
 </mapper>
