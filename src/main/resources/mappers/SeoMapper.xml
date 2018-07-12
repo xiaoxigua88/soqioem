@@ -17,6 +17,7 @@
     <result column="FromId" property="fromid" jdbcType="BIGINT" />
     <result column="BuyTime" property="buytime" jdbcType="TIMESTAMP" />
     <result column="FreezeAmount" property="freezeamount" jdbcType="DECIMAL" />
+    <result column="OemFreezeAmount" property="oemfreezeamount" jdbcType="DECIMAL" />
     <result column="CostCount" property="costcount" jdbcType="INTEGER" />
     <result column="CostAmount" property="costamount" jdbcType="DECIMAL" />
     <result column="CostTime" property="costtime" jdbcType="TIMESTAMP" />
@@ -41,7 +42,7 @@
       Url, SeoUrl, SearchType, 
       RankFirst, RankLast, RankLastChange, 
       RankUpdateTime, AddTime, FromType, 
-      FromId, BuyTime, FreezeAmount, 
+      FromId, BuyTime, FreezeAmount,OemFreezeAmount, 
       CostCount, CostAmount, CostTime, 
       SettleHour, SettleTime, SettleStart, 
       ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
@@ -50,7 +51,7 @@
       #{url,jdbcType=VARCHAR}, #{seourl,jdbcType=VARCHAR}, #{searchtype,jdbcType=INTEGER}, 
       #{rankfirst,jdbcType=INTEGER}, #{ranklast,jdbcType=INTEGER}, #{ranklastchange,jdbcType=INTEGER}, 
       #{rankupdatetime,jdbcType=TIMESTAMP}, #{addtime,jdbcType=TIMESTAMP}, #{fromtype,jdbcType=INTEGER}, 
-      #{fromid,jdbcType=BIGINT}, #{buytime,jdbcType=TIMESTAMP}, #{freezeamount,jdbcType=DECIMAL}, 
+      #{fromid,jdbcType=BIGINT}, #{buytime,jdbcType=TIMESTAMP}, #{freezeamount,jdbcType=DECIMAL}, #{oemfreezeamount,jdbcType=DECIMAL},
       #{costcount,jdbcType=INTEGER}, #{costamount,jdbcType=DECIMAL}, #{costtime,jdbcType=TIMESTAMP}, 
       #{settlehour,jdbcType=INTEGER}, #{settletime,jdbcType=TIMESTAMP}, #{settlestart,jdbcType=TIMESTAMP}, 
       #{apipricetaskid,jdbcType=BIGINT}, #{apiranktaskid,jdbcType=BIGINT}, #{apiwatchtaskid,jdbcType=BIGINT}, 
@@ -72,6 +73,7 @@
       FromId = #{fromid,jdbcType=BIGINT},
       BuyTime = #{buytime,jdbcType=TIMESTAMP},
       FreezeAmount = #{freezeamount,jdbcType=DECIMAL},
+      OemFreezeAmount = #{oemfreezeamount,jdbcType=DECIMAL},
       CostCount = #{costcount,jdbcType=INTEGER},
       CostAmount = #{costamount,jdbcType=DECIMAL},
       CostTime = #{costtime,jdbcType=TIMESTAMP},
@@ -106,7 +108,7 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
-    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
+    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, OemFreezeAmount, CostCount, CostAmount, 
     CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
     ErrorMsg, Status
     from Seo
@@ -114,7 +116,7 @@
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select TaskId, UserId, Keyword, Url, SeoUrl, SearchType, RankFirst, RankLast, RankLastChange, 
-    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, CostCount, CostAmount, 
+    RankUpdateTime, AddTime, FromType, FromId, BuyTime, FreezeAmount, OemFreezeAmount, CostCount, CostAmount, 
     CostTime, SettleHour, SettleTime, SettleStart, ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
     ErrorMsg, Status
     from Seo
@@ -152,7 +154,7 @@
   
   <select id="qrySeoManageListByUserId" resultMap="BaseResultMap" parameterType="map">
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
-    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.OemFreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
     m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
     from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1 where m.UserId = #{userid,jdbcType=INTEGER} and (m.Status = 4 or m.Status=5) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
@@ -164,7 +166,7 @@
   
   <select id="qrySeoApplyListByUserId" resultMap="BaseResultMap" parameterType="map">
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
-    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.OemFreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
     m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
     from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1 where m.UserId = #{userid,jdbcType=INTEGER} and m.Status &lt;= 3 Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
@@ -176,7 +178,7 @@
   
   <select id="qrySeoManageListByOemId" resultMap="BaseResultMap" parameterType="map">
     select m.TaskId, m.UserId, m.Keyword, m.Url, m.SeoUrl, m.SearchType, m.RankFirst, m.RankLast, m.RankLastChange, 
-    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.CostCount, m.CostAmount, 
+    m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.OemFreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
     m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
     from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1  where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
@@ -191,7 +193,7 @@
       Url, SeoUrl, SearchType, 
       RankFirst, RankLast, RankLastChange, 
       RankUpdateTime, AddTime, FromType, 
-      FromId, BuyTime, FreezeAmount, 
+      FromId, BuyTime, FreezeAmount, OemFreezeAmount,
       CostCount, CostAmount, CostTime, 
       SettleHour, SettleTime, SettleStart, 
       ApiPriceTaskId, ApiRankTaskId, ApiWatchTaskId, 
@@ -208,7 +210,7 @@
 					</otherwise>
 				</choose>
 				#{item.searchtype},#{item.rankfirst},#{item.ranklast},0,#{item.rankupdatetime},#{item.addtime},1,
-				0,#{item.buytime},0,
+				0,#{item.buytime},0,0,
 				0,0,#{item.costtime},
 				#{item.settlehour},#{item.settletime},#{item.settlestart},
 				<choose>
@@ -260,6 +262,9 @@
     	<if test="freezeamount!=null">
     		FreezeAmount = #{freezeamount},
     	</if>
+    	<if test="oemfreezeamount!=null">
+    		OemFreezeAmount = #{oemfreezeamount},
+    	</if>
     	<if test="buytime!=null">
     		BuyTime = #{buytime},
     	</if>
@@ -274,6 +279,12 @@
       <foreach collection="list" separator=";" item="item">
 	      update Seo
 	      set FreezeAmount = #{item.freezeamount,jdbcType=DECIMAL},
+	      <if test="item.oemfreezeamount!=null">
+    		OemFreezeAmount = #{item.oemfreezeamount},
+    		</if>
+	      <if test="item.buytime!=null">
+	      	BuyTime = #{item.buytime},
+	      </if>
 	      Status = #{item.status,jdbcType=INTEGER}
 	      where TaskId = #{item.taskid,jdbcType=INTEGER}
       </foreach>

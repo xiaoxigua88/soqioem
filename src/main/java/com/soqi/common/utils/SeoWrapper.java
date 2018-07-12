@@ -38,6 +38,7 @@ public class SeoWrapper {
 				seo.setUserid(userId);
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
+				seo.setOemfreezeamount(BigDecimal.ZERO);
 				seo.setPrice(BigDecimal.ZERO);
 				seo.setAddtime(new Date());
 				//设置初始排名和最新排名初始化、客户端给默认值
@@ -99,6 +100,7 @@ public class SeoWrapper {
 			seo.setUserid(userId);
 			//模拟冻结资产
 			seo.setFreezeamount(BigDecimal.ZERO);
+			seo.setOemfreezeamount(BigDecimal.ZERO);
 			seo.setPrice(BigDecimal.ZERO);
 			seo.setAddtime(new Date());
 			//设置初始排名和最新排名初始化、客户端给默认值
@@ -179,6 +181,7 @@ public class SeoWrapper {
 				seo.setRankupdatetime(new Date());
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
+				seo.setOemfreezeamount(BigDecimal.ZERO);
 				//关键词价格
 				List<Seoprice> listspr = new ArrayList<Seoprice>();
 				Seoprice spr1 = new Seoprice();
@@ -271,6 +274,7 @@ public class SeoWrapper {
 				seo.setRankupdatetime(new Date());
 				//模拟冻结资产
 				seo.setFreezeamount(BigDecimal.ZERO);
+				seo.setOemfreezeamount(BigDecimal.ZERO);
 				//关键词价格
 				List<Seoprice> listspr = new ArrayList<Seoprice>();
 				

@@ -133,7 +133,7 @@ public class DataPlatformCallbackService {
 		if(!splst.isEmpty()){
 			piceMapper.batchUpdateFormSeoPrice(splst);
 			Integer[] taskids = ids.toArray(new Integer[ids.size()]);
-			seoMapper.batchSeoFieldsByTaskids(taskids, Constant.SEO_STATUS_NEEDPAY, null, null);
+			seoMapper.batchSeoFieldsByTaskids(taskids, Constant.SEO_STATUS_NEEDPAY, null, null,null);
 		}
 	}
 }

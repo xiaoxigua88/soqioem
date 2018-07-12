@@ -44,6 +44,8 @@ public class Seo implements Serializable {
     private Date buytime;
 
     private BigDecimal freezeamount;
+    
+    private BigDecimal oemfreezeamount;
 
     private Integer costcount;
 
@@ -340,6 +342,14 @@ public class Seo implements Serializable {
 
 	public void setCanstop(Boolean canstop) {
 		this.canstop = canstop;
+	}
+
+	public BigDecimal getOemfreezeamount() {
+		return oemfreezeamount;
+	}
+
+	public void setOemfreezeamount(BigDecimal oemfreezeamount) {
+		this.oemfreezeamount = oemfreezeamount;
 	}
 
 	@Override

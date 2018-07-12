@@ -235,7 +235,7 @@ public class SeoService {
 			oemAcDetail.batchInsert(oadList);
 		}
 		//更新关键词任务的状态停止
-		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_STOP, BigDecimal.ZERO, null);
+		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_STOP, BigDecimal.ZERO, BigDecimal.ZERO, null);
 		//云服务上的任务也要做相应的删除操作
 		seoDoBusiness.keywordRankDel(taskIds);
 	}
@@ -298,6 +298,7 @@ public class SeoService {
 			seo.setTaskid(seoprice.getTaskid());
 			seo.setStatus(Constant.SEO_STATUS_DOING);
 			seo.setFreezeamount(seoprice.getPrice().multiply(day));
+			seo.setOemfreezeamount(seoprice.getPriceoemchild().multiply(day));
 			seo.setBuytime(new Date());
 			seoList.add(seo);
 		}
@@ -405,6 +406,7 @@ public class SeoService {
 				seo.setTaskid(seoprice.getTaskid());
 				seo.setStatus(Constant.SEO_STATUS_DOING);
 				seo.setFreezeamount(seoprice.getPrice().multiply(day));
+				seo.setOemfreezeamount(seoprice.getPriceoemchild().multiply(day));
 				seoList.add(seo);
 			}
 			account.setFreezeamount(account.getFreezeamount().add(frozen));

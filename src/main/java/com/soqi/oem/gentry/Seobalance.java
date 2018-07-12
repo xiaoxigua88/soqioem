@@ -18,6 +18,10 @@ public class Seobalance implements Serializable {
     private BigDecimal amount;
 
     private BigDecimal freeamount;
+    
+    private BigDecimal oemamount;
+    
+    private BigDecimal oemfreeamount;
 
     private Integer payflag;
 
@@ -106,8 +110,24 @@ public class Seobalance implements Serializable {
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
     }
+    
+    public BigDecimal getOemamount() {
+		return oemamount;
+	}
 
-    @Override
+	public void setOemamount(BigDecimal oemamount) {
+		this.oemamount = oemamount;
+	}
+
+	public BigDecimal getOemfreeamount() {
+		return oemfreeamount;
+	}
+
+	public void setOemfreeamount(BigDecimal oemfreeamount) {
+		this.oemfreeamount = oemfreeamount;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

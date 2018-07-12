@@ -1,13 +1,12 @@
 package com.soqi.oem.dao;
 
-import com.soqi.oem.gentry.Seo;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+
+import com.soqi.oem.gentry.Seo;
 
 public interface SeoMapper {
     int deleteByPrimaryKey(Long taskid);
@@ -30,7 +29,7 @@ public interface SeoMapper {
     
     int seoRankUpdateByPlatformId(Seo record);
     
-    int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount, @Param("buytime") Date buytime);
+    int batchSeoFieldsByTaskids(@Param("taskids") Integer[] taskids, @Param("status") Integer status, @Param("freezeamount") BigDecimal freezeamount,@Param("oemfreezeamount") BigDecimal oemfreezeamount, @Param("buytime") Date buytime);
         
     int updateStatusByListSeo(List<Seo> seos);
     

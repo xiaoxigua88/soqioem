@@ -9,6 +9,8 @@
     <result column="RankLast" property="ranklast" jdbcType="INTEGER" />
     <result column="Amount" property="amount" jdbcType="DECIMAL" />
     <result column="FreeAmount" property="freeamount" jdbcType="DECIMAL" />
+    <result column="OemAmount" property="oemamount" jdbcType="DECIMAL" />
+    <result column="OemFreeAmount" property="oemfreeamount" jdbcType="DECIMAL" />
     <result column="PayFlag" property="payflag" jdbcType="INTEGER" />
     <result column="PayId" property="payid" jdbcType="INTEGER" />
     <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
@@ -19,13 +21,10 @@
       and ConsumeDate = #{consumedate,jdbcType=DATE}
   </delete>
   <insert id="insert" parameterType="com.soqi.oem.gentry.Seobalance" >
-    insert into SeoBalance (TaskId, ConsumeDate, FromRank, 
-      ToRank, RankLast, Amount, 
-      FreeAmount, PayFlag, PayId, 
-      AddTime)
+    insert into SeoBalance (TaskId, ConsumeDate, FromRank,ToRank, RankLast, Amount, FreeAmount, OemAmount, OemFreeAmount, PayFlag, PayId, AddTime)
     values (#{taskid,jdbcType=BIGINT}, #{consumedate,jdbcType=DATE}, #{fromrank,jdbcType=INTEGER}, 
       #{torank,jdbcType=INTEGER}, #{ranklast,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
-      #{freeamount,jdbcType=DECIMAL}, #{payflag,jdbcType=INTEGER}, #{payid,jdbcType=INTEGER}, 
+      #{freeamount,jdbcType=DECIMAL}, #{oemamount,jdbcType=DECIMAL},#{oemfreeamount,jdbcType=DECIMAL}, #{payflag,jdbcType=INTEGER}, #{payid,jdbcType=INTEGER}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Seobalance" >
@@ -35,6 +34,8 @@
       RankLast = #{ranklast,jdbcType=INTEGER},
       Amount = #{amount,jdbcType=DECIMAL},
       FreeAmount = #{freeamount,jdbcType=DECIMAL},
+      OemAmount = #{oemamount,jdbcType=DECIMAL},
+      OemFreeAmount = #{oemfreeamount,jdbcType=DECIMAL},
       PayFlag = #{payflag,jdbcType=INTEGER},
       PayId = #{payid,jdbcType=INTEGER},
       AddTime = #{addtime,jdbcType=TIMESTAMP}
@@ -42,14 +43,14 @@
       and ConsumeDate = #{consumedate,jdbcType=DATE}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
-    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, PayFlag, 
+    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, OemAmount, OemFreeAmount, PayFlag, 
     PayId, AddTime
     from SeoBalance
     where TaskId = #{taskid,jdbcType=BIGINT}
       and ConsumeDate = #{consumedate,jdbcType=DATE}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, PayFlag, 
+    select TaskId, ConsumeDate, FromRank, ToRank, RankLast, Amount, FreeAmount, OemAmount, OemFreeAmount, PayFlag, 
     PayId, AddTime
     from SeoBalance
   </select>
