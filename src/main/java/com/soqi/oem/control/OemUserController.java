@@ -48,14 +48,13 @@ public class OemUserController extends BaseController{
 	private FinanceService rechargeService ;
 	//@RequiresPermissions("1301:7")//权限管理;
 	@RequestMapping(value="/oemmanager/userinfo/userlist")
-	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String userlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
@@ -199,14 +198,13 @@ public class OemUserController extends BaseController{
 
 	
 	@RequestMapping("/oemmanager/userinfo/userloginlog")
-	public String userloginlog(Model model, @RequestParam(value="page", defaultValue="1") int pageNo){
+	public String userloginlog(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="1";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Userloginlog> lst =LogService.qryUserLogsByOemid(this.getCustomer().getOemid(), start, size);

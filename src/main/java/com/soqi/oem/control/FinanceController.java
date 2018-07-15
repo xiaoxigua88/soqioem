@@ -34,14 +34,13 @@ public class FinanceController extends BaseController {
 	
 	
 	@RequestMapping("/oemmanager/userinfo/accountdetail")
-	public String userAccountdetail(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String userAccountdetail(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
@@ -59,14 +58,13 @@ public class FinanceController extends BaseController {
     }
 	
 	@RequestMapping("/oemmanager/userinfo/rechargelist")
-	public String userRechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String userRechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
@@ -84,14 +82,13 @@ public class FinanceController extends BaseController {
 	}
 	
 	@RequestMapping("/oemmanager/child/accountdetail")
-	public String oemAccountdetail(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String oemAccountdetail(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
@@ -109,14 +106,13 @@ public class FinanceController extends BaseController {
 	}
 	
 	@RequestMapping("/oemmanager/child/oembill")
-	public String oemBill(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String oemBill(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
@@ -134,14 +130,13 @@ public class FinanceController extends BaseController {
 	}
 	
 	@RequestMapping("/oemmanager/child/rechargelist")
-	public String oemRechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String oemRechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		Customer ct = this.getCustomer();
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;

@@ -131,14 +131,13 @@ public class OemManagerController extends BaseController{
     }
 	
 	@RequestMapping("/oemmanager/self/operateLog")
-	public String operateLog( @RequestParam(value="page", defaultValue="1") int pageNo){
+	public String operateLog( @RequestParam(value="page", defaultValue="1") int pageNo, Filter filter){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="1";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.soqi.oem.gentry.Seo;
+import com.soqi.system.vo.Filter;
 
 public interface SeoMapper {
     int deleteByPrimaryKey(Long taskid);
@@ -43,11 +44,12 @@ public interface SeoMapper {
     
     public List<Seo> qrySeoApplyListByUserId(@Param("userid") Integer userid, @Param("start") int start, @Param("size") int size);
     
-    public List<Seo> qrySeoManageListByOemId(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size);
+    public List<Seo> qrySeoManageListByOemId(@Param("oemid") Integer oemid, @Param("start") int start, @Param("size") int size, @Param("filter") Filter filter);
     
     public int qryCountSeoManageListByUserId(Integer userid);
     
     public int qryCountSeoApplyListByUserId(Integer userid);
     
-    public int qryCountSeoManageListByOemId(Integer oemid);
+    public int qryCountSeoManageListByOemId(@Param("oemid") Integer oemid, @Param("filter") Filter filter);
+
 }

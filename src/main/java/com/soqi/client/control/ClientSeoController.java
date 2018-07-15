@@ -39,14 +39,13 @@ public class ClientSeoController extends BaseController{
 	private UserService userService;
 	
 	@RequestMapping("/client/business/seo/manage")
-	public String userSeoManage(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String userSeoManage(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Seo> lst = seoService.qrySeoManageListByUserId(this.getOemuser().getUserid(), start, size);
@@ -76,14 +75,13 @@ public class ClientSeoController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/client/business/seo/apply")
-	public String apply(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String apply(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Seo> lst = seoService.qrySeoApplyListByUserId(this.getOemuser().getUserid(), start, size);

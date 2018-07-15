@@ -30,6 +30,7 @@ import com.soqi.oem.gentry.Seo;
 import com.soqi.oem.gentry.Seoprice;
 import com.soqi.oem.gentry.Useraccount;
 import com.soqi.oem.gentry.Useraccountdetail;
+import com.soqi.system.vo.Filter;
 
 @Service
 public class SeoService {
@@ -105,8 +106,18 @@ public class SeoService {
 	 * @param size
 	 * @return
 	 */
-	public List<Seo> qrySeoManageListByOemId(Integer oemid, int start, int size){
-		List<Seo> seoResult = seoMapper.qrySeoManageListByOemId(oemid, start, size);
+	public List<Seo> qrySeoManageListByOemId(Integer oemid, int start, int size, Filter filter){
+		if(StringUtils.isBlank(filter.getOrderName())){
+			filter.setOrderName("TaskId");
+		}
+		if(StringUtils.isNoneBlank(filter.getOrderType())){
+			if(!StringUtils.equals("desc", filter.getOrderType().toLowerCase()) && !StringUtils.equals("asc", filter.getOrderType().toLowerCase())){
+				filter.setOrderType("desc");
+			}
+		}else{
+			filter.setOrderType("desc");
+		}
+		List<Seo> seoResult = seoMapper.qrySeoManageListByOemId(oemid, start, size, filter);
 		return SeoWrapper.dealWithSeoResult(seoResult);
 	}
 	
@@ -114,8 +125,8 @@ public class SeoService {
 	 * @param userid
 	 * @return
 	 */
-	public int qryCountSeoManageListByOemId(Integer oemid){
-		return seoMapper.qryCountSeoManageListByOemId(oemid);
+	public int qryCountSeoManageListByOemId(Integer oemid, Filter filter){
+		return seoMapper.qryCountSeoManageListByOemId(oemid, filter);
 	}
 	
 	@Transactional("primaryTransactionManager")
@@ -195,20 +206,22 @@ public class SeoService {
 				uadList.add(uad);
 				free = free.add(seoprice.getPrice().multiply(day));
 				
-				//代理封装部分
-				Oemaccountdetail oad = new Oemaccountdetail();
-				oad.setOemid(oemid);
-				oad.setAddtime(new Date());
-				oad.setDescription("云排名停止");
-				oad.setTradeid(seoprice.getTaskid().toString());
-				oad.setTradetype(Constant.TRADE_TYPE_SEOSTOP);
-				oad.setChange(BigDecimal.ZERO);
-				//解冻值为负
-				oad.setFreeze(BigDecimal.ZERO.subtract(seoprice.getPriceoemchild().multiply(day)));
-				oad.setBalance(oemact.getTotalamount());
-				oadList.add(oad);
-				//代理解冻金额
-				oemFreemount = oemFreemount.add(seoprice.getPriceoemchild().multiply(day));
+				//代理添加交易明细
+				if(null != oemact){
+					Oemaccountdetail oad = new Oemaccountdetail();
+					oad.setOemid(oemid);
+					oad.setAddtime(new Date());
+					oad.setDescription("云排名停止");
+					oad.setTradeid(seoprice.getTaskid().toString());
+					oad.setTradetype(Constant.TRADE_TYPE_SEOSTOP);
+					oad.setChange(BigDecimal.ZERO);
+					//解冻值为负
+					oad.setFreeze(BigDecimal.ZERO.subtract(seoprice.getPriceoemchild().multiply(day)));
+					oad.setBalance(oemact.getTotalamount());
+					oadList.add(oad);
+					//代理解冻金额
+					oemFreemount = oemFreemount.add(seoprice.getPriceoemchild().multiply(day));
+				}
 			}
 			//如果冻结金额总数小于解冻金额：比如两个关键词消耗掉冻结金额，开始消耗剩余账户金额、此时又发生购买关键词，把剩余账户的钱全部给冻结了，然后过段时间，该关键词又发生解冻行为
 			//此时由于还有其它关键词在消耗冻结金额，会发生冻结金额小于该关键词解冻金额的行为，此时只把剩余冻结的解冻即可
@@ -300,6 +313,7 @@ public class SeoService {
 			seo.setFreezeamount(seoprice.getPrice().multiply(day));
 			seo.setOemfreezeamount(seoprice.getPriceoemchild().multiply(day));
 			seo.setBuytime(new Date());
+			seo.setSettlestart(new Date());
 			seoList.add(seo);
 		}
 		//冻结用户资产

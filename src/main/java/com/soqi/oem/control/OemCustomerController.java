@@ -52,14 +52,13 @@ public class OemCustomerController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/oemmanager/customer/customerlist")
-	public String customerlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String customerlist(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="1";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		//获取当前代理下的所有内部员工排除代理员工

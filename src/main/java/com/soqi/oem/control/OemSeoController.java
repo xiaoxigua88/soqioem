@@ -40,18 +40,17 @@ public class OemSeoController extends BaseController{
 	private UserService userService;
 	
 	@RequestMapping("/oemmanager/business/seo/manage")
-	public String oemSeoManage(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String oemSeoManage(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
-		List<Seo> lst = seoService.qrySeoManageListByOemId(this.getCustomer().getOemid(), start, size);
-		int total = seoService.qryCountSeoManageListByOemId(this.getCustomer().getOemid());
+		List<Seo> lst = seoService.qrySeoManageListByOemId(this.getCustomer().getOemid(), start, size, filter);
+		int total = seoService.qryCountSeoManageListByOemId(this.getCustomer().getOemid(), filter);
 		Page pager = new Page(pageNo, size, total);
 		pager.setCookieName("oem_ui_ul");
 		Map<String, Object> jsonObj = new HashMap<String, Object>();

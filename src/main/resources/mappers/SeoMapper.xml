@@ -181,11 +181,47 @@
     m.RankUpdateTime, m.AddTime, m.FromType, m.FromId, m.BuyTime, m.FreezeAmount, m.OemFreezeAmount, m.CostCount, m.CostAmount, 
     m.CostTime, m.SettleHour, m.SettleTime, m.SettleStart, m.ApiPriceTaskId, m.ApiRankTaskId, m.ApiWatchTaskId, 
     m.ErrorMsg, m.Status, n.Price, n.FromRank, n.ToRank
-    from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1  where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}) Order by m.TaskId Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
+    from Seo m left join SeoPrice n on m.TaskId = n.TaskId and n.FromRank = 1  where 
+    exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}
+    <if test="filter.likeField!=null and filter.likeField!=''">
+	    <choose> 
+		    <when test="filter.likeField.length()==11">
+		    and n.Mobile = #{filter.likeField}
+		    </when>
+		    <otherwise>
+		    and n.UserId = #{filter.likeField}
+		    </otherwise>
+		</choose>
+	</if>
+    ) 
+    <if test="filter.taskId!=null">
+    	and m.TaskId = #{filter.taskId}
+	</if>
+    <if test="filter.searchType!=null">
+    	and m.SearchType = #{filter.searchType}
+	</if>
+    Order by ${filter.orderName} ${filter.orderType} Offset #{start,jdbcType=INTEGER} Row Fetch Next #{size,jdbcType=INTEGER} Rows Only  
   </select>
   
-  <select id="qryCountSeoManageListByOemId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select count(1) as total from Seo m where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER})
+  <select id="qryCountSeoManageListByOemId" parameterType="map" resultType="java.lang.Integer">
+    select count(1) as total from Seo m where exists  (select * from OemUser n where n.UserId = m.UserId and n.OemId = #{oemid,jdbcType=INTEGER}
+    <if test="filter.likeField!=null and filter.likeField!=''">
+	    <choose> 
+		    <when test="filter.likeField.length()==11">
+		    and n.Mobile = #{filter.likeField}
+		    </when>
+		    <otherwise>
+		    and n.UserId = #{filter.likeField}
+		    </otherwise>
+		</choose>
+	</if>
+    )
+	<if test="filter.taskId!=null">
+    	and m.TaskId = #{filter.taskId}
+	</if>
+	<if test="filter.searchType!=null">
+    	and m.SearchType = #{filter.searchType}
+	</if>
   </select>
   <!-- 批量增加操作 -->
   <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="taskid">
@@ -281,7 +317,10 @@
 	      set FreezeAmount = #{item.freezeamount,jdbcType=DECIMAL},
 	      <if test="item.oemfreezeamount!=null">
     		OemFreezeAmount = #{item.oemfreezeamount},
-    		</if>
+    	  </if>
+	      <if test="item.settlestart!=null">
+	      	SettleStart = #{item.settlestart},
+	      </if>
 	      <if test="item.buytime!=null">
 	      	BuyTime = #{item.buytime},
 	      </if>

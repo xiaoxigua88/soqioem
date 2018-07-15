@@ -38,14 +38,13 @@ public class ChildOemController extends BaseController {
 	@Autowired
 	private FinanceService rechargeService ;
 	@RequestMapping("/oemmanager/child/childoemlist")
-	public String childoemlist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String childoemlist(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="1";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Oembase> lst = oemBaseService.qryChildOemsByOemId(this.getCustomer().getOemid(), start, size);

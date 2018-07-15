@@ -37,14 +37,13 @@ public class ClientFinanceController extends BaseController{
 	private FinanceService financeService;
 	
 	@RequestMapping("/client/finance/accountdetail")
-	public String accountdetail(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String accountdetail(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
 		String ybl_ui_ul = CookieUtils.getCookie("oem_ui_ul");
 		if(StringUtils.isBlank(ybl_ui_ul)){
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Useraccountdetail> lst = financeService.qryUserAcDtlsByUserid(this.getOemuser().getUserid(), start, size);
@@ -60,7 +59,7 @@ public class ClientFinanceController extends BaseController{
     }
 	
 	@RequestMapping("/client/finance/rechargelist")
-	public String rechargelist(Model model, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
+	public String rechargelist(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		Oemuser  user = userService.qryOemuser(this.getOemuser().getUserid());
 		if(user.getTotalamount() == null){
 			user.setTotalamount(BigDecimal.ZERO);
@@ -75,7 +74,6 @@ public class ClientFinanceController extends BaseController{
 			ybl_ui_ul="20";
 			CookieUtils.addCookie("oem_ui_ul", ybl_ui_ul);
 		}
-		Filter filter = new Filter("desc", "", "");
 		int size = Integer.valueOf(ybl_ui_ul);
 		int start = ((pageNo-1) >= 0 ? (pageNo-1) : 0) * size;
 		List<Userrecharge> lst = financeService.qryUserRechargesByUserid(this.getOemuser().getUserid(), start, size);
