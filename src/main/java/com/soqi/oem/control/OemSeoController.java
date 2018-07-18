@@ -124,7 +124,7 @@ public class OemSeoController extends BaseController{
 		if(listMap.isEmpty()){
 			return ResultFontJS.error("搜索引擎不能为空");
 		}
-		seoService.batchSameSeoInsert(listMap);
+		seoService.batchSameSeoInsert(listMap, this.getCustomer().getOemid());
 		
 		//return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		
@@ -224,7 +224,7 @@ public class OemSeoController extends BaseController{
 		if(listMap.isEmpty()){
 			return ResultFontJS.error("搜索引擎不能为空");
 		}
-		seoService.batchSameSeoInsert(listMap);
+		seoService.batchSameSeoInsert(listMap, this.getCustomer().getOemid());
 		//return ResultFontJS.ok(/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		return ResultFontJS.ok("批量添加关键词成功");
 	}

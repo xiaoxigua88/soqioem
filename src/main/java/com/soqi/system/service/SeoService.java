@@ -129,8 +129,13 @@ public class SeoService {
 		return seoMapper.qryCountSeoManageListByOemId(oemid, filter);
 	}
 	
+	/**
+	 * @param listMap
+	 * @param parentOemid 顶级代理的oemid、用于跟数据平台参数对接
+	 * @return
+	 */
 	@Transactional("primaryTransactionManager")
-	public int addSeoTask(Map<String, List<Seo>> listMap){
+	public int addSeoTask(Map<String, List<Seo>> listMap, Integer oemid){
 		List<Seo> seos = new ArrayList<Seo>();
 		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
 			seos.addAll(entry.getValue());
@@ -144,8 +149,15 @@ public class SeoService {
 		}
 		//生成关键词价格数据
 		piceMapper.batchInsertFormSeo(seos);
+		Integer parentOemid = null;//用于数据平台接口请求
+		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
+		if(currentOem.getParentoemid().intValue() != 0){
+			parentOemid = currentOem.getParentoemid();
+		}else{
+			parentOemid = oemid;
+		}
 		//异步调用生成服务ID
-		seoDoBusiness.createServiceIdOfRP(listMap);
+		seoDoBusiness.createServiceIdOfRP(listMap, parentOemid);
 		return count;
 		
 	}
@@ -168,10 +180,14 @@ public class SeoService {
 	public void stopSeoTasks(Integer[] taskIds, Integer oemid){
 		//查看代理是不是要参与结算
 		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
+		Integer parentOemid = null;//用于数据平台接口请求
 		Oemaccount oemact = null;
 		BigDecimal oemFreemount = BigDecimal.ZERO;
 		if(currentOem.getParentoemid().intValue() != 0){
+			parentOemid = currentOem.getParentoemid();
 			oemact = oemaccountMapper.selectByPrimaryKey(oemid);
+		}else{
+			parentOemid = oemid;
 		}
 		//按排名区间为1-10取保证取一条
 		List<Seoprice> sps = piceMapper.selectByTaskids(taskIds);
@@ -250,7 +266,7 @@ public class SeoService {
 		//更新关键词任务的状态停止
 		seoMapper.batchSeoFieldsByTaskids(taskIds, Constant.SEO_STATUS_STOP, BigDecimal.ZERO, BigDecimal.ZERO, null);
 		//云服务上的任务也要做相应的删除操作
-		seoDoBusiness.keywordRankDel(taskIds);
+		seoDoBusiness.keywordRankDel(taskIds, parentOemid);
 	}
 	
 	
@@ -267,11 +283,14 @@ public class SeoService {
 		//查看代理是不是要参与结算
 		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
 		Oemaccount oemact = null;
+		Integer parentOemid = null;//用于数据平台接口请求
 		BigDecimal oemFreezeamount = BigDecimal.ZERO;
 		if(currentOem.getParentoemid().intValue() != 0){
+			parentOemid = currentOem.getParentoemid();
 			oemact = oemaccountMapper.selectByPrimaryKey(oemid);
+		}else{
+			parentOemid = oemid;
 		}
-		
 		Useraccount account = useraccountMapper.selectByPrimaryKey(userid);
 		List<Seoprice> splist = piceMapper.selectByTaskids(taskIds);
 		BigDecimal day = BigDecimal.valueOf(Constant.SEOFREEZEDAY);
@@ -333,7 +352,7 @@ public class SeoService {
 		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
 		seoMapper.updateStatusByListSeo(seoList);
 		//调用异步服务获取云排名监控服务ID
-		seoDoBusiness.createServiceIdOfW(taskIds);
+		seoDoBusiness.createServiceIdOfW(taskIds, parentOemid);
 	}
 	
 	/**计算冻结支付金额
@@ -367,9 +386,13 @@ public class SeoService {
 		//查看代理是不是要参与结算
 		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
 		Oemaccount oemact = null;
+		Integer parentOemid = null;//用于数据平台接口请求
 		BigDecimal oemFreezeamount = BigDecimal.ZERO;
 		if(currentOem.getParentoemid().intValue() != 0){
 			oemact = oemaccountMapper.selectByPrimaryKey(oemid);
+			parentOemid = currentOem.getParentoemid();
+		}else{
+			parentOemid = oemid;
 		}
 		List<Seoprice> sps = piceMapper.selectByTaskids(taskIds);
 		Map<String, List<Seoprice>> spuMap = SeopriceWrapper.getListbyUserid(sps);
@@ -439,7 +462,7 @@ public class SeoService {
 		//更新每一条关键启的启动金额、注意每条关键词的用户可能是不同的
 		seoMapper.updateStatusByListSeo(seoList);
 		//调用异步服务获取云排名监控服务ID
-		seoDoBusiness.createServiceIdOfW(taskIds);
+		seoDoBusiness.createServiceIdOfW(taskIds, parentOemid);
 	}
 	/**功能：用户购买关键启时，需要对自身充值金额进地检查、资金不够要提示
 	 * @param taskIds
@@ -519,7 +542,7 @@ public class SeoService {
 		return true;
 	}
 	@Transactional("primaryTransactionManager")
-	public int batchSameSeoInsert(Map<String, List<Seo>> listMap){
+	public int batchSameSeoInsert(Map<String, List<Seo>> listMap, Integer oemid){
 		//注意此处listMap和seos中的每个seo对象是同一个对像。。所以设置taskid后,这两个集合中的对像也会同步更改，这应该就是地址引用传递、对像共享
 		List<Seo> seos = new ArrayList<Seo>();
 		for (Map.Entry<String, List<Seo>> entry : listMap.entrySet()) {
@@ -533,8 +556,15 @@ public class SeoService {
 			}
 		}
 		int rankCount = piceMapper.batchInsertFormSeo(seos);
+		Integer parentOemid = null;//用于数据平台接口请求
+		Oembase currentOem = oembaseMapper.selectByPrimaryKey(oemid);
+		if(currentOem.getParentoemid().intValue() != 0){
+			parentOemid = currentOem.getParentoemid();
+		}else{
+			parentOemid = oemid;
+		}
 		//异步调用生成服务ID
-		seoDoBusiness.createServiceIdOfRP(listMap);
+		seoDoBusiness.createServiceIdOfRP(listMap, parentOemid);
 		return rankCount > 0 ? count : 0;
 	}
 }

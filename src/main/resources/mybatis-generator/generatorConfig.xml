@@ -84,14 +84,14 @@
             数据库表主键
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table> -->
-       	<table tableName="UserPriceTempl" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+       	<table tableName="InterfaceParamConf" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="id" sqlStatement="SqlServer" identity="true" />
         </table>
-       	<table tableName="OemPriceTempl" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+       	<!-- <table tableName="OemPriceTempl" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="id" sqlStatement="SqlServer" identity="true" />
-        </table>
+        </table> -->
        	<!-- <table tableName="SeoPrice" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="id" sqlStatement="SqlServer" identity="true" />

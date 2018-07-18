@@ -147,7 +147,7 @@ public class ClientSeoController extends BaseController{
 		//TODO 验证码后台校验值对比
 		//封装seo对像
 		Map<String, List<Seo>> listMap = SeoWrapper.singleUroToSeo(this.getOemuser().getUserid(), url, keyword.trim().split("\r\n"), searchType);
-		int count = seoService.addSeoTask(listMap);
+		int count = seoService.addSeoTask(listMap, this.getOemuser().getOemid());
 		if(count >0){
 			return ResultFontJS.ok("添加关键词成功"/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
@@ -178,7 +178,7 @@ public class ClientSeoController extends BaseController{
 		//TODO 验证码后台校验值对比
 		//封装seo对像
 		Map<String, List<Seo>> listMap = SeoWrapper.multipleUroToSeo(this.getOemuser().getUserid(), url.trim().split("\r\n"), keyword.trim().split("\r\n"), searchType);
-		int count = seoService.addSeoTask(listMap);
+		int count = seoService.addSeoTask(listMap, this.getOemuser().getOemid());
 		if(count >0){
 			return ResultFontJS.ok("添加关键词成功"/*"提交完成，稍候请在列表中查看检测结果！<br/>本次请求不重复记录<b class='text-red'>"+seos.size()+"</b>个。失败<b class='text-red'>"+(seos.size()-count)+"</b>个，忽略<b class='text-red'>"+(seos.size()-count)+"</b>个，成功<b class='text-red'>"+ count +"</b>个！"*/);
 		}
