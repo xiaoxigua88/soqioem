@@ -133,6 +133,7 @@
 								</td>
 								<td>
 									<a href="#a_null" class="user-view" data-oemid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:4')==true ? '详情':''}"></a>
+								    <a href="#a_null" class="user-pricechange" data-oemid="{{item.oemid}}" th:text="${'|调价'}"></a>
 								    <a href="#a_null" class="user-edit" data-oemid="{{item.oemid}}" th:text="${#PeUtils.hasPermission('1301:16')==true ? '|编辑':''}">编辑</a>
 									<span class="text-muted operate-spacing">|</span>
 									<div  class="btn-group btn-group-mini">

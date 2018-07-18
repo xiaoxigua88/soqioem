@@ -1,0 +1,51 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading">
+		<div class="sq-panel-title">接口调价配置</div>
+	</div>
+	<div class="sq-panel-body">
+		<form class="form-horizontal sq-form sq-tab-container" action="/oemmanager/sysconfig/saveapipricechange" id="saveApiPriceForm">
+		    <div class="pull-left" style="width:850px;" id="operateArea">
+				<div class="form-group">
+					<div class="col-xs-7 sq-form-control">
+						<label class="search-group-label">价格限制：</label>
+						<span id="minprice"><input type="text" name="minprice" class="sq-input-reset sq-input-date necessary" placeholder="" autocomplete="off" value="{{minprice}}" /></span>
+						<label class="search-group-label">至：</label>
+						<span id="maxprice"><input type="text" name="maxprice" class="sq-input-reset sq-input-date necessary" placeholder="" autocomplete="off" value="{{maxprice}}"/></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-3 sq-form-control">
+						<a href="#a_null" class="sq-btn btn-strong btn-operate-add " id="addrow" data-operatetype="add">添加</a>
+						<a href="#a_null" class="sq-btn btn-strong" id="removerow" data-operatetype="remove">-删除</a>
+					</div>
+				</div>
+				{{if lst}}
+					{{each lst as item i}}
+					<div class="form-group operate">
+						<div class="col-xs-7 sq-form-control">
+							<label class="search-group-label">价格区间：</label>
+							<span id="pricefirst_{{i+1}}"><input type="text" name="pricefirst_{{i+1}}" class="sq-input-reset sq-label-mini necessary" placeholder="" autocomplete="off" value="{{item.pricefirst}}"/></span>
+							<label class="search-group-label">至：</label>
+							<span id="pricelast_{{i+1}}"><input type="text" name="pricelast_{{i+1}}" class="sq-input-reset sq-label-mini necessary" placeholder="" autocomplete="off" value="{{item.pricelast}}"/></span>
+							<label class="search-group-label">浮动：</label>
+							<span id="range_{{i+1}}"><input type="text" name="range_{{i+1}}" class="sq-input-reset sq-label-mini necessary" placeholder="" autocomplete="off" value="{{item.range}}" /></span>
+						</div>
+					</div>
+					{{/each}}
+                {{/if}}
+			</div>
+			<div class="form-group hide savebutton">
+					<div class="sq-control-label">
+						&nbsp;
+					</div>
+					<div class="col-xs-10 sq-form-control">
+						<input id="groupLength" type="hidden" name="groupLength" value="{{groupLength}}" />
+						<input type="hidden" name="id" value="{{id}}" />
+						<a href="#a_null" class="sq-btn btn-strong" id="saveApiPrice">保 存</a>
+					</div>
+			</div>
+		</form>
+	</div>
+</div>
+</script>

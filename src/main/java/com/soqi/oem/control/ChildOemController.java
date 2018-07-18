@@ -18,16 +18,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soqi.common.constants.Constant;
+import com.soqi.common.utils.BigDecimalUtil;
 import com.soqi.common.utils.CookieUtils;
 import com.soqi.common.utils.FastJsonUtil;
 import com.soqi.common.utils.IDUtils;
+import com.soqi.common.utils.PriceTemplWrapper;
 import com.soqi.common.utils.ResultFontJS;
+import com.soqi.common.utils.ValidateUtils;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oembase;
+import com.soqi.oem.gentry.Oempricetempl;
 import com.soqi.oem.gentry.Oemrecharge;
+import com.soqi.oem.gentry.Pricetempldtail;
+import com.soqi.oem.gentry.Userpricetempl;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.FinanceService;
 import com.soqi.system.service.OemBaseService;
+import com.soqi.system.service.PriceTemplService;
 import com.soqi.system.vo.Filter;
 import com.soqi.system.vo.Page;
 
@@ -37,6 +44,9 @@ public class ChildOemController extends BaseController {
 	private OemBaseService oemBaseService;
 	@Autowired
 	private FinanceService rechargeService ;
+	@Autowired
+	private PriceTemplService priceTemplService;
+	
 	@RequestMapping("/oemmanager/child/childoemlist")
 	public String childoemlist(Model model, Filter filter, @RequestParam(value="page", defaultValue="1") int pageNo,HttpServletResponse resp){
 		//添加cookie
@@ -109,5 +119,109 @@ public class ChildOemController extends BaseController {
 		recharge.setFinishtime(date);
 		rechargeService.oemRecharge(recharge);
 		return ResultFontJS.ok("用户充值成功");
+	}
+	
+	@RequestMapping("/oemmanager/child/seopricechange")
+	@ResponseBody
+	public ResultFontJS seopricechange(@RequestParam(value="oemid", required=true) Integer oemid){
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		String searchTypeList = "[{\"TypeId\":0,\"Sort\":0,\"Name\":\"全部搜索\",\"MaxPage\":5,\"Enabled\":false},{\"TypeId\":1010,\"Sort\":1,\"Name\":\"百度PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1015,\"Sort\":2,\"Name\":\"360PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":1030,\"Sort\":3,\"Name\":\"搜狗PC\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7010,\"Sort\":4,\"Name\":\"百度手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7015,\"Sort\":5,\"Name\":\"360手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7030,\"Sort\":6,\"Name\":\"搜狗手机\",\"MaxPage\":5,\"Enabled\":true},{\"TypeId\":7070,\"Sort\":7,\"Name\":\"神马\",\"MaxPage\":5,\"Enabled\":true}]";
+		jsonObj.put("searchTypeList", FastJsonUtil.parseObject(searchTypeList, List.class));
+		List<Oempricetempl> lst = priceTemplService.qryOempricetemplsByOemid(oemid);
+		if(null != lst && !lst.isEmpty()){
+			jsonObj.put("lst", lst);
+		}
+		jsonObj.put("oemid", oemid);
+		return ResultFontJS.ok(jsonObj);
+	}
+	
+	@RequestMapping("/oemmanager/child/savepricetempl")
+	@ResponseBody
+	public ResultFontJS savePriceTempl(@RequestParam(value="searchtype",required=true) String[] searchtype, @RequestParam(value="oemid",required=true) Integer oemid, HttpServletRequest req){
+		String errText = null;
+		String name = null;
+		for (String st : searchtype) {
+			String discounttype_ = req.getParameter("discounttype_"+st);
+			String fixprice_ = req.getParameter("fixprice_"+st);
+			String minprice_ = req.getParameter("minprice_"+st);
+			String maxprice_ = req.getParameter("maxprice_"+st);
+			String ratio_ = req.getParameter("ratio_"+st);
+			if(StringUtils.isBlank(discounttype_)){
+				errText = "折扣类型并未设置请检查页面";
+				name = "discounttype_" + st;
+			}else{
+				if(StringUtils.equals(discounttype_, "1")){
+					//一口价
+					if(StringUtils.isBlank(fixprice_)){
+						errText = "一口价不能为空";
+						name = "fixprice_" + st;
+					}
+					//验证金额
+					if(!ValidateUtils.PositiveNumber(fixprice_)){
+						errText = "请正确输入金额格式";
+						name = "fixprice_" + st;
+					}
+				}else if(StringUtils.equals(discounttype_, "2")){
+					//折扣价、最小、最大、比率
+					if(StringUtils.isBlank(minprice_)){
+						errText = "最小金额不能为空";
+						name = "minprice_" + st;
+					}
+					//验证金额
+					if(!ValidateUtils.PositiveNumber(minprice_)){
+						errText = "请正确输入最小金额格式";
+						name = "minprice_" + st;
+					}
+					if(StringUtils.isBlank(maxprice_)){
+						errText = "最大金额不能为空";
+						name = "maxprice_" + st;
+					}
+					//验证金额
+					if(!ValidateUtils.PositiveNumber(maxprice_)){
+						errText = "请正确输入最大金额格式";
+						name = "maxprice_" + st;
+					}
+					if(StringUtils.isBlank(ratio_)){
+						errText = "折扣率不能为空";
+						name = "ratio_" + st;
+					}
+					//验证金额
+					if(!ValidateUtils.PositiveNumber(ratio_)){
+						errText = "请正确输入金额格式";
+						name = "ratio_" + st;
+					}
+					//比较区间大小
+					if(!BigDecimalUtil.compareSize(maxprice_, minprice_)){
+						errText = "金额区间最大小最设置不正确";
+						name = "minprice_" + st;
+					}
+					//和0-1比较
+					if(!(Double.valueOf(ratio_)>=0 && Double.valueOf(ratio_)<=1)){
+						errText = "请输入0到1之间的小数、不包括0、1";
+						name = "ratio_" + st;
+					}
+				}
+			}
+			if(errText != null && name != null){
+				ResultFontJS rs = ResultFontJS.error(errText);
+				rs.put("name",name);
+				return rs;
+			}
+		}
+		List<Oempricetempl> optList = PriceTemplWrapper.convertOempricetempls(searchtype, req, oemid);
+		//查询子代理有没有配置价格模板
+		List<Oempricetempl> lst = priceTemplService.qryOempricetemplsByOemid(oemid);
+		if(null == lst || lst.isEmpty()){
+			priceTemplService.batchInsertOemPriceTempls(optList);
+		}else{
+			int a = optList.get(0).getOemid().intValue();
+			int b = lst.get(0).getOemid().intValue();
+			if(a==b){
+				priceTemplService.batchUpdateOemPriceTempls(optList);
+			}else{
+				ResultFontJS.error("策略模板无法更新");
+			}
+		}
+		return ResultFontJS.ok("价格策略模板配置成功");
 	}
 }

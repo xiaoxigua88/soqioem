@@ -114,6 +114,83 @@ $(function() {
     $(".user-verify").click(function() {
         return false;
     });
+    //关键词调价
+    $(".user-pricechange").click(function() {
+    	var userid = $(this).data("userid");
+    	SQ.post({
+            url: "/oemmanager/userinfo/seopricechange",
+            data: {
+            	userid: userid
+            },
+            isCoverSuccess: true,
+            success: function(json) {
+                if (json.result == false) {
+                    SQ.tips.error({ content: json.text });
+                    return;
+                }
+                $.dialog({
+                    title: "关键词价格调整",
+                    cancel: true,
+                    okVal: "保存",
+                    cancelVal: "关闭",
+                    content: template("seopricechangeInformation", {searchTypeList: json.searchTypeList,userid:userid, lst:json.lst}),
+                    init: function() {
+                    	SQ.component.initTabs();
+                    	$(".searchtypes input").click(function() {
+                    		var searchtype = $(this).parent().data("searchtype");
+                    		var discounttype_searchtype = $(this).data("discounttype_" + searchtype);
+                    		$("#discounttype_" + searchtype).val(discounttype_searchtype);
+                    		 if(discounttype_searchtype=='1'){
+                    			 $("#fixprice_" + searchtype).removeClass("hide");
+                    			 $("#minprice_" + searchtype).addClass("hide");
+                    			 $("#maxprice_" + searchtype).addClass("hide");
+                    			 $("#ratio_" + searchtype).addClass("hide");
+                            }else if(discounttype_searchtype=='2'){
+                            	$("#fixprice_" + searchtype).addClass("hide");
+                    			 $("#minprice_" + searchtype).removeClass("hide");
+                    			 $("#maxprice_" + searchtype).removeClass("hide");
+                    			 $("#ratio_" + searchtype).removeClass("hide");
+                            }
+                        });
+                    	// 保存密码
+                        /*$("#savepricetempl").click(function() {
+                            var $_form = $("#savepriceform");
+                            var actionUrl = $_form.attr("action");
+                            if (!fieldEmptyValidate($_form)) {
+                                return false;
+                            }
+                            SQ.post({
+                                url: actionUrl,
+                                data: $_form.serialize(),
+                                successResultFalse: function(json) {
+                                    if (json.reload) {
+                                        window.location.reload();
+                                    }
+                                    else {
+                                        validateShowError(json.name, json.text, $_form);
+                                    }
+                                }
+                            });
+                            return false;
+                        });*/
+                    },
+                    ok: function() {
+                        var $_form = $("#savepriceform");
+                        if (!fieldEmptyValidate($_form)) {
+                            return false;
+                        }
+                        SQ.post({
+                            url: $_form.attr("action"),
+                            data: $_form.serialize()
+                        });
+                        return false;
+                    }
+                });
+            }
+        });
+        return false;
+    });
+    
     //账户充值
     $(".user-recharge").click(function() {
     	var userid = $(this).data("userid");

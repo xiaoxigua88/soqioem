@@ -20,9 +20,12 @@ import com.soqi.common.utils.FastJsonUtil;
 import com.soqi.common.utils.PriceTemplWrapper;
 import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ValidateUtils;
+import com.soqi.oem.gentry.Apipricechange;
+import com.soqi.oem.gentry.Apipricechangedetail;
 import com.soqi.oem.gentry.Pricetempl;
 import com.soqi.oem.gentry.Pricetempldtail;
 import com.soqi.system.control.BaseController;
+import com.soqi.system.service.ApiPriceChangeService;
 import com.soqi.system.service.PriceTemplService;
 
 /**代理端系统信息控制层
@@ -33,6 +36,8 @@ import com.soqi.system.service.PriceTemplService;
 public class OemSysConfController extends BaseController {
 	@Autowired
 	private PriceTemplService ptService;
+	@Autowired
+	private ApiPriceChangeService apcService;
 	/**
 	 *价格策略配置
 	 */
@@ -142,6 +147,109 @@ public class OemSysConfController extends BaseController {
 	}
 	
 	/**
+	 *接口价格调整
+	 */
+	@RequestMapping("/oemmanager/sysconfig/apipricechange")
+	public String apiPriceChange(Model model){
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		Apipricechange change = apcService.getApipricechange(this.getCustomer().getOemid());
+		if(null != change){
+			List<Apipricechangedetail> lst = change.getAcdList();
+			if(null != lst && !lst.isEmpty()){
+				jsonObj.put("lst", lst);
+			}
+			jsonObj.put("id", change.getId());
+			jsonObj.put("maxprice", change.getMaxprice());
+			jsonObj.put("minprice", change.getMinprice());
+		}
+		model.addAttribute("jsonData",jsonObj);
+		return "/oemmanager/sysconfig/apipricechange";
+	}
+	
+	@RequestMapping("/oemmanager/sysconfig/saveapipricechange")
+	@ResponseBody
+	public ResultFontJS saveApiPriceChange(@RequestParam(value="groupLength",required=true) Byte groupLength,Apipricechange tosave,HttpServletRequest req){
+		String errText = null;
+		String name = null;
+		String minprice = req.getParameter("minprice");
+		String maxprice = req.getParameter("maxprice");
+		if(StringUtils.isBlank(minprice)){
+			return ResultFontJS.error("价格限制最小值不能为空");
+		}
+		if(StringUtils.isBlank(maxprice)){
+			return ResultFontJS.error("价格限制最大值不能为空");
+		}
+		if(!ValidateUtils.PositiveNumber(minprice)){
+			ResultFontJS rs = ResultFontJS.error("请输入正确的金额格式");
+			rs.put("name",minprice);
+			return rs;
+		}
+		if(!ValidateUtils.PositiveNumber(maxprice)){
+			ResultFontJS rs = ResultFontJS.error("请输入正确的金额格式");
+			rs.put("name",maxprice);
+			return rs;
+		}
+		if(!BigDecimalUtil.compareSize(maxprice, minprice)){
+			ResultFontJS rs = ResultFontJS.error("请输入正确区间值，最小值要小于最大值");
+			rs.put("name",minprice);
+			return rs;
+		}
+		if(groupLength <= 0){
+			return ResultFontJS.error("未设置调副区间、非法操作");
+		}else{
+			for(int i = 1 ; i<groupLength+1 ; i++){
+				String pricefirst_ = req.getParameter("pricefirst_"+i);
+				String pricelast_ = req.getParameter("pricelast_"+i);
+				String range_ = req.getParameter("range_"+i);
+				//非空校验
+				if(StringUtils.isBlank(pricefirst_)){
+					errText = "最低阀值";
+					name = "pricefirst_" + i;
+				}
+				if(StringUtils.isBlank(pricelast_)){
+					errText = "最高阀值";
+					name = "pricelast_" + i;
+				}
+				if(StringUtils.isBlank(range_)){
+					errText = "幅度不能为空";
+					name = "range_" + i;
+				}
+				//验证金额
+				if(!ValidateUtils.PositiveNumber(pricefirst_)){
+					errText = "请正确输入金额格式";
+					name = "pricefirst_" + i;
+				}
+				if(!ValidateUtils.PositiveNumber(pricelast_)){
+					errText = "请正确输入金额格式";
+					name = "pricelast_" + i;
+				}
+				if(!ValidateUtils.PositiveNumber(range_)){
+					errText = "请正确输入幅度比如1.2或0.5等数字";
+					name = "range_" + i;
+				}
+				if(errText != null && name != null){
+					ResultFontJS rs = ResultFontJS.error(errText);
+					rs.put("name",name);
+					return rs;
+				}
+			}
+		}
+		
+		Apipricechange change = apcService.getApipricechange(this.getCustomer().getOemid());
+		//封装tosave对像
+		PriceTemplWrapper.convertParamToApiPriceChange(groupLength, req, tosave, this.getCustomer().getOemid());
+		if(change==null || change.getAcdList() == null || change.getAcdList().isEmpty()){
+			apcService.saveApipricechange(tosave);
+		}else{
+			if(tosave.getId().intValue() == change.getId().intValue()){
+				apcService.updateApipricechange(tosave);
+			}else{
+				ResultFontJS.error("接口调价无法更新");
+			}
+		}
+		return ResultFontJS.ok("接口调价配置成功");
+	}
+	/**
 	 *服务配置
 	 */
 	@RequestMapping("/oemmanager/sysconfig/serviceconfig")
@@ -149,4 +257,5 @@ public class OemSysConfController extends BaseController {
 		
 		return "/oemmanager/sysconfig/serviceconfig";
 	}
+	
 }

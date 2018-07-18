@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.ApipricechangeMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Apipricechange" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="OemId" property="oemid" jdbcType="INTEGER" />
+    <result column="MinPrice" property="minprice" jdbcType="DECIMAL" />
+    <result column="MaxPrice" property="maxprice" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ApiPriceChange
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Apipricechange" >
+    insert into ApiPriceChange (OemId, MinPrice, MaxPrice)
+    values (#{oemid,jdbcType=INTEGER}, #{minprice,jdbcType=DECIMAL}, #{maxprice,jdbcType=DECIMAL})
+      <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+    	select @@IDENTITY as id
+      </selectKey>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.soqi.oem.gentry.Apipricechange" >
+    update ApiPriceChange
+    set 
+    MinPrice = #{minprice,jdbcType=DECIMAL},
+    MaxPrice = #{maxprice,jdbcType=DECIMAL}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select Id, OemId, MinPrice, MaxPrice
+    from ApiPriceChange
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select Id, OemId, MinPrice, MaxPrice
+    from ApiPriceChange
+    where OemId = #{oemid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select Id, OemId, MinPrice, MaxPrice
+    from ApiPriceChange
+  </select>
+</mapper>

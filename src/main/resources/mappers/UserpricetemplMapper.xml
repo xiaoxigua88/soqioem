@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soqi.oem.dao.UserpricetemplMapper" >
+  <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Userpricetempl" >
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="DiscountType" property="discounttype" jdbcType="TINYINT" />
+    <result column="SearchType" property="searchtype" jdbcType="SMALLINT" />
+    <result column="FixPrice" property="fixprice" jdbcType="DECIMAL" />
+    <result column="MinPrice" property="minprice" jdbcType="DECIMAL" />
+    <result column="MaxPrice" property="maxprice" jdbcType="DECIMAL" />
+    <result column="Ratio" property="ratio" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.soqi.oem.gentry.Userpricetempl" >
+    insert into UserPriceTempl (UserId, SearchType, FixPrice, 
+      MinPrice, MaxPrice, Ratio
+      )
+    values (#{userid,jdbcType=INTEGER}, #{searchtype,jdbcType=SMALLINT}, #{fixprice,jdbcType=DECIMAL}, 
+      #{minprice,jdbcType=DECIMAL}, #{maxprice,jdbcType=DECIMAL}, #{ratio,jdbcType=DECIMAL}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select UserId, SearchType, FixPrice, MinPrice, MaxPrice, Ratio
+    from UserPriceTempl
+  </select>
+  
+  <select id="qryUserpricetemplsByUserid" resultMap="BaseResultMap" parameterType="map">
+    select n.UserId, d.Name as SearchName, n.DiscountType, n.SearchType, n.FixPrice, n.MinPrice, n.MaxPrice, n.Ratio
+    from UserPriceTempl n left join SearchType d on n.SearchType = d.TypeId where n.UserId = #{userid,jdbcType=INTEGER}
+    <if test="searchtype != null">
+      and n.SearchType = #{searchtype}
+    </if>
+  </select>
+  
+  <update id="batchUpdate" parameterType="java.util.List">
+      <foreach collection="list" separator=";" item="item">
+	      update UserPriceTempl
+	      <trim prefix="set" suffixOverrides=",">
+		  DiscountType = #{item.discounttype,jdbcType=TINYINT},
+		    <choose>
+				<when test="item.fixprice!=null">
+					FixPrice = #{item.fixprice,jdbcType=DECIMAL},
+				</when>
+				<otherwise>
+					FixPrice = 0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.minprice!=null">
+					MinPrice = #{item.minprice,jdbcType=DECIMAL},
+				</when>
+				<otherwise>
+					MinPrice = 0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.maxprice!=null">
+					MaxPrice = #{item.maxprice,jdbcType=DECIMAL},
+				</when>
+				<otherwise>
+					MaxPrice = 0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.ratio!=null">
+					Ratio = #{item.ratio,jdbcType=DECIMAL},
+				</when>
+				<otherwise>
+					Ratio = 0,
+				</otherwise>
+			</choose>
+			</trim>
+		    where UserId = #{item.userid,jdbcType=INTEGER} and SearchType = #{item.searchtype,jdbcType=SMALLINT}
+      </foreach>
+  </update>
+  
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into UserPriceTempl (UserId, DiscountType, SearchType, 
+      FixPrice, MinPrice, MaxPrice, 
+      Ratio)
+    values 
+    <foreach item="item" index="index" collection="list" separator=",">
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+    		#{item.userid}, #{item.discounttype}, #{item.searchtype},
+    		<choose>
+				<when test="item.fixprice!=null">
+					#{item.fixprice},
+				</when>
+				<otherwise>
+					0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.minprice!=null">
+					#{item.minprice},
+				</when>
+				<otherwise>
+					0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.maxprice!=null">
+					#{item.maxprice},
+				</when>
+				<otherwise>
+					0,
+				</otherwise>
+			</choose>
+    		<choose>
+				<when test="item.ratio!=null">
+					#{item.ratio},
+				</when>
+				<otherwise>
+					0,
+				</otherwise>
+			</choose>
+    	</trim>
+    </foreach>
+  </insert>
+  
+</mapper>
