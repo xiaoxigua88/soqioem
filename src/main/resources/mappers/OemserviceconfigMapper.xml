@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.soqi.oem.gentry.Oemserviceconfig" >
     <id column="OemId" property="oemid" jdbcType="INTEGER" />
     <id column="ServiceId" property="serviceid" jdbcType="INTEGER" />
-    <result column="Status" property="status" jdbcType="BIT" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="CanOperate" property="canoperate" jdbcType="INTEGER" />
+    <result column="ServiceName" property="servicename" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="map" >
     delete from OemServiceConfig
@@ -23,6 +25,13 @@
     where OemId = #{oemid,jdbcType=INTEGER}
       and ServiceId = #{serviceid,jdbcType=INTEGER}
   </update>
+  <update id="batchUpdate" parameterType="java.util.List">
+      <foreach collection="list" separator=";" item="item">
+	      update OemServiceConfig
+	      set Status = #{item.status,jdbcType=INTEGER}
+		  where ServiceId = #{item.serviceid,jdbcType=INTEGER} and OemId = #{item.oemid,jdbcType=INTEGER}
+      </foreach>
+  </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
     select OemId, ServiceId, "Status"
     from OemServiceConfig
@@ -32,5 +41,9 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select OemId, ServiceId, "Status"
     from OemServiceConfig
+  </select>
+  <select id="selectListByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select m.OemId, m.ServiceId, m.Status,n.ServiceName,case when n.CanOperate = 0 then n.CanOperate else m.CanOperate end as CanOperate from OemServiceConfig m left join ServiceConfig n on m.ServiceId = n.ServiceId
+    where m.OemId=#{oemid,jdbcType=INTEGER}
   </select>
 </mapper>

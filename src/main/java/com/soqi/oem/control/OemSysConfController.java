@@ -1,5 +1,6 @@
 package com.soqi.oem.control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,12 @@ import com.soqi.common.utils.ResultFontJS;
 import com.soqi.common.utils.ValidateUtils;
 import com.soqi.oem.gentry.Apipricechange;
 import com.soqi.oem.gentry.Apipricechangedetail;
+import com.soqi.oem.gentry.Oemserviceconfig;
 import com.soqi.oem.gentry.Pricetempl;
 import com.soqi.oem.gentry.Pricetempldtail;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.ApiPriceChangeService;
+import com.soqi.system.service.OemServiceConfigService;
 import com.soqi.system.service.PriceTemplService;
 
 /**代理端系统信息控制层
@@ -38,6 +41,8 @@ public class OemSysConfController extends BaseController {
 	private PriceTemplService ptService;
 	@Autowired
 	private ApiPriceChangeService apcService;
+	@Autowired
+	private OemServiceConfigService serviceConfig;
 	/**
 	 *价格策略配置
 	 */
@@ -254,8 +259,30 @@ public class OemSysConfController extends BaseController {
 	 */
 	@RequestMapping("/oemmanager/sysconfig/serviceconfig")
 	public String serviceConfig(Model model,HttpServletRequest req, HttpServletResponse res){
-		
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		List<Oemserviceconfig> oscList = serviceConfig.getServiceConfigList(this.getCustomer().getOemid());
+		if(null != oscList && !oscList.isEmpty()){
+			jsonObj.put("lst", oscList);
+		}
+		model.addAttribute("jsonData",jsonObj);
 		return "/oemmanager/sysconfig/serviceconfig";
 	}
-	
+	@RequestMapping("/oemmanager/sysconfig/serviceconfigsave")
+	@ResponseBody
+	public ResultFontJS serviceConfigSave(@RequestParam(value="oemid",required=true) Integer[] oemid,@RequestParam(value="serviceid",required=true) Integer[] serviceid,
+			@RequestParam(value="status",required=true) Integer[] status){
+		if(oemid.length != serviceid.length || serviceid.length != status.length || oemid.length != status.length){
+			ResultFontJS.error("服务配置非法请求的url");
+		}
+		List<Oemserviceconfig> oscList = new ArrayList<Oemserviceconfig>();
+		for(int i = 0; i < status.length; i++){
+			Oemserviceconfig osc = new Oemserviceconfig();
+			osc.setStatus(status[i]);
+			osc.setOemid(oemid[0]);
+			osc.setServiceid(serviceid[i]);
+			oscList.add(osc);
+		}
+		serviceConfig.saveServiceConfigList(oscList);
+		return ResultFontJS.ok("服务配置设置成功");
+	}
 }

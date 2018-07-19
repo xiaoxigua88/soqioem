@@ -7,7 +7,11 @@ public class Oemserviceconfig implements Serializable {
 
     private Integer serviceid;
 
-    private Boolean status;
+    private Integer status;
+    
+    private Integer canoperate;
+    
+    private String servicename;
 
     private static final long serialVersionUID = 1L;
 
@@ -26,16 +30,32 @@ public class Oemserviceconfig implements Serializable {
     public void setServiceid(Integer serviceid) {
         this.serviceid = serviceid;
     }
+    
+    public Integer getStatus() {
+		return status;
+	}
 
-    public Boolean getStatus() {
-        return status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+	public Integer getCanoperate() {
+		return canoperate;
+	}
 
-    @Override
+	public void setCanoperate(Integer canoperate) {
+		this.canoperate = canoperate;
+	}
+	
+	public String getServicename() {
+		return servicename;
+	}
+
+	public void setServicename(String servicename) {
+		this.servicename = servicename;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

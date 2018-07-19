@@ -1,119 +1,58 @@
 <script type="text/html" id="contentTemplate">
 <div class="sq-panel">
 	<div class="sq-panel-heading clearfix">
-		<div class="pull-left sq-panel-title">²Ù×÷ÈÕÖ¾</div>
-	    <div class="pull-right">
-		    <form action="" class="pull-left" id="searchForm">
-		        <label class="pull-left search-group-label">IP£º</label>
-			    <input type="text" name="ip" class="pull-left sq-input-reset search-group-input" placeholder="ÊäÈëIPËÑË÷" value="{{filter.ip}}" />
-		        <label class="pull-left search-group-label">ÒµÎñ£º</label>
-		        <div data-field_name="business" class="pull-left sq-dropdown-container btn-group">
-			        <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				        <span class="selected-content"></span>
-				        <span class="sq-caret"></span>
-			        </a>
-			        <ul class="dropdown-menu sq-search-dropdown">
-		                {{each businessList as item i}}
-			            <li><a href="#a_null" class="{{if filter.business == item}}sq-default-option{{/if}}" data-drop="{{item}}">{{item}}</a></li>
-			            {{/each}}
-			        </ul>
-		        </div>
-		        <label class="pull-left search-group-label">Ä£¿é£º</label>
-		        <div data-field_name="module" class="pull-left sq-dropdown-container btn-group log-module-drop">
-			        <a type="button" href="#a_null" class="sq-btn btn-select-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				        <span class="selected-content"></span>
-				        <span class="sq-caret"></span>
-			        </a>
-			        <ul class="dropdown-menu sq-search-dropdown" id="moduleList">
-			        </ul>
-		        </div>
-		        <label class="pull-left search-group-label">²Ù×÷ÄÚÈİ£º</label>
-			    <input type="text" name="operateInfo" class="pull-left sq-input-reset search-group-input" placeholder="" value="{{filter.operateInfo}}" />
-	            <label class="pull-left search-group-label">²Ù×÷Ê±¼ä£º</label>
-		        <input type="text" name="minOperateTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.minOperateTime}}" />
-	            <label class="pull-left search-group-label">ÖÁ</label>
-		        <input type="text" name="maxOperateTime" class="pull-left sq-input-reset sq-input-date search-group-input" value="{{filter.maxOperateTime}}" />
-			    <input class="hide" type="text" name="business" id="txtBusiness" value="{{filter.business}}" />
-			    <input class="hide" type="text" name="module" value="{{filter.module}}" />
-		        <input type="submit" class="pull-left sq-btn btn-primary btn-primary-search" value="" />
-		    </form>
-	    </div>
+		<div class="pull-left sq-panel-title">æœåŠ¡é…ç½®</div>
 	</div>
 	<div class="sq-panel-body">
-		<table class="sq-table margin-bottom-20" id="mainList">
+		<form method="post" action="/oemmanager/sysconfig/serviceconfigsave" class="sq-tab-container" id="serviceConfigForm">
+		<table class="sq-table margin-bottom-20" style="line-height:45px;width:28%" id="mainList">
 			<thead>
 				<tr>
-					<th style="width:100px">
-					ÒµÎñ
-				</th>
-				<th style="width:100px">
-					Ä£¿é
-				</th>
-				<th style="width:180px">
-					²Ù×÷ÄÚÈİ
-				</th>
-				<th class="text-center" style="width:135px" data-order_name="logintime">
-					²Ù×÷Ê±¼ä
-				</th>
-				<th style="width:105px">
-					²Ù×÷IP
-				</th>
-				<th style="width:105px">
-					ËùÔÚÇøÓò
-				</th>
-				<th style="width:105px">
-					ä¯ÀÀÆ÷
-				</th>
-				<th style="width:105px">
-					²Ù×÷ÏµÍ³
-				</th>
-				<th>
-					ÖÕ¶Ë±êÊ¶
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{each lst as item i}}
-				<tr>
+					<th style="width:80px">
+						æœåŠ¡ç¼–ç 
+					</th>
+					<th style="width:125px">
+						æœåŠ¡åç§°
+					</th>
+					<th>
+						æ“ä½œ
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+					<tr>
+					<td class="text-center">{{item.serviceid}}</td>
+					<td class="text-center">{{item.servicename}}</td>
 					<td>
-					    {{item.Business}}
-					</td>
-					<td>
-					    {{item.Module}}
-					</td>
-					<td>
-					    {{item.OperateInfo}}
-					</td>
-					<td class="text-center">
-					    {{item.OperateTime}}
-					</td>
-					<td class="text-center">
-					    {{item.Ip}}
-					</td>
-					<td class="text-center">
-					    {{item.Area}}
-					</td>
-					<td class="text-center">
-					    {{item.Brower}}
-					</td>
-					<td>
-					    {{item.OS}}
-					</td>
-					<td>
-					    {{item.Stamp}}
+						{{if item.canoperate == 1}}
+							<div class="sq-btn-group sq-form-control switchBtn">
+								<input class="sq-btn btn-primary btn-reverse {{if item.status == 1}}sq-tab-selected{{/if}}" type="button" value="å¼€å¯" data-tab_group="1" data-status="1">
+								<input class="sq-btn btn-primary btn-reverse {{if item.status == 0}}sq-tab-selected{{/if}}" type="button" value="å…³é—­" data-tab_group="0" data-status="0">
+			    				<input name="status" type="hidden" value="{{item.status}}">
+								<input name="serviceid" type="hidden" value="{{item.serviceid}}">
+								<input name="oemid" type="hidden" value="{{item.oemid}}">
+							</div>
+						{{else if item.canoperate == 0}}
+								ä¸å¯æ“ä½œ
+						{{/if}}
+						
 					</td>
 				</tr>
-			{{/each}}
-		</tbody>
-		<tfoot>
-		    <tr>
-		        <td colspan="9">
-	                <!-- ÒıÈë·ÖÒ³ -->
-		                {{include "paginationTpl"}}
-			        </td>
+				{{/each}}
+				
+			</tbody>
+			<tfoot>
+			    <tr>
+			        <td colspan="5">
+		                <button id="btnSave" href="#a_null" class="pull-left sq-btn btn-strong btn-operate margin-left-10 batch-operate">
+			                <span class="operate-icon operate-icon-restart"></span>
+			                ä¿å­˜
+		                </button>					        </td>
 			    </tr>
 			</tfoot>
 		</table>
+		</form>
 	</div>
-</div>
+</div>	    
 </script>

@@ -12,6 +12,10 @@ public interface OemserviceconfigMapper {
     Oemserviceconfig selectByPrimaryKey(@Param("oemid") Integer oemid, @Param("serviceid") Integer serviceid);
 
     List<Oemserviceconfig> selectAll();
+    
+    List<Oemserviceconfig> selectListByOemid(Integer oemid);
 
     int updateByPrimaryKey(Oemserviceconfig record);
+    
+    int batchUpdate(List<Oemserviceconfig> list);
 }

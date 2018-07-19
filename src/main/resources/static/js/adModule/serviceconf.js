@@ -1,19 +1,13 @@
 $(function() {
-    // 基本信息页面，保存基本信息
-    $("#savingInfo").click(function() {
-        var $_form = $("#basicInfoForm");
-        var actionUrl = $_form.attr("action");
-        if (!fieldEmptyValidate($_form)) {
-            return false;
-        }
-        
-        $_form.find(".protection-enabled").trigger("click");
-        return false;
+	SQ.component.initTabs();
+	$(".switchBtn input").click(function() {
+        var val = $(this).data("status");
+        var $_inputStatus = $(this).parent().find("input[name=status]");
+        $_inputStatus.val(val);
     });
-
-    // 保存密码
-    $("#savePwd").click(function() {
-        var $_form = $("#changePassword");
+    // 服务设置提交
+    $("#btnSave").click(function() {
+        var $_form = $("#serviceConfigForm");
         var actionUrl = $_form.attr("action");
         if (!fieldEmptyValidate($_form)) {
             return false;
