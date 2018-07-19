@@ -122,6 +122,7 @@
 								<!-- <li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/priceconfig?templtype=2" data-named="config_priceconfig">代理价格配置</a></li> -->
 								<li th:if="${#PeUtils.hasParentOem()==true}"><a href="/oemmanager/sysconfig/priceconfig?templtype=1" data-named="config_priceconfiguser">客户价格配置</a></li>
 								<li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/serviceconfig" data-named="config_serviceconfig">服务配置</a></li>
+								<li th:if="${#PeUtils.hasParentOem()==false}"><a href="/oemmanager/sysconfig/mealdetail" data-named="config_mealdetail">套餐详情</a></li>
 							</ul>
 						</div>
 					</div>

@@ -11,6 +11,8 @@ public interface SetmealdetailMapper {
     Setmealdetail selectByPrimaryKey(Integer itemid);
 
     List<Setmealdetail> selectAll();
+    
+    List<Setmealdetail> selectByMealId(Integer mealId);
 
     int updateByPrimaryKey(Setmealdetail record);
 }

@@ -25,6 +25,12 @@
     where OemId = #{oemid,jdbcType=INTEGER}
       and ServiceId = #{serviceid,jdbcType=INTEGER}
   </update>
+  <insert id="batchInsert" parameterType="java.util.List">
+      <foreach collection="list" separator=";" item="item">
+	      insert into OemServiceConfig (OemId, ServiceId, Status, CanOperate)
+    	  values (#{item.oemid,jdbcType=INTEGER}, #{item.serviceid,jdbcType=INTEGER}, #{item.status,jdbcType=INTEGER}, #{item.canoperate,jdbcType=INTEGER})
+      </foreach>
+  </insert>
   <update id="batchUpdate" parameterType="java.util.List">
       <foreach collection="list" separator=";" item="item">
 	      update OemServiceConfig
@@ -39,11 +45,12 @@
       and ServiceId = #{serviceid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select OemId, ServiceId, "Status"
+    select OemId, ServiceId, Status, CanOperate
     from OemServiceConfig
   </select>
   <select id="selectListByOemid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select m.OemId, m.ServiceId, m.Status,n.ServiceName,case when n.CanOperate = 0 then n.CanOperate else m.CanOperate end as CanOperate from OemServiceConfig m left join ServiceConfig n on m.ServiceId = n.ServiceId
     where m.OemId=#{oemid,jdbcType=INTEGER}
   </select>
+  
 </mapper>

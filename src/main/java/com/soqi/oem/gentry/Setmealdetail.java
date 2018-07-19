@@ -3,13 +3,22 @@ package com.soqi.oem.gentry;
 import java.io.Serializable;
 
 public class Setmealdetail implements Serializable {
-    private Integer itemid;
+    
+    private Integer mealid;
 
+    private String mealname;
+    
+    private String comment;
+    
+    private Integer itemid;
+    
+    private Integer value;
+    
     private String itemname;
 
     private String itemnameen;
-
-    private String value;
+    
+    private Integer defvalue;
 
     private static final long serialVersionUID = 1L;
 
@@ -37,15 +46,47 @@ public class Setmealdetail implements Serializable {
         this.itemnameen = itemnameen == null ? null : itemnameen.trim();
     }
 
-    public String getValue() {
-        return value;
-    }
+    public Integer getMealid() {
+		return mealid;
+	}
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
-    }
+	public void setMealid(Integer mealid) {
+		this.mealid = mealid;
+	}
 
-    @Override
+	public String getMealname() {
+		return mealname;
+	}
+
+	public void setMealname(String mealname) {
+		this.mealname = mealname;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+	public Integer getDefvalue() {
+		return defvalue;
+	}
+
+	public void setDefvalue(Integer defvalue) {
+		this.defvalue = defvalue;
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

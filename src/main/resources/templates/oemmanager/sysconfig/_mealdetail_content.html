@@ -1,0 +1,51 @@
+<script type="text/html" id="contentTemplate">
+<div class="sq-panel">
+	<div class="sq-panel-heading clearfix">
+		<div class="pull-left sq-panel-title">套餐详情</div>
+	</div>
+	<div class="sq-panel-body">
+		<table class="sq-table margin-bottom-20" style="line-height:45px;width:28%" id="mainList">
+			<thead>
+				<tr>
+					<th style="width:80px">
+						套餐名称
+					</th>
+					<th style="width:80px">
+						套餐编码
+					</th>
+					<th  class="text-center" style="width:168px">
+						条目名称
+					</th>
+					<th style="width:70px">
+						条目编码
+					</th>
+					<th>
+						条目值
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{each lst as item i}}
+				<tr>
+				<td>
+					<b class="text-primary">{{item.mealname}}</b>
+				</td>
+				<td class="text-center">
+					{{item.mealid}}
+				</td>
+				<td class="text-center">
+					{{item.itemname}}
+				</td>
+				<td class="text-center">
+					{{item.itemid}}
+				</td>
+				<td class="text-center">
+					{{item.value}}
+				</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>	    
+</script>

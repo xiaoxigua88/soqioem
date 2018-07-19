@@ -1,5 +1,6 @@
 package com.soqi.system.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,11 +13,13 @@ import com.soqi.common.utils.MD5Utils;
 import com.soqi.oem.dao.CustomerMapper;
 import com.soqi.oem.dao.CustomerroleMapper;
 import com.soqi.oem.dao.OembaseMapper;
+import com.soqi.oem.dao.OemserviceconfigMapper;
 import com.soqi.oem.dao.RoleMapper;
 import com.soqi.oem.dao.WebtemplateMapper;
 import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Customerrole;
 import com.soqi.oem.gentry.Oembase;
+import com.soqi.oem.gentry.Oemserviceconfig;
 import com.soqi.oem.gentry.Role;
 import com.soqi.oem.gentry.Webtemplate;
 @Service
@@ -31,6 +34,8 @@ public class OemBaseService {
 	private CustomerroleMapper customerroleMapper;
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private OemserviceconfigMapper oscMapper;
 	
 	public Webtemplate selectTemplateByDomain(String domain){
 		return web.selectByDomain(domain);
@@ -85,6 +90,7 @@ public class OemBaseService {
 		customer.setPwd(MD5Utils.encrypt(customer.getMobile(),customer.getPwd()));
 		customer.setStatus(1);
 		customerMapper.insert(customer);
+		
 		//如果parentoemid不为0复制parentoemid的角色
 		if(oembase.getParentoemid().intValue()!=0){
 			//根据parentid和IsOemManager两个字段找到代理所属的管理员角色 
@@ -98,13 +104,28 @@ public class OemBaseService {
 				customerrole.setCustomerid(customer.getCustomerid());
 				customerroleMapper.insert(customerrole);
 			}
+			//二级代理添加时默认继承上级代理所属服务
+			List<Oemserviceconfig> oscList = oscMapper.selectListByOemid(oembase.getParentoemid());
+			if(null != oscList && !oscList.isEmpty()){
+				for(Oemserviceconfig osc : oscList){
+					osc.setOemid(oembase.getOemid());
+				}
+			}
+			oscMapper.batchInsert(oscList);
 		}else{
-			//获取系统超级管理员创建的各个顶级代理角色
-			
+			//顶级代理、复制一份默认服务
+			List<Oemserviceconfig> oscList = oscMapper.selectAll();
+			if(null != oscList && !oscList.isEmpty()){
+				for(Oemserviceconfig osc : oscList){
+					osc.setOemid(oembase.getOemid());
+				}
+			}
+			oscMapper.batchInsert(oscList);
 		}
 	}
 	
 	public int childoemUpdate(Oembase oembase){
 		return oembaseMapper.updateByPrimaryKey(oembase);
 	}
+	
 }

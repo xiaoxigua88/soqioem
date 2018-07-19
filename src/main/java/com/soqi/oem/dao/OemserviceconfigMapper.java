@@ -18,4 +18,6 @@ public interface OemserviceconfigMapper {
     int updateByPrimaryKey(Oemserviceconfig record);
     
     int batchUpdate(List<Oemserviceconfig> list);
+    
+    int batchInsert(List<Oemserviceconfig> list);
 }

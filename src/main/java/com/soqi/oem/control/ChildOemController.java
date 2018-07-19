@@ -29,8 +29,6 @@ import com.soqi.oem.gentry.Customer;
 import com.soqi.oem.gentry.Oembase;
 import com.soqi.oem.gentry.Oempricetempl;
 import com.soqi.oem.gentry.Oemrecharge;
-import com.soqi.oem.gentry.Pricetempldtail;
-import com.soqi.oem.gentry.Userpricetempl;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.FinanceService;
 import com.soqi.system.service.OemBaseService;

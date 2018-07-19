@@ -26,8 +26,10 @@ import com.soqi.oem.gentry.Apipricechangedetail;
 import com.soqi.oem.gentry.Oemserviceconfig;
 import com.soqi.oem.gentry.Pricetempl;
 import com.soqi.oem.gentry.Pricetempldtail;
+import com.soqi.oem.gentry.Setmealdetail;
 import com.soqi.system.control.BaseController;
 import com.soqi.system.service.ApiPriceChangeService;
+import com.soqi.system.service.OemMealService;
 import com.soqi.system.service.OemServiceConfigService;
 import com.soqi.system.service.PriceTemplService;
 
@@ -43,6 +45,8 @@ public class OemSysConfController extends BaseController {
 	private ApiPriceChangeService apcService;
 	@Autowired
 	private OemServiceConfigService serviceConfig;
+	@Autowired
+	private OemMealService oemMealService;
 	/**
 	 *价格策略配置
 	 */
@@ -284,5 +288,16 @@ public class OemSysConfController extends BaseController {
 		}
 		serviceConfig.saveServiceConfigList(oscList);
 		return ResultFontJS.ok("服务配置设置成功");
+	}
+	
+	@RequestMapping("/oemmanager/sysconfig/mealdetail")
+	public String mealDetail(Model model,HttpServletRequest req, HttpServletResponse res){
+		Map<String, Object> jsonObj = new HashMap<String, Object>();
+		List<Setmealdetail> smdList = oemMealService.getMealDetails(this.getCustomer().getOembase().getMealid());
+		if(null != smdList && !smdList.isEmpty()){
+			jsonObj.put("lst", smdList);
+		}
+		model.addAttribute("jsonData",jsonObj);
+		return "/oemmanager/sysconfig/mealdetail";
 	}
 }
